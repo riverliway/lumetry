@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dgwc0vxyda6dn"]
+
+[ext_resource type="PackedScene" uid="uid://dkd42r5x5yhs4" path="res://tileset/floor/floor_pattern.tscn" id="1_wewmp"]
+[ext_resource type="Script" path="res://levels/room.gd" id="2_ogn6p"]
+[ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="3_pqpdu"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="FloorPattern" parent="." instance=ExtResource("1_wewmp")]
+
+[node name="Room" type="Node2D" parent="."]
+script = ExtResource("2_ogn6p")
+
+[node name="LaserEmitter" parent="Room" instance=ExtResource("3_pqpdu")]
+position = Vector2(1760, 354)

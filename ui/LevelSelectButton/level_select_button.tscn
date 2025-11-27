@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://cl00m00ltc4nj"]
+
+[ext_resource type="Texture2D" uid="uid://buaq6fsw3t4ha" path="res://ui/LevelSelectButton/LevelSelectButton_base.png" id="1_rs514"]
+[ext_resource type="Texture2D" uid="uid://c2rfowy1p1vte" path="res://ui/LevelSelectButton/LevelSelectButton_press.png" id="2_5je87"]
+[ext_resource type="Texture2D" uid="uid://dhxpsmfmqssqv" path="res://ui/LevelSelectButton/LevelSelectButton_hover.png" id="3_rn2dd"]
+[ext_resource type="Texture2D" uid="uid://c1dlrtsixfv3" path="res://ui/LevelSelectButton/LevelSelectButton_disable.png" id="4_p2j2g"]
+[ext_resource type="Theme" uid="uid://bofbklpxqt5ff" path="res://ui/default_theme.tres" id="5_rsd6y"]
+
+[node name="LevelSelectButton" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_rs514")
+texture_pressed = ExtResource("2_5je87")
+texture_hover = ExtResource("3_rn2dd")
+texture_disabled = ExtResource("4_p2j2g")
+texture_focused = ExtResource("3_rn2dd")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = -60.0
+offset_right = 24.0
+offset_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_rsd6y")
+theme_override_font_sizes/font_size = 120
+text = "11"
+horizontal_alignment = 1
+vertical_alignment = 1
