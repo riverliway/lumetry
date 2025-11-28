@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cij7mo7my7bp7"]
+[gd_scene load_steps=5 format=3 uid="uid://cij7mo7my7bp7"]
 
 [ext_resource type="Texture2D" uid="uid://dh0tjyv18ta3u" path="res://tileset/laser/laser_emitter_1.png" id="1_6vf15"]
 [ext_resource type="Script" path="res://tileset/laser/laser_emitter.gd" id="1_u033e"]
 [ext_resource type="Texture2D" uid="uid://vkpxfgj763g8" path="res://tileset/laser/laser_emitter_2.png" id="2_edvgo"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_jibug"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_h87jf"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -18,16 +18,8 @@ animations = [{
 "speed": 1.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pck7u"]
-
-[node name="LaserEmitter" type="StaticBody2D"]
+[node name="LaserEmitter" type="AnimatedSprite2D"]
 scale = Vector2(0.7, 0.7)
-script = ExtResource("1_u033e")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_jibug")
+sprite_frames = SubResource("SpriteFrames_h87jf")
 autoplay = "default"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-scale = Vector2(11, 11)
-shape = SubResource("CircleShape2D_pck7u")
+script = ExtResource("1_u033e")

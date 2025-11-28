@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj7aw6ugryoas"]
+
+[ext_resource type="Texture2D" uid="uid://clfil1dtxg1yx" path="res://tileset/laser/Laser_1.png" id="1_8k136"]
+[ext_resource type="Texture2D" uid="uid://bet28knq2roqx" path="res://tileset/laser/Laser_2.png" id="2_sq4gs"]
+[ext_resource type="Script" path="res://tileset/laser/laser_segment.gd" id="3_01y2t"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yo1vm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_8k136")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_sq4gs")
+}],
+"loop": true,
+"name": &"straight",
+"speed": 1.0
+}]
+
+[node name="LaserSegment" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_yo1vm")
+animation = &"straight"
+script = ExtResource("3_01y2t")

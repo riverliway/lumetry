@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgwc0vxyda6dn"]
+[gd_scene load_steps=5 format=3 uid="uid://dgwc0vxyda6dn"]
 
 [ext_resource type="PackedScene" uid="uid://dkd42r5x5yhs4" path="res://tileset/floor/floor_pattern.tscn" id="1_wewmp"]
 [ext_resource type="Script" path="res://levels/room.gd" id="2_ogn6p"]
 [ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="3_pqpdu"]
+[ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/floor/wall.tscn" id="4_pgt2t"]
 
 [node name="Level1" type="Node2D"]
 
@@ -13,3 +14,25 @@ script = ExtResource("2_ogn6p")
 
 [node name="LaserEmitter" parent="Room" instance=ExtResource("3_pqpdu")]
 position = Vector2(1760, 354)
+rotation = 1.0472
+
+[node name="Wall" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1767, 188)
+
+[node name="Wall2" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1594, 286)
+
+[node name="Wall3" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1425, 374)
+
+[node name="Wall4" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1263, 467)
+
+[node name="Wall5" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1086, 558)
+
+[node name="Wall6" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(922, 667)
+
+[node name="Wall7" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(919, 854)
