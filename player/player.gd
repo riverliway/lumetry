@@ -1,6 +1,7 @@
 extends AnimatedSprite2D
 class_name Player
 signal attempt_move ## Emitted when the player inputs a movement direction
+signal attempt_use ## Emitted when the player attempts to use an object, passes the direction the player is facing
 
 var block_type := Util.BLOCK_TYPE.PLAYER
 
@@ -15,6 +16,7 @@ var _facing := Util.DIRECTION.DOWN
 
 var _LOOK_DURATION := 0.2
 var _MOVE_DURATION := 0.5
+var _USE_DURATION := 1.0
 var _time_left := 0.0
 
 
@@ -28,6 +30,8 @@ func _process(_delta: float) -> void:
 			_process_look()
 		Util.PLAYER_STATE.MOVING:
 			_process_move(_delta)
+		Util.PLAYER_STATE.USING:
+			_process_use()
 
 	_prev_state = _queue_state
 	_queue_state = _state
@@ -35,6 +39,10 @@ func _process(_delta: float) -> void:
 
 ## Processes the idle state
 func _process_idle() -> void:
+	if Input.is_action_pressed('use'):
+		attempt_use.emit(_facing)
+		return
+
 	var input_direction = _get_input_direction()
 	if input_direction == _facing:
 		# If the player is already facing the input direction, attempt to move
@@ -73,6 +81,12 @@ func _process_move(_delta) -> void:
 	else:
 		var t = 1.0 - (_time_left / _MOVE_DURATION)
 		_move_object.position = _move_start_pos.lerp(_move_target, t)
+
+
+## Processes the using state
+func _process_use() -> void:
+	if _time_left <= 0:
+		_state = Util.PLAYER_STATE.IDLE
 
 
 ## Determines the direction based on current input
@@ -140,3 +154,8 @@ func move(move_object, new_pos: Vector2, old_pos: Vector2) -> void:
 	_move_start_pos = old_pos
 	_state = Util.PLAYER_STATE.MOVING
 	_time_left = _MOVE_DURATION
+
+
+func use() -> void:
+	_state = Util.PLAYER_STATE.USING
+	_time_left = _USE_DURATION

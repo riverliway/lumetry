@@ -54,7 +54,8 @@ class Grid:
 		
 		for i in range(0, len(emitters_index), 2):
 			var emitter_cell = grid[emitters_index[i]][emitters_index[i + 1]]
-			_propagate_laser(emitter_cell)
+			if emitter_cell.block.activated:
+				_propagate_laser(emitter_cell)
 				
 	## Propogates a laser beam from a given emitter
 	## This is an internal helper function for handling the laser physics
@@ -118,6 +119,30 @@ class Grid:
 	func connect_player(pl: Player) -> void:
 		player = pl
 		player.attempt_move.connect(_attempt_move)
+		player.attempt_use.connect(_attempt_use)
+
+	## A hook for the player attempt use signal
+	## [br]`player_facing` is the direction the player is facing
+	func _attempt_use(player_facing: Util.DIRECTION) -> void:
+		var current_cell = get_nearest_cell(player.position)
+		var new_cell = go(current_cell, player_facing)
+
+		if new_cell == null:
+			return
+
+		var rotation_pad = new_cell.get_rotation_pad()
+		if rotation_pad != null:
+			rotation_pad.perform_rotation(new_cell.block)
+			new_cell.block_facing = Util.rotate_direction_clockwise(new_cell.block_facing)
+			player.use()
+			handle_laser_physics()
+			return
+
+		if new_cell.get_block_type() in [Util.BLOCK_TYPE.LASER_EMITTER]:
+			new_cell.block.use()
+			player.use()
+			handle_laser_physics()
+
 	
 	## A hook for the player attempt move signal
 	## [br]`direction` is the direction the player is attempting to move in
