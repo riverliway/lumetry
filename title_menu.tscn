@@ -23,6 +23,7 @@ offset_bottom = 688.0
 text = "1"
 
 [node name="Level2" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 385.0
 offset_top = 878.0
 offset_right = 685.0
@@ -32,6 +33,7 @@ offset_bottom = 1178.0
 text = "2"
 
 [node name="Level3" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 393.0
 offset_top = 1451.0
 offset_right = 693.0
@@ -41,6 +43,7 @@ offset_bottom = 1751.0
 text = "3"
 
 [node name="Level4" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 964.0
 offset_top = 388.0
 offset_right = 1264.0
@@ -50,6 +53,7 @@ offset_bottom = 688.0
 text = "4"
 
 [node name="Level5" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 960.0
 offset_top = 859.0
 offset_right = 1260.0
@@ -59,6 +63,7 @@ offset_bottom = 1159.0
 text = "5"
 
 [node name="Level6" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 956.0
 offset_top = 1453.0
 offset_right = 1256.0
@@ -68,6 +73,7 @@ offset_bottom = 1753.0
 text = "6"
 
 [node name="Level7" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 1558.0
 offset_top = 392.0
 offset_right = 1858.0
@@ -77,6 +83,7 @@ offset_bottom = 692.0
 text = "7"
 
 [node name="Level8" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 1569.0
 offset_top = 858.0
 offset_right = 1869.0
@@ -86,6 +93,7 @@ offset_bottom = 1158.0
 text = "8"
 
 [node name="Level9" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 1601.0
 offset_top = 1438.0
 offset_right = 1901.0
@@ -95,6 +103,7 @@ offset_bottom = 1738.0
 text = "9"
 
 [node name="Level10" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 2174.0
 offset_top = 395.0
 offset_right = 2474.0
@@ -104,12 +113,14 @@ offset_bottom = 695.0
 text = "10"
 
 [node name="Level11" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 2165.0
 offset_top = 855.0
 offset_right = 2465.0
 offset_bottom = 1155.0
 
 [node name="Level12" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 2144.0
 offset_top = 1434.0
 offset_right = 2444.0
@@ -119,6 +130,7 @@ offset_bottom = 1734.0
 text = "12"
 
 [node name="Level13" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 2700.0
 offset_top = 387.0
 offset_right = 3000.0
@@ -128,6 +140,7 @@ offset_bottom = 687.0
 text = "13"
 
 [node name="Level14" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 2704.0
 offset_top = 861.0
 offset_right = 3004.0
@@ -137,6 +150,7 @@ offset_bottom = 1161.0
 text = "14"
 
 [node name="Level15" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 2714.0
 offset_top = 1425.0
 offset_right = 3014.0
@@ -146,6 +160,7 @@ offset_bottom = 1725.0
 text = "15"
 
 [node name="Level16" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 3232.0
 offset_top = 399.0
 offset_right = 3532.0
@@ -155,6 +170,7 @@ offset_bottom = 699.0
 text = "16"
 
 [node name="Level17" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 3229.0
 offset_top = 878.0
 offset_right = 3529.0
@@ -164,6 +180,7 @@ offset_bottom = 1178.0
 text = "17"
 
 [node name="Level18" parent="LevelSelect" instance=ExtResource("1_0o8x5")]
+layout_mode = 0
 offset_left = 3229.0
 offset_top = 1423.0
 offset_right = 3529.0

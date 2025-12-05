@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://edblwq6jllx4"]
+
+[ext_resource type="Texture2D" uid="uid://bnhjy1vug14yc" path="res://tileset/mirror/mirror.png" id="1_apott"]
+[ext_resource type="Script" path="res://tileset/mirror/mirror.gd" id="2_jwfna"]
+
+[node name="Mirror" type="Sprite2D"]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_apott")
+script = ExtResource("2_jwfna")

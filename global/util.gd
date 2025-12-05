@@ -90,6 +90,15 @@ func get_rotation_from_direction(direction: Util.DIRECTION) -> float:
 	return max(directions.find(direction), 0) * 2 * PI / 6
 
 
+func is_half_direction(rotation: float) -> bool:
+	"""
+	:returns: true if the rotation is between two directions (i.e. a half step)
+	"""
+	var rot = int((int(rad_to_deg(rotation) + 15 + 360 * 100) % 360) / 30.0)
+	print(rot)
+	return rot % 2 == 1
+
+
 func rotate_direction_clockwise(direction: Util.DIRECTION, times=1) -> Util.DIRECTION:
 	"""
 	:returns: the hexdirection resulting from rotating the given direction clockwise
@@ -150,5 +159,7 @@ enum DIRECTION {
 enum BLOCK_TYPE {
 	NONE,
 	WALL,
-	LASER_EMITTER
+	LASER_EMITTER,
+	MIRROR_SHORT,
+	MIRROR_LONG
 }

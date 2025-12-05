@@ -41,16 +41,78 @@ class Grid:
 		"""
 		Creates new laser segments originating from the emitter
 		"""
+		clear_laser_grid()
 		var emitters_index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER, false)
 		
 		for i in range(0, len(emitters_index), 2):
 			var emitter_cell = grid[emitters_index[i]][emitters_index[i + 1]]
-			var laser_facing = emitter_cell.block_facing
-			var next_cell = go(emitter_cell, laser_facing)
+			_propagate_laser(emitter_cell)
+				
+	func _propagate_laser(emitter: Cell) -> void:
+		"""
+		Propogates a laser beam from a given emitter
+		This is an internal helper function for handling the laser physics
+		"""
+		# Propogate once from the emitter first, and then continue the propogation below
+		# because we don't want to continue the propogation if it hits a different emitter
+		var cell = _raycast_laser(go(emitter, emitter.block_facing), emitter.block_facing)
+		var laser_facing = emitter.block_facing
+		
+		while true:
+			if cell == null:
+				# We must be out of bounds
+				return
+				
+			if cell.get_block_type() == Util.BLOCK_TYPE.NONE:
+				# We should never hit this case because we should only propagate
+				# when it runs into a new block
+				assert(false)
+				
+			elif cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_SHORT:
+				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
+				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, false)
+				if laser_facing == input_dir:
+					# The mirror reflected back along the input path, so quit out
+					return
+				cell = _raycast_laser(go(cell, laser_facing), laser_facing)
+				continue
+				
+			elif cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_LONG:
+				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
+				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, true)
+				if laser_facing == input_dir:
+					# The mirror reflected back along the input path, so quit out
+					return
+				cell = _raycast_laser(go(cell, laser_facing), laser_facing)
+				continue
+				
+			return
 			
-			while next_cell != null && next_cell.get_block_type() == Util.BLOCK_TYPE.NONE:
-				next_cell.add_laser(Util.rotate_direction_clockwise(laser_facing, 3), laser_facing)
-				next_cell = go(next_cell, laser_facing)
+	func _raycast_laser(cell: Cell, laser_direction: Util.DIRECTION) -> Cell:
+		"""
+		Shoots the laser in a straight line along the direction,
+		until it hits a cell that isn't a NONE blocktype
+		
+		:param cell: The starting cell
+		:param laser_direction: The direction to shoot the laser in
+		
+		:returns: the non-air cell that the laser collided with
+		"""
+		var current_cell = cell
+		
+		while current_cell != null and current_cell.get_block_type() == Util.BLOCK_TYPE.NONE:
+			current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction)
+			current_cell = go(current_cell, laser_direction)
+			
+		return current_cell
+		
+	func clear_laser_grid() -> void:
+		"""
+		Cleans lasers off all cells in the grid
+		"""
+		for c in WIDTH:
+			for r in HEIGHT:
+				grid[c][r].clear_laser()
 		
 	func is_top(cell: Cell) -> bool:
 		return cell.r == 0
@@ -139,7 +201,7 @@ class Grid:
 		"""
 		:returns: the cell to the lower right of this one
 		"""
-		if is_right(cell) || (is_off_shifted(cell) && is_top(cell)):
+		if is_right(cell) || (is_off_shifted(cell) && is_bottom(cell)):
 			return null
 		var shift = 1 if is_off_shifted(cell) else 0
 		return grid[cell.c + 1][cell.r + shift]
@@ -204,8 +266,18 @@ class Cell:
 		block = block_object
 		block.position = pos
 		
-		block_facing = Util.get_direction_from_rotation(block.rotation)
-		block.rotation = Util.get_rotation_from_direction(block_facing)
+		var is_mirror = block_object.block_type in [Util.BLOCK_TYPE.MIRROR_SHORT, Util.BLOCK_TYPE.MIRROR_LONG]
+		if is_mirror and Util.is_half_direction(block.rotation):
+			# Long mirrors are odd because their rotation means they are technically facing halfways
+			# between two cardinal directions. So we set their facing to be orthogonal to the rotation
+			# i.e. the mirror is horizontal when it is facing down, as opposed to short mirrors which
+			# are in line with their facing, and are vertical when facing down.
+			block_object.block_type = Util.BLOCK_TYPE.MIRROR_LONG
+			block_facing = Util.get_direction_from_rotation(block.rotation + PI / 2)
+			block.rotation = Util.get_rotation_from_direction(block_facing) - PI / 2
+		else:
+			block_facing = Util.get_direction_from_rotation(block.rotation)
+			block.rotation = Util.get_rotation_from_direction(block_facing)
 		
 	func get_block_type() -> Util.BLOCK_TYPE:
 		if block == null:
