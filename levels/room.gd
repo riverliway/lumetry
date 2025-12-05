@@ -1,6 +1,7 @@
 extends Node2D
 class_name Room
 
+## Preloaded laser segment for dynamic creation of laser beams
 static var laser_segment_scene: PackedScene = preload("res://tileset/laser/laser_segment.tscn")
 @onready var grid: Grid = Grid.new(func(): return self)
 
@@ -12,20 +13,25 @@ func _ready() -> void:
 
 	grid.handle_laser_physics()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
+## The datastructure to handle the hexagonal grid of cells.
+## Has various helper functions for navigating the grid and handling laser physics.
 class Grid:
+	## Function for communicating with the room instance that this grid belongs to
 	var resolve_room: Callable
 	
-	var WIDTH = 23 # Number of cells in each row
-	var HEIGHT = 12 # Number of cells in each column
+	var WIDTH = 23 ## Number of cells in each row
+	var HEIGHT = 12 ## Number of cells in each column
 	var grid = []
 	
-	var SIZE = Vector2(168, 192) # Number of pixels between columns/rows
-	var START = Vector2(79, -17) # The coordinates of the top left cell
+	var SIZE = Vector2(168, 192) ## Number of pixels between columns/rows
+	var START = Vector2(79, -17) ## The coordinates of the top left cell
 	
+	## Initializes the grid with empty cells
+	## [br]`room_resolver` is a callable that returns the Room instance this grid belongs to
 	func _init(room_resolver: Callable):
 		resolve_room = room_resolver
 		for c in range(WIDTH):
@@ -37,10 +43,8 @@ class Grid:
 				
 			grid.push_back(col)
 			
+	## Wipes and re-computes the laser physics for the entire grid
 	func handle_laser_physics() -> void:
-		"""
-		Creates new laser segments originating from the emitter
-		"""
 		clear_laser_grid()
 		var emitters_index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER, false)
 		
@@ -48,11 +52,10 @@ class Grid:
 			var emitter_cell = grid[emitters_index[i]][emitters_index[i + 1]]
 			_propagate_laser(emitter_cell)
 				
+	## Propogates a laser beam from a given emitter
+	## This is an internal helper function for handling the laser physics
+	## [br]`emitter` is the cell containing the laser emitter
 	func _propagate_laser(emitter: Cell) -> void:
-		"""
-		Propogates a laser beam from a given emitter
-		This is an internal helper function for handling the laser physics
-		"""
 		# Propogate once from the emitter first, and then continue the propogation below
 		# because we don't want to continue the propogation if it hits a different emitter
 		var cell = _raycast_laser(go(emitter, emitter.block_facing), emitter.block_facing)
@@ -88,16 +91,11 @@ class Grid:
 				
 			return
 			
+	## Shoots the laser in a straight line until it hits a non-air block
+	## [br]`cell` is the starting cell
+	## [br]`laser_direction` is the direction to shoot the laser in
+	## [br]Returns the non-air cell that the laser collided with
 	func _raycast_laser(cell: Cell, laser_direction: Util.DIRECTION) -> Cell:
-		"""
-		Shoots the laser in a straight line along the direction,
-		until it hits a cell that isn't a NONE blocktype
-		
-		:param cell: The starting cell
-		:param laser_direction: The direction to shoot the laser in
-		
-		:returns: the non-air cell that the laser collided with
-		"""
 		var current_cell = cell
 		
 		while current_cell != null and current_cell.get_block_type() == Util.BLOCK_TYPE.NONE:
@@ -106,43 +104,38 @@ class Grid:
 			
 		return current_cell
 		
+	## Cleans lasers off all cells in the grid
 	func clear_laser_grid() -> void:
-		"""
-		Cleans lasers off all cells in the grid
-		"""
 		for c in WIDTH:
 			for r in HEIGHT:
 				grid[c][r].clear_laser()
 		
+	## Checks if this cell is in the top row
 	func is_top(cell: Cell) -> bool:
 		return cell.r == 0
-		
+
+	## Checks if this cell is in the bottom row
 	func is_bottom(cell: Cell) -> bool:
 		return cell.r == HEIGHT - 1
 		
+	## Checks if this cell is in the leftmost column
 	func is_left(cell: Cell) -> bool:
 		return cell.c == 0
 		
+	## Checks if this cell is in the rightmost column
 	func is_right(cell: Cell) -> bool:
 		return cell.c == WIDTH - 1
 		
+	## Checks if this cell is in a column that is offset down by 1/2 vertically
 	func is_off_shifted(cell: Cell) -> bool:
-		"""
-		:returns: true if this cell is in a column that is offset down by 1/2 vertically
-		"""
 		return cell.c % 2 == 1
 		
+	## Finds a cell that matches the criteria defined by the callable.
+	## [br]`lambda` is a function that takes a cell as a parameter, and returns a boolean
+	## [br]If `first` is true, it returns the first index and quits immediately.
+	## if false, it returns all indexes that match the lambda
+	## [br]Returns the index [col, row] of the first/every cell that the lambda returns true for.
 	func find(lambda: Callable, first = true) -> Array[int]:
-		"""
-		Finds a cell that matches the criteria defined by the callable.
-		
-		:param lambda: a function that takes a cell as a parameter, and returns a boolean
-		:param first: if true, it returns the first index and quits immediately.
-			If false, it returns all indexes that match the lambda
-		
-		:returns: the index [col, row] of the first/every cell that the lambda returns true for.
-		If the lambda returns false for all cells in the grid, an empty array is returned.
-		"""
 		var rets: Array[int] = []
 		for col in range(WIDTH):
 			for row in range(HEIGHT):
@@ -154,62 +147,48 @@ class Grid:
 					
 		return rets
 		
+	# # Returns the cell above this one
 	func get_top(cell: Cell) -> Cell:
-		"""
-		:returns: the cell above this one
-		"""
 		if is_top(cell):
 			return null
 		return grid[cell.c][cell.r - 1]
 		
+	## Returns the cell below this one
 	func get_bottom(cell: Cell) -> Cell:
-		"""
-		:returns: the cell below this one
-		"""
 		if is_bottom(cell):
 			return null
 		return grid[cell.c][cell.r + 1]
 		
+	## Returns the cell to the upper left of this one
 	func get_top_left(cell: Cell) -> Cell:
-		"""
-		:returns: the cell to the upper left of this one
-		"""
 		if is_left(cell) || (!is_off_shifted(cell) && is_top(cell)):
 			return null
 		var shift = 0 if is_off_shifted(cell) else 1
 		return grid[cell.c - 1][cell.r - shift]
 	
+	## Returns the cell to the upper right of this one
 	func get_top_right(cell: Cell) -> Cell:
-		"""
-		:returns: the cell to the upper right of this one
-		"""
 		if is_right(cell) || (!is_off_shifted(cell) && is_top(cell)):
 			return null
 		var shift = 0 if is_off_shifted(cell) else 1
 		return grid[cell.c + 1][cell.r - shift]
 		
+	## Returns the cell to the lower left of this one
 	func get_bottom_left(cell: Cell) -> Cell:
-		"""
-		:returns: the cell to the lower left of this one
-		"""
 		if is_left(cell) || (is_off_shifted(cell) && is_bottom(cell)):
 			return null
 		var shift = 1 if is_off_shifted(cell) else 0
 		return grid[cell.c - 1][cell.r + shift]
 	
+	## Returns the cell to the lower right of this one
 	func get_bottom_right(cell: Cell) -> Cell:
-		"""
-		:returns: the cell to the lower right of this one
-		"""
 		if is_right(cell) || (is_off_shifted(cell) && is_bottom(cell)):
 			return null
 		var shift = 1 if is_off_shifted(cell) else 0
 		return grid[cell.c + 1][cell.r + shift]
 		
+	## Returns the new cell after going in the specified direction from the given cell
 	func go(cell: Cell, direction: Util.DIRECTION) -> Cell:
-		"""
-		:returns: the new cell after going in the specified direction from the given cell
-		"""
 		match direction:
 			Util.DIRECTION.UP:
 				return get_top(cell)
@@ -225,11 +204,10 @@ class Grid:
 				return get_bottom_right(cell)
 			_:
 				return cell
-				
+	
+	## Given a position in pixels, returns the nearest cell in the grid measured by euclidean distance
+	## [br]`pos` is the position of the center of the object
 	func get_nearest_cell(pos: Vector2) -> Cell:
-		"""
-		:returns: the cell which is closest to the position, measured by eculidean distance
-		"""
 		var pos_x = pos.x + SIZE.x / 2
 		var column = floor((pos_x - START.x) / SIZE.x)
 		column = max(min(int(column), WIDTH - 1), 0)
@@ -241,28 +219,32 @@ class Grid:
 		return grid[column][row]
 
 
+## The contents of a single cell in the hexagonal grid
 class Cell:
 	var resolve_room: Callable
 	
-	var pos = Vector2.ZERO # The position of this cell in the world (px)
-	var r = 0 # The row index
-	var c = 0 # The col index
+	var pos = Vector2.ZERO ## The position of this cell in the world (px)
+	var r = 0 ## The row index
+	var c = 0 ## The col index
 	
-	var block = null
-	var block_facing = Util.DIRECTION.NONE
+	var block = null ## The block instance in this cell, null if empty
+	var block_facing = Util.DIRECTION.NONE ## The direction that the block in this cell is facing
 	
-	var laser: Array[LaserSegment] = [] # The laser sprites, cached so we don't have to keep remaking them
+	var laser: Array[LaserSegment] = [] ## The laser sprites, cached so we don't have to keep remaking them
 	
+	## Initializes the cell at the given position and grid indices
+	## [br]`ppos` is the position of this cell in the world (px)
+	## [br]`pr` is the row index
+	## [br]`pc` is the col index
+	## [br]`room_resolver` is a callable that returns the Room instance this cell belongs to
 	func _init(ppos: Vector2, pr: int, pc: int, room_resolver: Callable):
 		pos = ppos
 		r = pr
 		c = pc
 		resolve_room = room_resolver
 		
+	## Loads a block instance into this cell, snapping it to the grid
 	func set_block(block_object) -> void:
-		"""
-		Loads the block instance into the cell
-		"""
 		block = block_object
 		block.position = pos
 		
@@ -279,15 +261,16 @@ class Cell:
 			block_facing = Util.get_direction_from_rotation(block.rotation)
 			block.rotation = Util.get_rotation_from_direction(block_facing)
 		
+	## Returns the type of block in this cell
 	func get_block_type() -> Util.BLOCK_TYPE:
 		if block == null:
 			return Util.BLOCK_TYPE.NONE
 		return block.block_type
 		
+	## Adds a laser segment to this cell
+	## [br]`from` is the direction the laser is coming from
+	## [br]`to` is the direction the laser is going to
 	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION) -> void:
-		"""
-		Adds a new laser to this cell going from the direction to the other direction
-		"""
 		var available_segment = Util.find_elem(laser, func(ls): return !ls.is_active())
 		if len(available_segment) == 0:
 			var new_segment = Room.laser_segment_scene.instantiate()
@@ -298,15 +281,11 @@ class Cell:
 		else:
 			available_segment[0].set_laser(from, to)
 			
+	## Clears out all lasers in this cell
 	func clear_laser() -> void:
-		"""
-		Clears out all lasers existing in this cell
-		"""
 		for l in laser:
 			l.clear_laser()
 			
+	## Checks if this cell has an active laser in it
 	func is_laser_active() -> bool:
-		"""
-		Checks if this cell has a laser in it
-		"""
 		return len(Util.find_index(laser, func(l): return l.is_active())) > 0

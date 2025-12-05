@@ -1,28 +1,24 @@
 extends AnimatedSprite2D
 class_name LaserSegment
 
-@onready var from = Util.DIRECTION.NONE
-@onready var to = Util.DIRECTION.NONE
+@onready var from = Util.DIRECTION.NONE ## The direction the laser is coming from
+@onready var to = Util.DIRECTION.NONE ## The direction the laser is going to
 
 
+## Deactivates the laser
 func clear_laser() -> void:
-	"""
-	Clear out the laser
-	"""
 	hide()
 
 
+## Checks if the laser is activated
 func is_active() -> bool:
 	return visible
 
 
+## Sets this laser segment to be active
+## [br]`from` The direction the laser is coming from
+## [br]`to` The direction the laser is going to
 func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION) -> void:
-	"""
-	Sets this laser segment to be active
-	
-	:param from: the rotation in radians for where the laser is coming from
-	:param to: the rotation in radians for where the laser is going to
-	"""
 	from = pfrom
 	to = pto
 
