@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+      "**/*.xcf": true,
+      "**/*.png": true,
+      "**/*.import": true
+  },
+  "editor.tabSize": 2
+}

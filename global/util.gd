@@ -77,7 +77,6 @@ func get_rotation_from_direction(direction: Util.DIRECTION) -> float:
 ## Determines if a given rotation is a half-direction (i.e. between two directions)
 func is_half_direction(rotation: float) -> bool:
 	var rot = int((int(rad_to_deg(rotation) + 15 + 360 * 100) % 360) / 30.0)
-	print(rot)
 	return rot % 2 == 1
 
 
@@ -132,8 +131,17 @@ enum DIRECTION {
 
 enum BLOCK_TYPE {
 	NONE,
+	PLAYER,
 	WALL,
 	LASER_EMITTER,
 	MIRROR_SHORT,
-	MIRROR_LONG
+	MIRROR_LONG,
+	TRACK,
+	ROTATION_PAD
+}
+
+enum PLAYER_STATE {
+	IDLE,
+	LOOKING,
+	MOVING
 }

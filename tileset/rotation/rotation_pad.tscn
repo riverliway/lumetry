@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cret8xx0a7s6g"]
+
+[ext_resource type="Texture2D" uid="uid://biiik647ryfvb" path="res://tileset/rotation/rotation.png" id="1_mbprk"]
+[ext_resource type="Script" path="res://tileset/rotation/rotation_pad.gd" id="2_evsu6"]
+
+[node name="RotationPad" type="Sprite2D"]
+texture = ExtResource("1_mbprk")
+script = ExtResource("2_evsu6")

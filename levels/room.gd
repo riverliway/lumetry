@@ -12,16 +12,20 @@ func _ready() -> void:
 		cell.set_block(block)
 
 	grid.handle_laser_physics()
+	grid.connect_player($Player)
+
 
 func _process(_delta: float) -> void:
 	pass
 
-
+	
 ## The datastructure to handle the hexagonal grid of cells.
 ## Has various helper functions for navigating the grid and handling laser physics.
 class Grid:
 	## Function for communicating with the room instance that this grid belongs to
 	var resolve_room: Callable
+	## The actual player object to move around
+	var player: Player
 	
 	var WIDTH = 23 ## Number of cells in each row
 	var HEIGHT = 12 ## Number of cells in each column
@@ -109,6 +113,51 @@ class Grid:
 		for c in WIDTH:
 			for r in HEIGHT:
 				grid[c][r].clear_laser()
+
+	## Connects a player to this grid for movement handling
+	func connect_player(pl: Player) -> void:
+		player = pl
+		player.attempt_move.connect(_attempt_move)
+	
+	## A hook for the player attempt move signal
+	## [br]`direction` is the direction the player is attempting to move in
+	func _attempt_move(direction: Util.DIRECTION) -> void:
+		var current_cell = get_nearest_cell(player.position)
+		var new_cell = go(current_cell, direction)
+		if new_cell == null or (new_cell.get_block_type() == Util.BLOCK_TYPE.NONE and new_cell.is_laser_active()):
+			# Can't walk into lasers
+			return
+
+		if new_cell.get_block_type() != Util.BLOCK_TYPE.NONE:
+			var track = new_cell.get_track()
+			if track == null:
+				# Can't push a block that isn't on a track
+				return
+
+			if track.directions.find(direction) == -1:
+				# Can't push a block off the track
+				return
+
+			var push_cell = go(new_cell, direction)
+			if push_cell == null or push_cell.get_block_type() != Util.BLOCK_TYPE.NONE:
+				# Can't push into another block or out of bounds
+				return
+
+			# Handle block pushing
+			push_cell.block = new_cell.block
+			push_cell.block_facing = new_cell.block_facing
+			new_cell.remove_block()
+			player.move(push_cell.block, push_cell.pos, new_cell.pos)
+			handle_laser_physics()
+
+			return
+		
+		# Handle player movement
+		new_cell.block = player
+		new_cell.block_facing = direction
+		current_cell.remove_block()
+		player.move(player, new_cell.pos, current_cell.pos)
+		handle_laser_physics()
 		
 	## Checks if this cell is in the top row
 	func is_top(cell: Cell) -> bool:
@@ -227,8 +276,10 @@ class Cell:
 	var r = 0 ## The row index
 	var c = 0 ## The col index
 	
-	var block = null ## The block instance in this cell, null if empty
+	var block: Node2D = null ## The block instance in this cell, null if empty
 	var block_facing = Util.DIRECTION.NONE ## The direction that the block in this cell is facing
+
+	var terrain: Array[Node2D] = [] ## The terrain instances in this cell
 	
 	var laser: Array[LaserSegment] = [] ## The laser sprites, cached so we don't have to keep remaking them
 	
@@ -244,7 +295,13 @@ class Cell:
 		resolve_room = room_resolver
 		
 	## Loads a block instance into this cell, snapping it to the grid
-	func set_block(block_object) -> void:
+	func set_block(block_object: Node2D) -> void:
+		if block_object.block_type in [Util.BLOCK_TYPE.TRACK, Util.BLOCK_TYPE.ROTATION_PAD]:
+			# Tracks and rotation pads can stack on top of other blocks
+			block_object.position = pos
+			terrain.push_back(block_object)
+			return
+
 		block = block_object
 		block.position = pos
 		
@@ -260,6 +317,11 @@ class Cell:
 		else:
 			block_facing = Util.get_direction_from_rotation(block.rotation)
 			block.rotation = Util.get_rotation_from_direction(block_facing)
+
+	## Removes the block from this cell
+	func remove_block() -> void:
+		block = null
+		block_facing = Util.DIRECTION.NONE
 		
 	## Returns the type of block in this cell
 	func get_block_type() -> Util.BLOCK_TYPE:
@@ -289,3 +351,17 @@ class Cell:
 	## Checks if this cell has an active laser in it
 	func is_laser_active() -> bool:
 		return len(Util.find_index(laser, func(l): return l.is_active())) > 0
+
+	# Gets the track in this cell, returns null if there isn't any
+	func get_track() -> Track:
+		for t in terrain:
+			if t.block_type == Util.BLOCK_TYPE.TRACK:
+				return t
+		return null
+
+	# Gets the rotation pad in this cell, returns null if there isn't any
+	func get_rotation_pad() -> RotationPad:
+		for t in terrain:
+			if t.block_type == Util.BLOCK_TYPE.ROTATION_PAD:
+				return t
+		return null

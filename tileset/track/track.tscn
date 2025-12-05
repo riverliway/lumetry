@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bid0ygivbhoey"]
+
+[ext_resource type="Script" path="res://tileset/track/track.gd" id="1_fu3lx"]
+[ext_resource type="Texture2D" uid="uid://4q8p3q6fkh23" path="res://tileset/track/Track.png" id="1_x4w66"]
+
+[node name="Track" type="Node2D"]
+script = ExtResource("1_fu3lx")
+
+[node name="Top" type="Sprite2D" parent="."]
+rotation = 3.14159
+texture = ExtResource("1_x4w66")
+
+[node name="Bottom" type="Sprite2D" parent="."]
+texture = ExtResource("1_x4w66")
+
+[node name="BottomLeft" type="Sprite2D" parent="."]
+rotation = 1.0472
+texture = ExtResource("1_x4w66")
+
+[node name="TopLeft" type="Sprite2D" parent="."]
+rotation = 2.0944
+texture = ExtResource("1_x4w66")
+
+[node name="TopRight" type="Sprite2D" parent="."]
+rotation = 4.18879
+texture = ExtResource("1_x4w66")
+
+[node name="BottomRight" type="Sprite2D" parent="."]
+rotation = 5.23599
+texture = ExtResource("1_x4w66")
