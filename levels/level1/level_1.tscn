@@ -18,6 +18,7 @@ script = ExtResource("2_ogn6p")
 
 [node name="LaserEmitter" parent="Room" instance=ExtResource("3_pqpdu")]
 position = Vector2(1760, 554)
+laser_range = 5
 
 [node name="Wall" parent="Room" instance=ExtResource("4_pgt2t")]
 position = Vector2(1767, 188)

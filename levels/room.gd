@@ -61,37 +61,38 @@ class Grid:
 	## This is an internal helper function for handling the laser physics
 	## [br]`emitter` is the cell containing the laser emitter
 	func _propagate_laser(emitter: Cell) -> void:
+		var laser_strength: Array[int] = [emitter.block.laser_range]
+	
 		# Propogate once from the emitter first, and then continue the propogation below
 		# because we don't want to continue the propogation if it hits a different emitter
-		var cell = _raycast_laser(go(emitter, emitter.block_facing), emitter.block_facing)
+		var cell = _raycast_laser(go(emitter, emitter.block_facing), laser_strength, emitter.block_facing)
 		var laser_facing = emitter.block_facing
 		
-		while true:
+		while laser_strength[0] != 0:
 			if cell == null:
 				# We must be out of bounds
 				return
 				
-			if cell.get_block_type() == Util.BLOCK_TYPE.NONE:
-				# We should never hit this case because we should only propagate
-				# when it runs into a new block
-				assert(false)
-				
-			elif cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_SHORT:
+			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_SHORT:
 				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, false)
 				if laser_facing == input_dir:
 					# The mirror reflected back along the input path, so quit out
 					return
-				cell = _raycast_laser(go(cell, laser_facing), laser_facing)
+				
+				laser_strength[0] -= 1
+				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing)
 				continue
 				
-			elif cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_LONG:
+			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_LONG:
 				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, true)
 				if laser_facing == input_dir:
 					# The mirror reflected back along the input path, so quit out
 					return
-				cell = _raycast_laser(go(cell, laser_facing), laser_facing)
+				
+				laser_strength[0] -= 1
+				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing)
 				continue
 				
 			return
@@ -100,12 +101,13 @@ class Grid:
 	## [br]`cell` is the starting cell
 	## [br]`laser_direction` is the direction to shoot the laser in
 	## [br]Returns the non-air cell that the laser collided with
-	func _raycast_laser(cell: Cell, laser_direction: Util.DIRECTION) -> Cell:
+	func _raycast_laser(cell: Cell, strength: Array[int], laser_direction: Util.DIRECTION) -> Cell:
 		var current_cell = cell
 		
-		while current_cell != null and current_cell.get_block_type() == Util.BLOCK_TYPE.NONE:
+		while current_cell != null and current_cell.get_block_type() == Util.BLOCK_TYPE.NONE and strength[0] != 0:
 			current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction)
 			current_cell = go(current_cell, laser_direction)
+			strength[0] -= 1 
 			
 		return current_cell
 		
