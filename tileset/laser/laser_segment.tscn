@@ -1,24 +1,64 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj7aw6ugryoas"]
+[gd_scene load_steps=11 format=3 uid="uid://bj7aw6ugryoas"]
 
-[ext_resource type="Texture2D" uid="uid://clfil1dtxg1yx" path="res://tileset/laser/Laser_1.png" id="1_8k136"]
-[ext_resource type="Texture2D" uid="uid://bet28knq2roqx" path="res://tileset/laser/Laser_2.png" id="2_sq4gs"]
+[ext_resource type="Texture2D" uid="uid://i14hs2hgg6x0" path="res://tileset/laser/cyan_laser/cyan_laser_1.png" id="1_xg37u"]
+[ext_resource type="Texture2D" uid="uid://bsejsy028uyt0" path="res://tileset/laser/cyan_laser/cyan_laser_2.png" id="2_of8ro"]
 [ext_resource type="Script" path="res://tileset/laser/laser_segment.gd" id="3_01y2t"]
+[ext_resource type="Texture2D" uid="uid://bcl0v7lbtr8r5" path="res://tileset/laser/magenta_laser/magenta_laser_1.png" id="3_mh1q3"]
+[ext_resource type="Texture2D" uid="uid://bo7qanmft2cq5" path="res://tileset/laser/magenta_laser/magenta_laser_2.png" id="4_2i5qn"]
+[ext_resource type="Texture2D" uid="uid://dg46j1b6lff1u" path="res://tileset/laser/white_laser/laser_white_1.png" id="5_w6lrc"]
+[ext_resource type="Texture2D" uid="uid://deb570lrxcb3t" path="res://tileset/laser/white_laser/laser_white_2.png" id="6_hl80p"]
+[ext_resource type="Texture2D" uid="uid://dgr6qnmo8xyo0" path="res://tileset/laser/yellow_laser/yellow_laser_1.png" id="7_cg0t8"]
+[ext_resource type="Texture2D" uid="uid://js1gqluwen70" path="res://tileset/laser/yellow_laser/yellow_laser_2.png" id="8_jy836"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yo1vm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_8k136")
+"texture": ExtResource("1_xg37u")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_sq4gs")
+"texture": ExtResource("2_of8ro")
 }],
 "loop": true,
-"name": &"straight",
+"name": &"cyan",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_mh1q3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2i5qn")
+}],
+"loop": true,
+"name": &"magenta",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_w6lrc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hl80p")
+}],
+"loop": true,
+"name": &"white",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_cg0t8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_jy836")
+}],
+"loop": true,
+"name": &"yellow",
 "speed": 1.0
 }]
 
 [node name="LaserSegment" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_yo1vm")
-animation = &"straight"
+animation = &"white"
+autoplay = "white"
 script = ExtResource("3_01y2t")

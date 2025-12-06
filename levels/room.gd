@@ -55,18 +55,18 @@ class Grid:
 		for i in range(0, len(emitters_index), 2):
 			var emitter_cell = grid[emitters_index[i]][emitters_index[i + 1]]
 			if emitter_cell.block.activated:
-				_propagate_laser(emitter_cell)
+				_propagate_laser(emitter_cell, emitter_cell.block.laser_range, emitter_cell.block_facing, Util.LASER_COLOR.WHITE)
 				
 	## Propogates a laser beam from a given emitter
 	## This is an internal helper function for handling the laser physics
 	## [br]`emitter` is the cell containing the laser emitter
-	func _propagate_laser(emitter: Cell) -> void:
-		var laser_strength: Array[int] = [emitter.block.laser_range]
+	func _propagate_laser(emitter: Cell, strength: int, laser_direction: Util.DIRECTION, color: Util.LASER_COLOR) -> void:
+		var laser_strength: Array[int] = [strength]
 	
 		# Propogate once from the emitter first, and then continue the propogation below
 		# because we don't want to continue the propogation if it hits a different emitter
-		var cell = _raycast_laser(go(emitter, emitter.block_facing), laser_strength, emitter.block_facing)
-		var laser_facing = emitter.block_facing
+		var cell = _raycast_laser(go(emitter, laser_direction), laser_strength, laser_direction, color)
+		var laser_facing = laser_direction
 		
 		while laser_strength[0] != 0:
 			if cell == null:
@@ -81,7 +81,7 @@ class Grid:
 					return
 				
 				laser_strength[0] -= 1
-				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing)
+				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color)
 				continue
 				
 			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_LONG:
@@ -92,8 +92,18 @@ class Grid:
 					return
 				
 				laser_strength[0] -= 1
-				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing)
+				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color)
 				continue
+
+			if cell.get_block_type() == Util.BLOCK_TYPE.PRISIM:
+				if color != Util.LASER_COLOR.WHITE:
+					# Colored lasers are absorbed by the prism
+					return
+
+				# Split the laser into three colored lasers
+				_propagate_laser(cell, laser_strength[0] - 1, Util.rotate_direction_clockwise(laser_facing), Util.LASER_COLOR.CYAN)
+				_propagate_laser(cell, laser_strength[0] - 1, laser_facing, Util.LASER_COLOR.MAGENTA)
+				_propagate_laser(cell, laser_strength[0] - 1, Util.rotate_direction_counterclockwise(laser_facing), Util.LASER_COLOR.YELLOW)
 				
 			return
 			
@@ -101,11 +111,11 @@ class Grid:
 	## [br]`cell` is the starting cell
 	## [br]`laser_direction` is the direction to shoot the laser in
 	## [br]Returns the non-air cell that the laser collided with
-	func _raycast_laser(cell: Cell, strength: Array[int], laser_direction: Util.DIRECTION) -> Cell:
+	func _raycast_laser(cell: Cell, strength: Array[int], laser_direction: Util.DIRECTION, color: Util.LASER_COLOR) -> Cell:
 		var current_cell = cell
 		
 		while current_cell != null and current_cell.get_block_type() == Util.BLOCK_TYPE.NONE and strength[0] != 0:
-			current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction)
+			current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color)
 			current_cell = go(current_cell, laser_direction)
 			strength[0] -= 1 
 			
@@ -359,16 +369,16 @@ class Cell:
 	## Adds a laser segment to this cell
 	## [br]`from` is the direction the laser is coming from
 	## [br]`to` is the direction the laser is going to
-	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION) -> void:
+	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION, color: Util.LASER_COLOR) -> void:
 		var available_segment = Util.find_elem(laser, func(ls): return !ls.is_active())
 		if len(available_segment) == 0:
 			var new_segment = Room.laser_segment_scene.instantiate()
 			new_segment.position = pos
-			new_segment.set_laser(from, to)
 			laser.push_back(new_segment)
 			resolve_room.call().add_child(new_segment)
+			new_segment.set_laser(from, to, color)
 		else:
-			available_segment[0].set_laser(from, to)
+			available_segment[0].set_laser(from, to, color)
 			
 	## Clears out all lasers in this cell
 	func clear_laser() -> void:

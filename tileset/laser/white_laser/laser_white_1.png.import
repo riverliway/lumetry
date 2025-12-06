@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bet28knq2roqx"
-path="res://.godot/imported/Laser_2.png-b705c6e641751c9f5a9f14b866e75e7a.ctex"
+uid="uid://dg46j1b6lff1u"
+path="res://.godot/imported/laser_white_1.png-eaaffa4ffaa1b84f81d380c53c602957.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tileset/laser/Laser_2.png"
-dest_files=["res://.godot/imported/Laser_2.png-b705c6e641751c9f5a9f14b866e75e7a.ctex"]
+source_file="res://tileset/laser/white_laser/laser_white_1.png"
+dest_files=["res://.godot/imported/laser_white_1.png-eaaffa4ffaa1b84f81d380c53c602957.ctex"]
 
 [params]
 

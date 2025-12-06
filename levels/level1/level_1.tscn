@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dgwc0vxyda6dn"]
+[gd_scene load_steps=10 format=3 uid="uid://dgwc0vxyda6dn"]
 
 [ext_resource type="PackedScene" uid="uid://dkd42r5x5yhs4" path="res://tileset/floor/floor_pattern.tscn" id="1_wewmp"]
 [ext_resource type="Script" path="res://levels/room.gd" id="2_ogn6p"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="6_5vqxj"]
 [ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="6_006mn"]
 [ext_resource type="PackedScene" uid="uid://bid0ygivbhoey" path="res://tileset/track/track.tscn" id="7_dg0hw"]
+[ext_resource type="PackedScene" uid="uid://d0mglhdyaqp5" path="res://tileset/prisim/prisim.tscn" id="8_nl0sw"]
 
 [node name="Level1" type="Node2D"]
 
@@ -18,7 +19,6 @@ script = ExtResource("2_ogn6p")
 
 [node name="LaserEmitter" parent="Room" instance=ExtResource("3_pqpdu")]
 position = Vector2(1760, 554)
-laser_range = 5
 
 [node name="Wall" parent="Room" instance=ExtResource("4_pgt2t")]
 position = Vector2(1767, 188)
@@ -197,6 +197,9 @@ visible = false
 
 [node name="Mirror2" parent="Room" instance=ExtResource("5_qqaov")]
 position = Vector2(2768, 1135)
+
+[node name="Prisim" parent="Room" instance=ExtResource("8_nl0sw")]
+position = Vector2(1754, 1520)
 
 [node name="Player" parent="Room" instance=ExtResource("6_006mn")]
 position = Vector2(2260, 1040)

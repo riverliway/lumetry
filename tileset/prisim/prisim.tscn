@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0mglhdyaqp5"]
+
+[ext_resource type="Texture2D" uid="uid://cwlucpvrib30r" path="res://tileset/prisim/prisim.png" id="1_ry6y0"]
+[ext_resource type="Script" path="res://tileset/prisim/prisim.gd" id="2_lgvux"]
+
+[node name="Prisim" type="Sprite2D"]
+texture = ExtResource("1_ry6y0")
+script = ExtResource("2_lgvux")
