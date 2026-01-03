@@ -1,1121 +1,1398 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkd42r5x5yhs4"]
+[gd_scene load_steps=3 format=3 uid="uid://dkd42r5x5yhs4"]
 
 [ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="1_eecaw"]
+[ext_resource type="Script" path="res://tileset/floor/floor.gd" id="2_oif7l"]
 
 [node name="FloorPattern" type="Node2D"]
 
 [node name="floor1" type="Sprite2D" parent="."]
 position = Vector2(79, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor2" type="Sprite2D" parent="."]
 position = Vector2(415, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor3" type="Sprite2D" parent="."]
 position = Vector2(751, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor4" type="Sprite2D" parent="."]
 position = Vector2(1087, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor5" type="Sprite2D" parent="."]
 position = Vector2(1423, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor6" type="Sprite2D" parent="."]
 position = Vector2(1759, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor7" type="Sprite2D" parent="."]
 position = Vector2(2095, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor8" type="Sprite2D" parent="."]
 position = Vector2(2431, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor9" type="Sprite2D" parent="."]
 position = Vector2(2767, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor10" type="Sprite2D" parent="."]
 position = Vector2(247, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor11" type="Sprite2D" parent="."]
 position = Vector2(583, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor12" type="Sprite2D" parent="."]
 position = Vector2(919, 78)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor13" type="Sprite2D" parent="."]
 position = Vector2(1255, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor14" type="Sprite2D" parent="."]
 position = Vector2(1591, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor15" type="Sprite2D" parent="."]
 position = Vector2(1927, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor16" type="Sprite2D" parent="."]
 position = Vector2(2263, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor17" type="Sprite2D" parent="."]
 position = Vector2(2599, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor18" type="Sprite2D" parent="."]
 position = Vector2(3103, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor19" type="Sprite2D" parent="."]
 position = Vector2(3439, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor20" type="Sprite2D" parent="."]
 position = Vector2(2935, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor21" type="Sprite2D" parent="."]
 position = Vector2(3271, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor22" type="Sprite2D" parent="."]
 position = Vector2(3775, -17)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor23" type="Sprite2D" parent="."]
 position = Vector2(3607, 78)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor24" type="Sprite2D" parent="."]
 position = Vector2(79, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor25" type="Sprite2D" parent="."]
 position = Vector2(415, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor26" type="Sprite2D" parent="."]
 position = Vector2(751, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor27" type="Sprite2D" parent="."]
 position = Vector2(1087, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor28" type="Sprite2D" parent="."]
 position = Vector2(1423, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor29" type="Sprite2D" parent="."]
 position = Vector2(1759, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor30" type="Sprite2D" parent="."]
 position = Vector2(2095, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor31" type="Sprite2D" parent="."]
 position = Vector2(2431, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor32" type="Sprite2D" parent="."]
 position = Vector2(2767, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor33" type="Sprite2D" parent="."]
 position = Vector2(247, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor34" type="Sprite2D" parent="."]
 position = Vector2(583, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor35" type="Sprite2D" parent="."]
 position = Vector2(919, 270)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor36" type="Sprite2D" parent="."]
 position = Vector2(1255, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor37" type="Sprite2D" parent="."]
 position = Vector2(1591, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor38" type="Sprite2D" parent="."]
 position = Vector2(1927, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor39" type="Sprite2D" parent="."]
 position = Vector2(2263, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor40" type="Sprite2D" parent="."]
 position = Vector2(2599, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor41" type="Sprite2D" parent="."]
 position = Vector2(3103, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor42" type="Sprite2D" parent="."]
 position = Vector2(3439, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor43" type="Sprite2D" parent="."]
 position = Vector2(2935, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor44" type="Sprite2D" parent="."]
 position = Vector2(3271, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor45" type="Sprite2D" parent="."]
 position = Vector2(3775, 174)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor46" type="Sprite2D" parent="."]
 position = Vector2(3607, 270)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor47" type="Sprite2D" parent="."]
 position = Vector2(79, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor48" type="Sprite2D" parent="."]
 position = Vector2(415, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor49" type="Sprite2D" parent="."]
 position = Vector2(751, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor50" type="Sprite2D" parent="."]
 position = Vector2(1087, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor51" type="Sprite2D" parent="."]
 position = Vector2(1423, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor52" type="Sprite2D" parent="."]
 position = Vector2(1759, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor53" type="Sprite2D" parent="."]
 position = Vector2(2095, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor54" type="Sprite2D" parent="."]
 position = Vector2(2431, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor55" type="Sprite2D" parent="."]
 position = Vector2(2767, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor56" type="Sprite2D" parent="."]
 position = Vector2(247, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor57" type="Sprite2D" parent="."]
 position = Vector2(583, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor58" type="Sprite2D" parent="."]
 position = Vector2(919, 462)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor59" type="Sprite2D" parent="."]
 position = Vector2(1255, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor60" type="Sprite2D" parent="."]
 position = Vector2(1591, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor61" type="Sprite2D" parent="."]
 position = Vector2(1927, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor62" type="Sprite2D" parent="."]
 position = Vector2(2263, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor63" type="Sprite2D" parent="."]
 position = Vector2(2599, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor64" type="Sprite2D" parent="."]
 position = Vector2(3103, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor65" type="Sprite2D" parent="."]
 position = Vector2(3439, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor66" type="Sprite2D" parent="."]
 position = Vector2(2935, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor67" type="Sprite2D" parent="."]
 position = Vector2(3271, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor68" type="Sprite2D" parent="."]
 position = Vector2(3775, 366)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor69" type="Sprite2D" parent="."]
 position = Vector2(3607, 462)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor70" type="Sprite2D" parent="."]
 position = Vector2(79, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor71" type="Sprite2D" parent="."]
 position = Vector2(415, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor72" type="Sprite2D" parent="."]
 position = Vector2(751, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor73" type="Sprite2D" parent="."]
 position = Vector2(1087, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor74" type="Sprite2D" parent="."]
 position = Vector2(1423, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor75" type="Sprite2D" parent="."]
 position = Vector2(1759, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor76" type="Sprite2D" parent="."]
 position = Vector2(2095, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor77" type="Sprite2D" parent="."]
 position = Vector2(2431, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor78" type="Sprite2D" parent="."]
 position = Vector2(2767, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor79" type="Sprite2D" parent="."]
 position = Vector2(247, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor80" type="Sprite2D" parent="."]
 position = Vector2(583, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor81" type="Sprite2D" parent="."]
 position = Vector2(919, 654)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor82" type="Sprite2D" parent="."]
 position = Vector2(1255, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor83" type="Sprite2D" parent="."]
 position = Vector2(1591, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor84" type="Sprite2D" parent="."]
 position = Vector2(1927, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor85" type="Sprite2D" parent="."]
 position = Vector2(2263, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor86" type="Sprite2D" parent="."]
 position = Vector2(2599, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor87" type="Sprite2D" parent="."]
 position = Vector2(3103, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor88" type="Sprite2D" parent="."]
 position = Vector2(3439, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor89" type="Sprite2D" parent="."]
 position = Vector2(2935, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor90" type="Sprite2D" parent="."]
 position = Vector2(3271, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor91" type="Sprite2D" parent="."]
 position = Vector2(3775, 558)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor92" type="Sprite2D" parent="."]
 position = Vector2(3607, 654)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor93" type="Sprite2D" parent="."]
 position = Vector2(79, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor94" type="Sprite2D" parent="."]
 position = Vector2(415, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor95" type="Sprite2D" parent="."]
 position = Vector2(751, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor96" type="Sprite2D" parent="."]
 position = Vector2(1087, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor97" type="Sprite2D" parent="."]
 position = Vector2(1423, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor98" type="Sprite2D" parent="."]
 position = Vector2(1759, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor99" type="Sprite2D" parent="."]
 position = Vector2(2095, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor100" type="Sprite2D" parent="."]
 position = Vector2(2431, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor101" type="Sprite2D" parent="."]
 position = Vector2(2767, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor102" type="Sprite2D" parent="."]
 position = Vector2(247, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor103" type="Sprite2D" parent="."]
 position = Vector2(583, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor104" type="Sprite2D" parent="."]
 position = Vector2(919, 846)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor105" type="Sprite2D" parent="."]
 position = Vector2(1255, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor106" type="Sprite2D" parent="."]
 position = Vector2(1591, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor107" type="Sprite2D" parent="."]
 position = Vector2(1927, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor108" type="Sprite2D" parent="."]
 position = Vector2(2263, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor109" type="Sprite2D" parent="."]
 position = Vector2(2599, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor110" type="Sprite2D" parent="."]
 position = Vector2(3103, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor111" type="Sprite2D" parent="."]
 position = Vector2(3439, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor112" type="Sprite2D" parent="."]
 position = Vector2(2935, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor113" type="Sprite2D" parent="."]
 position = Vector2(3271, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor114" type="Sprite2D" parent="."]
 position = Vector2(3775, 750)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor115" type="Sprite2D" parent="."]
 position = Vector2(3607, 846)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor116" type="Sprite2D" parent="."]
 position = Vector2(79, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor117" type="Sprite2D" parent="."]
 position = Vector2(415, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor118" type="Sprite2D" parent="."]
 position = Vector2(751, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor119" type="Sprite2D" parent="."]
 position = Vector2(1087, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor120" type="Sprite2D" parent="."]
 position = Vector2(1423, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor121" type="Sprite2D" parent="."]
 position = Vector2(1759, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor122" type="Sprite2D" parent="."]
 position = Vector2(2095, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor123" type="Sprite2D" parent="."]
 position = Vector2(2431, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor124" type="Sprite2D" parent="."]
 position = Vector2(2767, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor125" type="Sprite2D" parent="."]
 position = Vector2(247, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor126" type="Sprite2D" parent="."]
 position = Vector2(583, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor127" type="Sprite2D" parent="."]
 position = Vector2(919, 1038)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor128" type="Sprite2D" parent="."]
 position = Vector2(1255, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor129" type="Sprite2D" parent="."]
 position = Vector2(1591, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor130" type="Sprite2D" parent="."]
 position = Vector2(1927, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor131" type="Sprite2D" parent="."]
 position = Vector2(2263, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor132" type="Sprite2D" parent="."]
 position = Vector2(2599, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor133" type="Sprite2D" parent="."]
 position = Vector2(3103, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor134" type="Sprite2D" parent="."]
 position = Vector2(3439, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor135" type="Sprite2D" parent="."]
 position = Vector2(2935, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor136" type="Sprite2D" parent="."]
 position = Vector2(3271, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor137" type="Sprite2D" parent="."]
 position = Vector2(3775, 942)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor138" type="Sprite2D" parent="."]
 position = Vector2(3607, 1038)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor139" type="Sprite2D" parent="."]
 position = Vector2(79, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor140" type="Sprite2D" parent="."]
 position = Vector2(415, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor141" type="Sprite2D" parent="."]
 position = Vector2(751, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor142" type="Sprite2D" parent="."]
 position = Vector2(1087, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor143" type="Sprite2D" parent="."]
 position = Vector2(1423, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor144" type="Sprite2D" parent="."]
 position = Vector2(1759, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor145" type="Sprite2D" parent="."]
 position = Vector2(2095, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor146" type="Sprite2D" parent="."]
 position = Vector2(2431, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor147" type="Sprite2D" parent="."]
 position = Vector2(2767, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor148" type="Sprite2D" parent="."]
 position = Vector2(247, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor149" type="Sprite2D" parent="."]
 position = Vector2(583, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor150" type="Sprite2D" parent="."]
 position = Vector2(919, 1230)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor151" type="Sprite2D" parent="."]
 position = Vector2(1255, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor152" type="Sprite2D" parent="."]
 position = Vector2(1591, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor153" type="Sprite2D" parent="."]
 position = Vector2(1927, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor154" type="Sprite2D" parent="."]
 position = Vector2(2263, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor155" type="Sprite2D" parent="."]
 position = Vector2(2599, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor156" type="Sprite2D" parent="."]
 position = Vector2(3103, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor157" type="Sprite2D" parent="."]
 position = Vector2(3439, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor158" type="Sprite2D" parent="."]
 position = Vector2(2935, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor159" type="Sprite2D" parent="."]
 position = Vector2(3271, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor160" type="Sprite2D" parent="."]
 position = Vector2(3775, 1134)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor161" type="Sprite2D" parent="."]
 position = Vector2(3607, 1230)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor162" type="Sprite2D" parent="."]
 position = Vector2(79, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor163" type="Sprite2D" parent="."]
 position = Vector2(415, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor164" type="Sprite2D" parent="."]
 position = Vector2(751, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor165" type="Sprite2D" parent="."]
 position = Vector2(1087, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor166" type="Sprite2D" parent="."]
 position = Vector2(1423, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor167" type="Sprite2D" parent="."]
 position = Vector2(1759, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor168" type="Sprite2D" parent="."]
 position = Vector2(2095, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor169" type="Sprite2D" parent="."]
 position = Vector2(2431, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor170" type="Sprite2D" parent="."]
 position = Vector2(2767, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor171" type="Sprite2D" parent="."]
 position = Vector2(247, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor172" type="Sprite2D" parent="."]
 position = Vector2(583, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor173" type="Sprite2D" parent="."]
 position = Vector2(919, 1422)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor174" type="Sprite2D" parent="."]
 position = Vector2(1255, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor175" type="Sprite2D" parent="."]
 position = Vector2(1591, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor176" type="Sprite2D" parent="."]
 position = Vector2(1927, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor177" type="Sprite2D" parent="."]
 position = Vector2(2263, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor178" type="Sprite2D" parent="."]
 position = Vector2(2599, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor179" type="Sprite2D" parent="."]
 position = Vector2(3103, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor180" type="Sprite2D" parent="."]
 position = Vector2(3439, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor181" type="Sprite2D" parent="."]
 position = Vector2(2935, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor182" type="Sprite2D" parent="."]
 position = Vector2(3271, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor183" type="Sprite2D" parent="."]
 position = Vector2(3775, 1326)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor184" type="Sprite2D" parent="."]
 position = Vector2(3607, 1422)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor185" type="Sprite2D" parent="."]
 position = Vector2(79, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor186" type="Sprite2D" parent="."]
 position = Vector2(415, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor187" type="Sprite2D" parent="."]
 position = Vector2(751, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor188" type="Sprite2D" parent="."]
 position = Vector2(1087, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor189" type="Sprite2D" parent="."]
 position = Vector2(1423, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor190" type="Sprite2D" parent="."]
 position = Vector2(1759, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor191" type="Sprite2D" parent="."]
 position = Vector2(2095, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor192" type="Sprite2D" parent="."]
 position = Vector2(2431, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor193" type="Sprite2D" parent="."]
 position = Vector2(2767, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor194" type="Sprite2D" parent="."]
 position = Vector2(247, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor195" type="Sprite2D" parent="."]
 position = Vector2(583, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor196" type="Sprite2D" parent="."]
 position = Vector2(919, 1614)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor197" type="Sprite2D" parent="."]
 position = Vector2(1255, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor198" type="Sprite2D" parent="."]
 position = Vector2(1591, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor199" type="Sprite2D" parent="."]
 position = Vector2(1927, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor200" type="Sprite2D" parent="."]
 position = Vector2(2263, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor201" type="Sprite2D" parent="."]
 position = Vector2(2599, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor202" type="Sprite2D" parent="."]
 position = Vector2(3103, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor203" type="Sprite2D" parent="."]
 position = Vector2(3439, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor204" type="Sprite2D" parent="."]
 position = Vector2(2935, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor205" type="Sprite2D" parent="."]
 position = Vector2(3271, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor206" type="Sprite2D" parent="."]
 position = Vector2(3775, 1518)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor207" type="Sprite2D" parent="."]
 position = Vector2(3607, 1614)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor208" type="Sprite2D" parent="."]
 position = Vector2(79, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor209" type="Sprite2D" parent="."]
 position = Vector2(415, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor210" type="Sprite2D" parent="."]
 position = Vector2(751, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor211" type="Sprite2D" parent="."]
 position = Vector2(1087, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor212" type="Sprite2D" parent="."]
 position = Vector2(1423, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor213" type="Sprite2D" parent="."]
 position = Vector2(1759, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor214" type="Sprite2D" parent="."]
 position = Vector2(2095, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor215" type="Sprite2D" parent="."]
 position = Vector2(2431, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor216" type="Sprite2D" parent="."]
 position = Vector2(2767, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor217" type="Sprite2D" parent="."]
 position = Vector2(247, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor218" type="Sprite2D" parent="."]
 position = Vector2(583, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor219" type="Sprite2D" parent="."]
 position = Vector2(919, 1806)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor220" type="Sprite2D" parent="."]
 position = Vector2(1255, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor221" type="Sprite2D" parent="."]
 position = Vector2(1591, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor222" type="Sprite2D" parent="."]
 position = Vector2(1927, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor223" type="Sprite2D" parent="."]
 position = Vector2(2263, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor224" type="Sprite2D" parent="."]
 position = Vector2(2599, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor225" type="Sprite2D" parent="."]
 position = Vector2(3103, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor226" type="Sprite2D" parent="."]
 position = Vector2(3439, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor227" type="Sprite2D" parent="."]
 position = Vector2(2935, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor228" type="Sprite2D" parent="."]
 position = Vector2(3271, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor229" type="Sprite2D" parent="."]
 position = Vector2(3775, 1710)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor230" type="Sprite2D" parent="."]
 position = Vector2(3607, 1806)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor231" type="Sprite2D" parent="."]
 position = Vector2(79, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor232" type="Sprite2D" parent="."]
 position = Vector2(415, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor233" type="Sprite2D" parent="."]
 position = Vector2(751, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor234" type="Sprite2D" parent="."]
 position = Vector2(1087, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor235" type="Sprite2D" parent="."]
 position = Vector2(1423, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor236" type="Sprite2D" parent="."]
 position = Vector2(1759, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor237" type="Sprite2D" parent="."]
 position = Vector2(2095, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor238" type="Sprite2D" parent="."]
 position = Vector2(2431, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor239" type="Sprite2D" parent="."]
 position = Vector2(2767, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor240" type="Sprite2D" parent="."]
 position = Vector2(247, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor241" type="Sprite2D" parent="."]
 position = Vector2(583, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor242" type="Sprite2D" parent="."]
 position = Vector2(919, 1998)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor243" type="Sprite2D" parent="."]
 position = Vector2(1255, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor244" type="Sprite2D" parent="."]
 position = Vector2(1591, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor245" type="Sprite2D" parent="."]
 position = Vector2(1927, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor246" type="Sprite2D" parent="."]
 position = Vector2(2263, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor247" type="Sprite2D" parent="."]
 position = Vector2(2599, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor248" type="Sprite2D" parent="."]
 position = Vector2(3103, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor249" type="Sprite2D" parent="."]
 position = Vector2(3439, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor250" type="Sprite2D" parent="."]
 position = Vector2(2935, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor251" type="Sprite2D" parent="."]
 position = Vector2(3271, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor252" type="Sprite2D" parent="."]
 position = Vector2(3775, 1902)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor253" type="Sprite2D" parent="."]
 position = Vector2(3607, 1998)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor254" type="Sprite2D" parent="."]
 position = Vector2(79, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor255" type="Sprite2D" parent="."]
 position = Vector2(415, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor256" type="Sprite2D" parent="."]
 position = Vector2(751, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor257" type="Sprite2D" parent="."]
 position = Vector2(1087, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor258" type="Sprite2D" parent="."]
 position = Vector2(1423, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor259" type="Sprite2D" parent="."]
 position = Vector2(1759, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor260" type="Sprite2D" parent="."]
 position = Vector2(2095, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor261" type="Sprite2D" parent="."]
 position = Vector2(2431, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor262" type="Sprite2D" parent="."]
 position = Vector2(2767, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor263" type="Sprite2D" parent="."]
 position = Vector2(247, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor264" type="Sprite2D" parent="."]
 position = Vector2(583, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor265" type="Sprite2D" parent="."]
 position = Vector2(919, 2190)
 rotation = -0.000950797
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor266" type="Sprite2D" parent="."]
 position = Vector2(1255, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor267" type="Sprite2D" parent="."]
 position = Vector2(1591, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor268" type="Sprite2D" parent="."]
 position = Vector2(1927, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor269" type="Sprite2D" parent="."]
 position = Vector2(2263, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor270" type="Sprite2D" parent="."]
 position = Vector2(2599, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor271" type="Sprite2D" parent="."]
 position = Vector2(3103, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor272" type="Sprite2D" parent="."]
 position = Vector2(3439, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor273" type="Sprite2D" parent="."]
 position = Vector2(2935, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor274" type="Sprite2D" parent="."]
 position = Vector2(3271, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor275" type="Sprite2D" parent="."]
 position = Vector2(3775, 2094)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")
 
 [node name="floor276" type="Sprite2D" parent="."]
 position = Vector2(3607, 2190)
 texture = ExtResource("1_eecaw")
+script = ExtResource("2_oif7l")

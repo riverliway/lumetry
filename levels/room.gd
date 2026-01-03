@@ -113,8 +113,15 @@ class Grid:
 	## [br]Returns the non-air cell that the laser collided with
 	func _raycast_laser(cell: Cell, strength: Array[int], laser_direction: Util.DIRECTION, color: Util.LASER_COLOR) -> Cell:
 		var current_cell = cell
+
+		var _should_continue = func (c: Cell, s: int) -> bool:
+			if c == null:
+				return false
+			if s == 0:
+				return false
+			return c.get_block_type() in [Util.BLOCK_TYPE.NONE, Util.BLOCK_TYPE.WALL]
 		
-		while current_cell != null and current_cell.get_block_type() == Util.BLOCK_TYPE.NONE and strength[0] != 0:
+		while _should_continue.call(current_cell, strength[0]):
 			current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color)
 			current_cell = go(current_cell, laser_direction)
 			strength[0] -= 1 

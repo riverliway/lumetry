@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dkd42r5x5yhs4" path="res://tileset/floor/floor_pattern.tscn" id="1_wewmp"]
 [ext_resource type="Script" path="res://levels/room.gd" id="2_ogn6p"]
 [ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="3_pqpdu"]
-[ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/floor/wall.tscn" id="4_pgt2t"]
+[ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/wall/wall.tscn" id="4_pgt2t"]
 [ext_resource type="PackedScene" uid="uid://edblwq6jllx4" path="res://tileset/mirror/mirror.tscn" id="5_qqaov"]
 [ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="6_5vqxj"]
 [ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="6_006mn"]
@@ -12,19 +12,592 @@
 
 [node name="Level1" type="Node2D"]
 
-[node name="FloorPattern" parent="." instance=ExtResource("1_wewmp")]
+[node name="Background" type="Node2D" parent="."]
+
+[node name="GreyBack" type="ColorRect" parent="Background"]
+offset_left = 806.0
+offset_top = 179.0
+offset_right = 3772.0
+offset_bottom = 2098.0
+color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[node name="FloorPattern" parent="Background" instance=ExtResource("1_wewmp")]
+
+[node name="floor1" parent="Background/FloorPattern" index="0"]
+visible = false
+
+[node name="floor2" parent="Background/FloorPattern" index="1"]
+visible = false
+
+[node name="floor3" parent="Background/FloorPattern" index="2"]
+visible = false
+
+[node name="floor4" parent="Background/FloorPattern" index="3"]
+visible = false
+
+[node name="floor5" parent="Background/FloorPattern" index="4"]
+visible = false
+
+[node name="floor6" parent="Background/FloorPattern" index="5"]
+visible = false
+
+[node name="floor7" parent="Background/FloorPattern" index="6"]
+visible = false
+
+[node name="floor8" parent="Background/FloorPattern" index="7"]
+visible = false
+
+[node name="floor9" parent="Background/FloorPattern" index="8"]
+visible = false
+
+[node name="floor10" parent="Background/FloorPattern" index="9"]
+visible = false
+
+[node name="floor11" parent="Background/FloorPattern" index="10"]
+visible = false
+
+[node name="floor12" parent="Background/FloorPattern" index="11"]
+visible = false
+
+[node name="floor13" parent="Background/FloorPattern" index="12"]
+visible = false
+
+[node name="floor14" parent="Background/FloorPattern" index="13"]
+visible = false
+
+[node name="floor15" parent="Background/FloorPattern" index="14"]
+visible = false
+
+[node name="floor16" parent="Background/FloorPattern" index="15"]
+visible = false
+is_background = true
+
+[node name="floor17" parent="Background/FloorPattern" index="16"]
+visible = false
+
+[node name="floor18" parent="Background/FloorPattern" index="17"]
+visible = false
+
+[node name="floor19" parent="Background/FloorPattern" index="18"]
+visible = false
+
+[node name="floor20" parent="Background/FloorPattern" index="19"]
+visible = false
+
+[node name="floor21" parent="Background/FloorPattern" index="20"]
+visible = false
+
+[node name="floor22" parent="Background/FloorPattern" index="21"]
+visible = false
+
+[node name="floor23" parent="Background/FloorPattern" index="22"]
+visible = false
+
+[node name="floor24" parent="Background/FloorPattern" index="23"]
+visible = false
+
+[node name="floor25" parent="Background/FloorPattern" index="24"]
+visible = false
+
+[node name="floor26" parent="Background/FloorPattern" index="25"]
+visible = false
+
+[node name="floor27" parent="Background/FloorPattern" index="26"]
+visible = false
+
+[node name="floor28" parent="Background/FloorPattern" index="27"]
+visible = false
+
+[node name="floor29" parent="Background/FloorPattern" index="28"]
+visible = false
+is_background = true
+
+[node name="floor30" parent="Background/FloorPattern" index="29"]
+visible = false
+is_background = true
+
+[node name="floor31" parent="Background/FloorPattern" index="30"]
+visible = false
+is_background = true
+
+[node name="floor32" parent="Background/FloorPattern" index="31"]
+visible = false
+is_background = true
+
+[node name="floor33" parent="Background/FloorPattern" index="32"]
+visible = false
+
+[node name="floor34" parent="Background/FloorPattern" index="33"]
+visible = false
+
+[node name="floor35" parent="Background/FloorPattern" index="34"]
+visible = false
+
+[node name="floor36" parent="Background/FloorPattern" index="35"]
+visible = false
+
+[node name="floor37" parent="Background/FloorPattern" index="36"]
+visible = false
+is_background = true
+
+[node name="floor38" parent="Background/FloorPattern" index="37"]
+visible = false
+is_background = true
+
+[node name="floor39" parent="Background/FloorPattern" index="38"]
+is_background = true
+
+[node name="floor40" parent="Background/FloorPattern" index="39"]
+visible = false
+is_background = true
+
+[node name="floor41" parent="Background/FloorPattern" index="40"]
+visible = false
+
+[node name="floor42" parent="Background/FloorPattern" index="41"]
+visible = false
+
+[node name="floor43" parent="Background/FloorPattern" index="42"]
+visible = false
+is_background = true
+
+[node name="floor44" parent="Background/FloorPattern" index="43"]
+visible = false
+
+[node name="floor45" parent="Background/FloorPattern" index="44"]
+visible = false
+
+[node name="floor46" parent="Background/FloorPattern" index="45"]
+visible = false
+
+[node name="floor47" parent="Background/FloorPattern" index="46"]
+visible = false
+
+[node name="floor48" parent="Background/FloorPattern" index="47"]
+visible = false
+
+[node name="floor49" parent="Background/FloorPattern" index="48"]
+visible = false
+
+[node name="floor50" parent="Background/FloorPattern" index="49"]
+visible = false
+
+[node name="floor51" parent="Background/FloorPattern" index="50"]
+is_background = true
+
+[node name="floor52" parent="Background/FloorPattern" index="51"]
+is_background = true
+
+[node name="floor53" parent="Background/FloorPattern" index="52"]
+is_background = true
+
+[node name="floor54" parent="Background/FloorPattern" index="53"]
+is_background = true
+
+[node name="floor55" parent="Background/FloorPattern" index="54"]
+is_background = true
+
+[node name="floor56" parent="Background/FloorPattern" index="55"]
+visible = false
+
+[node name="floor57" parent="Background/FloorPattern" index="56"]
+visible = false
+
+[node name="floor58" parent="Background/FloorPattern" index="57"]
+visible = false
+
+[node name="floor59" parent="Background/FloorPattern" index="58"]
+is_background = true
+
+[node name="floor60" parent="Background/FloorPattern" index="59"]
+is_background = true
+
+[node name="floor61" parent="Background/FloorPattern" index="60"]
+is_background = true
+
+[node name="floor63" parent="Background/FloorPattern" index="62"]
+is_background = true
+
+[node name="floor64" parent="Background/FloorPattern" index="63"]
+visible = false
+
+[node name="floor65" parent="Background/FloorPattern" index="64"]
+visible = false
+
+[node name="floor66" parent="Background/FloorPattern" index="65"]
+is_background = true
+
+[node name="floor67" parent="Background/FloorPattern" index="66"]
+visible = false
+
+[node name="floor68" parent="Background/FloorPattern" index="67"]
+visible = false
+
+[node name="floor69" parent="Background/FloorPattern" index="68"]
+visible = false
+
+[node name="floor70" parent="Background/FloorPattern" index="69"]
+visible = false
+
+[node name="floor71" parent="Background/FloorPattern" index="70"]
+visible = false
+
+[node name="floor72" parent="Background/FloorPattern" index="71"]
+visible = false
+
+[node name="floor73" parent="Background/FloorPattern" index="72"]
+is_background = true
+
+[node name="floor79" parent="Background/FloorPattern" index="78"]
+visible = false
+
+[node name="floor80" parent="Background/FloorPattern" index="79"]
+visible = false
+
+[node name="floor81" parent="Background/FloorPattern" index="80"]
+is_background = true
+
+[node name="floor87" parent="Background/FloorPattern" index="86"]
+is_background = true
+
+[node name="floor88" parent="Background/FloorPattern" index="87"]
+visible = false
+
+[node name="floor90" parent="Background/FloorPattern" index="89"]
+is_background = true
+
+[node name="floor91" parent="Background/FloorPattern" index="90"]
+visible = false
+
+[node name="floor92" parent="Background/FloorPattern" index="91"]
+visible = false
+
+[node name="floor93" parent="Background/FloorPattern" index="92"]
+visible = false
+
+[node name="floor94" parent="Background/FloorPattern" index="93"]
+visible = false
+
+[node name="floor95" parent="Background/FloorPattern" index="94"]
+visible = false
+
+[node name="floor102" parent="Background/FloorPattern" index="101"]
+visible = false
+
+[node name="floor103" parent="Background/FloorPattern" index="102"]
+visible = false
+
+[node name="floor104" parent="Background/FloorPattern" index="103"]
+is_background = true
+
+[node name="floor111" parent="Background/FloorPattern" index="110"]
+is_background = true
+
+[node name="floor114" parent="Background/FloorPattern" index="113"]
+visible = false
+
+[node name="floor115" parent="Background/FloorPattern" index="114"]
+is_background = true
+
+[node name="floor116" parent="Background/FloorPattern" index="115"]
+visible = false
+
+[node name="floor117" parent="Background/FloorPattern" index="116"]
+visible = false
+
+[node name="floor118" parent="Background/FloorPattern" index="117"]
+visible = false
+
+[node name="floor125" parent="Background/FloorPattern" index="124"]
+visible = false
+
+[node name="floor126" parent="Background/FloorPattern" index="125"]
+visible = false
+
+[node name="floor127" parent="Background/FloorPattern" index="126"]
+is_background = true
+
+[node name="floor137" parent="Background/FloorPattern" index="136"]
+visible = false
+
+[node name="floor138" parent="Background/FloorPattern" index="137"]
+is_background = true
+
+[node name="floor139" parent="Background/FloorPattern" index="138"]
+visible = false
+
+[node name="floor140" parent="Background/FloorPattern" index="139"]
+visible = false
+
+[node name="floor141" parent="Background/FloorPattern" index="140"]
+visible = false
+
+[node name="floor148" parent="Background/FloorPattern" index="147"]
+visible = false
+
+[node name="floor149" parent="Background/FloorPattern" index="148"]
+visible = false
+
+[node name="floor150" parent="Background/FloorPattern" index="149"]
+is_background = true
+
+[node name="floor160" parent="Background/FloorPattern" index="159"]
+visible = false
+
+[node name="floor161" parent="Background/FloorPattern" index="160"]
+is_background = true
+
+[node name="floor162" parent="Background/FloorPattern" index="161"]
+visible = false
+
+[node name="floor163" parent="Background/FloorPattern" index="162"]
+visible = false
+
+[node name="floor164" parent="Background/FloorPattern" index="163"]
+visible = false
+
+[node name="floor171" parent="Background/FloorPattern" index="170"]
+visible = false
+
+[node name="floor172" parent="Background/FloorPattern" index="171"]
+visible = false
+
+[node name="floor173" parent="Background/FloorPattern" index="172"]
+is_background = true
+
+[node name="floor183" parent="Background/FloorPattern" index="182"]
+visible = false
+
+[node name="floor184" parent="Background/FloorPattern" index="183"]
+is_background = true
+
+[node name="floor185" parent="Background/FloorPattern" index="184"]
+visible = false
+
+[node name="floor186" parent="Background/FloorPattern" index="185"]
+visible = false
+
+[node name="floor187" parent="Background/FloorPattern" index="186"]
+visible = false
+
+[node name="floor188" parent="Background/FloorPattern" index="187"]
+is_background = true
+
+[node name="floor194" parent="Background/FloorPattern" index="193"]
+visible = false
+
+[node name="floor195" parent="Background/FloorPattern" index="194"]
+visible = false
+
+[node name="floor196" parent="Background/FloorPattern" index="195"]
+visible = false
+
+[node name="floor197" parent="Background/FloorPattern" index="196"]
+is_background = true
+
+[node name="floor206" parent="Background/FloorPattern" index="205"]
+visible = false
+
+[node name="floor207" parent="Background/FloorPattern" index="206"]
+is_background = true
+
+[node name="floor208" parent="Background/FloorPattern" index="207"]
+visible = false
+
+[node name="floor209" parent="Background/FloorPattern" index="208"]
+visible = false
+
+[node name="floor210" parent="Background/FloorPattern" index="209"]
+visible = false
+
+[node name="floor211" parent="Background/FloorPattern" index="210"]
+visible = false
+
+[node name="floor212" parent="Background/FloorPattern" index="211"]
+is_background = true
+
+[node name="floor217" parent="Background/FloorPattern" index="216"]
+visible = false
+
+[node name="floor218" parent="Background/FloorPattern" index="217"]
+visible = false
+
+[node name="floor219" parent="Background/FloorPattern" index="218"]
+visible = false
+
+[node name="floor220" parent="Background/FloorPattern" index="219"]
+visible = false
+
+[node name="floor221" parent="Background/FloorPattern" index="220"]
+is_background = true
+
+[node name="floor222" parent="Background/FloorPattern" index="221"]
+is_background = true
+
+[node name="floor223" parent="Background/FloorPattern" index="222"]
+is_background = true
+
+[node name="floor226" parent="Background/FloorPattern" index="225"]
+is_background = true
+
+[node name="floor228" parent="Background/FloorPattern" index="227"]
+is_background = true
+
+[node name="floor229" parent="Background/FloorPattern" index="228"]
+visible = false
+
+[node name="floor230" parent="Background/FloorPattern" index="229"]
+visible = false
+
+[node name="floor231" parent="Background/FloorPattern" index="230"]
+visible = false
+
+[node name="floor232" parent="Background/FloorPattern" index="231"]
+visible = false
+
+[node name="floor233" parent="Background/FloorPattern" index="232"]
+visible = false
+
+[node name="floor234" parent="Background/FloorPattern" index="233"]
+visible = false
+
+[node name="floor235" parent="Background/FloorPattern" index="234"]
+visible = false
+
+[node name="floor236" parent="Background/FloorPattern" index="235"]
+is_background = true
+
+[node name="floor237" parent="Background/FloorPattern" index="236"]
+is_background = true
+
+[node name="floor238" parent="Background/FloorPattern" index="237"]
+is_background = true
+
+[node name="floor239" parent="Background/FloorPattern" index="238"]
+is_background = true
+
+[node name="floor240" parent="Background/FloorPattern" index="239"]
+visible = false
+
+[node name="floor241" parent="Background/FloorPattern" index="240"]
+visible = false
+
+[node name="floor242" parent="Background/FloorPattern" index="241"]
+visible = false
+
+[node name="floor243" parent="Background/FloorPattern" index="242"]
+visible = false
+
+[node name="floor244" parent="Background/FloorPattern" index="243"]
+visible = false
+
+[node name="floor245" parent="Background/FloorPattern" index="244"]
+visible = false
+
+[node name="floor246" parent="Background/FloorPattern" index="245"]
+visible = false
+
+[node name="floor247" parent="Background/FloorPattern" index="246"]
+is_background = true
+
+[node name="floor248" parent="Background/FloorPattern" index="247"]
+is_background = true
+
+[node name="floor249" parent="Background/FloorPattern" index="248"]
+visible = false
+
+[node name="floor250" parent="Background/FloorPattern" index="249"]
+is_background = true
+
+[node name="floor251" parent="Background/FloorPattern" index="250"]
+visible = false
+
+[node name="floor252" parent="Background/FloorPattern" index="251"]
+visible = false
+
+[node name="floor253" parent="Background/FloorPattern" index="252"]
+visible = false
+
+[node name="floor254" parent="Background/FloorPattern" index="253"]
+visible = false
+
+[node name="floor255" parent="Background/FloorPattern" index="254"]
+visible = false
+
+[node name="floor256" parent="Background/FloorPattern" index="255"]
+visible = false
+
+[node name="floor257" parent="Background/FloorPattern" index="256"]
+visible = false
+
+[node name="floor258" parent="Background/FloorPattern" index="257"]
+visible = false
+
+[node name="floor259" parent="Background/FloorPattern" index="258"]
+visible = false
+
+[node name="floor260" parent="Background/FloorPattern" index="259"]
+visible = false
+
+[node name="floor261" parent="Background/FloorPattern" index="260"]
+visible = false
+
+[node name="floor262" parent="Background/FloorPattern" index="261"]
+visible = false
+
+[node name="floor263" parent="Background/FloorPattern" index="262"]
+visible = false
+
+[node name="floor264" parent="Background/FloorPattern" index="263"]
+visible = false
+
+[node name="floor265" parent="Background/FloorPattern" index="264"]
+visible = false
+
+[node name="floor266" parent="Background/FloorPattern" index="265"]
+visible = false
+
+[node name="floor267" parent="Background/FloorPattern" index="266"]
+visible = false
+
+[node name="floor268" parent="Background/FloorPattern" index="267"]
+visible = false
+
+[node name="floor269" parent="Background/FloorPattern" index="268"]
+visible = false
+
+[node name="floor270" parent="Background/FloorPattern" index="269"]
+visible = false
+
+[node name="floor271" parent="Background/FloorPattern" index="270"]
+visible = false
+
+[node name="floor272" parent="Background/FloorPattern" index="271"]
+visible = false
+
+[node name="floor273" parent="Background/FloorPattern" index="272"]
+visible = false
+
+[node name="floor274" parent="Background/FloorPattern" index="273"]
+visible = false
+
+[node name="floor275" parent="Background/FloorPattern" index="274"]
+visible = false
+
+[node name="floor276" parent="Background/FloorPattern" index="275"]
+visible = false
 
 [node name="Room" type="Node2D" parent="."]
 script = ExtResource("2_ogn6p")
 
 [node name="LaserEmitter" parent="Room" instance=ExtResource("3_pqpdu")]
-position = Vector2(1760, 554)
+position = Vector2(1760, 754)
 
 [node name="Wall" parent="Room" instance=ExtResource("4_pgt2t")]
-position = Vector2(1767, 188)
+position = Vector2(1763, 376)
 
 [node name="Wall2" parent="Room" instance=ExtResource("4_pgt2t")]
-position = Vector2(1594, 286)
+position = Vector2(1584, 470)
 
 [node name="Wall3" parent="Room" instance=ExtResource("4_pgt2t")]
 position = Vector2(1425, 374)
@@ -40,6 +613,105 @@ position = Vector2(922, 667)
 
 [node name="Wall7" parent="Room" instance=ExtResource("4_pgt2t")]
 position = Vector2(919, 854)
+
+[node name="Wall8" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(919, 1052)
+
+[node name="Wall9" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(911, 1233)
+
+[node name="Wall10" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(929, 1420)
+
+[node name="Wall11" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1097, 1533)
+
+[node name="Wall12" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1253, 1601)
+
+[node name="Wall13" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1435, 1719)
+
+[node name="Wall14" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1613, 1812)
+
+[node name="Wall15" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1777, 1918)
+
+[node name="Wall16" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1946, 1840)
+
+[node name="Wall17" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2102, 1913)
+
+[node name="Wall18" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2260, 1827)
+
+[node name="Wall19" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2454, 1920)
+
+[node name="Wall20" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2610, 2004)
+
+[node name="Wall21" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2781, 1920)
+
+[node name="Wall22" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2947, 2011)
+
+[node name="Wall23" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3116, 1903)
+
+[node name="Wall24" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3267, 1807)
+
+[node name="Wall25" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3443, 1722)
+
+[node name="Wall26" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3594, 1626)
+
+[node name="Wall27" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3622, 1410)
+
+[node name="Wall28" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3612, 1233)
+
+[node name="Wall29" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3624, 1045)
+
+[node name="Wall30" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3617, 848)
+
+[node name="Wall31" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3441, 750)
+
+[node name="Wall32" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3260, 654)
+
+[node name="Wall33" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(3119, 554)
+
+[node name="Wall34" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2937, 471)
+
+[node name="Wall36" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2769, 389)
+
+[node name="Wall37" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2609, 446)
+
+[node name="Wall38" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2435, 367)
+
+[node name="Wall39" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2276, 265)
+
+[node name="Wall40" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(2095, 363)
+
+[node name="Wall41" parent="Room" instance=ExtResource("4_pgt2t")]
+position = Vector2(1943, 450)
 
 [node name="Mirror" parent="Room" instance=ExtResource("5_qqaov")]
 position = Vector2(1761, 1136)
@@ -204,6 +876,279 @@ position = Vector2(1754, 1520)
 [node name="Player" parent="Room" instance=ExtResource("6_006mn")]
 position = Vector2(2260, 1040)
 
+[node name="WallArt" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Gray1" type="ColorRect" parent="WallArt"]
+offset_left = 1475.0
+offset_top = 165.0
+offset_right = 1671.0
+offset_bottom = 897.0
+rotation = 1.0472
+color = Color(0.205792, 0.371052, 0.447549, 1)
+
+[node name="Gray2" type="ColorRect" parent="WallArt"]
+offset_left = 2648.0
+offset_top = 363.0
+offset_right = 2844.0
+offset_bottom = 1436.0
+rotation = -1.0472
+color = Color(0.205792, 0.371052, 0.447549, 1)
+
+[node name="Gray3" type="ColorRect" parent="WallArt"]
+offset_left = 2268.0
+offset_top = 32.0
+offset_right = 2464.0
+offset_bottom = 461.0
+rotation = 1.0472
+color = Color(0.205792, 0.371052, 0.447549, 1)
+
+[node name="Gray4" type="ColorRect" parent="WallArt"]
+offset_left = 2170.0
+offset_top = 211.0
+offset_right = 2366.0
+offset_bottom = 618.0
+rotation = -1.0472
+color = Color(0.205792, 0.371052, 0.447549, 1)
+
+[node name="Gray5" type="ColorRect" parent="WallArt"]
+offset_left = 1994.0
+offset_top = 220.0
+offset_right = 2190.0
+offset_bottom = 952.0
+rotation = 1.5708
+color = Color(0.205792, 0.371052, 0.447549, 1)
+
+[node name="Gray6" type="ColorRect" parent="WallArt"]
+offset_left = 2838.0
+offset_top = 219.0
+offset_right = 3034.0
+offset_bottom = 535.0
+rotation = 1.5708
+color = Color(0.205792, 0.371052, 0.447549, 1)
+
+[node name="Blue1" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 927.0
+offset_top = 423.0
+offset_right = 967.0
+offset_bottom = 1528.0
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue2" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 883.0
+offset_top = 1388.0
+offset_right = 923.0
+offset_bottom = 2552.0
+rotation = -1.0472
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue3" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 2448.0
+offset_top = 1870.0
+offset_right = 2488.0
+offset_bottom = 2541.0
+rotation = 1.5708
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue4" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 2428.0
+offset_top = 1905.0
+offset_right = 2468.0
+offset_bottom = 2236.0
+rotation = -1.0472
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue5" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 3117.0
+offset_top = 1965.0
+offset_right = 3157.0
+offset_bottom = 2736.0
+rotation = 1.5708
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue6" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 3740.0
+offset_top = 1479.0
+offset_right = 3780.0
+offset_bottom = 2643.0
+rotation = 1.0472
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue7" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 3556.0
+offset_top = 544.0
+offset_right = 3596.0
+offset_bottom = 1632.0
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue8" type="ColorRect" parent="WallArt"]
+offset_left = 1407.0
+offset_top = 171.0
+offset_right = 1447.0
+offset_bottom = 749.0
+rotation = 1.0472
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue9" type="ColorRect" parent="WallArt"]
+offset_left = 2000.0
+offset_top = 179.0
+offset_right = 2040.0
+offset_bottom = 805.0
+rotation = 1.5708
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue10" type="ColorRect" parent="WallArt"]
+offset_left = 2272.0
+offset_top = 15.0
+offset_right = 2312.0
+offset_bottom = 352.0
+rotation = 1.0472
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue11" type="ColorRect" parent="WallArt"]
+offset_left = 2254.0
+offset_top = 58.9999
+offset_right = 2294.0
+offset_bottom = 385.0
+rotation = -1.0472
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Black1" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = -74.0
+offset_right = 946.0
+offset_bottom = 2231.0
+color = Color(0, 0, 0, 1)
+
+[node name="Black2" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 540.0
+offset_top = 1980.0
+offset_right = 1246.0
+offset_bottom = 3144.0
+rotation = -1.0472
+color = Color(0, 0, 0, 1)
+
+[node name="Black3" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 2442.0
+offset_top = 1888.0
+offset_right = 2744.0
+offset_bottom = 2659.0
+rotation = 1.5708
+color = Color(0, 0, 0, 1)
+
+[node name="Black4" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 2343.0
+offset_top = 2059.0
+offset_right = 2540.0
+offset_bottom = 2561.0
+rotation = -1.0472
+color = Color(0, 0, 0, 1)
+
+[node name="Black5" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 3002.0
+offset_top = 1982.0
+offset_right = 3240.0
+offset_bottom = 2388.0
+rotation = 1.5708
+color = Color(0, 0, 0, 1)
+
+[node name="Black6" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 3754.0
+offset_top = 1491.0
+offset_right = 4424.0
+offset_bottom = 2655.0
+rotation = 1.0472
+color = Color(0, 0, 0, 1)
+
+[node name="Black7" type="ColorRect" parent="WallArt"]
+layout_mode = 0
+offset_left = 3572.0
+offset_top = 194.0
+offset_right = 3890.0
+offset_bottom = 1701.0
+color = Color(0, 0, 0, 1)
+
+[node name="Blue12" type="ColorRect" parent="WallArt"]
+offset_left = 2835.0
+offset_top = 182.0
+offset_right = 2875.0
+offset_bottom = 481.0
+rotation = 1.5708
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Blue13" type="ColorRect" parent="WallArt"]
+offset_left = 2772.0
+offset_top = 210.0
+offset_right = 2812.0
+offset_bottom = 1123.0
+rotation = -1.0472
+color = Color(0.0881063, 0.59649, 0.75358, 1)
+
+[node name="Black8" type="ColorRect" parent="WallArt"]
+offset_left = 1992.0
+offset_top = -103.0
+offset_right = 2294.0
+offset_bottom = 668.0
+rotation = 1.5708
+color = Color(0, 0, 0, 1)
+
+[node name="Black9" type="ColorRect" parent="WallArt"]
+offset_left = 1327.0
+offset_top = -410.0
+offset_right = 1889.0
+offset_bottom = 401.0
+rotation = 1.0472
+color = Color(0, 0, 0, 1)
+
+[node name="Black10" type="ColorRect" parent="WallArt"]
+offset_left = 2240.0
+offset_top = -220.0
+offset_right = 2479.0
+offset_bottom = 206.0
+rotation = 1.0472
+color = Color(0, 0, 0, 1)
+
+[node name="Black11" type="ColorRect" parent="WallArt"]
+offset_left = 2668.0
+offset_top = 128.0
+offset_right = 3374.0
+offset_bottom = 1292.0
+rotation = -1.0472
+color = Color(0, 0, 0, 1)
+
+[node name="Black12" type="ColorRect" parent="WallArt"]
+offset_left = 2198.0
+offset_top = 2.0
+offset_right = 2431.0
+offset_bottom = 405.0
+rotation = -1.0472
+color = Color(0, 0, 0, 1)
+
+[node name="Black13" type="ColorRect" parent="WallArt"]
+offset_left = 2884.0
+offset_top = -8.0
+offset_right = 3095.0
+offset_bottom = 331.0
+rotation = 1.5708
+color = Color(0, 0, 0, 1)
+
+[editable path="Background/FloorPattern"]
 [editable path="Room/Track"]
 [editable path="Room/Track2"]
 [editable path="Room/Track3"]

@@ -3,12 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://nicd1ofqn6fn" path="res://player/anim_idle_down/player_idle_down_1.png" id="1_xfngg"]
 [ext_resource type="Texture2D" uid="uid://b8ep5poqtdbfs" path="res://player/anim_idle_down/player_idle_down_2.png" id="2_is67v"]
 [ext_resource type="Texture2D" uid="uid://c4uwg34jwocm5" path="res://player/anim_idle_downright/player_idle_downright_1.png" id="3_8kv84"]
-[ext_resource type="Script" path="res://player/player.gd" id="3_m70or"]
 [ext_resource type="Texture2D" uid="uid://6457tgdyq4cd" path="res://player/anim_idle_downright/player_idle_downright_2.png" id="4_3co3a"]
 [ext_resource type="Texture2D" uid="uid://d13ann1n8fpba" path="res://player/anim_idle_up/player_idle_up_1.png" id="5_wspho"]
 [ext_resource type="Texture2D" uid="uid://clkax88mqu0no" path="res://player/anim_idle_up/player_idle_up_2.png" id="6_s33tn"]
 [ext_resource type="Texture2D" uid="uid://bkjmuiadih2db" path="res://player/anim_idle_upright/player_idle_upright_1.png" id="7_ii85b"]
 [ext_resource type="Texture2D" uid="uid://bjo2b0f44m2av" path="res://player/anim_idle_upright/player_idle_upright_2.png" id="8_syeqv"]
+[ext_resource type="Script" path="res://player/player.gd" id="9_dtor7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7htld"]
 animations = [{
@@ -62,4 +62,4 @@ scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_7htld")
 animation = &"idle_down"
 autoplay = "idle_down"
-script = ExtResource("3_m70or")
+script = ExtResource("9_dtor7")

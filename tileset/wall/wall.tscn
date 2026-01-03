@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dxapfb2nplqn0"]
 
-[ext_resource type="Script" path="res://tileset/floor/wall.gd" id="1_w5gpo"]
+[ext_resource type="Script" path="res://tileset/wall/wall.gd" id="1_w5gpo"]
 
 [node name="Wall" type="Node2D"]
 script = ExtResource("1_w5gpo")
