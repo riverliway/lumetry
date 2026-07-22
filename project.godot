@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Util="*res://global/util.gd"
+AnimSync="*res://global/anim_sync.gd"
 
 [editor_plugins]
 

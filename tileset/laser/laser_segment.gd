@@ -31,7 +31,8 @@ func is_active() -> bool:
 ## [br]`to` The direction the laser is going to
 func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LASER_COLOR) -> void:
 	color = laser_color
-	play('white')
+	animation = 'white'
+	AnimSync.sync(self)
 	self_modulate = LASER_MODULATE.get(color, Color.WHITE)
 
 	from = pfrom

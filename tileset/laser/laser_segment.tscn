@@ -18,8 +18,7 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="LaserSegment" type="AnimatedSprite2D"]
+[node name="LaserSegment" type="AnimatedSprite2D" groups=["synced_anim"]]
 sprite_frames = SubResource("SpriteFrames_yo1vm")
 animation = &"white"
-autoplay = "white"
 script = ExtResource("3_01y2t")

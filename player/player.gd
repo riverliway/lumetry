@@ -133,14 +133,16 @@ func _look(direction: Util.DIRECTION, start_cooldown=true) -> void:
 	else:
 		scale.x = abs(scale.x)
 
+	# Select the animation only -- AnimSync drives the frame so every idle
+	# stays in phase with the lasers and emitters.
 	if direction == Util.DIRECTION.UP:
-		play('idle_up')
+		animation = 'idle_up'
 	elif direction == Util.DIRECTION.DOWN:
-		play('idle_down')
+		animation = 'idle_down'
 	elif direction in [Util.DIRECTION.UP_LEFT, Util.DIRECTION.UP_RIGHT]:
-		play('idle_upright')
+		animation = 'idle_upright'
 	else:
-		play('idle_downright')
+		animation = 'idle_downright'
 
 	_state = Util.PLAYER_STATE.LOOKING
 	if start_cooldown:
