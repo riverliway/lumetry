@@ -4,6 +4,5 @@
 [ext_resource type="Script" path="res://tileset/meltable/meltable.gd" id="2_meltsc"]
 
 [node name="Meltable" type="Sprite2D"]
-modulate = Color(1, 0.55, 0.2, 1)
 texture = ExtResource("1_melttx")
 script = ExtResource("2_meltsc")
