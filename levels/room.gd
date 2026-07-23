@@ -31,11 +31,19 @@ func _process(_delta: float) -> void:
 ## The datastructure to handle the hexagonal grid of cells.
 ## Has various helper functions for navigating the grid and handling laser physics.
 class Grid:
+	## Safety bound on the melt-then-resolve loop (melting can't exceed the cells).
+	const MELT_RESOLVE_LIMIT := 256
+
 	## Function for communicating with the room instance that this grid belongs to
 	var resolve_room: Callable
 	## The actual player object to move around
 	var player: Player
-	
+
+	## Meltable cells struck by a destructive beam during the current resolve.
+	## Collected mid-propagation and removed after it, so the freshly cleared
+	## cells re-propagate light on the next resolve.
+	var _cells_to_melt: Array = []
+
 	var WIDTH = 23 ## Number of cells in each row
 	var HEIGHT = 12 ## Number of cells in each column
 	var grid = []
@@ -59,25 +67,63 @@ class Grid:
 				
 			grid.push_back(col)
 			
-	## Wipes and re-computes the laser physics for the entire grid
+	## Wipes and re-computes the laser physics for the entire grid.
+	## A destructive beam can melt a block; removing it changes what light can
+	## reach, so we resolve, remove any melted blocks, and resolve again until the
+	## grid is stable (removal-then-resolve). Detectors are edge-triggered across
+	## the whole pass -- their signals fire once, based on the final stable state.
 	func handle_laser_physics() -> void:
-		clear_laser_grid()
-
-		# Detectors are edge-triggered across the pass: clear their hit state now,
-		# let propagation mark the struck ones, then fire signals for any changes.
+		# Detectors are edge-triggered across the pass: snapshot their prior state,
+		# let the final resolve mark the struck ones, then fire signals for changes.
 		var detectors = find_detectors()
 		for detector in detectors:
 			detector.begin_pass()
 
-		var emitters_index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER, false)
+		var guard := 0
+		while guard < MELT_RESOLVE_LIMIT:
+			var melted := _resolve_lasers()
+			if melted.is_empty():
+				break
+			for cell in melted:
+				cell.melt()
+			guard += 1
 
+		for detector in detectors:
+			detector.end_pass()
+
+	## Runs one full laser resolution on the current grid (no block removal):
+	## clears beams, resets per-pass state, propagates every active emitter, then
+	## fires each ready focuser to a fixpoint. Returns the meltable cells a
+	## destructive beam struck this resolve (for handle_laser_physics to remove).
+	func _resolve_lasers() -> Array:
+		clear_laser_grid()
+		_cells_to_melt = []
+
+		# Reset per-resolve accumulators (the final resolve's state is the one kept).
+		for detector in find_detectors():
+			detector.is_hit = false
+		var focuser_cells := find_focuser_cells()
+		for focuser_cell in focuser_cells:
+			focuser_cell.block.reset_ports()
+
+		var emitters_index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER, false)
 		for i in range(0, len(emitters_index), 2):
 			var emitter_cell = grid[emitters_index[i]][emitters_index[i + 1]]
 			if emitter_cell.block.activated:
 				_propagate_laser(emitter_cell, emitter_cell.block.laser_range, emitter_cell.block_facing, Util.LASER_COLOR.WHITE)
 
-		for detector in detectors:
-			detector.end_pass()
+		# A focuser fires only once its three back ports are fed; one focuser's
+		# destructive output can feed another, so resolve to a fixpoint.
+		var progressed := true
+		while progressed:
+			progressed = false
+			for focuser_cell in focuser_cells:
+				if focuser_cell.block.is_ready() and not focuser_cell.block.has_emitted:
+					focuser_cell.block.has_emitted = true
+					_propagate_laser(focuser_cell, -1, focuser_cell.block_facing, Util.LASER_COLOR.DESTRUCTIVE)
+					progressed = true
+
+		return _cells_to_melt
 				
 	## Propogates a laser beam from a given emitter
 	## This is an internal helper function for handling the laser physics
@@ -127,6 +173,22 @@ class Grid:
 				var from_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				if detector_hit_directions(cell.block_facing).has(from_dir):
 					cell.block.mark_hit(color)
+				return
+
+			if cell.get_block_type() == Util.BLOCK_TYPE.LASER_FOCUSER:
+				# The beam stops here; it feeds the focuser only if it arrived
+				# through one of the three back ports. The focuser fires its own
+				# destructive beam later, once all three ports are fed (_resolve_lasers).
+				var from_dir = Util.rotate_direction_clockwise(laser_facing, 3)
+				if focuser_back_ports(cell.block_facing).has(from_dir):
+					cell.block.feed_port(from_dir, color)
+				return
+
+			if cell.get_block_type() == Util.BLOCK_TYPE.MELTABLE:
+				# Only a destructive beam melts a block. Either way the beam stops;
+				# the melt is applied after this resolve so the beam continues next time.
+				if color == Util.LASER_COLOR.DESTRUCTIVE:
+					_cells_to_melt.push_back(cell)
 				return
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.PRISIM:
@@ -352,6 +414,26 @@ class Grid:
 			Util.rotate_direction_counterclockwise(facing),
 		]
 
+	## Every laser-focuser cell currently placed in the grid (the cell, not the
+	## block, since firing needs its position and facing).
+	func find_focuser_cells() -> Array:
+		var cells: Array = []
+		var index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_FOCUSER, false)
+		for i in range(0, len(index), 2):
+			cells.push_back(grid[index[i]][index[i + 1]])
+		return cells
+
+	## The three back-port directions a focuser facing `facing` accepts input
+	## from: the opposite of its facing plus that direction's two neighbors -- the
+	## mirror image of the detector's front arc. Output leaves the front (`facing`).
+	func focuser_back_ports(facing: Util.DIRECTION) -> Array:
+		var back := Util.rotate_direction_clockwise(facing, 3)
+		return [
+			back,
+			Util.rotate_direction_clockwise(back),
+			Util.rotate_direction_counterclockwise(back),
+		]
+
 	## The world-space pixel offset from a cell to its neighbor in `direction`.
 	func direction_to_offset(direction: Util.DIRECTION) -> Vector2:
 		match direction:
@@ -509,7 +591,14 @@ class Cell:
 	func remove_block() -> void:
 		block = null
 		block_facing = Util.DIRECTION.NONE
-		
+
+	## Destroys the block in this cell (a destructive beam melted it): frees its
+	## node and empties the cell so light passes through on the next resolve.
+	func melt() -> void:
+		if block != null:
+			block.queue_free()
+		remove_block()
+
 	## Returns the type of block in this cell
 	func get_block_type() -> Util.BLOCK_TYPE:
 		if block == null:

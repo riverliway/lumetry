@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmelt3blk700"]
+
+[ext_resource type="Texture2D" path="res://tileset/meltable/meltable.png" id="1_melttx"]
+[ext_resource type="Script" path="res://tileset/meltable/meltable.gd" id="2_meltsc"]
+
+[node name="Meltable" type="Sprite2D"]
+modulate = Color(1, 0.55, 0.2, 1)
+texture = ExtResource("1_melttx")
+script = ExtResource("2_meltsc")

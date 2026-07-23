@@ -159,6 +159,52 @@ func test_detector_emits_cleared_when_beam_stops_reaching_it():
 	assert_false(d.is_hit, "detector no longer hit")
 	assert_signal_emitted(d, "cleared")
 
+# ------------------------------------------------- laser focuser / destructive
+# A focuser at (4,6) facing DOWN takes inputs through its three back ports (UP,
+# UP_LEFT, UP_RIGHT) and emits a destructive beam downward. Each requested port
+# is fed by a white emitter one cell away, aimed into the focuser.
+func _focuser_with_feeders(ports_to_feed: Array) -> Array:
+	var blocks := [make_block(FocuserScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.DOWN))]
+	var feeders := {
+		Util.DIRECTION.UP:       [Vector2i(4, 5), Util.DIRECTION.DOWN],
+		Util.DIRECTION.UP_LEFT:  [Vector2i(3, 5), Util.DIRECTION.DOWN_RIGHT],
+		Util.DIRECTION.UP_RIGHT: [Vector2i(5, 5), Util.DIRECTION.DOWN_LEFT],
+	}
+	for port in ports_to_feed:
+		var spec = feeders[port]
+		var e := make_block(EmitterScene, spec[0].x, spec[0].y, Util.get_rotation_from_direction(spec[1]))
+		e.laser_range = -1
+		blocks.push_back(e)
+	return blocks
+
+func test_focuser_with_three_inputs_emits_a_destructive_beam():
+	var blocks := _focuser_with_feeders([Util.DIRECTION.UP, Util.DIRECTION.UP_LEFT, Util.DIRECTION.UP_RIGHT])
+	var room := build_room(blocks, Vector2i(20, 0))
+	assert_true(room.grid.grid[4][6].block.is_ready(), "all three back ports fed")
+	assert_true(room.grid.grid[4][7].is_laser_active(), "destructive beam leaves the front")
+	assert_true(active_laser_colors(room).has(Util.LASER_COLOR.DESTRUCTIVE), "output beam is destructive")
+
+func test_focuser_missing_an_input_stays_inert():
+	var blocks := _focuser_with_feeders([Util.DIRECTION.UP, Util.DIRECTION.UP_LEFT])  # only two
+	var room := build_room(blocks, Vector2i(20, 0))
+	assert_false(room.grid.grid[4][6].block.is_ready(), "only two ports fed")
+	assert_false(active_laser_colors(room).has(Util.LASER_COLOR.DESTRUCTIVE), "no destructive output")
+
+func test_destructive_beam_melts_a_block_then_light_repropagates():
+	var blocks := _focuser_with_feeders([Util.DIRECTION.UP, Util.DIRECTION.UP_LEFT, Util.DIRECTION.UP_RIGHT])
+	blocks.push_back(make_block(MeltableScene, 4, 8))  # two cells down, in the beam path
+	var room := build_room(blocks, Vector2i(20, 0))
+	assert_eq(room.grid.grid[4][8].get_block_type(), Util.BLOCK_TYPE.NONE, "the meltable block was melted away")
+	assert_true(room.grid.grid[4][9].is_laser_active(), "beam continues past the freshly cleared cell")
+
+func test_ordinary_beam_does_not_melt_a_meltable_block():
+	var emitter := make_block(EmitterScene, 4, 3)  # faces DOWN
+	emitter.laser_range = -1
+	var meltable := make_block(MeltableScene, 4, 6)
+	var room := build_room([emitter, meltable], Vector2i(20, 0))
+	assert_eq(room.grid.grid[4][6].get_block_type(), Util.BLOCK_TYPE.MELTABLE, "white light leaves it intact")
+	assert_false(room.grid.grid[4][7].is_laser_active(), "and the meltable blocks ordinary light")
+
 # -------------------------------------------------------------- toggling
 func test_toggling_emitter_off_clears_all_lasers():
 	var emitter := make_block(EmitterScene, 4, 3)

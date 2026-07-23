@@ -10,10 +10,11 @@ var color: Util.LASER_COLOR = Util.LASER_COLOR.WHITE ## The color of the laser
 ## The white sprite is a pure grayscale ramp with a (1,1,1) highlight, so
 ## multiplying it by these values reproduces the old per-color sprites.
 const LASER_MODULATE := {
-	Util.LASER_COLOR.WHITE:   Color(1.0, 1.0, 1.0),
-	Util.LASER_COLOR.CYAN:    Color(0.737, 0.756, 1.0),
-	Util.LASER_COLOR.MAGENTA: Color(0.910, 0.738, 1.0),
-	Util.LASER_COLOR.YELLOW:  Color(1.0, 0.930, 0.740),
+	Util.LASER_COLOR.WHITE:       Color(1.0, 1.0, 1.0),
+	Util.LASER_COLOR.CYAN:        Color(0.737, 0.756, 1.0),
+	Util.LASER_COLOR.MAGENTA:     Color(0.910, 0.738, 1.0),
+	Util.LASER_COLOR.YELLOW:      Color(1.0, 0.930, 0.740),
+	Util.LASER_COLOR.DESTRUCTIVE: Color(1.0, 0.35, 0.30),
 }
 
 ## Deactivates the laser

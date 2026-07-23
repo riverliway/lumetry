@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfocus3rbn700"]
+
+[ext_resource type="Texture2D" path="res://tileset/focuser/focuser.png" id="1_foctx"]
+[ext_resource type="Script" path="res://tileset/focuser/focuser.gd" id="2_focsc"]
+
+[node name="LaserFocuser" type="Sprite2D"]
+texture = ExtResource("1_foctx")
+script = ExtResource("2_focsc")

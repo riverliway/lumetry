@@ -137,12 +137,12 @@ func z_index_for(block_type: BLOCK_TYPE) -> int:
 			return 40
 		BLOCK_TYPE.MIRROR_SHORT, BLOCK_TYPE.MIRROR_LONG:
 			return 50
-		BLOCK_TYPE.PRISIM:
+		BLOCK_TYPE.PRISIM, BLOCK_TYPE.LASER_FOCUSER:
 			return 60
 		BLOCK_TYPE.LASER_EMITTER:
 			return 70
 		_:
-			return 80  # walls and any other solid block render on top
+			return 80  # walls, meltable, and any other solid block render on top
 
 enum DIRECTION {
 	NONE,
@@ -164,7 +164,9 @@ enum BLOCK_TYPE {
 	PRISIM,
 	TRACK,
 	ROTATION_PAD,
-	LASER_DETECTOR
+	LASER_DETECTOR,
+	LASER_FOCUSER,
+	MELTABLE
 }
 
 enum PLAYER_STATE {
