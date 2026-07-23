@@ -50,8 +50,8 @@ func test_esc_asks_for_confirmation() -> void:
 
 
 func test_level_select_gates_and_focuses_first_unlocked() -> void:
-	SaveData.data["levels_unlocked"][0] = true   # level 1 unlocked
-	SaveData.data["levels_unlocked"][1] = false  # level 2 locked
+	SaveData.data["levels"][0] = SaveData.LevelState.UNLOCKED  # level 1 unlocked
+	SaveData.data["levels"][1] = SaveData.LevelState.LOCKED    # level 2 locked
 	var screen: CanvasLayer = add_child_autofree(load(LEVEL_SELECT).instantiate())
 	await get_tree().process_frame
 	await get_tree().process_frame

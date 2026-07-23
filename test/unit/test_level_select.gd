@@ -30,18 +30,27 @@ func _make_selector(count: int) -> Control:
 	return selector
 
 
-func test_unlocked_levels_enabled_locked_levels_disabled():
-	SaveData.data["levels_unlocked"][0] = true   # level 1
-	SaveData.data["levels_unlocked"][1] = true   # level 2
-	SaveData.data["levels_unlocked"][2] = false  # level 3 locked
+func test_playable_levels_enabled_locked_levels_disabled():
+	SaveData.data["levels"][0] = SaveData.LevelState.UNLOCKED
+	SaveData.data["levels"][1] = SaveData.LevelState.COMPLETED
+	SaveData.data["levels"][2] = SaveData.LevelState.LOCKED
 	var selector := _make_selector(3)
 	assert_false(selector.get_node("Level1").disabled, "unlocked level 1 is enabled")
-	assert_false(selector.get_node("Level2").disabled, "unlocked level 2 is enabled")
+	assert_false(selector.get_node("Level2").disabled, "completed level 2 is enabled")
 	assert_true(selector.get_node("Level3").disabled, "locked level 3 is disabled")
 
-func test_only_unlocked_buttons_are_wired():
-	SaveData.data["levels_unlocked"][0] = true
-	SaveData.data["levels_unlocked"][1] = false
+func test_completed_level_is_tinted():
+	SaveData.data["levels"][0] = SaveData.LevelState.UNLOCKED
+	SaveData.data["levels"][1] = SaveData.LevelState.COMPLETED
 	var selector := _make_selector(2)
+	assert_eq(selector.get_node("Level1").modulate, Color.WHITE, "unlocked level is untinted")
+	assert_eq(selector.get_node("Level2").modulate, LevelSelectScript.COMPLETED_TINT, "completed level is tinted")
+
+func test_playable_buttons_are_wired_locked_are_inert():
+	SaveData.data["levels"][0] = SaveData.LevelState.UNLOCKED
+	SaveData.data["levels"][1] = SaveData.LevelState.COMPLETED
+	SaveData.data["levels"][2] = SaveData.LevelState.LOCKED
+	var selector := _make_selector(3)
 	assert_gt(selector.get_node("Level1").pressed.get_connections().size(), 0, "unlocked button opens its level")
-	assert_eq(selector.get_node("Level2").pressed.get_connections().size(), 0, "locked button is inert")
+	assert_gt(selector.get_node("Level2").pressed.get_connections().size(), 0, "completed button is replayable")
+	assert_eq(selector.get_node("Level3").pressed.get_connections().size(), 0, "locked button is inert")

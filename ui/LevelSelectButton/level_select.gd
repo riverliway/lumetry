@@ -1,13 +1,17 @@
 extends Control
 ## Level-select screen. Each "LevelN" button (N = 1..18) opens
 ## levels/levelN/level_N.tscn. Buttons are wired up generically by name so
-## adding or reordering them needs no per-button handler. A level that isn't
-## unlocked in the save file (SaveData, 0-based) is shown disabled and inert.
+## adding or reordering them needs no per-button handler. Each button reflects the
+## level's SaveData state (0-based): LOCKED is disabled and inert, UNLOCKED is
+## playable, and COMPLETED is playable and tinted.
 ##
 ## A child MenuNav drives the focus cursor (mouse hover + WASD); ESC backs out to
 ## the title menu.
 
 const TITLE_MENU_SCENE := "res://title_menu.tscn"
+## Tint applied to a completed level's button. Placeholder until completed-state
+## button art exists.
+const COMPLETED_TINT := Color(0.55, 1.0, 0.55)
 
 func _ready() -> void:
 	for child in get_children():
@@ -15,10 +19,14 @@ func _ready() -> void:
 			var number := String(child.name).trim_prefix("Level").to_int()
 			if number < 1:
 				continue
-			if SaveData.is_level_unlocked(number - 1):
-				child.pressed.connect(_open_level.bind(number))
-			else:
-				child.disabled = true
+			match SaveData.get_level_state(number - 1):
+				SaveData.LevelState.LOCKED:
+					child.disabled = true
+				SaveData.LevelState.COMPLETED:
+					child.modulate = COMPLETED_TINT
+					child.pressed.connect(_open_level.bind(number))
+				_:  # UNLOCKED
+					child.pressed.connect(_open_level.bind(number))
 
 
 func _unhandled_input(event: InputEvent) -> void:

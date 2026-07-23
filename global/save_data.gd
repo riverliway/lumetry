@@ -23,11 +23,18 @@ const LEVEL_COUNT := 18
 ## Allowed values for settings.colorblind_mode.
 const COLORBLIND_MODES := ["default", "patterned"]
 
+## Per-level progression, stored in `levels` as one of these values per level.
+## Ordered so higher means "further along" (LOCKED < UNLOCKED < COMPLETED).
+enum LevelState { LOCKED, UNLOCKED, COMPLETED }
+
 ## Canonical defaults and schema. load_from_disk() starts from a deep copy of
 ## this and overlays the (validated) values found on disk.
 const DEFAULTS := {
-	"levels_unlocked": [true, false, false, false, false, false, false, false, false,
-		false, false, false, false, false, false, false, false, false],  # level 1 unlocked
+	# One LevelState per level; level 1 starts UNLOCKED, the rest LOCKED.
+	"levels": [LevelState.UNLOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED,
+		LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED,
+		LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED,
+		LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED],
 	"sandbox_unlocked": false,
 	"settings": {
 		"music_audio": 100,
@@ -155,19 +162,43 @@ func _read_slot(slot: int) -> Variant:
 
 
 # ---------------------------------------------------------------- progression
-## Whether level `index` (0-based; 0 = level 1) is unlocked.
-func is_level_unlocked(index: int) -> bool:
+## The LevelState of level `index` (0-based; 0 = level 1); LOCKED if out of range.
+func get_level_state(index: int) -> LevelState:
 	if index < 0 or index >= LEVEL_COUNT:
-		return false
-	return data["levels_unlocked"][index]
+		return LevelState.LOCKED
+	return data["levels"][index]
 
 
-## Unlocks level `index` and saves.
+## Whether level `index` can be played (i.e. unlocked or already completed).
+func is_level_unlocked(index: int) -> bool:
+	return get_level_state(index) != LevelState.LOCKED
+
+
+## Whether level `index` has been completed.
+func is_level_completed(index: int) -> bool:
+	return get_level_state(index) == LevelState.COMPLETED
+
+
+## Unlocks level `index` (if it was locked) and saves. Never downgrades a level
+## that is already completed.
 func unlock_level(index: int) -> void:
 	if index < 0 or index >= LEVEL_COUNT:
 		push_warning("SaveData: level index %d out of range" % index)
 		return
-	data["levels_unlocked"][index] = true
+	if data["levels"][index] == LevelState.LOCKED:
+		data["levels"][index] = LevelState.UNLOCKED
+		save()
+
+
+## Marks level `index` completed, unlocks the next level if it was locked, and
+## saves.
+func complete_level(index: int) -> void:
+	if index < 0 or index >= LEVEL_COUNT:
+		push_warning("SaveData: level index %d out of range" % index)
+		return
+	data["levels"][index] = LevelState.COMPLETED
+	if index + 1 < LEVEL_COUNT and data["levels"][index + 1] == LevelState.LOCKED:
+		data["levels"][index + 1] = LevelState.UNLOCKED
 	save()
 
 
@@ -205,16 +236,16 @@ func set_setting(key: String, value: Variant) -> void:
 
 # ------------------------------------------------------------------- internal
 ## Returns a fully populated, validated copy of the schema with `loaded` values
-## overlaid: correct types, exactly LEVEL_COUNT booleans for levels_unlocked,
-## audio clamped to 0-100, and a valid colorblind mode.
+## overlaid: correct types, exactly LEVEL_COUNT LevelState values for levels (each
+## clamped to a valid state), audio clamped to 0-100, and a valid colorblind mode.
 func _normalize(loaded: Dictionary) -> Dictionary:
 	var result := DEFAULTS.duplicate(true)
 
-	var levels = loaded.get("levels_unlocked")
+	var levels = loaded.get("levels")
 	if levels is Array:
 		for i in range(LEVEL_COUNT):
 			if i < levels.size():
-				result["levels_unlocked"][i] = bool(levels[i])
+				result["levels"][i] = clampi(int(levels[i]), LevelState.LOCKED, LevelState.COMPLETED)
 
 	if "sandbox_unlocked" in loaded:
 		result["sandbox_unlocked"] = bool(loaded["sandbox_unlocked"])

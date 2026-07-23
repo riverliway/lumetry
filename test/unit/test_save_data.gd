@@ -37,8 +37,7 @@ func _write_file(path: String, text: String) -> void:
 ## A full, valid payload dict (top-level keys overridable).
 func _valid_payload(overrides := {}) -> Dictionary:
 	var p := {
-		"levels_unlocked": [true, false, false, false, false, false, false, false, false,
-			false, false, false, false, false, false, false, false, false],
+		"levels": [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # UNLOCKED, rest LOCKED
 		"sandbox_unlocked": false,
 		"settings": {"music_audio": 100, "sfx_audio": 100, "colorblind_mode": "default"},
 	}
@@ -66,9 +65,10 @@ func _bad_checksum_envelope(counter: int, timestamp: float, payload: Dictionary)
 func test_defaults_created_when_no_slots_exist():
 	var s = _make()
 	s.load_from_disk()
-	assert_eq(s.data["levels_unlocked"].size(), 18, "exactly 18 level flags")
-	assert_true(s.is_level_unlocked(0), "level 1 unlocked by default")
-	assert_false(s.is_level_unlocked(1), "level 2 locked by default")
+	assert_eq(s.data["levels"].size(), 18, "exactly 18 level states")
+	assert_eq(s.get_level_state(0), s.LevelState.UNLOCKED, "level 1 unlocked by default")
+	assert_eq(s.get_level_state(1), s.LevelState.LOCKED, "level 2 locked by default")
+	assert_false(s.is_level_completed(0), "no level completed by default")
 	assert_false(s.is_sandbox_unlocked(), "sandbox locked by default")
 	assert_eq(s.get_setting("music_audio"), 100)
 	assert_eq(s.get_setting("colorblind_mode"), "default")
@@ -80,6 +80,7 @@ func test_save_and_reload_roundtrip():
 	var a = _make()
 	a.load_from_disk()
 	a.unlock_level(3)
+	a.complete_level(5)
 	a.set_sandbox_unlocked(true)
 	a.set_setting("music_audio", 42)
 	a.set_setting("colorblind_mode", "patterned")
@@ -87,6 +88,8 @@ func test_save_and_reload_roundtrip():
 	var b = _make()  # a separate instance reading the same slots
 	b.load_from_disk()
 	assert_true(b.is_level_unlocked(3), "unlocked level persisted")
+	assert_true(b.is_level_completed(5), "completed level persisted")
+	assert_eq(b.get_level_state(6), b.LevelState.UNLOCKED, "completing a level unlocked the next")
 	assert_true(b.is_sandbox_unlocked(), "sandbox flag persisted")
 	assert_eq(b.get_setting("music_audio"), 42, "audio persisted")
 	assert_eq(b.get_setting("colorblind_mode"), "patterned", "enum persisted")
@@ -175,14 +178,16 @@ func test_defaults_when_both_slots_corrupt():
 # ---------------------------------------------------------- load validation
 func test_load_repairs_malformed_values():
 	_write_file(_slot(0), _envelope(1, 100.0, {
-		"levels_unlocked": [true, true],
+		"levels": [1, 2, 99, -3],  # UNLOCKED, COMPLETED, then out-of-range values
 		"settings": {"music_audio": 999, "colorblind_mode": "bogus"},
 	}))
 	var s = _make()
 	s.load_from_disk()
-	assert_eq(s.data["levels_unlocked"].size(), 18, "short array padded to 18")
-	assert_true(s.is_level_unlocked(1), "provided true kept")
-	assert_false(s.is_level_unlocked(5), "padded entries default to false")
+	assert_eq(s.data["levels"].size(), 18, "short array padded to 18")
+	assert_eq(s.get_level_state(1), s.LevelState.COMPLETED, "provided state kept")
+	assert_eq(s.get_level_state(2), s.LevelState.COMPLETED, "too-high state clamped to COMPLETED")
+	assert_eq(s.get_level_state(3), s.LevelState.LOCKED, "negative state clamped to LOCKED")
+	assert_eq(s.get_level_state(5), s.LevelState.LOCKED, "padded entries default to LOCKED")
 	assert_eq(s.get_setting("music_audio"), 100, "out-of-range audio clamped")
 	assert_eq(s.get_setting("colorblind_mode"), "default", "invalid enum falls back")
 	assert_false(s.is_sandbox_unlocked(), "missing key filled from defaults")
@@ -208,21 +213,47 @@ func test_set_setting_ignores_unknown_key():
 	s.set_setting("does_not_exist", 5)
 	assert_false(s.data["settings"].has("does_not_exist"), "unknown key not stored")
 
+# --------------------------------------------------------------- progression
+func test_complete_level_unlocks_the_next():
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.get_level_state(1), s.LevelState.LOCKED, "level 2 starts locked")
+	s.complete_level(0)
+	assert_eq(s.get_level_state(0), s.LevelState.COMPLETED, "level 1 marked completed")
+	assert_eq(s.get_level_state(1), s.LevelState.UNLOCKED, "completing level 1 unlocked level 2")
+
+func test_unlock_never_downgrades_a_completed_level():
+	var s = _make()
+	s.load_from_disk()
+	s.complete_level(2)
+	s.unlock_level(2)
+	assert_eq(s.get_level_state(2), s.LevelState.COMPLETED, "unlock leaves a completed level completed")
+
+func test_complete_last_level_is_safe():
+	var s = _make()
+	s.load_from_disk()
+	s.complete_level(17)  # LEVEL_COUNT - 1: no next level to unlock
+	assert_eq(s.get_level_state(17), s.LevelState.COMPLETED, "last level completed")
+	assert_eq(s.data["levels"].size(), 18, "array not grown")
+
 # ------------------------------------------------------------- bounds & reset
 func test_level_index_out_of_range_is_safe():
 	var s = _make()
 	s.load_from_disk()
 	assert_false(s.is_level_unlocked(-1), "negative index")
 	assert_false(s.is_level_unlocked(18), "index past the end")
+	assert_eq(s.get_level_state(18), s.LevelState.LOCKED, "out-of-range state is LOCKED")
 	s.unlock_level(99)  # must not crash or grow the array
-	assert_eq(s.data["levels_unlocked"].size(), 18)
+	s.complete_level(99)  # must not crash or grow the array
+	assert_eq(s.data["levels"].size(), 18)
 
 func test_reset_restores_defaults():
 	var s = _make()
 	s.load_from_disk()
-	s.unlock_level(5)
+	s.complete_level(5)
 	s.set_sandbox_unlocked(true)
 	s.reset()
-	assert_false(s.is_level_unlocked(5), "progression cleared")
+	assert_eq(s.get_level_state(5), s.LevelState.LOCKED, "progression cleared")
+	assert_eq(s.get_level_state(6), s.LevelState.LOCKED, "auto-unlocked next cleared too")
 	assert_false(s.is_sandbox_unlocked(), "sandbox cleared")
-	assert_true(s.is_level_unlocked(0), "level 1 back to unlocked")
+	assert_eq(s.get_level_state(0), s.LevelState.UNLOCKED, "level 1 back to unlocked")
