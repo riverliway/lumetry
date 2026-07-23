@@ -189,8 +189,6 @@ offset_bottom = 1723.0
 [node name="Label" parent="LevelSelect/Level18" index="0"]
 text = "18"
 
-[connection signal="pressed" from="LevelSelect/Level1" to="LevelSelect" method="_on_level_1_pressed"]
-
 [editable path="LevelSelect/Level1"]
 [editable path="LevelSelect/Level2"]
 [editable path="LevelSelect/Level3"]
