@@ -144,6 +144,21 @@ func test_detector_emits_detected_signal_on_recompute():
 	assert_signal_emitted_with_parameters(d, "detected", [Util.LASER_COLOR.WHITE])
 	assert_true(d.is_hit)
 
+func test_detector_emits_cleared_when_beam_stops_reaching_it():
+	# The detector starts hit; once the beam no longer reaches it, the falling
+	# edge fires `cleared` so level code can react to it turning off.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var detector := make_block(DetectorScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var room := build_room([emitter, detector])
+	var d = room.grid.grid[4][6].block
+	assert_true(d.is_hit, "detector starts hit")
+	watch_signals(d)
+	emitter.use()  # turn the emitter off so the beam no longer reaches the detector
+	room.grid.handle_laser_physics()
+	assert_false(d.is_hit, "detector no longer hit")
+	assert_signal_emitted(d, "cleared")
+
 # -------------------------------------------------------------- toggling
 func test_toggling_emitter_off_clears_all_lasers():
 	var emitter := make_block(EmitterScene, 4, 3)
