@@ -91,6 +91,16 @@ func test_prism_splits_white_beam_into_three_colors():
 	assert_true(colors.has(Util.LASER_COLOR.MAGENTA), "magenta beam present")
 	assert_true(colors.has(Util.LASER_COLOR.YELLOW), "yellow beam present")
 
+func test_prism_cell_draws_four_split_segments():
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var prism := make_block(PrismScene, 4, 5)
+	var room := build_room([emitter, prism], Vector2i(20, 0))
+	var pcell = room.grid.grid[4][5]
+	var active = pcell.prism_laser.filter(func(p): return p.is_active())
+	# incoming white + straight/left/right colored outputs
+	assert_eq(active.size(), 4, "prism cell draws four half-beam split segments")
+
 # -------------------------------------------------------------- toggling
 func test_toggling_emitter_off_clears_all_lasers():
 	var emitter := make_block(EmitterScene, 4, 3)

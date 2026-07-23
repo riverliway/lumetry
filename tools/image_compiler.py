@@ -114,10 +114,40 @@ def compile_laser_mirror_cuts() -> int:
     return count
 
 
+# --------------------------------------------------------------------------- #
+# Step 3: laser prism-split half-beam
+# --------------------------------------------------------------------------- #
+# The prism splits a beam at a point, not off a surface, so the half-beam is cut
+# flat (perpendicular to the beam) through the center -- surface 90 deg from the
+# beam axis. One sprite serves all four halves in a prism cell (incoming white +
+# straight/left/right splits), rotated and tinted in Godot.
+PRISM_SURFACE_DEG = 90.0
+
+
+def compile_laser_prism_cut() -> int:
+    out_dir = ROOT / "tileset" / "laser" / "white_laser_prism"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    count = 0
+    for i, frame in enumerate(LASER_FRAMES, start=1):
+        src = LASER_DIR / frame
+        if not src.is_file():
+            print(f"[prism-cut] missing source {src.relative_to(ROOT)}, skipping")
+            continue
+        tile = Image.open(src).convert("RGBA")
+        out = out_dir / f"laser_white_prism_{i}.png"
+        mirror_cut(tile, PRISM_SURFACE_DEG).save(out)
+        count += 1
+        print(f"  prism (flat cut): {out.relative_to(ROOT)}")
+    print(f"[prism-cut] wrote {count} sprite(s)\n" if count
+          else "[prism-cut] nothing generated\n")
+    return count
+
+
 def main() -> None:
     print("== image compiler ==")
     expand_halftiles()
     compile_laser_mirror_cuts()
+    compile_laser_prism_cut()
 
 
 if __name__ == "__main__":

@@ -5,6 +5,8 @@ class_name Room
 static var laser_segment_scene: PackedScene = preload("res://tileset/laser/laser_segment.tscn")
 ## Preloaded half-beam segment for drawing a bounce inside a mirror cell
 static var mirror_segment_scene: PackedScene = preload("res://tileset/laser/mirror_segment.tscn")
+## Preloaded half-beam segment for drawing a split inside a prism cell
+static var prism_segment_scene: PackedScene = preload("res://tileset/laser/prism_segment.tscn")
 @onready var grid: Grid = Grid.new(func(): return self)
 
 
@@ -106,6 +108,7 @@ class Grid:
 					# Colored lasers are absorbed by the prism
 					return
 
+				_draw_prism_split(cell, laser_facing)
 				# Split the laser into three colored lasers
 				_propagate_laser(cell, laser_strength[0] - 1, Util.rotate_direction_clockwise(laser_facing), Util.LASER_COLOR.CYAN)
 				_propagate_laser(cell, laser_strength[0] - 1, laser_facing, Util.LASER_COLOR.MAGENTA)
@@ -354,6 +357,23 @@ class Grid:
 		var xfs = mirror_bounce_transforms(cell, incoming_dir, outgoing_dir, is_long)
 		cell.add_mirror_laser(is_long, color, xfs[0], xfs[1])
 
+	## Renders the split in a prism cell as four flat-cut half-beams: the incoming
+	## white beam and the straight (magenta), clockwise (cyan) and counter-clockwise
+	## (yellow) outputs -- matching the beams _propagate_laser spawns. Each cut is
+	## flat, so a plain rotation orients it; the incoming beam points along the entry
+	## direction while each output points its full end outward (rotate 3 = reverse).
+	func _draw_prism_split(cell: Cell, incoming_dir: Util.DIRECTION) -> void:
+		var cyan_dir := Util.rotate_direction_clockwise(incoming_dir)
+		var yellow_dir := Util.rotate_direction_counterclockwise(incoming_dir)
+		var colors := [Util.LASER_COLOR.WHITE, Util.LASER_COLOR.MAGENTA, Util.LASER_COLOR.CYAN, Util.LASER_COLOR.YELLOW]
+		var transforms := [
+			Transform2D(laser_rotation(incoming_dir), cell.pos),
+			Transform2D(laser_rotation(Util.rotate_direction_clockwise(incoming_dir, 3)), cell.pos),
+			Transform2D(laser_rotation(Util.rotate_direction_clockwise(cyan_dir, 3)), cell.pos),
+			Transform2D(laser_rotation(Util.rotate_direction_clockwise(yellow_dir, 3)), cell.pos),
+		]
+		cell.add_prism_laser(colors, transforms)
+
 	## Given a position in pixels, returns the nearest cell in the grid measured by euclidean distance
 	## [br]`pos` is the position of the center of the object
 	func get_nearest_cell(pos: Vector2) -> Cell:
@@ -383,6 +403,7 @@ class Cell:
 	
 	var laser: Array[LaserSegment] = [] ## The laser sprites, cached so we don't have to keep remaking them
 	var mirror_laser: Array[MirrorSegment] = [] ## The two half-beam bounce sprites when a mirror sits here
+	var prism_laser: Array[PrismSegment] = [] ## The four half-beam split sprites when a prism sits here
 	
 	## Initializes the cell at the given position and grid indices
 	## [br]`ppos` is the position of this cell in the world (px)
@@ -461,12 +482,28 @@ class Cell:
 			resolve_room.call().add_child(seg)
 		mirror_laser[index].set_mirror(is_long, color, xf)
 
+	## Draws a prism split here as four flat-cut half-beam sprites, pooled like the
+	## straight segments. `colors[i]` and `transforms[i]` come from Grid._draw_prism_split.
+	func add_prism_laser(colors: Array, transforms: Array) -> void:
+		for i in range(colors.size()):
+			_set_prism_segment(i, colors[i], transforms[i])
+
+	func _set_prism_segment(index: int, color: Util.LASER_COLOR, xf: Transform2D) -> void:
+		while prism_laser.size() <= index:
+			var seg = Room.prism_segment_scene.instantiate()
+			seg.z_index = Util.Z_LASER
+			prism_laser.push_back(seg)
+			resolve_room.call().add_child(seg)
+		prism_laser[index].set_prism(color, xf)
+
 	## Clears out all lasers in this cell
 	func clear_laser() -> void:
 		for l in laser:
 			l.clear_laser()
 		for m in mirror_laser:
 			m.clear_laser()
+		for p in prism_laser:
+			p.clear_laser()
 			
 	## Checks if this cell has an active laser in it
 	func is_laser_active() -> bool:
