@@ -64,6 +64,20 @@ func test_mirror_reflects_beam_off_its_column():
 	assert_gt(active_laser_count(room), 1, "beam continued after reflecting")
 	assert_true(_has_lit_cell_off_column(room, 4), "reflected beam left the emitter column")
 
+func test_mirror_cell_draws_two_bounce_segments():
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var mirror := make_block(MirrorScene, 4, 5, PI / 3.0)
+	var room := build_room([emitter, mirror])
+	var mcell = room.grid.grid[4][5]
+	var active = mcell.mirror_laser.filter(func(m): return m.is_active())
+	assert_eq(active.size(), 2, "mirror cell draws two half-beam bounce segments")
+	# The incoming half-beam is oriented along the entry direction (DOWN): its
+	# sprite y-axis (base beam) maps onto the DOWN pixel offset.
+	var d_down := room.grid.direction_to_offset(Util.DIRECTION.DOWN).normalized()
+	assert_almost_eq(mcell.mirror_laser[0].transform.y.normalized().dot(d_down), 1.0, 0.001,
+		"incoming half-beam points along the entry direction")
+
 # ---------------------------------------------------------- prism splitting
 func test_prism_splits_white_beam_into_three_colors():
 	var emitter := make_block(EmitterScene, 4, 3)

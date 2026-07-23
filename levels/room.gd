@@ -3,6 +3,8 @@ class_name Room
 
 ## Preloaded laser segment for dynamic creation of laser beams
 static var laser_segment_scene: PackedScene = preload("res://tileset/laser/laser_segment.tscn")
+## Preloaded half-beam segment for drawing a bounce inside a mirror cell
+static var mirror_segment_scene: PackedScene = preload("res://tileset/laser/mirror_segment.tscn")
 @onready var grid: Grid = Grid.new(func(): return self)
 
 
@@ -75,22 +77,26 @@ class Grid:
 				
 			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_SHORT:
 				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
+				var incoming_dir = laser_facing
 				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, false)
 				if laser_facing == input_dir:
 					# The mirror reflected back along the input path, so quit out
 					return
-				
+
+				_draw_mirror_bounce(cell, incoming_dir, laser_facing, false, color)
 				laser_strength[0] -= 1
 				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color)
 				continue
-				
+
 			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_LONG:
 				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
+				var incoming_dir = laser_facing
 				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, true)
 				if laser_facing == input_dir:
 					# The mirror reflected back along the input path, so quit out
 					return
-				
+
+				_draw_mirror_bounce(cell, incoming_dir, laser_facing, true, color)
 				laser_strength[0] -= 1
 				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color)
 				continue
@@ -298,22 +304,55 @@ class Grid:
 			_:
 				return cell
 	
+	## The world-space pixel offset from a cell to its neighbor in `direction`.
+	func direction_to_offset(direction: Util.DIRECTION) -> Vector2:
+		match direction:
+			Util.DIRECTION.UP:         return Vector2(0, -SIZE.y)
+			Util.DIRECTION.DOWN:       return Vector2(0, SIZE.y)
+			Util.DIRECTION.UP_LEFT:    return Vector2(-SIZE.x, -SIZE.y / 2.0)
+			Util.DIRECTION.UP_RIGHT:   return Vector2(SIZE.x, -SIZE.y / 2.0)
+			Util.DIRECTION.DOWN_LEFT:  return Vector2(-SIZE.x, SIZE.y / 2.0)
+			Util.DIRECTION.DOWN_RIGHT: return Vector2(SIZE.x, SIZE.y / 2.0)
+			_:                         return Vector2.ZERO
+
 	## The sprite rotation (radians) that points a laser segment along `direction`.
 	## [br]Uses the grid's true pixel geometry -- a diagonal step is (SIZE.x, SIZE.y/2),
 	## which is ~60.26 degrees from vertical, not the idealized 60. Rotating segments
 	## to the real angle keeps them collinear with the cells they pass through, so
 	## angled beams don't jag at each segment boundary.
 	func laser_rotation(direction: Util.DIRECTION) -> float:
-		var offset := Vector2.ZERO
-		match direction:
-			Util.DIRECTION.UP:         offset = Vector2(0, -SIZE.y)
-			Util.DIRECTION.DOWN:       offset = Vector2(0, SIZE.y)
-			Util.DIRECTION.UP_LEFT:    offset = Vector2(-SIZE.x, -SIZE.y / 2.0)
-			Util.DIRECTION.UP_RIGHT:   offset = Vector2(SIZE.x, -SIZE.y / 2.0)
-			Util.DIRECTION.DOWN_LEFT:  offset = Vector2(-SIZE.x, SIZE.y / 2.0)
-			Util.DIRECTION.DOWN_RIGHT: offset = Vector2(SIZE.x, SIZE.y / 2.0)
 		# The sprite points DOWN (+y) at rotation 0, so subtract that reference angle.
-		return offset.angle() - PI / 2.0
+		return direction_to_offset(direction).angle() - PI / 2.0
+
+	## World transforms for the two half-beam sprites that draw a bounce inside a
+	## mirror cell: the incoming beam (stopping at the surface) and the reflected
+	## beam (leaving it). Matches the angled cut baked in by the image compiler --
+	## the beam meets the surface at 60 deg (short) / 30 deg (long).
+	## [br]Returns [incoming_transform, reflected_transform].
+	func mirror_bounce_transforms(cell: Cell, incoming_dir: Util.DIRECTION, outgoing_dir: Util.DIRECTION, is_long: bool) -> Array:
+		var d_in := direction_to_offset(incoming_dir).normalized()
+		var d_out := direction_to_offset(outgoing_dir).normalized()
+		var phi := deg_to_rad(30.0) if is_long else deg_to_rad(60.0)
+		var n_base := Vector2(cos(phi), -sin(phi))      # base sprite's cut normal
+		var n_target := (d_out - d_in).normalized()     # mirror normal, reflective side
+		return [
+			_mirror_solve(d_in, n_base, n_target, cell.pos),
+			_mirror_solve(-d_out, n_base, n_target, cell.pos),
+		]
+
+	## Isometry (as a Transform2D at `origin`) mapping the base cut sprite -- beam
+	## axis (0,1) and cut normal `n_base` -- onto `target_beam` and `n_target`.
+	func _mirror_solve(target_beam: Vector2, n_base: Vector2, n_target: Vector2, origin: Vector2) -> Transform2D:
+		var base := Transform2D(Vector2(0, 1), n_base, Vector2.ZERO)
+		var target := Transform2D(target_beam, n_target, Vector2.ZERO)
+		var a := target * base.affine_inverse()
+		return Transform2D(a.x, a.y, origin)
+
+	## Renders a bounce in a mirror cell as two half-beam sprites (incoming +
+	## reflected). The mirror cell holds no straight segment; this is its beam.
+	func _draw_mirror_bounce(cell: Cell, incoming_dir: Util.DIRECTION, outgoing_dir: Util.DIRECTION, is_long: bool, color: Util.LASER_COLOR) -> void:
+		var xfs = mirror_bounce_transforms(cell, incoming_dir, outgoing_dir, is_long)
+		cell.add_mirror_laser(is_long, color, xfs[0], xfs[1])
 
 	## Given a position in pixels, returns the nearest cell in the grid measured by euclidean distance
 	## [br]`pos` is the position of the center of the object
@@ -343,6 +382,7 @@ class Cell:
 	var terrain: Array[Node2D] = [] ## The terrain instances in this cell
 	
 	var laser: Array[LaserSegment] = [] ## The laser sprites, cached so we don't have to keep remaking them
+	var mirror_laser: Array[MirrorSegment] = [] ## The two half-beam bounce sprites when a mirror sits here
 	
 	## Initializes the cell at the given position and grid indices
 	## [br]`ppos` is the position of this cell in the world (px)
@@ -404,11 +444,26 @@ class Cell:
 			new_segment.set_laser(from, to, color, beam_rotation)
 		else:
 			available_segment[0].set_laser(from, to, color, beam_rotation)
-			
+
+	## Draws a mirror bounce here as two half-beam sprites (incoming + reflected),
+	## pooled like the straight segments. Transforms come from Grid.mirror_bounce_transforms.
+	func add_mirror_laser(is_long: bool, color: Util.LASER_COLOR, incoming_xf: Transform2D, reflected_xf: Transform2D) -> void:
+		_set_mirror_segment(0, is_long, color, incoming_xf)
+		_set_mirror_segment(1, is_long, color, reflected_xf)
+
+	func _set_mirror_segment(index: int, is_long: bool, color: Util.LASER_COLOR, xf: Transform2D) -> void:
+		while mirror_laser.size() <= index:
+			var seg = Room.mirror_segment_scene.instantiate()
+			mirror_laser.push_back(seg)
+			resolve_room.call().add_child(seg)
+		mirror_laser[index].set_mirror(is_long, color, xf)
+
 	## Clears out all lasers in this cell
 	func clear_laser() -> void:
 		for l in laser:
 			l.clear_laser()
+		for m in mirror_laser:
+			m.clear_laser()
 			
 	## Checks if this cell has an active laser in it
 	func is_laser_active() -> bool:
