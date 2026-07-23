@@ -54,12 +54,22 @@ class Grid:
 	## Wipes and re-computes the laser physics for the entire grid
 	func handle_laser_physics() -> void:
 		clear_laser_grid()
+
+		# Detectors are edge-triggered across the pass: clear their hit state now,
+		# let propagation mark the struck ones, then fire signals for any changes.
+		var detectors = find_detectors()
+		for detector in detectors:
+			detector.begin_pass()
+
 		var emitters_index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER, false)
-		
+
 		for i in range(0, len(emitters_index), 2):
 			var emitter_cell = grid[emitters_index[i]][emitters_index[i + 1]]
 			if emitter_cell.block.activated:
 				_propagate_laser(emitter_cell, emitter_cell.block.laser_range, emitter_cell.block_facing, Util.LASER_COLOR.WHITE)
+
+		for detector in detectors:
+			detector.end_pass()
 				
 	## Propogates a laser beam from a given emitter
 	## This is an internal helper function for handling the laser physics
@@ -102,6 +112,14 @@ class Grid:
 				laser_strength[0] -= 1
 				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color)
 				continue
+
+			if cell.get_block_type() == Util.BLOCK_TYPE.LASER_DETECTOR:
+				# The beam stops here; the detector registers a hit only if the
+				# beam arrived through its sensitive front arc (see detector_hit_directions).
+				var from_dir = Util.rotate_direction_clockwise(laser_facing, 3)
+				if detector_hit_directions(cell.block_facing).has(from_dir):
+					cell.block.mark_hit(color)
+				return
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.PRISIM:
 				if color != Util.LASER_COLOR.WHITE:
@@ -307,6 +325,25 @@ class Grid:
 			_:
 				return cell
 	
+	## Every laser-detector block instance currently placed in the grid.
+	func find_detectors() -> Array:
+		var detectors: Array = []
+		var index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_DETECTOR, false)
+		for i in range(0, len(index), 2):
+			detectors.push_back(grid[index[i]][index[i + 1]].block)
+		return detectors
+
+	## The three directions a detector facing `facing` can be struck from: the way
+	## it faces plus its two neighbors -- its ~180-degree sensitive front arc. A
+	## beam arriving FROM one of these directions triggers the detector; a beam
+	## from the back three is ignored.
+	func detector_hit_directions(facing: Util.DIRECTION) -> Array:
+		return [
+			facing,
+			Util.rotate_direction_clockwise(facing),
+			Util.rotate_direction_counterclockwise(facing),
+		]
+
 	## The world-space pixel offset from a cell to its neighbor in `direction`.
 	func direction_to_offset(direction: Util.DIRECTION) -> Vector2:
 		match direction:

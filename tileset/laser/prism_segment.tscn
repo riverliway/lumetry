@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8prismsegbnc0"]
+[gd_scene format=3 uid="uid://75vg5vtq1vm4"]
 
 [ext_resource type="Script" path="res://tileset/laser/prism_segment.gd" id="1_pseg"]
 [ext_resource type="Texture2D" uid="uid://dqndtgwxn24q7" path="res://tileset/laser/white_laser_prism/laser_white_prism_1.png" id="2_pr1"]

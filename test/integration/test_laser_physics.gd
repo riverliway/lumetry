@@ -101,6 +101,49 @@ func test_prism_cell_draws_four_split_segments():
 	# incoming white + straight/left/right colored outputs
 	assert_eq(active.size(), 4, "prism cell draws four half-beam split segments")
 
+# ---------------------------------------------------------- laser detector
+func test_detector_facing_the_beam_registers_a_hit():
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	# Beam travels DOWN; the detector below faces UP, into the beam's front arc.
+	var detector := make_block(DetectorScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var room := build_room([emitter, detector])
+	assert_true(room.grid.grid[4][6].block.is_hit, "detector facing the beam is hit")
+	assert_eq(room.grid.grid[4][6].block.hit_color, Util.LASER_COLOR.WHITE, "records the beam color")
+
+func test_detector_facing_away_is_not_hit():
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	# Same DOWN beam, but the detector faces DOWN -- the beam meets its back arc.
+	var detector := make_block(DetectorScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.DOWN))
+	var room := build_room([emitter, detector])
+	assert_false(room.grid.grid[4][6].block.is_hit, "a beam hitting the back does not register")
+
+func test_detector_stops_the_beam():
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var detector := make_block(DetectorScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var room := build_room([emitter, detector])
+	assert_true(room.grid.grid[4][5].is_laser_active(), "beam reaches the cell before the detector")
+	assert_false(room.grid.grid[4][7].is_laser_active(), "beam does not continue past the detector")
+
+func test_detector_emits_detected_signal_on_recompute():
+	# Room._ready() already resolved physics, so drive a fresh clear->detect edge
+	# by toggling the emitter and watch the signal on the second pass.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var detector := make_block(DetectorScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var room := build_room([emitter, detector])
+	var d = room.grid.grid[4][6].block
+	emitter.use()  # off
+	room.grid.handle_laser_physics()
+	assert_false(d.is_hit, "no beam while the emitter is off")
+	watch_signals(d)
+	emitter.use()  # on again
+	room.grid.handle_laser_physics()
+	assert_signal_emitted_with_parameters(d, "detected", [Util.LASER_COLOR.WHITE])
+	assert_true(d.is_hit)
+
 # -------------------------------------------------------------- toggling
 func test_toggling_emitter_off_clears_all_lasers():
 	var emitter := make_block(EmitterScene, 4, 3)

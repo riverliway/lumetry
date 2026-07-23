@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdet3ct0rdet0"]
+
+[ext_resource type="Texture2D" path="res://tileset/detector/detector.png" id="1_dettx"]
+[ext_resource type="Script" path="res://tileset/detector/detector.gd" id="2_detsc"]
+
+[node name="LaserDetector" type="Sprite2D"]
+texture = ExtResource("1_dettx")
+script = ExtResource("2_detsc")
