@@ -12,13 +12,21 @@ const Level1Script := preload("res://levels/level1/level_1.gd")
 ## A Node2D carrying level_1.gd with a "Floor" container and a "Room" child
 ## (room.gd) holding a Player plus the given blocks -- the same shape the base
 ## Level expects. The player parks in a far corner by default so it never blocks
-## a beam. `width`/`height` size the grid. Auto-freed by GUT.
-func build_level(blocks: Array, player_cell := Vector2i(20, 0), width := 23, height := 12) -> Node2D:
+## a beam. `width`/`height` size the grid. When `with_floor` is true the Floor is
+## populated with plain tiles, mirroring what tools/generate_floor.py bakes into
+## a real scene, so runtime wall-dimming can be exercised. Auto-freed by GUT.
+func build_level(blocks: Array, player_cell := Vector2i(20, 0), width := 23, height := 12, with_floor := false) -> Node2D:
 	var level := Node2D.new()
 	level.set_script(Level1Script)
 	var floor_node := Node2D.new()
 	floor_node.name = "Floor"
 	level.add_child(floor_node)
+	if with_floor:
+		for c in range(width):
+			for r in range(height):
+				var tile := Sprite2D.new()
+				tile.position = cell_center(c, r)
+				floor_node.add_child(tile)
 	var room := Room.new()
 	room.name = "Room"
 	room.grid_width = width
@@ -80,14 +88,10 @@ func test_solved_signal_fires_on_the_solving_edge():
 	assert_signal_emitted(level, "solved")
 
 
-# ------------------------------------ board presentation (base Level: floor + fit)
-func test_floor_is_generated_one_tile_per_cell():
-	var level := build_level([], Vector2i(0, 0), 5, 7)
-	assert_eq(level.get_node("Floor").get_child_count(), 35, "one floor tile per cell (5x7)")
-
-func test_floor_under_a_wall_is_dimmed():
+# ------------------------------------ board presentation (base Level: fit + dim)
+func test_wall_floor_is_dimmed_at_runtime():
 	var wall := make_block(WallScene, 3, 4)
-	var level := build_level([wall], Vector2i(0, 0))
+	var level := build_level([wall], Vector2i(0, 0), 23, 12, true)
 	var wall_center := cell_center(3, 4)
 	var dimmed := 0
 	var wall_tile_dimmed := false

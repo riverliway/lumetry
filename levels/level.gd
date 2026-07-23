@@ -3,18 +3,19 @@ class_name Level
 ## Root node for a playable room.
 ##
 ## room.gd is the shared, generalized puzzle engine (one per room, as the `Room`
-## child). This base presents that room: it generates the hex floor to match the
-## room's grid size, and uniformly scales the whole level so the entire board is
-## always on screen -- a bigger grid renders smaller, a smaller grid larger. The
-## view never pans or follows the player.
+## child). This base presents that room: it uniformly scales the whole level so
+## the entire board is always on screen -- a bigger grid renders smaller, a
+## smaller grid larger. The view never pans or follows the player.
+##
+## The hex floor tiles are NOT generated here: they are baked into the scene
+## (under a `Floor` node) by the external tool tools/generate_floor.py, so the
+## grid is visible in the editor while authoring. Re-run that tool only when the
+## room's grid size changes. This base does dim the floor cells that sit under a
+## wall at runtime -- it knows the live wall positions, so that needs no re-bake.
 ##
 ## Room-specific subclasses (e.g. level_1.gd) extend this to add their own logic
 ## (win conditions, dialogue, transitions); they must call super._ready().
-##
-## Scene convention: a Level has a `Room` child (the engine) and may have a
-## `Floor` child (an empty Node2D) that the generated floor tiles are placed under.
 
-const FLOOR_TEXTURE := preload("res://tileset/floor/Floor.png")
 ## Dim tint for floor cells under a wall, so the arena boundary reads darker than
 ## the open, movable cells. Matches the old hand-authored `is_background` look.
 const WALL_FLOOR_MODULATE := Color("ffffff26")
@@ -23,25 +24,19 @@ const WALL_FLOOR_MODULATE := Color("ffffff26")
 
 
 func _ready() -> void:
-	generate_floor()
+	dim_wall_floor()
 	fit_to_screen()
 
 
-## Lays one floor tile at every grid cell, under the "Floor" child if present.
-## The floor is generated (not hand-placed) so it always matches the room size.
-## A cell holding a wall is dimmed, marking it as non-playable boundary.
-func generate_floor() -> void:
+## Dims each baked floor tile that sits on a wall cell, marking the non-playable
+## boundary. Derived from the live grid, so it always matches the actual walls.
+func dim_wall_floor() -> void:
 	var floor_root := get_node_or_null("Floor")
 	if floor_root == null or room == null:
 		return
-	for column in room.grid.grid:
-		for cell in column:
-			var tile := Sprite2D.new()
-			tile.texture = FLOOR_TEXTURE
-			tile.position = cell.pos
-			if cell.get_block_type() == Util.BLOCK_TYPE.WALL:
-				tile.modulate = WALL_FLOOR_MODULATE
-			floor_root.add_child(tile)
+	for tile in floor_root.get_children():
+		if tile is CanvasItem and room.grid.get_nearest_cell(tile.position).get_block_type() == Util.BLOCK_TYPE.WALL:
+			tile.modulate = WALL_FLOOR_MODULATE
 
 
 ## Uniformly scales and centers this level so the room's board bounds fit the

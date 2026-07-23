@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgwc0vxyda6dn"]
+[gd_scene load_steps=11 format=3 uid="uid://dgwc0vxyda6dn"]
 
+[ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="floor_tile_tex"]
 [ext_resource type="Script" path="res://levels/room.gd" id="2_ogn6p"]
 [ext_resource type="Script" path="res://levels/level1/level_1.gd" id="9_lvl1"]
 [ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="3_pqpdu"]
@@ -23,6 +24,1110 @@ offset_bottom = 2098.0
 color = Color(0.306923, 0.306923, 0.306923, 1)
 
 [node name="Floor" type="Node2D" parent="."]
+
+[node name="floor_0_0" type="Sprite2D" parent="Floor"]
+position = Vector2(79, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_1" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_2" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_3" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_4" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_5" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_6" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_7" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_8" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_9" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_10" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_0_11" type="Sprite2D" parent="Floor"]
+position = Vector2(79, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_0" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_1" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_2" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_3" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_4" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_5" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_6" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_7" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_8" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_9" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_10" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_1_11" type="Sprite2D" parent="Floor"]
+position = Vector2(247, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_0" type="Sprite2D" parent="Floor"]
+position = Vector2(415, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_1" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_2" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_3" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_4" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_5" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_6" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_7" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_8" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_9" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_10" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_2_11" type="Sprite2D" parent="Floor"]
+position = Vector2(415, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_0" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_1" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_2" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_3" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_4" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_5" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_6" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_7" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_8" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_9" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_10" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_3_11" type="Sprite2D" parent="Floor"]
+position = Vector2(583, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_0" type="Sprite2D" parent="Floor"]
+position = Vector2(751, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_1" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_2" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_3" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_4" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_5" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_6" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_7" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_8" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_9" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_10" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_4_11" type="Sprite2D" parent="Floor"]
+position = Vector2(751, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_0" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_1" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_2" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_3" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_4" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_5" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_6" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_7" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_8" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_9" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_10" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_5_11" type="Sprite2D" parent="Floor"]
+position = Vector2(919, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_0" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_1" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_2" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_3" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_4" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_5" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_6" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_7" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_8" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_9" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_10" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_6_11" type="Sprite2D" parent="Floor"]
+position = Vector2(1087, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_0" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_1" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_2" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_3" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_4" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_5" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_6" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_7" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_8" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_9" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_10" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_7_11" type="Sprite2D" parent="Floor"]
+position = Vector2(1255, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_0" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_1" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_2" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_3" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_4" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_5" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_6" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_7" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_8" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_9" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_10" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_8_11" type="Sprite2D" parent="Floor"]
+position = Vector2(1423, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_0" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_1" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_2" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_3" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_4" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_5" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_6" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_7" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_8" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_9" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_10" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_9_11" type="Sprite2D" parent="Floor"]
+position = Vector2(1591, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_0" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_1" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_2" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_3" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_4" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_5" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_6" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_7" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_8" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_9" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_10" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_10_11" type="Sprite2D" parent="Floor"]
+position = Vector2(1759, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_0" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_1" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_2" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_3" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_4" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_5" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_6" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_7" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_8" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_9" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_10" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_11_11" type="Sprite2D" parent="Floor"]
+position = Vector2(1927, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_0" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_1" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_2" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_3" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_4" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_5" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_6" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_7" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_8" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_9" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_10" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_12_11" type="Sprite2D" parent="Floor"]
+position = Vector2(2095, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_0" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_1" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_2" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_3" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_4" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_5" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_6" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_7" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_8" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_9" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_10" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_13_11" type="Sprite2D" parent="Floor"]
+position = Vector2(2263, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_0" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_1" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_2" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_3" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_4" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_5" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_6" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_7" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_8" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_9" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_10" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_14_11" type="Sprite2D" parent="Floor"]
+position = Vector2(2431, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_0" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_1" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_2" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_3" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_4" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_5" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_6" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_7" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_8" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_9" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_10" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_15_11" type="Sprite2D" parent="Floor"]
+position = Vector2(2599, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_0" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_1" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_2" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_3" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_4" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_5" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_6" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_7" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_8" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_9" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_10" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_16_11" type="Sprite2D" parent="Floor"]
+position = Vector2(2767, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_0" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_1" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_2" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_3" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_4" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_5" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_6" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_7" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_8" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_9" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_10" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_17_11" type="Sprite2D" parent="Floor"]
+position = Vector2(2935, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_0" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_1" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_2" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_3" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_4" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_5" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_6" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_7" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_8" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_9" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_10" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_18_11" type="Sprite2D" parent="Floor"]
+position = Vector2(3103, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_0" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_1" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_2" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_3" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_4" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_5" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_6" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_7" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_8" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_9" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_10" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_19_11" type="Sprite2D" parent="Floor"]
+position = Vector2(3271, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_0" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_1" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_2" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_3" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_4" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_5" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_6" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_7" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_8" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_9" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_10" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_20_11" type="Sprite2D" parent="Floor"]
+position = Vector2(3439, 2095)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_0" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 79)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_1" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 271)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_2" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 463)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_3" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 655)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_4" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 847)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_5" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 1039)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_6" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 1231)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_7" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 1423)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_8" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 1615)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_9" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 1807)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_10" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 1999)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_21_11" type="Sprite2D" parent="Floor"]
+position = Vector2(3607, 2191)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_0" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, -17)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_1" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 175)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_2" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 367)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_3" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 559)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_4" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 751)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_5" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 943)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_6" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 1135)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_7" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 1327)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_8" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 1519)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_9" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 1711)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_10" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 1903)
+texture = ExtResource("floor_tile_tex")
+
+[node name="floor_22_11" type="Sprite2D" parent="Floor"]
+position = Vector2(3775, 2095)
+texture = ExtResource("floor_tile_tex")
 
 [node name="Room" type="Node2D" parent="."]
 script = ExtResource("2_ogn6p")
