@@ -7,7 +7,12 @@ static var laser_segment_scene: PackedScene = preload("res://tileset/laser/laser
 static var mirror_segment_scene: PackedScene = preload("res://tileset/laser/mirror_segment.tscn")
 ## Preloaded half-beam segment for drawing a split inside a prism cell
 static var prism_segment_scene: PackedScene = preload("res://tileset/laser/prism_segment.tscn")
-@onready var grid: Grid = Grid.new(func(): return self)
+## Grid dimensions for this room, in cells. Set per level scene; the whole board
+## is scaled to fit the screen (see levels/level.gd), so a bigger room just
+## renders smaller rather than running off the edge.
+@export var grid_width := 23
+@export var grid_height := 12
+@onready var grid: Grid = Grid.new(func(): return self, grid_width, grid_height)
 
 
 func _ready() -> void:
@@ -40,8 +45,11 @@ class Grid:
 	
 	## Initializes the grid with empty cells
 	## [br]`room_resolver` is a callable that returns the Room instance this grid belongs to
-	func _init(room_resolver: Callable):
+	## [br]`width`/`height` are the grid dimensions in cells (cell size is constant)
+	func _init(room_resolver: Callable, width := 23, height := 12):
 		resolve_room = room_resolver
+		WIDTH = width
+		HEIGHT = height
 		for c in range(WIDTH):
 			var col = []
 			for r in range(HEIGHT):
@@ -423,6 +431,25 @@ class Grid:
 		row = max(min(int(row), HEIGHT - 1), 0)
 
 		return grid[column][row]
+
+	## Every cell's world-space center, column-major. Used to lay out the floor.
+	func cell_centers() -> Array:
+		var centers: Array = []
+		for c in range(WIDTH):
+			for r in range(HEIGHT):
+				centers.push_back(grid[c][r].pos)
+		return centers
+
+	## The board's pixel bounds in board space: the bounding box of every cell,
+	## each treated as a SIZE-big footprint. Used to scale the room to the screen
+	## so the whole board stays visible regardless of how many cells it has.
+	func board_bounds() -> Rect2:
+		var min_center := Vector2(START.x, START.y)
+		var max_center := Vector2(START.x + SIZE.x * (WIDTH - 1), START.y + SIZE.y * (HEIGHT - 1))
+		if WIDTH >= 2:
+			# Odd columns sit half a cell lower, extending the bottom edge.
+			max_center.y += SIZE.y / 2.0
+		return Rect2(min_center - SIZE / 2.0, (max_center - min_center) + SIZE)
 
 
 ## The contents of a single cell in the hexagonal grid

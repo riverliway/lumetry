@@ -146,3 +146,31 @@ func test_find_all_returns_flat_column_major_pairs():
 		_grid.find(func(c): return c.get_block_type() == Util.BLOCK_TYPE.WALL, false),
 		[0, 0, 1, 0]
 	)
+
+# ------------------------------------------------- variable dimensions
+func test_default_grid_is_23x12():
+	assert_eq(_grid.WIDTH, 23)
+	assert_eq(_grid.HEIGHT, 12)
+
+func test_grid_respects_custom_dimensions():
+	var g = Room.Grid.new(func(): return null, 5, 7)
+	assert_eq(g.WIDTH, 5, "width")
+	assert_eq(g.HEIGHT, 7, "height")
+	assert_eq(g.grid.size(), 5, "column count")
+	assert_eq(g.grid[0].size(), 7, "row count")
+
+func test_cell_centers_has_one_per_cell():
+	var g = Room.Grid.new(func(): return null, 5, 7)
+	assert_eq(g.cell_centers().size(), 35, "5*7 centers")
+
+func test_board_bounds_contains_every_cell_center():
+	var g = Room.Grid.new(func(): return null, 6, 4)
+	var b = g.board_bounds()
+	for center in g.cell_centers():
+		assert_true(b.has_point(center), "bounds contain %s" % center)
+
+func test_board_bounds_grows_with_the_grid():
+	var small = Room.Grid.new(func(): return null, 5, 5).board_bounds()
+	var big = Room.Grid.new(func(): return null, 20, 10).board_bounds()
+	assert_lt(small.size.x, big.size.x, "width grows with columns")
+	assert_lt(small.size.y, big.size.y, "height grows with rows")

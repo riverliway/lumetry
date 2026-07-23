@@ -1,11 +1,13 @@
-extends Node2D
+extends Level
 ## Room-specific logic for Level 1.
 ##
+## The base Level (levels/level.gd) handles the shared board presentation --
+## generating the floor to the room's size and scaling it to fit the screen.
 ## room.gd is the generalized puzzle engine (hex grid, laser physics, block
-## pushing) shared by every room. This script owns what is unique to *this*
-## room: its win condition and what happens when it is met -- dialogue,
-## advancing to the next room, saving progress, and achievements. Those
-## subsystems are not built yet, so those hooks are stubs for now.
+## pushing). This script owns what is unique to *this* room: its win condition
+## and what happens when it is met -- dialogue, advancing to the next room,
+## saving progress, and achievements. Those subsystems are not built yet, so
+## those hooks are stubs for now.
 ##
 ## Win condition: every laser detector in the room is lit at once. The detectors'
 ## on/off events (detected / cleared) drive a re-evaluation, and `solved` /
@@ -17,12 +19,11 @@ signal solved
 ## Emitted once when a previously-solved room stops satisfying it.
 signal unsolved
 
-@onready var room: Room = $Room
-
 var _solved := false  ## whether the win condition is currently satisfied
 
 
 func _ready() -> void:
+	super._ready()  # generate the floor and fit the board to the screen
 	# Room is a child, so Room._ready() has already built the grid and registered
 	# every block. Wire each detector's on/off events to a re-evaluation, then
 	# capture the initial state -- a detector's first `detected` fires during

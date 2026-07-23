@@ -9,14 +9,20 @@ extends "res://test/fixtures/game_test.gd"
 const Level1Script := preload("res://levels/level1/level_1.gd")
 
 
-## A Node2D carrying level_1.gd with a child "Room" (room.gd) holding a Player
-## plus the given blocks -- the same shape as the real scene. The player parks in
-## a far corner by default so it never blocks a beam. Auto-freed by GUT.
-func build_level(blocks: Array, player_cell := Vector2i(20, 0)) -> Node2D:
+## A Node2D carrying level_1.gd with a "Floor" container and a "Room" child
+## (room.gd) holding a Player plus the given blocks -- the same shape the base
+## Level expects. The player parks in a far corner by default so it never blocks
+## a beam. `width`/`height` size the grid. Auto-freed by GUT.
+func build_level(blocks: Array, player_cell := Vector2i(20, 0), width := 23, height := 12) -> Node2D:
 	var level := Node2D.new()
 	level.set_script(Level1Script)
+	var floor_node := Node2D.new()
+	floor_node.name = "Floor"
+	level.add_child(floor_node)
 	var room := Room.new()
 	room.name = "Room"
+	room.grid_width = width
+	room.grid_height = height
 	var player := PlayerScene.instantiate()
 	player.name = "Player"
 	player.position = cell_center(player_cell.x, player_cell.y)
@@ -72,3 +78,21 @@ func test_solved_signal_fires_on_the_solving_edge():
 	level.room.grid.handle_laser_physics()
 	assert_true(level._solved)
 	assert_signal_emitted(level, "solved")
+
+
+# ------------------------------------ board presentation (base Level: floor + fit)
+func test_floor_is_generated_one_tile_per_cell():
+	var level := build_level([], Vector2i(0, 0), 5, 7)
+	assert_eq(level.get_node("Floor").get_child_count(), 35, "one floor tile per cell (5x7)")
+
+func test_default_room_scales_to_fit_the_screen():
+	# The 23x12 board (~3864x2400) fits a 3840x2160 design viewport limited by
+	# height -> a uniform 0.9 scale, so the whole room stays visible.
+	var level := build_level([], Vector2i(0, 0))
+	assert_almost_eq(level.scale.x, 0.9, 0.001, "uniform fit scale x")
+	assert_almost_eq(level.scale.y, 0.9, 0.001, "uniform fit scale y")
+
+func test_smaller_room_scales_up_more_than_a_bigger_room():
+	var small := build_level([], Vector2i(0, 0), 5, 7)
+	var big := build_level([], Vector2i(0, 0), 23, 12)
+	assert_gt(small.scale.x, big.scale.x, "fewer cells -> sprites shrink less (scale up)")
