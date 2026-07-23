@@ -877,6 +877,7 @@ position = Vector2(1754, 1520)
 position = Vector2(2260, 1040)
 
 [node name="WallArt" type="Control" parent="."]
+z_index = 100
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
