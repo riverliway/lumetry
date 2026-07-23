@@ -19,7 +19,6 @@ animations = [{
 }]
 
 [node name="LaserSegment" type="AnimatedSprite2D" groups=["synced_anim"]]
-offset = Vector2(2, 0)
 sprite_frames = SubResource("SpriteFrames_yo1vm")
 animation = &"white"
 script = ExtResource("3_01y2t")
