@@ -47,7 +47,18 @@ func _valid_payload(overrides := {}) -> Dictionary:
 	return p
 
 ## A slot envelope with a correct checksum for `payload`.
-func _envelope(timestamp: float, payload: Dictionary) -> String:
+func _envelope(counter: int, timestamp: float, payload: Dictionary) -> String:
+	var payload_text := JSON.stringify(payload)
+	return JSON.stringify({
+		"counter": counter,
+		"timestamp": timestamp,
+		"checksum": payload_text.sha256_text(),
+		"payload": payload_text,
+	})
+
+## A pre-counter envelope (as written before the write counter existed): valid
+## checksum, no "counter" key. Used to test that old saves still load.
+func _legacy_envelope(timestamp: float, payload: Dictionary) -> String:
 	var payload_text := JSON.stringify(payload)
 	return JSON.stringify({
 		"timestamp": timestamp,
@@ -56,9 +67,9 @@ func _envelope(timestamp: float, payload: Dictionary) -> String:
 	})
 
 ## A slot envelope whose checksum does NOT match its payload.
-func _bad_checksum_envelope(timestamp: float, payload: Dictionary) -> String:
+func _bad_checksum_envelope(counter: int, timestamp: float, payload: Dictionary) -> String:
 	var payload_text := JSON.stringify(payload)
-	return JSON.stringify({"timestamp": timestamp, "checksum": "not_a_valid_hash", "payload": payload_text})
+	return JSON.stringify({"counter": counter, "timestamp": timestamp, "checksum": "not_a_valid_hash", "payload": payload_text})
 
 
 # ------------------------------------------------------------------ defaults
@@ -91,28 +102,65 @@ func test_save_and_reload_roundtrip():
 	assert_eq(b.get_setting("colorblind_mode"), "patterned", "enum persisted")
 
 # ------------------------------------------------------- A/B slot robustness
-func test_prefers_slot_with_newer_timestamp():
-	_write_file(_slot(0), _envelope(100.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
-	_write_file(_slot(1), _envelope(200.0, _valid_payload({"settings": {"music_audio": 90, "sfx_audio": 100, "colorblind_mode": "default"}})))
+func test_prefers_slot_with_higher_counter():
+	_write_file(_slot(0), _envelope(1, 100.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	_write_file(_slot(1), _envelope(2, 200.0, _valid_payload({"settings": {"music_audio": 90, "sfx_audio": 100, "colorblind_mode": "default"}})))
 	var s = _make()
 	s.load_from_disk()
-	assert_eq(s.get_setting("music_audio"), 90, "the newer timestamp wins")
+	assert_eq(s.get_setting("music_audio"), 90, "the higher counter wins")
+
+func test_counter_is_source_of_truth_over_timestamp():
+	# slot 0 is the genuinely newer write (higher counter) but its timestamp is
+	# OLDER -- as if the system clock jumped backward. The counter must win.
+	_write_file(_slot(0), _envelope(5, 100.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	_write_file(_slot(1), _envelope(4, 999.0, _valid_payload({"settings": {"music_audio": 90, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.get_setting("music_audio"), 10, "higher counter wins even with an older timestamp")
+
+func test_migrates_pre_counter_saves_by_timestamp():
+	# Two old saves that predate the counter: both read as counter 0, so the tie
+	# breaks on the newer timestamp.
+	_write_file(_slot(0), _legacy_envelope(100.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	_write_file(_slot(1), _legacy_envelope(200.0, _valid_payload({"settings": {"music_audio": 90, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.get_setting("music_audio"), 90, "pre-counter saves fall back to the newer timestamp")
 
 func test_falls_back_when_newest_slot_is_corrupt():
 	# slot 0 is the intact previous save; slot 1 is a torn/garbage write.
-	_write_file(_slot(0), _envelope(100.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	_write_file(_slot(0), _envelope(1, 100.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
 	_write_file(_slot(1), "torn write {{{")
 	var s = _make()
 	s.load_from_disk()
 	assert_eq(s.get_setting("music_audio"), 10, "used the intact older slot")
 
 func test_checksum_mismatch_rejects_slot_even_if_newer():
-	# slot 0 has a newer timestamp but a tampered checksum -> must be rejected.
-	_write_file(_slot(0), _bad_checksum_envelope(999.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
-	_write_file(_slot(1), _envelope(100.0, _valid_payload({"settings": {"music_audio": 90, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	# slot 0 has a higher counter but a tampered checksum -> must be rejected.
+	_write_file(_slot(0), _bad_checksum_envelope(2, 999.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
+	_write_file(_slot(1), _envelope(1, 100.0, _valid_payload({"settings": {"music_audio": 90, "sfx_audio": 100, "colorblind_mode": "default"}})))
 	var s = _make()
 	s.load_from_disk()
-	assert_eq(s.get_setting("music_audio"), 90, "tampered slot rejected despite newer timestamp")
+	assert_eq(s.get_setting("music_audio"), 90, "tampered slot rejected despite higher counter")
+
+func test_counter_advances_across_saves_and_reloads():
+	var a = _make()
+	a.load_from_disk()  # first run writes both slots -> counter 2
+	assert_eq(a._counter, 2, "two initial writes bumped the counter to 2")
+	a.set_setting("music_audio", 50)
+	assert_eq(a._counter, 3, "each save increments the counter")
+	var b = _make()
+	b.load_from_disk()  # a separate instance reading the same slots
+	assert_eq(b._counter, 3, "reload resumes from the stored counter, not a reset")
+	b.set_setting("music_audio", 60)
+	assert_eq(b._counter, 4, "keeps climbing past the reloaded value")
+
+func test_load_records_last_played_from_winning_slot():
+	_write_file(_slot(0), _envelope(1, 100.0, _valid_payload()))
+	_write_file(_slot(1), _envelope(2, 250.0, _valid_payload()))
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.last_played, 250.0, "last_played is the timestamp of the newest (highest-counter) slot")
 
 func test_corruption_fallback_end_to_end():
 	var a = _make()
@@ -145,7 +193,7 @@ func test_defaults_when_both_slots_corrupt():
 
 # ---------------------------------------------------------- load validation
 func test_load_repairs_malformed_values():
-	_write_file(_slot(0), _envelope(100.0, {
+	_write_file(_slot(0), _envelope(1, 100.0, {
 		"levels_unlocked": [true, true],
 		"settings": {"music_audio": 999, "colorblind_mode": "bogus"},
 	}))

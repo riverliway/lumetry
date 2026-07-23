@@ -5,11 +5,14 @@ extends Node
 ##
 ## Two slot files (A/B) are derived from `save_path` -- save.0.json / save.1.json.
 ## Each save writes the *backup* slot (the one not written last), wrapped in an
-## envelope with a wall-clock timestamp and a SHA-256 checksum of the payload.
-## The newest good slot is therefore never the one being overwritten. On load we
-## read both slots, discard any whose checksum fails (a torn or corrupt write),
-## and take the most recent timestamp that survives; a missing/corrupt slot is
-## repaired, and if neither survives we fall back to DEFAULTS.
+## envelope carrying a monotonic write counter, a wall-clock timestamp, and a
+## SHA-256 checksum of the payload. The newest good slot is therefore never the
+## one being overwritten. On load we read both slots, discard any whose checksum
+## fails (a torn or corrupt write), and keep the one with the highest counter --
+## the counter, not the timestamp, is the source of truth for which write is
+## newest, so a backward jump in the system clock can't pick the stale slot. The
+## timestamp is retained only as a "last played" record. A missing/corrupt slot
+## is repaired, and if neither survives we fall back to DEFAULTS.
 ##
 ## Every value is validated on load and any missing key is filled from DEFAULTS,
 ## so old saves keep working as the schema grows -- to add a field, add it to
@@ -40,6 +43,12 @@ var save_path := SAVE_PATH
 
 ## Slot (0 or 1) holding the newest good data; the next save writes the other one.
 var _last_slot := 1
+## Monotonic sequence number of the most recent write; the source of truth for
+## which slot is newest. Increments on every save and never resets across loads.
+var _counter := 0
+## Wall-clock time of the loaded save's most recent write (unix seconds), kept
+## as a "last played" record only -- it never decides which slot wins.
+var last_played := 0.0
 
 
 func _ready() -> void:
@@ -47,10 +56,10 @@ func _ready() -> void:
 
 
 ## Loads the newest valid slot. Reads both A/B slots, drops any that fail their
-## checksum, and keeps the most recent timestamp. Repairs a missing/corrupt slot
-## and falls back to DEFAULTS if neither survives.
+## checksum, and keeps the one with the highest write counter. Repairs a
+## missing/corrupt slot and falls back to DEFAULTS if neither survives.
 func load_from_disk() -> void:
-	var slots := []  # each entry: [slot_index, {timestamp, data}]
+	var slots := []  # each entry: [slot_index, {counter, timestamp, data}]
 	for slot in [0, 1]:
 		var read = _read_slot(slot)
 		if read != null:
@@ -59,16 +68,23 @@ func load_from_disk() -> void:
 	if slots.is_empty():
 		data = DEFAULTS.duplicate(true)
 		_last_slot = 1
+		_counter = 0
 		save()  # write both slots so the backup exists from the very first run
 		save()
 		return
 
+	# Highest counter wins; ties (e.g. pre-counter saves that both read as 0) fall
+	# back to the newer timestamp so migrating an old save still picks correctly.
 	var best = slots[0]
 	for entry in slots:
-		if entry[1]["timestamp"] > best[1]["timestamp"]:
+		var e: Dictionary = entry[1]
+		var b: Dictionary = best[1]
+		if e["counter"] > b["counter"] or (e["counter"] == b["counter"] and e["timestamp"] > b["timestamp"]):
 			best = entry
 	data = _normalize(best[1]["data"])
 	_last_slot = best[0]
+	_counter = best[1]["counter"]
+	last_played = best[1]["timestamp"]
 
 	if slots.size() < 2:
 		save()  # the other slot was missing/corrupt -- rewrite it to restore the backup
@@ -78,7 +94,9 @@ func load_from_disk() -> void:
 ## an interrupted write can never destroy the newest good save. Ping-pongs A/B.
 func save() -> void:
 	var target := 1 - _last_slot
-	_write_slot(target, Time.get_unix_time_from_system())
+	_counter += 1
+	last_played = Time.get_unix_time_from_system()
+	_write_slot(target, _counter, last_played)
 	_last_slot = target
 
 
@@ -94,11 +112,13 @@ func _slot_path(slot: int) -> String:
 	return "%s.%d.%s" % [save_path.get_basename(), slot, save_path.get_extension()]
 
 
-## Writes `data` to `slot` inside an envelope carrying the write timestamp and a
-## SHA-256 checksum of the payload, so a corrupt read can be detected on load.
-func _write_slot(slot: int, timestamp: float) -> void:
+## Writes `data` to `slot` inside an envelope carrying the monotonic write
+## counter, the write timestamp, and a SHA-256 checksum of the payload, so the
+## newest write can be identified and a corrupt read detected on load.
+func _write_slot(slot: int, counter: int, timestamp: float) -> void:
 	var payload := JSON.stringify(data, "\t")
 	var envelope := {
+		"counter": counter,
 		"timestamp": timestamp,
 		"checksum": payload.sha256_text(),
 		"payload": payload,
@@ -111,8 +131,9 @@ func _write_slot(slot: int, timestamp: float) -> void:
 	file.close()
 
 
-## Reads and verifies a slot. Returns {timestamp, data} if intact, else null
-## (missing, unparseable, malformed envelope, or checksum mismatch).
+## Reads and verifies a slot. Returns {counter, timestamp, data} if intact, else
+## null (missing, unparseable, malformed envelope, or checksum mismatch). A save
+## written before the counter existed reads back as counter 0, so it still loads.
 func _read_slot(slot: int) -> Variant:
 	var path := _slot_path(slot)
 	if not FileAccess.file_exists(path):
@@ -134,7 +155,8 @@ func _read_slot(slot: int) -> Variant:
 	var payload_json := JSON.new()
 	if payload_json.parse(payload) != OK or not payload_json.data is Dictionary:
 		return null
-	return {"timestamp": float(envelope["timestamp"]), "data": payload_json.data}
+	var counter := int(envelope["counter"]) if envelope.has("counter") else 0
+	return {"counter": counter, "timestamp": float(envelope["timestamp"]), "data": payload_json.data}
 
 
 # ---------------------------------------------------------------- progression
