@@ -2,22 +2,26 @@ extends Control
 ## The game's title menu (the main scene). Three options:
 ##   Experiments  -- opens the level select
 ##   Calibrations -- opens the settings menu (not implemented yet)
-##   Drop Out     -- quits the game
-## Mouse and keyboard both work; MenuNav (a child node) drives the focus cursor,
-## and ESC backs out of the game -- at the top level that means quitting.
+##   Drop Out     -- quits, after a confirmation
+## Mouse and keyboard both work (a child MenuNav drives the focus cursor).
+## Quitting -- via Drop Out or ESC -- asks for confirmation first.
 
 const LEVEL_SELECT_SCENE := "res://level_select.tscn"
+
+@onready var _confirm: Control = $Confirm
 
 
 func _ready() -> void:
 	$Center/Menu/Experiments.pressed.connect(_on_experiments)
 	$Center/Menu/Calibrations.pressed.connect(_on_calibrations)
-	$Center/Menu/DropOut.pressed.connect(_on_drop_out)
+	$Center/Menu/DropOut.pressed.connect(_confirm_quit)
+	_confirm.confirmed.connect(_quit)
+	_confirm.canceled.connect(_on_quit_canceled)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):  # ESC: back out of the game
-		_on_drop_out()
+	if event.is_action_pressed("pause") and not _confirm.visible:  # ESC: back out
+		_confirm_quit()
 		get_viewport().set_input_as_handled()
 
 
@@ -30,5 +34,13 @@ func _on_calibrations() -> void:
 	push_warning("Calibrations menu not implemented yet")
 
 
-func _on_drop_out() -> void:
+func _confirm_quit() -> void:
+	_confirm.open()
+
+
+func _quit() -> void:
 	get_tree().quit()
+
+
+func _on_quit_canceled() -> void:
+	$Center/Menu/DropOut.grab_focus()  # return the cursor to the menu

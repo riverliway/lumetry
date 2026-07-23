@@ -27,6 +27,28 @@ func test_title_menu_wires_and_focuses_first_option() -> void:
 	assert_true(experiments.has_focus(), "cursor starts on the first option")
 
 
+func test_drop_out_asks_for_confirmation_and_can_be_canceled() -> void:
+	var menu: Control = add_child_autofree(load(TITLE_MENU).instantiate())
+	await get_tree().process_frame
+	var dialog: Control = menu.get_node("Confirm")
+	assert_false(dialog.visible, "confirm dialog is hidden at first")
+	menu.get_node("Center/Menu/DropOut").pressed.emit()  # click Drop Out
+	assert_true(dialog.visible, "Drop Out opens the confirm dialog instead of quitting")
+	dialog.get_node("Center/Panel/Box/Buttons/Cancel").pressed.emit()  # cancel
+	assert_false(dialog.visible, "canceling closes the dialog")
+
+
+func test_esc_asks_for_confirmation() -> void:
+	var menu: Control = add_child_autofree(load(TITLE_MENU).instantiate())
+	await get_tree().process_frame
+	var dialog: Control = menu.get_node("Confirm")
+	var esc := InputEventAction.new()
+	esc.action = "pause"
+	esc.pressed = true
+	menu._unhandled_input(esc)
+	assert_true(dialog.visible, "ESC opens the confirm dialog instead of quitting")
+
+
 func test_level_select_gates_and_focuses_first_unlocked() -> void:
 	SaveData.data["levels_unlocked"][0] = true   # level 1 unlocked
 	SaveData.data["levels_unlocked"][1] = false  # level 2 locked

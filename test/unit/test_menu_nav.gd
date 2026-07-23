@@ -34,3 +34,28 @@ func test_disabled_buttons_are_skipped():
 	await get_tree().process_frame
 	assert_eq(root.get_node("B0").focus_mode, Control.FOCUS_NONE, "disabled button is not a cursor target")
 	assert_true(root.get_node("B1").has_focus(), "cursor skips to the first enabled button")
+
+
+func test_wasd_moves_the_cursor_by_geometry():
+	var root := Control.new()
+	var top := Button.new()
+	top.name = "Top"
+	top.position = Vector2(0, 0)
+	top.size = Vector2(300, 100)
+	root.add_child(top)
+	var bottom := Button.new()
+	bottom.name = "Bottom"
+	bottom.position = Vector2(0, 400)
+	bottom.size = Vector2(300, 100)
+	root.add_child(bottom)
+	var nav := Node.new()
+	nav.set_script(MenuNavScript)
+	root.add_child(nav)
+	add_child_autofree(root)
+	await get_tree().process_frame
+	assert_true(top.has_focus(), "cursor starts on the top button")
+	var event := InputEventAction.new()
+	event.action = "move_down"
+	event.pressed = true
+	nav._unhandled_input(event)
+	assert_true(bottom.has_focus(), "move_down moves the cursor to the lower button")
