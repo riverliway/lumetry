@@ -2,7 +2,7 @@ extends GutTest
 ## Unit tests for the level-select gating (ui/LevelSelectButton/level_select.gd):
 ## unlocked levels are wired and enabled, locked levels are disabled and inert.
 ##
-## Uses synthetic buttons (never the real title_menu scene) and drives the global
+## Uses synthetic buttons (never the real level_select scene) and drives the global
 ## SaveData in memory, snapshotting/restoring its data so no save file is touched.
 
 const LevelSelectScript := preload("res://ui/LevelSelectButton/level_select.gd")
