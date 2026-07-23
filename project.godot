@@ -24,10 +24,6 @@ config/icon="res://icon.svg"
 Util="*res://global/util.gd"
 AnimSync="*res://global/anim_sync.gd"
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/gut/plugin.cfg")
-
 [display]
 
 window/size/viewport_width=3840
@@ -35,7 +31,10 @@ window/size/viewport_height=2160
 window/size/mode=3
 window/size/borderless=true
 window/stretch/mode="canvas_items"
-window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
 
 [gui]
 
