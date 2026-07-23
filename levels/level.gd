@@ -15,6 +15,9 @@ class_name Level
 ## `Floor` child (an empty Node2D) that the generated floor tiles are placed under.
 
 const FLOOR_TEXTURE := preload("res://tileset/floor/Floor.png")
+## Dim tint for floor cells under a wall, so the arena boundary reads darker than
+## the open, movable cells. Matches the old hand-authored `is_background` look.
+const WALL_FLOOR_MODULATE := Color("ffffff26")
 
 @onready var room: Room = $Room
 
@@ -26,15 +29,19 @@ func _ready() -> void:
 
 ## Lays one floor tile at every grid cell, under the "Floor" child if present.
 ## The floor is generated (not hand-placed) so it always matches the room size.
+## A cell holding a wall is dimmed, marking it as non-playable boundary.
 func generate_floor() -> void:
 	var floor_root := get_node_or_null("Floor")
 	if floor_root == null or room == null:
 		return
-	for center in room.grid.cell_centers():
-		var tile := Sprite2D.new()
-		tile.texture = FLOOR_TEXTURE
-		tile.position = center
-		floor_root.add_child(tile)
+	for column in room.grid.grid:
+		for cell in column:
+			var tile := Sprite2D.new()
+			tile.texture = FLOOR_TEXTURE
+			tile.position = cell.pos
+			if cell.get_block_type() == Util.BLOCK_TYPE.WALL:
+				tile.modulate = WALL_FLOOR_MODULATE
+			floor_root.add_child(tile)
 
 
 ## Uniformly scales and centers this level so the room's board bounds fit the

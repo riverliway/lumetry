@@ -85,6 +85,20 @@ func test_floor_is_generated_one_tile_per_cell():
 	var level := build_level([], Vector2i(0, 0), 5, 7)
 	assert_eq(level.get_node("Floor").get_child_count(), 35, "one floor tile per cell (5x7)")
 
+func test_floor_under_a_wall_is_dimmed():
+	var wall := make_block(WallScene, 3, 4)
+	var level := build_level([wall], Vector2i(0, 0))
+	var wall_center := cell_center(3, 4)
+	var dimmed := 0
+	var wall_tile_dimmed := false
+	for tile in level.get_node("Floor").get_children():
+		if tile.modulate.a < 1.0:
+			dimmed += 1
+			if tile.position.is_equal_approx(wall_center):
+				wall_tile_dimmed = true
+	assert_true(wall_tile_dimmed, "the floor cell under the wall is dimmed")
+	assert_eq(dimmed, 1, "only the wall cell is dimmed; open cells stay bright")
+
 func test_default_room_scales_to_fit_the_screen():
 	# The 23x12 board (~3864x2400) fits a 3840x2160 design viewport limited by
 	# height -> a uniform 0.9 scale, so the whole room stays visible.
