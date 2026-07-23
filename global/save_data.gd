@@ -73,13 +73,10 @@ func load_from_disk() -> void:
 		save()
 		return
 
-	# Highest counter wins; ties (e.g. pre-counter saves that both read as 0) fall
-	# back to the newer timestamp so migrating an old save still picks correctly.
+	# Highest counter wins -- the two slots always hold distinct counters.
 	var best = slots[0]
 	for entry in slots:
-		var e: Dictionary = entry[1]
-		var b: Dictionary = best[1]
-		if e["counter"] > b["counter"] or (e["counter"] == b["counter"] and e["timestamp"] > b["timestamp"]):
+		if entry[1]["counter"] > best[1]["counter"]:
 			best = entry
 	data = _normalize(best[1]["data"])
 	_last_slot = best[0]
@@ -132,8 +129,7 @@ func _write_slot(slot: int, counter: int, timestamp: float) -> void:
 
 
 ## Reads and verifies a slot. Returns {counter, timestamp, data} if intact, else
-## null (missing, unparseable, malformed envelope, or checksum mismatch). A save
-## written before the counter existed reads back as counter 0, so it still loads.
+## null (missing, unparseable, malformed envelope, or checksum mismatch).
 func _read_slot(slot: int) -> Variant:
 	var path := _slot_path(slot)
 	if not FileAccess.file_exists(path):
@@ -147,7 +143,7 @@ func _read_slot(slot: int) -> Variant:
 	if json.parse(text) != OK or not json.data is Dictionary:
 		return null
 	var envelope: Dictionary = json.data
-	if not (envelope.has("timestamp") and envelope.has("checksum") and envelope.has("payload")):
+	if not (envelope.has("counter") and envelope.has("timestamp") and envelope.has("checksum") and envelope.has("payload")):
 		return null
 	var payload = envelope["payload"]
 	if not payload is String or payload.sha256_text() != envelope["checksum"]:
@@ -155,8 +151,7 @@ func _read_slot(slot: int) -> Variant:
 	var payload_json := JSON.new()
 	if payload_json.parse(payload) != OK or not payload_json.data is Dictionary:
 		return null
-	var counter := int(envelope["counter"]) if envelope.has("counter") else 0
-	return {"counter": counter, "timestamp": float(envelope["timestamp"]), "data": payload_json.data}
+	return {"counter": int(envelope["counter"]), "timestamp": float(envelope["timestamp"]), "data": payload_json.data}
 
 
 # ---------------------------------------------------------------- progression

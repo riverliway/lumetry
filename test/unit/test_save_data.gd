@@ -56,16 +56,6 @@ func _envelope(counter: int, timestamp: float, payload: Dictionary) -> String:
 		"payload": payload_text,
 	})
 
-## A pre-counter envelope (as written before the write counter existed): valid
-## checksum, no "counter" key. Used to test that old saves still load.
-func _legacy_envelope(timestamp: float, payload: Dictionary) -> String:
-	var payload_text := JSON.stringify(payload)
-	return JSON.stringify({
-		"timestamp": timestamp,
-		"checksum": payload_text.sha256_text(),
-		"payload": payload_text,
-	})
-
 ## A slot envelope whose checksum does NOT match its payload.
 func _bad_checksum_envelope(counter: int, timestamp: float, payload: Dictionary) -> String:
 	var payload_text := JSON.stringify(payload)
@@ -117,15 +107,6 @@ func test_counter_is_source_of_truth_over_timestamp():
 	var s = _make()
 	s.load_from_disk()
 	assert_eq(s.get_setting("music_audio"), 10, "higher counter wins even with an older timestamp")
-
-func test_migrates_pre_counter_saves_by_timestamp():
-	# Two old saves that predate the counter: both read as counter 0, so the tie
-	# breaks on the newer timestamp.
-	_write_file(_slot(0), _legacy_envelope(100.0, _valid_payload({"settings": {"music_audio": 10, "sfx_audio": 100, "colorblind_mode": "default"}})))
-	_write_file(_slot(1), _legacy_envelope(200.0, _valid_payload({"settings": {"music_audio": 90, "sfx_audio": 100, "colorblind_mode": "default"}})))
-	var s = _make()
-	s.load_from_disk()
-	assert_eq(s.get_setting("music_audio"), 90, "pre-counter saves fall back to the newer timestamp")
 
 func test_falls_back_when_newest_slot_is_corrupt():
 	# slot 0 is the intact previous save; slot 1 is a torn/garbage write.
