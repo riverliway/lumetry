@@ -109,6 +109,22 @@ func test_nearest_cell_clamps_far_negative_to_origin():
 func test_nearest_cell_clamps_far_positive_to_last_cell():
 	assert_eq(coords(_grid.get_nearest_cell(Vector2(100000, 100000))), [WIDTH - 1, HEIGHT - 1])
 
+# -------------------------------------------------- laser beam rotation
+func test_laser_rotation_points_at_the_actual_neighbor_cell():
+	# The beam sprite points DOWN (+y) at rotation 0. For every direction the
+	# segment rotation must aim exactly at the neighbor cell it spans -- if it
+	# used an idealized 60-degree hex angle instead, angled beams would jag at
+	# each segment boundary (the grid is ~1% wider than a regular hexagon).
+	var c = cell(4, 5)  # interior even column: all six neighbors exist
+	for dir in [Util.DIRECTION.UP, Util.DIRECTION.DOWN, Util.DIRECTION.UP_LEFT,
+			Util.DIRECTION.UP_RIGHT, Util.DIRECTION.DOWN_LEFT, Util.DIRECTION.DOWN_RIGHT]:
+		var neighbor = _grid.go(c, dir)
+		var expected = (neighbor.pos - c.pos).angle() - PI / 2.0
+		assert_almost_eq(_grid.laser_rotation(dir), expected, 0.0001, str(dir))
+
+func test_laser_rotation_vertical_is_unchanged():
+	assert_almost_eq(_grid.laser_rotation(Util.DIRECTION.DOWN), 0.0, 0.0001, "down")
+
 # ------------------------------------------------------------------- find
 func test_find_on_empty_grid_returns_empty():
 	assert_eq(_grid.find(func(c): return c.get_block_type() == Util.BLOCK_TYPE.WALL), [])

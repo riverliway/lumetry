@@ -29,7 +29,11 @@ func is_active() -> bool:
 ## Sets this laser segment to be active
 ## [br]`from` The direction the laser is coming from
 ## [br]`to` The direction the laser is going to
-func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LASER_COLOR) -> void:
+## [br]`beam_rotation` The sprite rotation (radians) aligning the beam to the
+## true pixel angle between cell centers -- see Grid.laser_rotation. Using the
+## real geometry rather than an idealized 60-degree hex angle keeps angled
+## beams collinear with the cells they pass through (no per-segment jag).
+func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LASER_COLOR, beam_rotation: float) -> void:
 	color = laser_color
 	animation = 'white'
 	AnimSync.sync(self)
@@ -41,6 +45,6 @@ func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LAS
 	show()
 	var angle_from = Util.get_rotation_from_direction(from)
 	var angle_to = Util.get_rotation_from_direction(to)
-	
+
 	if is_equal_approx(abs(angle_from - angle_to), PI):
-		rotation = angle_to
+		rotation = beam_rotation

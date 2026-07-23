@@ -122,7 +122,7 @@ class Grid:
 			return c.get_block_type() in [Util.BLOCK_TYPE.NONE, Util.BLOCK_TYPE.WALL]
 		
 		while _should_continue.call(current_cell, strength[0]):
-			current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color)
+			current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color, laser_rotation(laser_direction))
 			current_cell = go(current_cell, laser_direction)
 			strength[0] -= 1 
 			
@@ -298,6 +298,23 @@ class Grid:
 			_:
 				return cell
 	
+	## The sprite rotation (radians) that points a laser segment along `direction`.
+	## [br]Uses the grid's true pixel geometry -- a diagonal step is (SIZE.x, SIZE.y/2),
+	## which is ~60.26 degrees from vertical, not the idealized 60. Rotating segments
+	## to the real angle keeps them collinear with the cells they pass through, so
+	## angled beams don't jag at each segment boundary.
+	func laser_rotation(direction: Util.DIRECTION) -> float:
+		var offset := Vector2.ZERO
+		match direction:
+			Util.DIRECTION.UP:         offset = Vector2(0, -SIZE.y)
+			Util.DIRECTION.DOWN:       offset = Vector2(0, SIZE.y)
+			Util.DIRECTION.UP_LEFT:    offset = Vector2(-SIZE.x, -SIZE.y / 2.0)
+			Util.DIRECTION.UP_RIGHT:   offset = Vector2(SIZE.x, -SIZE.y / 2.0)
+			Util.DIRECTION.DOWN_LEFT:  offset = Vector2(-SIZE.x, SIZE.y / 2.0)
+			Util.DIRECTION.DOWN_RIGHT: offset = Vector2(SIZE.x, SIZE.y / 2.0)
+		# The sprite points DOWN (+y) at rotation 0, so subtract that reference angle.
+		return offset.angle() - PI / 2.0
+
 	## Given a position in pixels, returns the nearest cell in the grid measured by euclidean distance
 	## [br]`pos` is the position of the center of the object
 	func get_nearest_cell(pos: Vector2) -> Cell:
@@ -376,16 +393,17 @@ class Cell:
 	## Adds a laser segment to this cell
 	## [br]`from` is the direction the laser is coming from
 	## [br]`to` is the direction the laser is going to
-	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION, color: Util.LASER_COLOR) -> void:
+	## [br]`beam_rotation` is the sprite rotation from Grid.laser_rotation
+	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION, color: Util.LASER_COLOR, beam_rotation: float) -> void:
 		var available_segment = Util.find_elem(laser, func(ls): return !ls.is_active())
 		if len(available_segment) == 0:
 			var new_segment = Room.laser_segment_scene.instantiate()
 			new_segment.position = pos
 			laser.push_back(new_segment)
 			resolve_room.call().add_child(new_segment)
-			new_segment.set_laser(from, to, color)
+			new_segment.set_laser(from, to, color, beam_rotation)
 		else:
-			available_segment[0].set_laser(from, to, color)
+			available_segment[0].set_laser(from, to, color, beam_rotation)
 			
 	## Clears out all lasers in this cell
 	func clear_laser() -> void:
