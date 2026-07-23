@@ -397,6 +397,7 @@ class Cell:
 		
 	## Loads a block instance into this cell, snapping it to the grid
 	func set_block(block_object: Node2D) -> void:
+		block_object.z_index = Util.z_index_for(block_object.block_type)
 		if block_object.block_type in [Util.BLOCK_TYPE.TRACK, Util.BLOCK_TYPE.ROTATION_PAD]:
 			# Tracks and rotation pads can stack on top of other blocks
 			block_object.position = pos
@@ -439,6 +440,7 @@ class Cell:
 		if len(available_segment) == 0:
 			var new_segment = Room.laser_segment_scene.instantiate()
 			new_segment.position = pos
+			new_segment.z_index = Util.Z_LASER
 			laser.push_back(new_segment)
 			resolve_room.call().add_child(new_segment)
 			new_segment.set_laser(from, to, color, beam_rotation)
@@ -454,6 +456,7 @@ class Cell:
 	func _set_mirror_segment(index: int, is_long: bool, color: Util.LASER_COLOR, xf: Transform2D) -> void:
 		while mirror_laser.size() <= index:
 			var seg = Room.mirror_segment_scene.instantiate()
+			seg.z_index = Util.Z_LASER
 			mirror_laser.push_back(seg)
 			resolve_room.call().add_child(seg)
 		mirror_laser[index].set_mirror(is_long, color, xf)

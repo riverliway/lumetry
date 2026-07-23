@@ -119,6 +119,31 @@ func reflect_direction(incoming_beam: Util.DIRECTION, mirror_facing: Util.DIRECT
 		
 	return rotate_direction_clockwise(incoming_beam, -2 if long_mirror else 1)
 
+
+## Draw order for laser beam sprites (segments and mirror bounces). Sits above
+## terrain but below the player and every solid block -- see [method z_index_for].
+const Z_LASER := 30
+
+## The z-index (draw order, higher = on top) for a block/terrain of the given
+## type. Background(0) < rotation pad < track/terrain < laser beam < player <
+## mirror < prism < emitter < other blocks.
+func z_index_for(block_type: BLOCK_TYPE) -> int:
+	match block_type:
+		BLOCK_TYPE.ROTATION_PAD:
+			return 10
+		BLOCK_TYPE.TRACK:
+			return 20
+		BLOCK_TYPE.PLAYER:
+			return 40
+		BLOCK_TYPE.MIRROR_SHORT, BLOCK_TYPE.MIRROR_LONG:
+			return 50
+		BLOCK_TYPE.PRISIM:
+			return 60
+		BLOCK_TYPE.LASER_EMITTER:
+			return 70
+		_:
+			return 80  # walls and any other solid block render on top
+
 enum DIRECTION {
 	NONE,
 	UP,

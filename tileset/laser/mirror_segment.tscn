@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2mirrorsegbnc0"]
+[gd_scene format=3 uid="uid://dowhdhja5t7b6"]
 
 [ext_resource type="Script" path="res://tileset/laser/mirror_segment.gd" id="1_mseg"]
 [ext_resource type="Texture2D" uid="uid://dh3ap2cdlgg5u" path="res://tileset/laser/white_laser_mirrored_short/laser_white_mirrored_short_1.png" id="2_ms1"]

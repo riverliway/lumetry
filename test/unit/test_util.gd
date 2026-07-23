@@ -126,3 +126,25 @@ func test_reflect_always_returns_a_valid_direction():
 			var out_short := Util.reflect_direction(incoming, facing, false)
 			assert_true(out_long in ALL_DIRS, "long reflect valid")
 			assert_true(out_short in ALL_DIRS, "short reflect valid")
+
+# ------------------------------------------------------------- z draw order
+func test_z_order_is_back_to_front():
+	# background(0) < rotation pad < track < laser beam < player < mirror <
+	# prism < emitter < other blocks
+	var layers := [
+		0,
+		Util.z_index_for(Util.BLOCK_TYPE.ROTATION_PAD),
+		Util.z_index_for(Util.BLOCK_TYPE.TRACK),
+		Util.Z_LASER,
+		Util.z_index_for(Util.BLOCK_TYPE.PLAYER),
+		Util.z_index_for(Util.BLOCK_TYPE.MIRROR_SHORT),
+		Util.z_index_for(Util.BLOCK_TYPE.PRISIM),
+		Util.z_index_for(Util.BLOCK_TYPE.LASER_EMITTER),
+		Util.z_index_for(Util.BLOCK_TYPE.WALL),
+	]
+	for i in range(layers.size() - 1):
+		assert_lt(layers[i], layers[i + 1], "layer %d is behind layer %d" % [i, i + 1])
+
+func test_mirror_renders_above_the_laser_beam():
+	assert_gt(Util.z_index_for(Util.BLOCK_TYPE.MIRROR_SHORT), Util.Z_LASER, "short mirror above beam")
+	assert_gt(Util.z_index_for(Util.BLOCK_TYPE.MIRROR_LONG), Util.Z_LASER, "long mirror above beam")
