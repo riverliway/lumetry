@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dgwc0vxyda6dn"]
+[gd_scene load_steps=11 format=3 uid="uid://dgwc0vxyda6dn"]
 
 [ext_resource type="PackedScene" uid="uid://dkd42r5x5yhs4" path="res://tileset/floor/floor_pattern.tscn" id="1_wewmp"]
 [ext_resource type="Script" path="res://levels/room.gd" id="2_ogn6p"]
+[ext_resource type="Script" path="res://levels/level1/level_1.gd" id="9_lvl1"]
 [ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="3_pqpdu"]
 [ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/wall/wall.tscn" id="4_pgt2t"]
 [ext_resource type="PackedScene" uid="uid://edblwq6jllx4" path="res://tileset/mirror/mirror.tscn" id="5_qqaov"]
@@ -11,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d0mglhdyaqp5" path="res://tileset/prisim/prisim.tscn" id="8_nl0sw"]
 
 [node name="Level1" type="Node2D"]
+script = ExtResource("9_lvl1")
 
 [node name="Background" type="Node2D" parent="."]
 
