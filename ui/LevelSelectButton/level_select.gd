@@ -31,9 +31,9 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):  # ESC: back to the title menu
-		get_tree().change_scene_to_file(TITLE_MENU_SCENE)
+		Transition.change_scene_to(TITLE_MENU_SCENE)
 		get_viewport().set_input_as_handled()
 
 
 func _open_level(number: int) -> void:
-	get_tree().change_scene_to_file("res://levels/level%d/level_%d.tscn" % [number, number])
+	Transition.change_scene_to("res://levels/level%d/level_%d.tscn" % [number, number])

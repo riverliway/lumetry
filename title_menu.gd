@@ -26,7 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _on_experiments() -> void:
-	get_tree().change_scene_to_file(LEVEL_SELECT_SCENE)
+	Transition.change_scene_to(LEVEL_SELECT_SCENE)
 
 
 func _on_calibrations() -> void:
@@ -39,6 +39,7 @@ func _confirm_quit() -> void:
 
 
 func _quit() -> void:
+	await Transition.fade_out()  # fade to black before the window closes
 	get_tree().quit()
 
 

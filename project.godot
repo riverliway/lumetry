@@ -24,6 +24,7 @@ config/icon="res://icon.svg"
 Util="*res://global/util.gd"
 AnimSync="*res://global/anim_sync.gd"
 SaveData="*res://global/save_data.gd"
+Transition="*res://global/scene_transition.gd"
 
 [display]
 
