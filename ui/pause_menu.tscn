@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpausemenu8x2q4"]
+
+[ext_resource type="Theme" uid="uid://bofbklpxqt5ff" path="res://ui/default_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://ui/pause_menu.gd" id="2_pause"]
+[ext_resource type="Script" path="res://ui/menu_nav.gd" id="3_nav"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+layer = 10
+process_mode = 3
+script = ExtResource("2_pause")
+
+[node name="Menu" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme = ExtResource("1_theme")
+
+[node name="Dim" type="ColorRect" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Center" type="CenterContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" type="VBoxContainer" parent="Menu/Center"]
+layout_mode = 2
+theme_override_constants/separation = 60
+
+[node name="Title" type="Label" parent="Menu/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 180
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="Resume" type="Button" parent="Menu/Center/Box"]
+layout_mode = 2
+text = "Resume"
+
+[node name="ResetRoom" type="Button" parent="Menu/Center/Box"]
+layout_mode = 2
+text = "Reset Room"
+
+[node name="Calibrations" type="Button" parent="Menu/Center/Box"]
+layout_mode = 2
+text = "Calibrations"
+
+[node name="Quit" type="Button" parent="Menu/Center/Box"]
+layout_mode = 2
+text = "Quit to Level Select"
+
+[node name="MenuNav" type="Node" parent="Menu/Center/Box"]
+script = ExtResource("3_nav")

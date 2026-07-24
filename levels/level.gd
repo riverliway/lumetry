@@ -19,6 +19,8 @@ class_name Level
 ## Dim tint for floor cells under a wall, so the arena boundary reads darker than
 ## the open, movable cells. Matches the old hand-authored `is_background` look.
 const WALL_FLOOR_MODULATE := Color("ffffff26")
+## Pause menu overlay, added to every room so ESC always has a menu behind it.
+const PAUSE_MENU := preload("res://ui/pause_menu.tscn")
 
 @onready var room: Room = $Room
 
@@ -26,6 +28,7 @@ const WALL_FLOOR_MODULATE := Color("ffffff26")
 func _ready() -> void:
 	dim_wall_floor()
 	fit_to_screen()
+	add_child(PAUSE_MENU.instantiate())
 
 
 ## Dims each baked floor tile that sits on a wall cell, marking the non-playable
