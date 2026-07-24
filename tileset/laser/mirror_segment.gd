@@ -6,9 +6,14 @@ class_name MirrorSegment
 ## short/long set, tints it, and places it with a Transform2D from
 ## Grid.mirror_bounce_transforms (a rotation, possibly reflected).
 
+## The colorblind glyph overlay, if present.
+@onready var _symbol: ColorSymbol = get_node_or_null("ColorSymbol")
+
 ## Deactivates the segment
 func clear_laser() -> void:
 	hide()
+	if _symbol:
+		_symbol.set_active(false)
 
 
 ## Whether this segment is currently shown
@@ -24,5 +29,8 @@ func set_mirror(is_long: bool, color: Util.LASER_COLOR, xf: Transform2D) -> void
 	animation = 'long' if is_long else 'short'
 	AnimSync.sync(self)
 	self_modulate = LaserSegment.LASER_MODULATE.get(color, Color.WHITE)
+	if _symbol:
+		_symbol.set_symbol(color)
+		_symbol.set_active(true)
 	transform = xf
 	show()

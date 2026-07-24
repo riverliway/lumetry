@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cpausemenu8x2q4"]
+[gd_scene load_steps=5 format=3 uid="uid://cpausemenu8x2q4"]
 
 [ext_resource type="Theme" uid="uid://bofbklpxqt5ff" path="res://ui/default_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://ui/pause_menu.gd" id="2_pause"]
 [ext_resource type="Script" path="res://ui/menu_nav.gd" id="3_nav"]
+[ext_resource type="PackedScene" path="res://ui/options_menu.tscn" id="4_options"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 layer = 10
@@ -65,3 +66,5 @@ text = "Quit to Level Select"
 
 [node name="MenuNav" type="Node" parent="Menu/Center/Box"]
 script = ExtResource("3_nav")
+
+[node name="Options" parent="Menu" instance=ExtResource("4_options")]

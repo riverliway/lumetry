@@ -18,10 +18,18 @@ extends Node
 ## so old saves keep working as the schema grows -- to add a field, add it to
 ## DEFAULTS and validate it in _normalize(). Mutators write back automatically.
 
+## Emitted after a setting is changed via set_setting(), carrying the setting's
+## key and its (validated) new value. Systems that react to settings live -- the
+## audio buses, the colorblind beam/detector symbols -- listen for this so a
+## change in the options menu takes effect immediately.
+signal setting_changed(key: String, value)
+
 const SAVE_PATH := "user://save.json"
 const LEVEL_COUNT := 18
 ## Allowed values for settings.colorblind_mode.
 const COLORBLIND_MODES := ["default", "patterned"]
+## Allowed values for settings.text_speed (consumed by the dialogue system).
+const TEXT_SPEEDS := ["slow", "normal", "fast"]
 
 ## Per-level progression, stored in `levels` as one of these values per level.
 ## Ordered so higher means "further along" (LOCKED < UNLOCKED < COMPLETED).
@@ -37,9 +45,11 @@ const DEFAULTS := {
 		LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED],
 	"sandbox_unlocked": false,
 	"settings": {
+		"master_audio": 100,
 		"music_audio": 100,
 		"sfx_audio": 100,
 		"colorblind_mode": "default",
+		"text_speed": "normal",
 	},
 }
 
@@ -217,21 +227,28 @@ func get_setting(key: String) -> Variant:
 	return data["settings"].get(key, DEFAULTS["settings"].get(key))
 
 
-## Sets a validated setting and saves. Audio is clamped to 0-100; colorblind_mode
-## must be one of COLORBLIND_MODES. Unknown keys and invalid values are ignored.
+## Sets a validated setting, saves, and emits `setting_changed`. Audio is clamped
+## to 0-100; colorblind_mode must be one of COLORBLIND_MODES and text_speed one of
+## TEXT_SPEEDS. Unknown keys and invalid values are ignored (no save, no signal).
 func set_setting(key: String, value: Variant) -> void:
 	match key:
-		"music_audio", "sfx_audio":
+		"master_audio", "music_audio", "sfx_audio":
 			data["settings"][key] = clampi(int(value), 0, 100)
 		"colorblind_mode":
 			if not value in COLORBLIND_MODES:
 				push_warning("SaveData: invalid colorblind_mode '%s'" % value)
 				return
 			data["settings"]["colorblind_mode"] = value
+		"text_speed":
+			if not value in TEXT_SPEEDS:
+				push_warning("SaveData: invalid text_speed '%s'" % value)
+				return
+			data["settings"]["text_speed"] = value
 		_:
 			push_warning("SaveData: unknown setting '%s'" % key)
 			return
 	save()
+	setting_changed.emit(key, data["settings"][key])
 
 
 # ------------------------------------------------------------------- internal
@@ -252,11 +269,15 @@ func _normalize(loaded: Dictionary) -> Dictionary:
 
 	var settings = loaded.get("settings")
 	if settings is Dictionary:
+		if "master_audio" in settings:
+			result["settings"]["master_audio"] = clampi(int(settings["master_audio"]), 0, 100)
 		if "music_audio" in settings:
 			result["settings"]["music_audio"] = clampi(int(settings["music_audio"]), 0, 100)
 		if "sfx_audio" in settings:
 			result["settings"]["sfx_audio"] = clampi(int(settings["sfx_audio"]), 0, 100)
 		if settings.get("colorblind_mode") in COLORBLIND_MODES:
 			result["settings"]["colorblind_mode"] = settings["colorblind_mode"]
+		if settings.get("text_speed") in TEXT_SPEEDS:
+			result["settings"]["text_speed"] = settings["text_speed"]
 
 	return result

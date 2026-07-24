@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj7aw6ugryoas"]
+[gd_scene load_steps=6 format=3 uid="uid://bj7aw6ugryoas"]
 
 [ext_resource type="Script" path="res://tileset/laser/laser_segment.gd" id="3_01y2t"]
 [ext_resource type="Texture2D" uid="uid://dg46j1b6lff1u" path="res://tileset/laser/white_laser/laser_white_1.png" id="5_w6lrc"]
 [ext_resource type="Texture2D" uid="uid://deb570lrxcb3t" path="res://tileset/laser/white_laser/laser_white_2.png" id="6_hl80p"]
+[ext_resource type="Script" path="res://tileset/color_symbol/color_symbol.gd" id="7_sym"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yo1vm"]
 animations = [{
@@ -22,3 +23,7 @@ animations = [{
 sprite_frames = SubResource("SpriteFrames_yo1vm")
 animation = &"white"
 script = ExtResource("3_01y2t")
+
+[node name="ColorSymbol" type="Node2D" parent="."]
+visible = false
+script = ExtResource("7_sym")

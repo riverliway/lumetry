@@ -6,9 +6,14 @@ class_name PrismSegment
 ## baked into the sprite by tools/image_compiler.py; this node tints it and
 ## places it via a rotation Transform2D from Grid._draw_prism_split.
 
+## The colorblind glyph overlay, if present.
+@onready var _symbol: ColorSymbol = get_node_or_null("ColorSymbol")
+
 ## Deactivates the segment
 func clear_laser() -> void:
 	hide()
+	if _symbol:
+		_symbol.set_active(false)
 
 
 ## Whether this segment is currently shown
@@ -22,5 +27,8 @@ func is_active() -> bool:
 func set_prism(color: Util.LASER_COLOR, xf: Transform2D) -> void:
 	AnimSync.sync(self)
 	self_modulate = LaserSegment.LASER_MODULATE.get(color, Color.WHITE)
+	if _symbol:
+		_symbol.set_symbol(color)
+		_symbol.set_active(true)
 	transform = xf
 	show()

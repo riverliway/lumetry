@@ -9,6 +9,7 @@ extends Control
 const LEVEL_SELECT_SCENE := "res://level_select.tscn"
 
 @onready var _confirm: Control = $Confirm
+@onready var _options: Control = $Options
 
 
 func _ready() -> void:
@@ -17,10 +18,12 @@ func _ready() -> void:
 	$Center/Menu/DropOut.pressed.connect(_confirm_quit)
 	_confirm.confirmed.connect(_quit)
 	_confirm.canceled.connect(_on_quit_canceled)
+	_options.closed.connect(_on_options_closed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause") and not _confirm.visible:  # ESC: back out
+	# ESC backs out, but only when no overlay owns it (each closes itself on ESC).
+	if event.is_action_pressed("pause") and not _confirm.visible and not _options.visible:
 		_confirm_quit()
 		get_viewport().set_input_as_handled()
 
@@ -30,8 +33,11 @@ func _on_experiments() -> void:
 
 
 func _on_calibrations() -> void:
-	# TODO: open the calibrations (settings) menu once it exists.
-	push_warning("Calibrations menu not implemented yet")
+	_options.open()
+
+
+func _on_options_closed() -> void:
+	$Center/Menu/Calibrations.grab_focus()  # return the cursor to the menu
 
 
 func _confirm_quit() -> void:

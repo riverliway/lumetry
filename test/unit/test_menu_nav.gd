@@ -59,3 +59,34 @@ func test_wasd_moves_the_cursor_by_geometry():
 	event.pressed = true
 	nav._unhandled_input(event)
 	assert_true(bottom.has_focus(), "move_down moves the cursor to the lower button")
+
+
+func test_sliders_are_targets_and_left_right_adjust_them():
+	var root := Control.new()
+	var slider := HSlider.new()
+	slider.name = "S"
+	slider.min_value = 0
+	slider.max_value = 100
+	slider.step = 5
+	slider.value = 50
+	slider.size = Vector2(300, 60)
+	root.add_child(slider)
+	var nav := Node.new()
+	nav.set_script(MenuNavScript)
+	root.add_child(nav)
+	add_child_autofree(root)
+	await get_tree().process_frame
+	assert_eq(slider.focus_mode, Control.FOCUS_ALL, "slider is a focusable target")
+	assert_true(slider.has_focus(), "cursor starts on the slider")
+
+	var right := InputEventAction.new()
+	right.action = "move_right"
+	right.pressed = true
+	nav._unhandled_input(right)
+	assert_eq(slider.value, 55.0, "move_right steps the slider up")
+
+	var left := InputEventAction.new()
+	left.action = "move_left"
+	left.pressed = true
+	nav._unhandled_input(left)
+	assert_eq(slider.value, 50.0, "move_left steps the slider down")

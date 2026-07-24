@@ -213,6 +213,38 @@ func test_set_setting_ignores_unknown_key():
 	s.set_setting("does_not_exist", 5)
 	assert_false(s.data["settings"].has("does_not_exist"), "unknown key not stored")
 
+func test_master_audio_default_and_clamp():
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.get_setting("master_audio"), 100, "master defaults to 100")
+	s.set_setting("master_audio", 250)
+	assert_eq(s.get_setting("master_audio"), 100, "clamped high")
+	s.set_setting("master_audio", -5)
+	assert_eq(s.get_setting("master_audio"), 0, "clamped low")
+
+func test_text_speed_default_and_validation():
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.get_setting("text_speed"), "normal", "text speed defaults to normal")
+	s.set_setting("text_speed", "fast")
+	assert_eq(s.get_setting("text_speed"), "fast", "valid value stored")
+	s.set_setting("text_speed", "warp")
+	assert_eq(s.get_setting("text_speed"), "fast", "invalid value ignored")
+
+func test_setting_changed_signal_carries_key_and_value():
+	var s = _make()
+	s.load_from_disk()
+	watch_signals(s)
+	s.set_setting("music_audio", 55)
+	assert_signal_emitted_with_parameters(s, "setting_changed", ["music_audio", 55])
+
+func test_setting_changed_not_emitted_for_invalid_value():
+	var s = _make()
+	s.load_from_disk()
+	watch_signals(s)
+	s.set_setting("text_speed", "nope")
+	assert_signal_not_emitted(s, "setting_changed")
+
 # --------------------------------------------------------------- progression
 func test_complete_level_unlocks_the_next():
 	var s = _make()

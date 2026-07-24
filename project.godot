@@ -25,6 +25,11 @@ Util="*res://global/util.gd"
 AnimSync="*res://global/anim_sync.gd"
 SaveData="*res://global/save_data.gd"
 Transition="*res://global/scene_transition.gd"
+Audio="*res://global/audio.gd"
+
+[audio]
+
+buses/default_bus_layout="res://default_bus_layout.tres"
 
 [display]
 

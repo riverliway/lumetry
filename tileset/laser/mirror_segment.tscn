@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bv3xvnswgiual" path="res://tileset/laser/white_laser_mirrored_short/laser_white_mirrored_short_2.png" id="3_ms2"]
 [ext_resource type="Texture2D" uid="uid://dhhc3cm8yd8v0" path="res://tileset/laser/white_laser_mirrored_long/laser_white_mirrored_long_1.png" id="4_ml1"]
 [ext_resource type="Texture2D" uid="uid://bli6tx1v2wt61" path="res://tileset/laser/white_laser_mirrored_long/laser_white_mirrored_long_2.png" id="5_ml2"]
+[ext_resource type="Script" path="res://tileset/color_symbol/color_symbol.gd" id="6_sym"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mseg"]
 animations = [{
@@ -35,3 +36,7 @@ animations = [{
 sprite_frames = SubResource("SpriteFrames_mseg")
 animation = &"short"
 script = ExtResource("1_mseg")
+
+[node name="ColorSymbol" type="Node2D" parent="."]
+visible = false
+script = ExtResource("6_sym")

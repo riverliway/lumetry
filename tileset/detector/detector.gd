@@ -31,12 +31,29 @@ var _was_hit := false  ## is_hit at the start of the current pass
 func begin_pass() -> void:
 	_was_hit = is_hit
 	is_hit = false
+	_hide_symbol()
 
 
 ## Marks the detector as struck by a beam of `color` during this pass.
 func mark_hit(color: Util.LASER_COLOR) -> void:
 	is_hit = true
 	hit_color = color
+	_show_symbol(color)
+
+
+## Shows the colorblind glyph for the striking beam's color, if the overlay
+## exists (it is absent in the stripped-down detector unit tests).
+func _show_symbol(color: Util.LASER_COLOR) -> void:
+	var symbol := get_node_or_null("ColorSymbol")
+	if symbol:
+		symbol.set_symbol(color)
+		symbol.set_active(true)
+
+
+func _hide_symbol() -> void:
+	var symbol := get_node_or_null("ColorSymbol")
+	if symbol:
+		symbol.set_active(false)
 
 
 ## Ends a physics pass, emitting an edge signal if the hit state changed.

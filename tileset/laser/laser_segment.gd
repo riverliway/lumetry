@@ -17,9 +17,14 @@ const LASER_MODULATE := {
 	Util.LASER_COLOR.DESTRUCTIVE: Color(1.0, 0.35, 0.30),
 }
 
+## The colorblind glyph overlay, if present (null in stripped-down test rigs).
+@onready var _symbol: ColorSymbol = get_node_or_null("ColorSymbol")
+
 ## Deactivates the laser
 func clear_laser() -> void:
 	hide()
+	if _symbol:
+		_symbol.set_active(false)
 
 
 ## Checks if the laser is activated
@@ -39,6 +44,9 @@ func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LAS
 	animation = 'white'
 	AnimSync.sync(self)
 	self_modulate = LASER_MODULATE.get(color, Color.WHITE)
+	if _symbol:
+		_symbol.set_symbol(color)
+		_symbol.set_active(true)
 
 	from = pfrom
 	to = pto

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2fcdthdccu5"]
+[gd_scene load_steps=6 format=3 uid="uid://c2fcdthdccu5"]
 
 [ext_resource type="Theme" uid="uid://bofbklpxqt5ff" path="res://ui/default_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://title_menu.gd" id="2_menu"]
 [ext_resource type="Script" path="res://ui/menu_nav.gd" id="3_nav"]
 [ext_resource type="PackedScene" path="res://ui/confirm_dialog.tscn" id="4_confirm"]
+[ext_resource type="PackedScene" path="res://ui/options_menu.tscn" id="5_options"]
 
 [node name="TitleMenu" type="Control"]
 layout_mode = 3
@@ -49,3 +50,5 @@ text = "Drop Out"
 script = ExtResource("3_nav")
 
 [node name="Confirm" parent="." instance=ExtResource("4_confirm")]
+
+[node name="Options" parent="." instance=ExtResource("5_options")]
