@@ -52,3 +52,4 @@ script = ExtResource("3_nav")
 [node name="Confirm" parent="." instance=ExtResource("4_confirm")]
 
 [node name="Options" parent="." instance=ExtResource("5_options")]
+show_reset = true

@@ -19,8 +19,10 @@ func after_each() -> void:
 	Audio.apply_all()    # resync the buses to the restored levels
 
 
-func _open_menu():
-	var menu = add_child_autofree(OptionsScene.instantiate())
+func _open_menu(show_reset := false):
+	var menu = OptionsScene.instantiate()
+	menu.show_reset = show_reset  # set before _ready so it configures the button
+	add_child_autofree(menu)
 	await get_tree().process_frame  # let _ready hide + wire the controls
 	menu.open()
 	return menu
@@ -72,6 +74,42 @@ func test_text_speed_cycles_and_wraps():
 	assert_eq(SaveData.get_setting("text_speed"), "fast", "normal -> fast")
 	btn.pressed.emit()
 	assert_eq(SaveData.get_setting("text_speed"), "slow", "fast wraps to slow")
+
+
+func test_reset_is_hidden_unless_from_the_title_screen():
+	var menu = await _open_menu()  # in-game (pause) copy: show_reset defaults false
+	var reset = menu.get_node("Center/Panel/Box/ResetSave")
+	assert_false(reset.visible, "Reset Save is hidden in the in-level pause menu")
+	assert_true(reset.disabled, "and disabled, so the cursor never lands on it")
+
+
+func test_reset_button_opens_a_confirmation():
+	var menu = await _open_menu(true)
+	menu.get_node("Center/Panel/Box/ResetSave").pressed.emit()
+	var confirm = menu.get_node("Confirm")
+	assert_true(confirm.visible, "Reset Save opens a confirmation dialog")
+	assert_eq(confirm.get_node("Center/Panel/Box/Message").text,
+		"Reset all progress? This can't be undone.", "shows the reset prompt")
+
+
+func test_reset_cancel_keeps_progress_and_reopens_menu():
+	SaveData.data["levels"][3] = SaveData.LevelState.COMPLETED
+	var menu = await _open_menu(true)
+	menu.get_node("Center/Panel/Box/ResetSave").pressed.emit()
+	menu.get_node("Confirm/Center/Panel/Box/Buttons/Cancel").pressed.emit()
+	assert_false(menu.get_node("Confirm").visible, "cancel closes the confirmation")
+	assert_true(menu.visible, "the options menu stays open after cancel")
+	assert_eq(SaveData.get_level_state(3), SaveData.LevelState.COMPLETED, "cancel keeps progress")
+
+
+func test_confirming_reset_wipes_progress_and_closes():
+	SaveData.data["levels"][3] = SaveData.LevelState.COMPLETED
+	var menu = await _open_menu(true)
+	menu.get_node("Center/Panel/Box/ResetSave").pressed.emit()
+	menu.get_node("Confirm/Center/Panel/Box/Buttons/Confirm").pressed.emit()
+	assert_eq(SaveData.get_level_state(3), SaveData.LevelState.LOCKED, "reset wiped the completed level")
+	assert_eq(SaveData.get_level_state(0), SaveData.LevelState.UNLOCKED, "level 1 is unlocked again")
+	assert_false(menu.visible, "reset closes the options menu")
 
 
 func test_close_hides_and_emits():

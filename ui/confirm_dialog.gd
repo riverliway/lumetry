@@ -7,6 +7,7 @@ extends Control
 signal confirmed
 signal canceled
 
+@onready var _message: Label = $Center/Panel/Box/Message
 @onready var _confirm_button: Button = $Center/Panel/Box/Buttons/Confirm
 @onready var _cancel_button: Button = $Center/Panel/Box/Buttons/Cancel
 
@@ -17,8 +18,14 @@ func _ready() -> void:
 	_cancel_button.pressed.connect(_on_cancel)
 
 
-## Shows the dialog and puts the cursor on Cancel (the safe default).
-func open() -> void:
+## Shows the dialog and puts the cursor on Cancel (the safe default). `message` and
+## `confirm_text` optionally override the prompt and the confirm button's label; an
+## empty string keeps whatever the scene already defines.
+func open(message := "", confirm_text := "") -> void:
+	if message != "":
+		_message.text = message
+	if confirm_text != "":
+		_confirm_button.text = confirm_text
 	show()
 	_cancel_button.grab_focus()
 
