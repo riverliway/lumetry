@@ -19,9 +19,10 @@ func after_each() -> void:
 	Audio.apply_all()    # resync the buses to the restored levels
 
 
-func _open_menu(show_reset := false):
+func _open_menu(show_reset := false, show_unlock := false):
 	var menu = OptionsScene.instantiate()
 	menu.show_reset = show_reset  # set before _ready so it configures the button
+	menu.show_unlock = show_unlock
 	add_child_autofree(menu)
 	await get_tree().process_frame  # let _ready hide + wire the controls
 	menu.open()
@@ -110,6 +111,28 @@ func test_confirming_reset_wipes_progress_and_closes():
 	assert_eq(SaveData.get_level_state(3), SaveData.LevelState.LOCKED, "reset wiped the completed level")
 	assert_eq(SaveData.get_level_state(0), SaveData.LevelState.UNLOCKED, "level 1 is unlocked again")
 	assert_false(menu.visible, "reset closes the options menu")
+
+
+func test_unlock_is_hidden_unless_from_the_title_screen():
+	var menu = await _open_menu()  # in-game (pause) copy: show_unlock defaults false
+	var unlock = menu.get_node("Center/Panel/Box/UnlockSave")
+	assert_false(unlock.visible, "Unlock Save is hidden in the in-level pause menu")
+	assert_true(unlock.disabled, "and disabled, so the cursor never lands on it")
+
+
+func test_unlock_button_opens_access_to_everything():
+	# A locked level, a completed one to prove unlock never downgrades progress,
+	# and a locked sandbox.
+	SaveData.data["levels"][5] = SaveData.LevelState.LOCKED
+	SaveData.data["levels"][3] = SaveData.LevelState.COMPLETED
+	SaveData.data["sandbox_unlocked"] = false
+	var menu = await _open_menu(false, true)
+	menu.get_node("Center/Panel/Box/UnlockSave").pressed.emit()
+	for i in range(SaveData.LEVEL_COUNT):
+		assert_true(SaveData.is_level_unlocked(i), "level %d is accessible" % i)
+	assert_eq(SaveData.get_level_state(3), SaveData.LevelState.COMPLETED, "a completed level stays completed")
+	assert_true(SaveData.is_sandbox_unlocked(), "the sandbox is unlocked")
+	assert_false(menu.visible, "unlock closes the options menu")
 
 
 func test_close_hides_and_emits():

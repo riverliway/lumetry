@@ -161,6 +161,10 @@ text = "Normal"
 layout_mode = 2
 text = "Reset Save"
 
+[node name="UnlockSave" type="Button" parent="Center/Panel/Box"]
+layout_mode = 2
+text = "Unlock Save"
+
 [node name="Back" type="Button" parent="Center/Panel/Box"]
 layout_mode = 2
 text = "Back"

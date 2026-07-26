@@ -289,3 +289,14 @@ func test_reset_restores_defaults():
 	assert_eq(s.get_level_state(6), s.LevelState.LOCKED, "auto-unlocked next cleared too")
 	assert_false(s.is_sandbox_unlocked(), "sandbox cleared")
 	assert_eq(s.get_level_state(0), s.LevelState.UNLOCKED, "level 1 back to unlocked")
+
+func test_unlock_all_opens_every_level_and_the_sandbox():
+	var s = _make()
+	s.load_from_disk()
+	s.complete_level(2)  # a completed level should survive the unlock
+	s.unlock_all()
+	for i in range(s.LEVEL_COUNT):
+		assert_true(s.is_level_unlocked(i), "level %d accessible after unlock_all" % i)
+	assert_eq(s.get_level_state(2), s.LevelState.COMPLETED, "unlock_all never downgrades a completed level")
+	assert_true(s.is_sandbox_unlocked(), "sandbox unlocked")
+	assert_eq(s.data["levels"].size(), s.LEVEL_COUNT, "array not grown")

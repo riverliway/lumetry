@@ -10,15 +10,19 @@ extends Control
 ## scene) so it works while the game is paused. Back or ESC closes it and emits
 ## `closed`, letting the owner return the cursor to whatever opened it.
 ##
-## Reset Save wipes all progress (behind a confirmation) via SaveData.reset(). It is
-## offered only from the title screen -- `show_reset` gates the button -- so a player
-## can't wipe the save mid-run from the in-level pause menu.
+## Reset Save wipes all progress (behind a confirmation) via SaveData.reset().
+## Unlock Save opens access to everything via SaveData.unlock_all(). Both are
+## offered only from the title screen -- `show_reset` / `show_unlock` gate them --
+## so a player can't wipe or skip the save mid-run from the in-level pause menu.
 
 signal closed
 
 ## Whether the Reset Save button is shown. Enabled only on the title-screen copy of
 ## this menu; the in-level pause menu leaves it off. Set on the scene instance.
 @export var show_reset := false
+
+## Whether the Unlock Save button is shown. Title-screen only, like `show_reset`.
+@export var show_unlock := false
 
 ## Text-speed cycle order and the label shown for each (keys mirror SaveData.TEXT_SPEEDS).
 const TEXT_SPEED_ORDER := ["slow", "normal", "fast"]
@@ -35,6 +39,7 @@ const RESET_PROMPT := "Reset all progress? This can't be undone."
 @onready var _colorblind: Button = $Center/Panel/Box/Colorblind/Toggle
 @onready var _text_speed: Button = $Center/Panel/Box/TextSpeed/Toggle
 @onready var _reset: Button = $Center/Panel/Box/ResetSave
+@onready var _unlock: Button = $Center/Panel/Box/UnlockSave
 @onready var _confirm: Control = $Confirm
 @onready var _nav: Node = $Center/Panel/Box/MenuNav
 
@@ -51,11 +56,14 @@ func _ready() -> void:
 	_colorblind.pressed.connect(_toggle_colorblind)
 	_text_speed.pressed.connect(_cycle_text_speed)
 	_reset.pressed.connect(_open_reset_confirm)
+	_unlock.pressed.connect(_on_unlock)
 	_confirm.confirmed.connect(_on_reset_confirmed)
 	_confirm.canceled.connect(_on_reset_canceled)
-	# Hidden AND disabled when not offered, so MenuNav never lands the cursor on it.
+	# Hidden AND disabled when not offered, so MenuNav never lands the cursor on them.
 	_reset.visible = show_reset
 	_reset.disabled = not show_reset
+	_unlock.visible = show_unlock
+	_unlock.disabled = not show_unlock
 	$Center/Panel/Box/Back.pressed.connect(close)
 
 
@@ -98,6 +106,14 @@ func _on_reset_confirmed() -> void:
 
 func _on_reset_canceled() -> void:
 	_reset.grab_focus()  # return the cursor to the options menu
+
+
+## Unlocks every level and the sandbox, then closes so the title's level select
+## (loaded fresh on the next open) shows the newly opened content. Not
+## destructive, so unlike Reset it needs no confirmation.
+func _on_unlock() -> void:
+	SaveData.unlock_all()
+	close()
 
 
 ## Wires a volume slider so its value label tracks it and a user-driven change is

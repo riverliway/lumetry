@@ -53,3 +53,4 @@ script = ExtResource("3_nav")
 
 [node name="Options" parent="." instance=ExtResource("5_options")]
 show_reset = true
+show_unlock = true

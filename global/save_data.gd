@@ -221,6 +221,17 @@ func set_sandbox_unlocked(value: bool) -> void:
 	save()
 
 
+## Opens access to everything: unlocks every level (without downgrading any that
+## are already completed) and unlocks the sandbox, then saves. Exposed only from
+## the title-screen options menu as a progress shortcut.
+func unlock_all() -> void:
+	for i in range(LEVEL_COUNT):
+		if data["levels"][i] == LevelState.LOCKED:
+			data["levels"][i] = LevelState.UNLOCKED
+	data["sandbox_unlocked"] = true
+	save()
+
+
 # ------------------------------------------------------------------- settings
 ## Current value of settings `key` (or its default if somehow unknown).
 func get_setting(key: String) -> Variant:
