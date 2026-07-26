@@ -25,3 +25,14 @@ func test_use_twice_returns_to_activated():
 	emitter.use()
 	emitter.use()
 	assert_true(emitter.activated)
+
+func test_interactable_by_default():
+	assert_true(make_emitter().interactable, "emitters are player-interactable unless configured otherwise")
+
+func test_use_still_toggles_a_non_interactable_emitter():
+	# `interactable` only gates the player's use verb (see Room.Grid._attempt_use);
+	# a direct use() call -- how level code drives an emitter -- still toggles it.
+	var emitter = make_emitter()
+	emitter.interactable = false
+	emitter.use()
+	assert_false(emitter.activated, "programmatic use() ignores the interactable flag")

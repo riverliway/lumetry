@@ -263,7 +263,9 @@ class Grid:
 			handle_laser_physics()
 			return
 
-		if new_cell.get_block_type() in [Util.BLOCK_TYPE.LASER_EMITTER]:
+		# Only a player-interactable emitter toggles from the use verb; a fixed one
+		# ignores the interaction entirely (no toggle, no use animation, no resolve).
+		if new_cell.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER and new_cell.block.interactable:
 			new_cell.block.use()
 			player.use()
 			handle_laser_physics()

@@ -28,6 +28,22 @@ func test_use_toggles_a_faced_emitter_off_then_on():
 	assert_gt(active_laser_count(room), 0, "and the beam came back")
 
 
+func test_use_cannot_toggle_a_non_interactable_emitter():
+	# A fixed emitter (interactable = false) ignores the player's use verb: it
+	# stays on and its beam is untouched.
+	var emitter := make_block(EmitterScene, 5, 6)
+	emitter.laser_range = -1
+	emitter.interactable = false
+	var room := build_room([emitter], Vector2i(5, 5))
+	assert_true(emitter.activated, "emitter starts on")
+	var beams_before := active_laser_count(room)
+
+	room.grid._attempt_use(Util.DIRECTION.DOWN)
+
+	assert_true(emitter.activated, "the player could not toggle the fixed emitter off")
+	assert_eq(active_laser_count(room), beams_before, "the beam is unchanged")
+
+
 func test_use_toward_empty_cell_does_nothing():
 	# The player faces an empty cell; a distant emitter must be left untouched.
 	var emitter := make_block(EmitterScene, 10, 6)
