@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b3lvl3scenxk"]
+[gd_scene format=3 uid="uid://clgbtvhkbix4r"]
 
 [ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="2_rlete"]
 [ext_resource type="Script" uid="uid://dtg4bvreeirqv" path="res://levels/room.gd" id="3_qnq8n"]
@@ -1426,10 +1426,10 @@ offset_bottom = 40.0
 
 [node name="Black13" type="ColorRect" parent="WallArt" unique_id=696716871]
 layout_mode = 0
-offset_left = 2884.0
-offset_top = -8.0
-offset_right = 3095.0
-offset_bottom = 331.0
+offset_left = 3811.0
+offset_top = -36.0
+offset_right = 4022.0
+offset_bottom = 303.0
 rotation = 1.5708
 color = Color(0, 0, 0, 1)
 
