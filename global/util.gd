@@ -142,7 +142,10 @@ func z_index_for(block_type: BLOCK_TYPE) -> int:
 		BLOCK_TYPE.LASER_EMITTER:
 			return 70
 		_:
-			return 80  # walls, meltable, and any other solid block render on top
+			# Walls, meltable, crates, and any other solid block render on top.
+			# A crate in particular must sit above Z_LASER so it hides the cut end
+			# of the half-beam drawn where light strikes it (see Grid._draw_crate_hit).
+			return 80
 
 enum DIRECTION {
 	NONE,
@@ -166,7 +169,8 @@ enum BLOCK_TYPE {
 	ROTATION_PAD,
 	LASER_DETECTOR,
 	LASER_FOCUSER,
-	MELTABLE
+	MELTABLE,
+	CRATE
 }
 
 enum PLAYER_STATE {

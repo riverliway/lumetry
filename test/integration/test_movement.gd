@@ -34,6 +34,26 @@ func test_cannot_move_into_wall_without_track():
 	assert_eq(room.grid.grid[5][5].block, player, "player blocked, stayed put")
 	assert_eq(room.grid.grid[5][6].block, wall, "wall unchanged")
 
+func test_cannot_move_into_crate_without_track():
+	# A crate off a track is solid, just like a wall: the player cannot enter it.
+	var crate := make_block(CrateScene, 5, 6)  # DOWN neighbor of (5,5)
+	var room := build_room([crate], Vector2i(5, 5))
+	var player := room.get_node("Player")
+	room.grid._attempt_move(Util.DIRECTION.DOWN)
+	player._process(1.0)
+	assert_eq(room.grid.grid[5][5].block, player, "player blocked, stayed put")
+	assert_eq(room.grid.grid[5][6].block, crate, "crate unchanged")
+
+func test_pushes_crate_along_enabled_track():
+	var crate := make_block(CrateScene, 5, 6)
+	var track := make_track(5, 6, [Util.DIRECTION.DOWN])
+	var room := build_room([crate, track], Vector2i(5, 5))
+	var player := room.get_node("Player")
+	room.grid._attempt_move(Util.DIRECTION.DOWN)
+	player._process(1.0)
+	assert_eq(room.grid.grid[5][7].block, crate, "crate pushed one cell down")
+	assert_null(room.grid.grid[5][6].block, "crate left its old cell")
+
 func test_cannot_walk_into_active_laser():
 	var emitter := make_block(EmitterScene, 7, 3)  # faces DOWN, beam down column 7
 	emitter.laser_range = -1

@@ -191,6 +191,15 @@ class Grid:
 					_cells_to_melt.push_back(cell)
 				return
 
+			if cell.get_block_type() == Util.BLOCK_TYPE.CRATE:
+				# The crate is opaque -- the beam stops here regardless of color
+				# (unlike walls, which are laser-transparent). Draw a flat-cut
+				# half-beam into the cell, the same half-beam a prism uses for its
+				# incoming light, so the beam appears to strike the crate face; the
+				# crate sprite sits above Z_LASER and hides the cut end.
+				_draw_crate_hit(cell, laser_facing, color)
+				return
+
 			if cell.get_block_type() == Util.BLOCK_TYPE.PRISIM:
 				if color != Util.LASER_COLOR.WHITE:
 					# Colored lasers are absorbed by the prism
@@ -501,6 +510,13 @@ class Grid:
 		]
 		cell.add_prism_laser(colors, transforms)
 
+	## Renders a laser striking a crate as a single flat-cut half-beam pointing
+	## along `incoming_dir` and ending at the crate's center. Reuses the prism's
+	## flat-cut half-beam sprite; the crate sprite (drawn above Z_LASER) hides the
+	## cut end, so the beam looks like it stops dead at the crate.
+	func _draw_crate_hit(cell: Cell, incoming_dir: Util.DIRECTION, color: Util.LASER_COLOR) -> void:
+		cell.add_crate_laser(color, Transform2D(laser_rotation(incoming_dir), cell.pos))
+
 	## Given a position in pixels, returns the nearest cell in the grid measured by euclidean distance
 	## [br]`pos` is the position of the center of the object
 	func get_nearest_cell(pos: Vector2) -> Cell:
@@ -550,6 +566,7 @@ class Cell:
 	var laser: Array[LaserSegment] = [] ## The laser sprites, cached so we don't have to keep remaking them
 	var mirror_laser: Array[MirrorSegment] = [] ## The two half-beam bounce sprites when a mirror sits here
 	var prism_laser: Array[PrismSegment] = [] ## The four half-beam split sprites when a prism sits here
+	var crate_laser: Array[PrismSegment] = [] ## Flat-cut half-beam sprites when a laser strikes a crate here (one per incoming beam)
 	
 	## Initializes the cell at the given position and grid indices
 	## [br]`ppos` is the position of this cell in the world (px)
@@ -649,6 +666,21 @@ class Cell:
 			resolve_room.call().add_child(seg)
 		prism_laser[index].set_prism(color, xf)
 
+	## Draws a laser striking a crate here as a single flat-cut half-beam, reusing
+	## the prism half-beam sprite. Pooled like the straight segments, since a crate
+	## can be struck from several directions at once. Transform comes from
+	## Grid._draw_crate_hit.
+	func add_crate_laser(color: Util.LASER_COLOR, xf: Transform2D) -> void:
+		var available_segment = Util.find_elem(crate_laser, func(cs): return !cs.is_active())
+		if len(available_segment) == 0:
+			var new_segment = Room.prism_segment_scene.instantiate()
+			new_segment.z_index = Util.Z_LASER
+			crate_laser.push_back(new_segment)
+			resolve_room.call().add_child(new_segment)
+			new_segment.set_prism(color, xf)
+		else:
+			available_segment[0].set_prism(color, xf)
+
 	## Clears out all lasers in this cell
 	func clear_laser() -> void:
 		for l in laser:
@@ -657,6 +689,8 @@ class Cell:
 			m.clear_laser()
 		for p in prism_laser:
 			p.clear_laser()
+		for cs in crate_laser:
+			cs.clear_laser()
 			
 	## Checks if this cell has an active laser in it
 	func is_laser_active() -> bool:

@@ -35,6 +35,40 @@ func test_beam_passes_through_walls():
 	assert_true(room.grid.grid[4][5].is_laser_active(), "the wall cell itself is lit")
 	assert_true(room.grid.grid[4][6].is_laser_active(), "beam continues past the wall")
 
+func test_crate_stops_the_beam():
+	# Unlike a wall, a crate is opaque: the beam reaches it and stops dead rather
+	# than passing through.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var crate := make_block(CrateScene, 4, 6)
+	var room := build_room([emitter, crate], Vector2i(20, 0))
+	assert_true(room.grid.grid[4][5].is_laser_active(), "beam reaches the cell before the crate")
+	assert_false(room.grid.grid[4][6].is_laser_active(), "crate cell has no straight beam segment")
+	assert_false(room.grid.grid[4][7].is_laser_active(), "beam does not continue past the crate")
+
+func test_crate_cell_draws_a_half_beam_where_light_strikes_it():
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var crate := make_block(CrateScene, 4, 6)
+	var room := build_room([emitter, crate], Vector2i(20, 0))
+	var ccell = room.grid.grid[4][6]
+	var active = ccell.crate_laser.filter(func(cs): return cs.is_active())
+	assert_eq(active.size(), 1, "crate cell draws one flat-cut half-beam for the incoming light")
+
+func test_crate_also_stops_a_colored_beam():
+	# A prism upstream splits white light into colors; a colored beam is opaque to
+	# the crate just as the white one is.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var prism := make_block(PrismScene, 4, 5)
+	# The prism's straight (magenta) output travels DOWN into the crate below it.
+	var crate := make_block(CrateScene, 4, 7)
+	var room := build_room([emitter, prism, crate], Vector2i(20, 0))
+	assert_true(room.grid.grid[4][6].is_laser_active(), "magenta beam reaches the cell before the crate")
+	assert_false(room.grid.grid[4][8].is_laser_active(), "colored beam does not pass through the crate")
+	var active = room.grid.grid[4][7].crate_laser.filter(func(cs): return cs.is_active())
+	assert_eq(active.size(), 1, "crate draws its half-beam for the colored strike too")
+
 func test_no_beam_when_emitter_starts_disabled():
 	var emitter := make_block(EmitterScene, 4, 3)
 	emitter.laser_range = -1

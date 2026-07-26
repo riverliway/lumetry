@@ -26,3 +26,8 @@ func test_meltable_block_type():
 	var m = MeltableScene.instantiate()
 	assert_eq(m.block_type, Util.BLOCK_TYPE.MELTABLE)
 	m.free()
+
+func test_crate_block_type():
+	var c = CrateScene.instantiate()
+	assert_eq(c.block_type, Util.BLOCK_TYPE.CRATE)
+	c.free()

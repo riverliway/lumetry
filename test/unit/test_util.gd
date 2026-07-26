@@ -148,3 +148,8 @@ func test_z_order_is_back_to_front():
 func test_mirror_renders_above_the_laser_beam():
 	assert_gt(Util.z_index_for(Util.BLOCK_TYPE.MIRROR_SHORT), Util.Z_LASER, "short mirror above beam")
 	assert_gt(Util.z_index_for(Util.BLOCK_TYPE.MIRROR_LONG), Util.Z_LASER, "long mirror above beam")
+
+func test_crate_renders_above_the_laser_beam():
+	# The crate must sit above the beam so it hides the cut end of the half-beam
+	# drawn where light strikes it (see Grid._draw_crate_hit).
+	assert_gt(Util.z_index_for(Util.BLOCK_TYPE.CRATE), Util.Z_LASER, "crate above beam")

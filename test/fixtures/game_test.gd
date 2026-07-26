@@ -15,6 +15,7 @@ const TrackScene: PackedScene = preload("res://tileset/track/track.tscn")
 const DetectorScene: PackedScene = preload("res://tileset/detector/detector.tscn")
 const FocuserScene: PackedScene = preload("res://tileset/focuser/focuser.tscn")
 const MeltableScene: PackedScene = preload("res://tileset/meltable/meltable.tscn")
+const CrateScene: PackedScene = preload("res://tileset/crate/crate.tscn")
 
 # Grid geometry mirrors Room.Grid (WIDTH/HEIGHT/SIZE/START). Kept in one place so
 # the fixture can compute exact cell centers without reaching into private state.

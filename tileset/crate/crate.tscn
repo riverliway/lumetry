@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://ccrate3blk700"]
+
+[ext_resource type="Texture2D" path="res://tileset/crate/crate.png" id="1_cratetx"]
+[ext_resource type="Script" path="res://tileset/crate/crate.gd" id="2_cratesc"]
+
+[node name="Crate" type="Sprite2D"]
+texture = ExtResource("1_cratetx")
+script = ExtResource("2_cratesc")
