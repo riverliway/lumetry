@@ -26,8 +26,22 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	pass
-
 	
+	
+func handle_laser_physics() -> void:
+	grid.handle_laser_physics()
+
+
+## Rotates the block sitting on the given rotation pad one hex step clockwise
+## (animating both) and re-resolves the lasers -- the programmatic equivalent of
+## a player rotating it with the use verb, and unaffected by the pad's
+## `interactable` flag. Level scripts call this in response to signals (e.g. a
+## detector), the same way they toggle an emitter's `activated`; see
+## levels/level3 for the signal-routing pattern.
+func rotate_pad(pad: RotationPad) -> void:
+	grid.rotate_pad(pad)
+
+
 ## The datastructure to handle the hexagonal grid of cells.
 ## Has various helper functions for navigating the grid and handling laser physics.
 class Grid:
@@ -257,10 +271,12 @@ class Grid:
 
 		var rotation_pad = new_cell.get_rotation_pad()
 		if rotation_pad != null:
-			rotation_pad.perform_rotation(new_cell.block)
-			new_cell.block_facing = Util.rotate_direction_clockwise(new_cell.block_facing)
-			player.use()
-			handle_laser_physics()
+			# A pad-cell's use verb is always about rotation. A non-interactable
+			# pad is locked: using it does nothing (no rotation, no fall-through to
+			# a block on top). Level code drives a locked pad via rotate_pad().
+			if rotation_pad.interactable:
+				_rotate_pad_cell(new_cell)
+				player.use()
 			return
 
 		# Only a player-interactable emitter toggles from the use verb; a fixed one
@@ -269,6 +285,28 @@ class Grid:
 			new_cell.block.use()
 			player.use()
 			handle_laser_physics()
+
+	## Rotates the block on the given rotation pad one hex step clockwise and
+	## re-resolves the lasers. Ignores the pad's `interactable` flag -- that only
+	## gates the player's use verb; this is the programmatic path (Room.rotate_pad).
+	func rotate_pad(pad: RotationPad) -> void:
+		var index := find(func(cell): return cell.terrain.has(pad))
+		if index.is_empty():
+			push_warning("Room.Grid: rotation pad is not placed in this grid")
+			return
+		_rotate_pad_cell(grid[index[0]][index[1]])
+
+	## Spins `cell`'s rotation pad (and whatever block sits on it) one hex step
+	## clockwise, advances the cell's logical facing to match, and re-resolves the
+	## lasers so a re-aimed beam updates immediately. Shared by the player use verb
+	## and the programmatic rotate_pad() path.
+	func _rotate_pad_cell(cell: Cell) -> void:
+		var pad = cell.get_rotation_pad()
+		if pad == null:
+			return
+		pad.perform_rotation(cell.block)
+		cell.block_facing = Util.rotate_direction_clockwise(cell.block_facing)
+		handle_laser_physics()
 
 	
 	## A hook for the player attempt move signal

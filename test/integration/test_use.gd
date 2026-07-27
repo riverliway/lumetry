@@ -80,3 +80,52 @@ func test_use_on_a_rotation_pad_spins_the_block_and_reaims_the_beam():
 	assert_false(room.grid.grid[5][7].is_laser_active(),
 		"the beam re-aimed off the straight-down path after the spin")
 	assert_gt(active_laser_count(room), 0, "a beam still exists in the new direction")
+
+func test_use_cannot_rotate_a_non_interactable_pad():
+	# A locked pad ignores the use verb entirely: the block on it neither rotates
+	# nor (falling through) toggles.
+	var emitter := make_block(EmitterScene, 5, 6)
+	emitter.laser_range = -1
+	var pad := make_block(RotationPadScene, 5, 6)
+	pad.interactable = false
+	var room := build_room([emitter, pad], Vector2i(5, 5))
+	var pad_cell = room.grid.grid[5][6]
+	assert_eq(pad_cell.block_facing, Util.DIRECTION.DOWN, "emitter starts facing down")
+
+	room.grid._attempt_use(Util.DIRECTION.DOWN)
+
+	assert_eq(pad_cell.block_facing, Util.DIRECTION.DOWN, "the locked pad did not rotate")
+	assert_null(pad_cell.get_rotation_pad()._rotating_block, "no rotation animation started")
+	assert_true(emitter.activated, "the emitter on the locked pad was not toggled either")
+
+func test_rotate_pad_hook_spins_the_block_and_reaims_the_beam():
+	# The programmatic path a level script drives from a signal (see Room.rotate_pad).
+	var emitter := make_block(EmitterScene, 5, 6)
+	emitter.laser_range = -1
+	var pad := make_block(RotationPadScene, 5, 6)
+	var room := build_room([emitter, pad], Vector2i(5, 5))
+	var pad_cell = room.grid.grid[5][6]
+	assert_true(room.grid.grid[5][7].is_laser_active(), "beam initially travels straight down")
+
+	room.rotate_pad(pad)
+
+	assert_eq(pad_cell.block_facing, Util.rotate_direction_clockwise(Util.DIRECTION.DOWN),
+		"the block's facing advanced one hex step clockwise")
+	assert_eq(pad_cell.get_rotation_pad()._rotating_block, emitter, "the pad is animating the emitter")
+	assert_false(room.grid.grid[5][7].is_laser_active(), "the beam re-aimed off the straight-down path")
+	assert_gt(active_laser_count(room), 0, "a beam still exists in the new direction")
+
+func test_rotate_pad_hook_ignores_the_interactable_flag():
+	# `interactable` gates only the player's use verb; level code can rotate a
+	# locked pad. This is what lets a detector drive a pad the player can't touch.
+	var emitter := make_block(EmitterScene, 5, 6)
+	emitter.laser_range = -1
+	var pad := make_block(RotationPadScene, 5, 6)
+	pad.interactable = false
+	var room := build_room([emitter, pad], Vector2i(5, 5))
+	var pad_cell = room.grid.grid[5][6]
+
+	room.rotate_pad(pad)
+
+	assert_eq(pad_cell.block_facing, Util.rotate_direction_clockwise(Util.DIRECTION.DOWN),
+		"a locked pad still rotates programmatically")

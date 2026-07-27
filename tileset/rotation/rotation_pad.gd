@@ -3,6 +3,12 @@ class_name RotationPad
 
 var block_type := Util.BLOCK_TYPE.ROTATION_PAD
 
+## Whether the player can rotate this pad with the use verb. When false the pad
+## is locked -- using it does nothing (the grid skips it in _attempt_use) -- but
+## level code can still spin it (and the block on top) via Room.rotate_pad().
+## Mirrors the laser emitter's `interactable`.
+@export var interactable := true
+
 var _ROTATION_DURATION := 0.75 ## The duration of a rotation in 
 var _ROTATION_AMOUNT := deg_to_rad(60.0) ## The amount to rotate in radians
 var _rotating_block: Node2D = null ## The block currently being rotated

@@ -16,6 +16,9 @@ func make_pad():
 func test_block_type_is_rotation_pad():
 	assert_eq(make_pad().block_type, Util.BLOCK_TYPE.ROTATION_PAD)
 
+func test_interactable_by_default():
+	assert_true(make_pad().interactable, "pads are player-rotatable unless configured otherwise")
+
 func test_idle_pad_does_not_rotate():
 	var pad = make_pad()
 	pad.rotation = 1.234
