@@ -171,7 +171,7 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(1060, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "4-Key"
+text = "6-Key"
 
 [node name="ResetSave" type="Button" parent="Center/Panel/Box"]
 layout_mode = 2

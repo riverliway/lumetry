@@ -234,11 +234,11 @@ func test_text_speed_default_and_validation():
 func test_movement_scheme_default_and_validation():
 	var s = _make()
 	s.load_from_disk()
-	assert_eq(s.get_setting("movement_scheme"), "four_key", "movement defaults to 4-key")
-	s.set_setting("movement_scheme", "six_key")
-	assert_eq(s.get_setting("movement_scheme"), "six_key", "valid scheme stored")
+	assert_eq(s.get_setting("movement_scheme"), "six_key", "movement defaults to 6-key")
+	s.set_setting("movement_scheme", "four_key")
+	assert_eq(s.get_setting("movement_scheme"), "four_key", "valid scheme stored")
 	s.set_setting("movement_scheme", "ten_key")
-	assert_eq(s.get_setting("movement_scheme"), "six_key", "invalid scheme ignored")
+	assert_eq(s.get_setting("movement_scheme"), "four_key", "invalid scheme ignored")
 
 func test_setting_changed_signal_carries_key_and_value():
 	var s = _make()

@@ -26,8 +26,12 @@ func _make_player() -> Player:
 
 func before_each() -> void:
 	# Snapshot settings so a test switching the movement scheme can't leak into
-	# the next test (mutated in-memory only, never written to disk here).
+	# the next test (mutated in-memory only, never written to disk here). Pin the
+	# scheme to a deterministic 4-key baseline regardless of the shipped default;
+	# the 6-key tests override it explicitly. (The shipped default itself is
+	# asserted in test_save_data.gd, not here.)
 	_saved_settings = SaveData.data["settings"].duplicate(true)
+	_set_scheme("four_key")
 
 
 func after_each() -> void:
@@ -169,13 +173,6 @@ func test_lateral_input_resolves_by_current_facing():
 func test_input_direction_none_when_idle():
 	var p = _make_player()
 	assert_eq(p._get_input_direction(), Util.DIRECTION.NONE, "no input -> NONE")
-
-func test_four_key_is_the_default_scheme():
-	# With no scheme set, the old WASD combo logic applies (regression guard).
-	var p = _make_player()
-	Input.action_press("move_up")
-	Input.action_press("move_right")
-	assert_eq(p._get_input_direction(), Util.DIRECTION.UP_RIGHT, "default 4-key W+D -> up-right")
 
 
 # ----------------------------------------------- _get_input_direction (6-key)

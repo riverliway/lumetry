@@ -31,8 +31,8 @@ const COLORBLIND_MODES := ["default", "patterned"]
 ## Allowed values for settings.text_speed (consumed by the dialogue system).
 const TEXT_SPEEDS := ["slow", "normal", "fast"]
 ## Allowed values for settings.movement_scheme (consumed by the player controller).
-## "four_key" is WASD with diagonals resolved by facing; "six_key" is one hex
-## direction per key (QWE / ASD).
+## "four_key" is WASD with diagonals resolved by facing; "six_key" (the default,
+## easier to learn) is one hex direction per key (QWE / ASD).
 const MOVEMENT_SCHEMES := ["four_key", "six_key"]
 
 ## Per-level progression, stored in `levels` as one of these values per level.
@@ -54,7 +54,7 @@ const DEFAULTS := {
 		"sfx_audio": 100,
 		"colorblind_mode": "default",
 		"text_speed": "normal",
-		"movement_scheme": "four_key",
+		"movement_scheme": "six_key",
 	},
 }
 

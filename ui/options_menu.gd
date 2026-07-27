@@ -165,4 +165,4 @@ func _toggle_movement() -> void:
 
 
 func _refresh_movement_label() -> void:
-	_movement.text = MOVEMENT_LABEL.get(SaveData.get_setting("movement_scheme"), "4-Key")
+	_movement.text = MOVEMENT_LABEL.get(SaveData.get_setting("movement_scheme"), "6-Key")
