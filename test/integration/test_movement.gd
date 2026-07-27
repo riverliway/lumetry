@@ -80,6 +80,20 @@ func test_pushes_block_along_enabled_track():
 	# player does NOT follow into the vacated cell.
 	assert_eq(room.grid.grid[5][5].block, player, "player stays put after pushing")
 
+func test_pushes_emitter_along_enabled_track():
+	# The push rule is block-type agnostic: an emitter on a track pushes like any
+	# other block, and its beam re-resolves from the new cell.
+	var emitter := make_block(EmitterScene, 5, 6)  # faces DOWN
+	emitter.laser_range = -1
+	var track := make_track(5, 6, [Util.DIRECTION.DOWN])
+	var room := build_room([emitter, track], Vector2i(5, 5))
+	var player := room.get_node("Player")
+	room.grid._attempt_move(Util.DIRECTION.DOWN)
+	player._process(1.0)
+	assert_eq(room.grid.grid[5][7].block, emitter, "emitter pushed one cell down")
+	assert_null(room.grid.grid[5][6].block, "emitter left its old cell")
+	assert_true(room.grid.grid[5][8].is_laser_active(), "beam re-emits from the emitter's new cell")
+
 func test_cannot_push_block_off_its_track():
 	var mirror := make_block(MirrorScene, 5, 6)
 	var track := make_track(5, 6, [Util.DIRECTION.UP])  # DOWN not permitted
