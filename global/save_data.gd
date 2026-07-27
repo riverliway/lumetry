@@ -30,6 +30,10 @@ const LEVEL_COUNT := 18
 const COLORBLIND_MODES := ["default", "patterned"]
 ## Allowed values for settings.text_speed (consumed by the dialogue system).
 const TEXT_SPEEDS := ["slow", "normal", "fast"]
+## Allowed values for settings.movement_scheme (consumed by the player controller).
+## "four_key" is WASD with diagonals resolved by facing; "six_key" is one hex
+## direction per key (QWE / ASD).
+const MOVEMENT_SCHEMES := ["four_key", "six_key"]
 
 ## Per-level progression, stored in `levels` as one of these values per level.
 ## Ordered so higher means "further along" (LOCKED < UNLOCKED < COMPLETED).
@@ -50,6 +54,7 @@ const DEFAULTS := {
 		"sfx_audio": 100,
 		"colorblind_mode": "default",
 		"text_speed": "normal",
+		"movement_scheme": "four_key",
 	},
 }
 
@@ -239,8 +244,9 @@ func get_setting(key: String) -> Variant:
 
 
 ## Sets a validated setting, saves, and emits `setting_changed`. Audio is clamped
-## to 0-100; colorblind_mode must be one of COLORBLIND_MODES and text_speed one of
-## TEXT_SPEEDS. Unknown keys and invalid values are ignored (no save, no signal).
+## to 0-100; colorblind_mode must be one of COLORBLIND_MODES, text_speed one of
+## TEXT_SPEEDS, and movement_scheme one of MOVEMENT_SCHEMES. Unknown keys and
+## invalid values are ignored (no save, no signal).
 func set_setting(key: String, value: Variant) -> void:
 	match key:
 		"master_audio", "music_audio", "sfx_audio":
@@ -255,6 +261,11 @@ func set_setting(key: String, value: Variant) -> void:
 				push_warning("SaveData: invalid text_speed '%s'" % value)
 				return
 			data["settings"]["text_speed"] = value
+		"movement_scheme":
+			if not value in MOVEMENT_SCHEMES:
+				push_warning("SaveData: invalid movement_scheme '%s'" % value)
+				return
+			data["settings"]["movement_scheme"] = value
 		_:
 			push_warning("SaveData: unknown setting '%s'" % key)
 			return
@@ -290,5 +301,7 @@ func _normalize(loaded: Dictionary) -> Dictionary:
 			result["settings"]["colorblind_mode"] = settings["colorblind_mode"]
 		if settings.get("text_speed") in TEXT_SPEEDS:
 			result["settings"]["text_speed"] = settings["text_speed"]
+		if settings.get("movement_scheme") in MOVEMENT_SCHEMES:
+			result["settings"]["movement_scheme"] = settings["movement_scheme"]
 
 	return result

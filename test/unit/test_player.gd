@@ -11,7 +11,10 @@ extends GutTest
 
 const PlayerScene: PackedScene = preload("res://player/player.tscn")
 
-const MOVE_ACTIONS := ["move_up", "move_down", "move_left", "move_right", "use"]
+const MOVE_ACTIONS := ["move_up", "move_down", "move_left", "move_right",
+	"move_up_left", "move_up_right", "use"]
+
+var _saved_settings
 
 
 func _make_player() -> Player:
@@ -21,10 +24,22 @@ func _make_player() -> Player:
 	return player
 
 
+func before_each() -> void:
+	# Snapshot settings so a test switching the movement scheme can't leak into
+	# the next test (mutated in-memory only, never written to disk here).
+	_saved_settings = SaveData.data["settings"].duplicate(true)
+
+
 func after_each() -> void:
 	for action in MOVE_ACTIONS:
 		if Input.is_action_pressed(action):
 			Input.action_release(action)
+	SaveData.data["settings"] = _saved_settings
+
+
+## Switches the in-memory movement scheme for a test (no disk write).
+func _set_scheme(scheme: String) -> void:
+	SaveData.data["settings"]["movement_scheme"] = scheme
 
 
 # ---------------------------------------------------------------------- look
@@ -154,3 +169,42 @@ func test_lateral_input_resolves_by_current_facing():
 func test_input_direction_none_when_idle():
 	var p = _make_player()
 	assert_eq(p._get_input_direction(), Util.DIRECTION.NONE, "no input -> NONE")
+
+func test_four_key_is_the_default_scheme():
+	# With no scheme set, the old WASD combo logic applies (regression guard).
+	var p = _make_player()
+	Input.action_press("move_up")
+	Input.action_press("move_right")
+	assert_eq(p._get_input_direction(), Util.DIRECTION.UP_RIGHT, "default 4-key W+D -> up-right")
+
+
+# ----------------------------------------------- _get_input_direction (6-key)
+func test_six_key_maps_each_key_to_one_hex_direction():
+	var p = _make_player()
+	_set_scheme("six_key")
+	var cases := {
+		"move_up_left": Util.DIRECTION.UP_LEFT,     # Q
+		"move_up": Util.DIRECTION.UP,               # W
+		"move_up_right": Util.DIRECTION.UP_RIGHT,   # E
+		"move_left": Util.DIRECTION.DOWN_LEFT,      # A
+		"move_down": Util.DIRECTION.DOWN,           # S
+		"move_right": Util.DIRECTION.DOWN_RIGHT,    # D
+	}
+	for action in cases:
+		Input.action_press(action)
+		assert_eq(p._get_input_direction(), cases[action], "%s -> expected direction" % action)
+		Input.action_release(action)
+
+func test_six_key_lateral_keys_ignore_facing():
+	# Unlike 4-key, a bare A/D is absolute (down-left/right) regardless of facing.
+	var p = _make_player()
+	_set_scheme("six_key")
+	p._facing = Util.DIRECTION.UP
+	Input.action_press("move_left")
+	assert_eq(p._get_input_direction(), Util.DIRECTION.DOWN_LEFT, "A is always down-left in 6-key")
+
+func test_six_key_ignores_the_diagonal_keys_in_four_key_mode():
+	# Q/E do nothing under the default 4-key scheme.
+	var p = _make_player()
+	Input.action_press("move_up_left")
+	assert_eq(p._get_input_direction(), Util.DIRECTION.NONE, "Q is inert in 4-key mode")

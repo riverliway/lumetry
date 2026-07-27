@@ -77,6 +77,19 @@ func test_text_speed_cycles_and_wraps():
 	assert_eq(SaveData.get_setting("text_speed"), "slow", "fast wraps to slow")
 
 
+func test_movement_toggle_switches_between_the_two_schemes():
+	SaveData.data["settings"]["movement_scheme"] = "four_key"
+	var menu = await _open_menu()
+	var btn = menu.get_node("Center/Panel/Box/Movement/Toggle")
+	assert_eq(btn.text, "4-Key", "open reflects the saved scheme")
+	btn.pressed.emit()
+	assert_eq(SaveData.get_setting("movement_scheme"), "six_key", "4-key -> 6-key")
+	assert_eq(btn.text, "6-Key", "label updates to 6-key")
+	btn.pressed.emit()
+	assert_eq(SaveData.get_setting("movement_scheme"), "four_key", "6-key -> 4-key")
+	assert_eq(btn.text, "4-Key", "label updates back to 4-key")
+
+
 func test_reset_is_hidden_unless_from_the_title_screen():
 	var menu = await _open_menu()  # in-game (pause) copy: show_reset defaults false
 	var reset = menu.get_node("Center/Panel/Box/ResetSave")

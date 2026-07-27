@@ -1,6 +1,7 @@
 extends Control
 ## The options ("Calibrations") screen: master / music / SFX volume sliders, a
-## colorblind-mode toggle, and a dialogue text-speed cycle.
+## colorblind-mode toggle, a dialogue text-speed cycle, and a movement-scheme
+## toggle (4-key vs 6-key).
 ##
 ## A reusable overlay, instanced into both the title menu and the in-level pause
 ## menu. It reads the current values from SaveData when opened and writes each
@@ -27,6 +28,8 @@ signal closed
 ## Text-speed cycle order and the label shown for each (keys mirror SaveData.TEXT_SPEEDS).
 const TEXT_SPEED_ORDER := ["slow", "normal", "fast"]
 const TEXT_SPEED_LABEL := {"slow": "Slow", "normal": "Normal", "fast": "Fast"}
+## Label shown for each movement scheme (keys mirror SaveData.MOVEMENT_SCHEMES).
+const MOVEMENT_LABEL := {"four_key": "4-Key", "six_key": "6-Key"}
 ## Prompt shown before wiping the save; the action is irreversible.
 const RESET_PROMPT := "Reset all progress? This can't be undone."
 
@@ -38,6 +41,7 @@ const RESET_PROMPT := "Reset all progress? This can't be undone."
 @onready var _sfx_value: Label = $Center/Panel/Box/Sfx/Value
 @onready var _colorblind: Button = $Center/Panel/Box/Colorblind/Toggle
 @onready var _text_speed: Button = $Center/Panel/Box/TextSpeed/Toggle
+@onready var _movement: Button = $Center/Panel/Box/Movement/Toggle
 @onready var _reset: Button = $Center/Panel/Box/ResetSave
 @onready var _unlock: Button = $Center/Panel/Box/UnlockSave
 @onready var _confirm: Control = $Confirm
@@ -55,6 +59,7 @@ func _ready() -> void:
 	_bind_slider(_sfx, _sfx_value, "sfx_audio")
 	_colorblind.pressed.connect(_toggle_colorblind)
 	_text_speed.pressed.connect(_cycle_text_speed)
+	_movement.pressed.connect(_toggle_movement)
 	_reset.pressed.connect(_open_reset_confirm)
 	_unlock.pressed.connect(_on_unlock)
 	_confirm.confirmed.connect(_on_reset_confirmed)
@@ -76,6 +81,7 @@ func open() -> void:
 	_set_slider(_sfx, _sfx_value, SaveData.get_setting("sfx_audio"))
 	_refresh_colorblind_label()
 	_refresh_text_speed_label()
+	_refresh_movement_label()
 	_loading = false
 	show()
 	_nav.focus_first()
@@ -150,3 +156,13 @@ func _cycle_text_speed() -> void:
 
 func _refresh_text_speed_label() -> void:
 	_text_speed.text = TEXT_SPEED_LABEL.get(SaveData.get_setting("text_speed"), "Normal")
+
+
+func _toggle_movement() -> void:
+	var current: String = SaveData.get_setting("movement_scheme")
+	SaveData.set_setting("movement_scheme", "six_key" if current == "four_key" else "four_key")
+	_refresh_movement_label()
+
+
+func _refresh_movement_label() -> void:
+	_movement.text = MOVEMENT_LABEL.get(SaveData.get_setting("movement_scheme"), "4-Key")

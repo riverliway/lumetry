@@ -157,6 +157,22 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Normal"
 
+[node name="Movement" type="HBoxContainer" parent="Center/Panel/Box"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="Center/Panel/Box/Movement"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+text = "Movement"
+vertical_alignment = 1
+
+[node name="Toggle" type="Button" parent="Center/Panel/Box/Movement"]
+custom_minimum_size = Vector2(1060, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4-Key"
+
 [node name="ResetSave" type="Button" parent="Center/Panel/Box"]
 layout_mode = 2
 text = "Reset Save"

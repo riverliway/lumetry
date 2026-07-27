@@ -5,6 +5,13 @@ signal attempt_use ## Emitted when the player attempts to use an object, passes 
 
 var block_type := Util.BLOCK_TYPE.PLAYER
 
+## Movement input actions per scheme (see SaveData.MOVEMENT_SCHEMES). 4-key uses
+## WASD with diagonals resolved by facing; 6-key maps one hex direction to each
+## of Q/W/E/A/S/D. Menus always navigate with the WASD move_* actions regardless
+## -- the scheme only changes how in-game movement input is interpreted here.
+const _FOUR_KEY_ACTIONS := ["move_up", "move_down", "move_left", "move_right"]
+const _SIX_KEY_ACTIONS := ["move_up_left", "move_up", "move_up_right", "move_left", "move_down", "move_right"]
+
 var _move_start_pos := Vector2.ZERO ## The starting position of the current movement
 var _move_target := Vector2.ZERO ## The target position the player is moving to
 var _move_object = null ## The object to move (can be player or a pushed block)
@@ -58,15 +65,8 @@ func _process_idle() -> void:
 
 ## Processes the looking state
 func _process_look() -> void:
-	var inputs = [
-		Input.is_action_just_pressed('move_up'),
-		Input.is_action_just_pressed('move_down'),
-		Input.is_action_just_pressed('move_left'),
-		Input.is_action_just_pressed('move_right')
-	]
-
 	# If any new movement input is detected, look in that direction immediately
-	if inputs.any(func(i): return i):
+	if _movement_just_pressed():
 		_look(_get_input_direction())
 
 	if _time_left <= 0:
@@ -89,34 +89,71 @@ func _process_use() -> void:
 		_state = Util.PLAYER_STATE.IDLE
 
 
-## Determines the direction based on current input
+## Whether the six-key movement scheme is active (else four-key). Read live from
+## the save so a change in the options menu takes effect without a reload.
+func _six_key() -> bool:
+	return SaveData.get_setting("movement_scheme") == "six_key"
+
+
+## Whether a movement key for the active scheme was pressed this frame.
+func _movement_just_pressed() -> bool:
+	var actions = _SIX_KEY_ACTIONS if _six_key() else _FOUR_KEY_ACTIONS
+	return actions.any(func(a): return Input.is_action_just_pressed(a))
+
+
+## Determines the movement direction from the current input, per the active scheme.
 func _get_input_direction() -> Util.DIRECTION:
+	return _input_direction_six_key() if _six_key() else _input_direction_four_key()
+
+
+## Four-key scheme: WASD, where a bare left/right resolves to an up- or
+## down-diagonal based on the direction the player last looked (`_facing`).
+func _input_direction_four_key() -> Util.DIRECTION:
 	if Input.is_action_pressed('move_up'):
 		if Input.is_action_pressed('move_left'):
 			return Util.DIRECTION.UP_LEFT
 		elif Input.is_action_pressed('move_right'):
 			return Util.DIRECTION.UP_RIGHT
-		
+
 		return Util.DIRECTION.UP
-	
+
 	if Input.is_action_pressed('move_down'):
 		if Input.is_action_pressed('move_left'):
 			return Util.DIRECTION.DOWN_LEFT
 		elif Input.is_action_pressed('move_right'):
 			return Util.DIRECTION.DOWN_RIGHT
-		
+
 		return Util.DIRECTION.DOWN
-	
+
 	if Input.is_action_pressed('move_left'):
 		if _facing in [Util.DIRECTION.UP, Util.DIRECTION.UP_LEFT, Util.DIRECTION.UP_RIGHT]:
 			return Util.DIRECTION.UP_LEFT
-		
+
 		return Util.DIRECTION.DOWN_LEFT
-	
+
 	if Input.is_action_pressed('move_right'):
 		if _facing in [Util.DIRECTION.UP, Util.DIRECTION.UP_LEFT, Util.DIRECTION.UP_RIGHT]:
 			return Util.DIRECTION.UP_RIGHT
-		
+
+		return Util.DIRECTION.DOWN_RIGHT
+
+	return Util.DIRECTION.NONE
+
+
+## Six-key scheme: one hex direction per key -- Q/W/E across the top row,
+## A/S/D across the bottom -- with no facing-dependent resolution.
+func _input_direction_six_key() -> Util.DIRECTION:
+	if Input.is_action_pressed('move_up_left'):    # Q
+		return Util.DIRECTION.UP_LEFT
+	if Input.is_action_pressed('move_up'):         # W
+		return Util.DIRECTION.UP
+	if Input.is_action_pressed('move_up_right'):   # E
+		return Util.DIRECTION.UP_RIGHT
+	if Input.is_action_pressed('move_left'):       # A
+		return Util.DIRECTION.DOWN_LEFT
+	if Input.is_action_pressed('move_down'):       # S
+		return Util.DIRECTION.DOWN
+	if Input.is_action_pressed('move_right'):      # D
 		return Util.DIRECTION.DOWN_RIGHT
 
 	return Util.DIRECTION.NONE
