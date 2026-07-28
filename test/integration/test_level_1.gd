@@ -114,3 +114,19 @@ func test_smaller_room_scales_up_more_than_a_bigger_room():
 	var small := build_level([], Vector2i(0, 0), 5, 7)
 	var big := build_level([], Vector2i(0, 0), 23, 12)
 	assert_gt(small.scale.x, big.scale.x, "fewer cells -> sprites shrink less (scale up)")
+
+
+# --------------------------------------------- progression (base Level: numbering)
+func test_level_number_parsed_from_the_scene_path():
+	assert_eq(Level.level_number_from_path("res://levels/level5/level_5.tscn"), 5)
+	assert_eq(Level.level_number_from_path("res://levels/level10/level_10.tscn"), 10, "two digits")
+
+func test_level_number_is_minus_one_off_a_real_level_scene():
+	assert_eq(Level.level_number_from_path(""), -1, "a tree with no scene file")
+	assert_eq(Level.level_number_from_path("res://title_menu.tscn"), -1, "not a numbered level")
+
+func test_synthetic_level_has_no_level_number():
+	# The synthetic tree has no scene file, so the progression hooks no-op -- which
+	# is why solving one in a test neither writes the save nor swaps the scene.
+	var level := build_level([])
+	assert_eq(level._level_number(), -1)
