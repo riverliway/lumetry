@@ -1480,6 +1480,7 @@ position = Vector2(3276, 1061)
 
 [node name="LaserDetector3" parent="Room" unique_id=651469837 instance=ExtResource("9_ivh0a")]
 position = Vector2(2942, 1425)
+rotation = 2.211332
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100

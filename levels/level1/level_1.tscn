@@ -1415,6 +1415,7 @@ position = Vector2(2590, 1612)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_2lrd6")]
 position = Vector2(2762, 940)
+rotation = 2.0367992
 
 [node name="Crate" parent="Room" unique_id=230658233 instance=ExtResource("10_8e3mo")]
 position = Vector2(2772, 1324)
