@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://edblwq6jllx4"]
 
-[ext_resource type="Texture2D" uid="uid://bnhjy1vug14yc" path="res://tileset/mirror/mirror.png" id="1_apott"]
+[ext_resource type="Texture2D" uid="uid://7txlf0ko8s12" path="res://tileset/mirror/mirror_short.png" id="1_apott"]
 [ext_resource type="Script" path="res://tileset/mirror/mirror.gd" id="2_jwfna"]
 
 [node name="Mirror" type="Sprite2D"]

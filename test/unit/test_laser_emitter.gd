@@ -36,3 +36,14 @@ func test_use_still_toggles_a_non_interactable_emitter():
 	emitter.interactable = false
 	emitter.use()
 	assert_false(emitter.activated, "programmatic use() ignores the interactable flag")
+
+func test_interactable_emitter_shows_default_animation():
+	assert_eq(make_emitter().animation, &"default")
+
+func test_locked_emitter_shows_disabled_animation():
+	# A non-interactable emitter is greyed out via the "disabled" animation, chosen
+	# in _ready(); set the flag before adding to the tree so _ready sees it.
+	var emitter = EmitterScene.instantiate()
+	emitter.interactable = false
+	add_child_autofree(emitter)
+	assert_eq(emitter.animation, &"disabled")

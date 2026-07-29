@@ -19,6 +19,17 @@ func test_block_type_is_rotation_pad():
 func test_interactable_by_default():
 	assert_true(make_pad().interactable, "pads are player-rotatable unless configured otherwise")
 
+func test_interactable_pad_keeps_active_texture():
+	assert_eq(make_pad().texture.resource_path, "res://tileset/rotation/rotation.png")
+
+func test_locked_pad_shows_disabled_texture():
+	# A non-interactable pad is greyed out via the disabled texture, swapped in
+	# _ready(); set the flag before adding to the tree so _ready sees it.
+	var pad = RotationPadScene.instantiate()
+	pad.interactable = false
+	add_child_autofree(pad)
+	assert_eq(pad.texture.resource_path, "res://tileset/rotation/rotation_pad_disabled.png")
+
 func test_idle_pad_does_not_rotate():
 	var pad = make_pad()
 	pad.rotation = 1.234

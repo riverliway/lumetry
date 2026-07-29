@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cij7mo7my7bp7"]
+[gd_scene load_steps=7 format=3 uid="uid://cij7mo7my7bp7"]
 
 [ext_resource type="Texture2D" uid="uid://dh0tjyv18ta3u" path="res://tileset/laser/laser_emitter_1.png" id="1_6vf15"]
 [ext_resource type="Script" path="res://tileset/laser/laser_emitter.gd" id="1_u033e"]
 [ext_resource type="Texture2D" uid="uid://vkpxfgj763g8" path="res://tileset/laser/laser_emitter_2.png" id="2_edvgo"]
+[ext_resource type="Texture2D" uid="uid://bfpx0yoxd7k6h" path="res://tileset/laser/laser_emitter_disabled_1.png" id="3_dis1"]
+[ext_resource type="Texture2D" uid="uid://dyyckn2j3525f" path="res://tileset/laser/laser_emitter_disabled_2.png" id="4_dis2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_h87jf"]
 animations = [{
@@ -15,6 +17,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dis1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dis2")
+}],
+"loop": true,
+"name": &"disabled",
 "speed": 1.0
 }]
 

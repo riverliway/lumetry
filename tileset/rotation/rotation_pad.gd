@@ -1,6 +1,8 @@
 extends Sprite2D
 class_name RotationPad
 
+const _DISABLED_TEXTURE := preload("res://tileset/rotation/rotation_pad_disabled.png")
+
 var block_type := Util.BLOCK_TYPE.ROTATION_PAD
 
 ## Whether the player can rotate this pad with the use verb. When false the pad
@@ -15,6 +17,12 @@ var _rotating_block: Node2D = null ## The block currently being rotated
 var _rotation_time_left := 0.0 ## The time left for the current rotation
 var _rotation_self_start_amount := 0.0 ## The rotation amount for the pad at the start of the rotation
 var _rotation_block_start_amount := 0.0 ## The rotation amount for the block at the start of the rotation
+
+func _ready() -> void:
+	# Locked pads (interactable == false) can't be spun by the player, so show the
+	# greyed-out sprite as a hint. Level code can still drive them via Room.rotate_pad().
+	if not interactable:
+		texture = _DISABLED_TEXTURE
 
 func _process(delta: float) -> void:
 	if _rotation_time_left > 0.0:

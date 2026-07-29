@@ -15,6 +15,7 @@ func test_mirror_defaults_to_short():
 	# it is placed at a half-angle (see test_cell.gd).
 	var m = MirrorScene.instantiate()
 	assert_eq(m.block_type, Util.BLOCK_TYPE.MIRROR_SHORT)
+	assert_eq(m.texture.resource_path, "res://tileset/mirror/mirror_short.png", "short sprite by default")
 	m.free()
 
 func test_prism_block_type():

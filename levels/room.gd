@@ -644,6 +644,12 @@ class Cell:
 			block_facing = Util.get_direction_from_rotation(block.rotation)
 			block.rotation = Util.get_rotation_from_direction(block_facing)
 
+		# Now that the short/long type is finalized, show the matching sprite.
+		# Guarded so the unit-test FakeBlock (a bare Node2D) can still drive the
+		# promotion logic above without providing a sprite.
+		if is_mirror and block_object.has_method(&"apply_type_sprite"):
+			block_object.apply_type_sprite()
+
 	## Removes the block from this cell
 	func remove_block() -> void:
 		block = null

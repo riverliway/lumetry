@@ -4,6 +4,7 @@ extends GutTest
 
 const TrackScene: PackedScene = preload("res://tileset/track/track.tscn")
 const RotationPadScene: PackedScene = preload("res://tileset/rotation/rotation_pad.tscn")
+const MirrorScene: PackedScene = preload("res://tileset/mirror/mirror.tscn")
 
 ## Stand-in for simple blocks. get_track()/get_rotation_pad() have typed returns
 ## (Track/RotationPad) so those cases use the real scenes instead of this fake.
@@ -76,3 +77,21 @@ func test_half_angled_mirror_promoted_to_long():
 	mirror.rotation = PI / 6.0  # 30 deg -> half direction
 	c.set_block(mirror)
 	assert_eq(mirror.block_type, Util.BLOCK_TYPE.MIRROR_LONG)
+
+# The real mirror scene (not FakeBlock) swaps its sprite to match the finalized
+# short/long type via apply_type_sprite().
+func test_short_mirror_uses_short_sprite():
+	var c = make_cell()
+	var mirror := MirrorScene.instantiate()
+	autofree(mirror)
+	mirror.rotation = 0.0  # cardinal -> stays short
+	c.set_block(mirror)
+	assert_eq(mirror.texture.resource_path, "res://tileset/mirror/mirror_short.png")
+
+func test_long_mirror_uses_long_sprite():
+	var c = make_cell()
+	var mirror := MirrorScene.instantiate()
+	autofree(mirror)
+	mirror.rotation = PI / 6.0  # 30 deg -> promoted to long
+	c.set_block(mirror)
+	assert_eq(mirror.texture.resource_path, "res://tileset/mirror/mirror_long.png")
