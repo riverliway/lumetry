@@ -144,7 +144,7 @@ func z_index_for(block_type: BLOCK_TYPE) -> int:
 		_:
 			# Walls, meltable, crates, and any other solid block render on top.
 			# A crate in particular must sit above Z_LASER so it hides the cut end
-			# of the half-beam drawn where light strikes it (see Grid._draw_crate_hit).
+			# of the half-beam drawn where light strikes it (see Grid._draw_half_beam).
 			return 80
 
 enum DIRECTION {

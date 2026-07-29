@@ -151,5 +151,5 @@ func test_mirror_renders_above_the_laser_beam():
 
 func test_crate_renders_above_the_laser_beam():
 	# The crate must sit above the beam so it hides the cut end of the half-beam
-	# drawn where light strikes it (see Grid._draw_crate_hit).
+	# drawn where light strikes it (see Grid._draw_half_beam).
 	assert_gt(Util.z_index_for(Util.BLOCK_TYPE.CRATE), Util.Z_LASER, "crate above beam")

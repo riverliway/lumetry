@@ -145,6 +145,13 @@ class Grid:
 	func _propagate_laser(emitter: Cell, strength: int, laser_direction: Util.DIRECTION, color: Util.LASER_COLOR) -> void:
 		var laser_strength: Array[int] = [strength]
 	
+		# Draw the stub of beam emerging from an emitter's face: the raycast below
+		# starts one cell out, so without this the emitter cell would read as dark.
+		# The emitter sprite sits above Z_LASER and hides the flat cut. Guarded to
+		# real emitters -- focusers and prisms also call this but draw their own beams.
+		if emitter.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER:
+			_draw_half_beam(emitter, laser_direction, color, true)
+
 		# Propogate once from the emitter first, and then continue the propogation below
 		# because we don't want to continue the propogation if it hits a different emitter
 		var cell = _raycast_laser(go(emitter, laser_direction), laser_strength, laser_direction, color)
@@ -182,8 +189,11 @@ class Grid:
 				continue
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.LASER_DETECTOR:
-				# The beam stops here; the detector registers a hit only if the
-				# beam arrived through its sensitive front arc (see detector_hit_directions).
+				# The beam stops here. Draw a stub striking the detector face (the
+				# detector sprite sits above Z_LASER and hides the cut) regardless of
+				# arc -- the beam physically reaches it either way. The detector only
+				# registers a hit if the beam arrived through its sensitive front arc.
+				_draw_half_beam(cell, laser_facing, color, false)
 				var from_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				if detector_hit_directions(cell.block_facing).has(from_dir):
 					cell.block.mark_hit(color)
@@ -208,10 +218,9 @@ class Grid:
 			if cell.get_block_type() == Util.BLOCK_TYPE.CRATE:
 				# The crate is opaque -- the beam stops here regardless of color
 				# (unlike walls, which are laser-transparent). Draw a flat-cut
-				# half-beam into the cell, the same half-beam a prism uses for its
-				# incoming light, so the beam appears to strike the crate face; the
-				# crate sprite sits above Z_LASER and hides the cut end.
-				_draw_crate_hit(cell, laser_facing, color)
+				# half-beam striking the crate face; the crate sprite sits above
+				# Z_LASER and hides the cut end, so the beam looks like it stops dead.
+				_draw_half_beam(cell, laser_facing, color, false)
 				return
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.PRISIM:
@@ -550,12 +559,17 @@ class Grid:
 		]
 		cell.add_prism_laser(colors, transforms)
 
-	## Renders a laser striking a crate as a single flat-cut half-beam pointing
-	## along `incoming_dir` and ending at the crate's center. Reuses the prism's
-	## flat-cut half-beam sprite; the crate sprite (drawn above Z_LASER) hides the
-	## cut end, so the beam looks like it stops dead at the crate.
-	func _draw_crate_hit(cell: Cell, incoming_dir: Util.DIRECTION, color: Util.LASER_COLOR) -> void:
-		cell.add_crate_laser(color, Transform2D(laser_rotation(incoming_dir), cell.pos))
+	## Draws a flat-cut half-beam connecting the main beam to a block sprite at a
+	## beam endpoint: where a beam emerges from an emitter (`outward` = true) or
+	## terminates at a solid block -- a detector or crate (`outward` = false).
+	## Reuses the prism's flat-cut half-beam sprite; the block sprite sits above
+	## Z_LASER and hides the cut, so the beam looks like it meets the block face.
+	## `beam_dir` is the beam's travel direction; an outward stub points its full
+	## end away from the block, an inward one back toward where the beam came from
+	## (rotate 3 = reverse). The cut always sits at the cell center.
+	func _draw_half_beam(cell: Cell, beam_dir: Util.DIRECTION, color: Util.LASER_COLOR, outward: bool) -> void:
+		var sprite_dir := Util.rotate_direction_clockwise(beam_dir, 3) if outward else beam_dir
+		cell.add_half_laser(color, Transform2D(laser_rotation(sprite_dir), cell.pos))
 
 	## Given a position in pixels, returns the nearest cell in the grid measured by euclidean distance
 	## [br]`pos` is the position of the center of the object
@@ -606,7 +620,7 @@ class Cell:
 	var laser: Array[LaserSegment] = [] ## The laser sprites, cached so we don't have to keep remaking them
 	var mirror_laser: Array[MirrorSegment] = [] ## The two half-beam bounce sprites when a mirror sits here
 	var prism_laser: Array[PrismSegment] = [] ## The four half-beam split sprites when a prism sits here
-	var crate_laser: Array[PrismSegment] = [] ## Flat-cut half-beam sprites when a laser strikes a crate here (one per incoming beam)
+	var half_laser: Array[PrismSegment] = [] ## Flat-cut half-beam stubs at beam endpoints in this cell -- an emitter emitting, or a beam striking a detector/crate (one per beam)
 	
 	## Initializes the cell at the given position and grid indices
 	## [br]`ppos` is the position of this cell in the world (px)
@@ -712,16 +726,16 @@ class Cell:
 			resolve_room.call().add_child(seg)
 		prism_laser[index].set_prism(color, xf)
 
-	## Draws a laser striking a crate here as a single flat-cut half-beam, reusing
-	## the prism half-beam sprite. Pooled like the straight segments, since a crate
-	## can be struck from several directions at once. Transform comes from
-	## Grid._draw_crate_hit.
-	func add_crate_laser(color: Util.LASER_COLOR, xf: Transform2D) -> void:
-		var available_segment = Util.find_elem(crate_laser, func(cs): return !cs.is_active())
+	## Draws a flat-cut half-beam stub at a beam endpoint here, reusing the prism
+	## half-beam sprite. Pooled like the straight segments, since an endpoint (e.g.
+	## a crate) can be struck from several directions at once. Transform comes from
+	## Grid._draw_half_beam.
+	func add_half_laser(color: Util.LASER_COLOR, xf: Transform2D) -> void:
+		var available_segment = Util.find_elem(half_laser, func(cs): return !cs.is_active())
 		if len(available_segment) == 0:
 			var new_segment = Room.prism_segment_scene.instantiate()
 			new_segment.z_index = Util.Z_LASER
-			crate_laser.push_back(new_segment)
+			half_laser.push_back(new_segment)
 			resolve_room.call().add_child(new_segment)
 			new_segment.set_prism(color, xf)
 		else:
@@ -735,7 +749,7 @@ class Cell:
 			m.clear_laser()
 		for p in prism_laser:
 			p.clear_laser()
-		for cs in crate_laser:
+		for cs in half_laser:
 			cs.clear_laser()
 			
 	## Checks if this cell has an active laser in it

@@ -52,7 +52,7 @@ func test_crate_cell_draws_a_half_beam_where_light_strikes_it():
 	var crate := make_block(CrateScene, 4, 6)
 	var room := build_room([emitter, crate], Vector2i(20, 0))
 	var ccell = room.grid.grid[4][6]
-	var active = ccell.crate_laser.filter(func(cs): return cs.is_active())
+	var active = ccell.half_laser.filter(func(cs): return cs.is_active())
 	assert_eq(active.size(), 1, "crate cell draws one flat-cut half-beam for the incoming light")
 
 func test_crate_also_stops_a_colored_beam():
@@ -66,8 +66,25 @@ func test_crate_also_stops_a_colored_beam():
 	var room := build_room([emitter, prism, crate], Vector2i(20, 0))
 	assert_true(room.grid.grid[4][6].is_laser_active(), "magenta beam reaches the cell before the crate")
 	assert_false(room.grid.grid[4][8].is_laser_active(), "colored beam does not pass through the crate")
-	var active = room.grid.grid[4][7].crate_laser.filter(func(cs): return cs.is_active())
+	var active = room.grid.grid[4][7].half_laser.filter(func(cs): return cs.is_active())
 	assert_eq(active.size(), 1, "crate draws its half-beam for the colored strike too")
+
+func test_emitter_cell_draws_a_half_beam_emerging_from_its_face():
+	# The raycast starts one cell out, so the emitter cell has no straight segment;
+	# a flat-cut half-beam fills it so the beam looks like it leaves the emitter.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var room := build_room([emitter])
+	var active = room.grid.grid[4][3].half_laser.filter(func(hs): return hs.is_active())
+	assert_eq(active.size(), 1, "emitter cell draws one flat-cut half-beam emerging from its face")
+
+func test_detector_cell_draws_a_half_beam_where_light_strikes_it():
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var detector := make_block(DetectorScene, 4, 6)
+	var room := build_room([emitter, detector], Vector2i(20, 0))
+	var active = room.grid.grid[4][6].half_laser.filter(func(hs): return hs.is_active())
+	assert_eq(active.size(), 1, "detector cell draws one flat-cut half-beam for the incoming light")
 
 func test_no_beam_when_emitter_starts_disabled():
 	var emitter := make_block(EmitterScene, 4, 3)
