@@ -23,12 +23,26 @@ func test_interactable_pad_keeps_active_texture():
 	assert_eq(make_pad().texture.resource_path, "res://tileset/rotation/rotation.png")
 
 func test_locked_pad_shows_disabled_texture():
-	# A non-interactable pad is greyed out via the disabled texture, swapped in
-	# _ready(); set the flag before adding to the tree so _ready sees it.
+	# A non-interactable pad is greyed out via the disabled texture, swapped in by
+	# the `interactable` setter as soon as the flag is set.
 	var pad = RotationPadScene.instantiate()
 	pad.interactable = false
 	add_child_autofree(pad)
 	assert_eq(pad.texture.resource_path, "res://tileset/rotation/rotation_pad_disabled.png")
+
+func test_locking_a_pad_at_runtime_greys_it_out():
+	# Level 5's middle detector flips `interactable` while running (see
+	# level_5.gd); the sprite must follow.
+	var pad = make_pad()  # starts interactable, active texture
+	pad.interactable = false
+	assert_eq(pad.texture.resource_path, "res://tileset/rotation/rotation_pad_disabled.png")
+
+func test_unlocking_a_pad_at_runtime_restores_the_active_texture():
+	var pad = RotationPadScene.instantiate()
+	pad.interactable = false
+	add_child_autofree(pad)
+	pad.interactable = true
+	assert_eq(pad.texture.resource_path, "res://tileset/rotation/rotation.png")
 
 func test_idle_pad_does_not_rotate():
 	var pad = make_pad()

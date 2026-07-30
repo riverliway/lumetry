@@ -1,6 +1,7 @@
 extends Sprite2D
 class_name RotationPad
 
+const _ENABLED_TEXTURE := preload("res://tileset/rotation/rotation.png")
 const _DISABLED_TEXTURE := preload("res://tileset/rotation/rotation_pad_disabled.png")
 
 var block_type := Util.BLOCK_TYPE.ROTATION_PAD
@@ -8,8 +9,14 @@ var block_type := Util.BLOCK_TYPE.ROTATION_PAD
 ## Whether the player can rotate this pad with the use verb. When false the pad
 ## is locked -- using it does nothing (the grid skips it in _attempt_use) -- but
 ## level code can still spin it (and the block on top) via Room.rotate_pad().
-## Mirrors the laser emitter's `interactable`.
-@export var interactable := true
+## Setting it swaps the sprite (active when unlocked, greyed-out when locked), so
+## a level can flip it at runtime -- e.g. level 5's middle detector unlocks the
+## pad while its beam is present -- and the lock state stays visible. Mirrors the
+## laser emitter's `interactable`.
+@export var interactable := true:
+	set(value):
+		interactable = value
+		texture = _ENABLED_TEXTURE if value else _DISABLED_TEXTURE
 
 var _ROTATION_DURATION := 0.75 ## The duration of a rotation in 
 var _ROTATION_AMOUNT := deg_to_rad(60.0) ## The amount to rotate in radians
@@ -17,12 +24,6 @@ var _rotating_block: Node2D = null ## The block currently being rotated
 var _rotation_time_left := 0.0 ## The time left for the current rotation
 var _rotation_self_start_amount := 0.0 ## The rotation amount for the pad at the start of the rotation
 var _rotation_block_start_amount := 0.0 ## The rotation amount for the block at the start of the rotation
-
-func _ready() -> void:
-	# Locked pads (interactable == false) can't be spun by the player, so show the
-	# greyed-out sprite as a hint. Level code can still drive them via Room.rotate_pad().
-	if not interactable:
-		texture = _DISABLED_TEXTURE
 
 func _process(delta: float) -> void:
 	if _rotation_time_left > 0.0:

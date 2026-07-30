@@ -1500,6 +1500,7 @@ color = Color(0, 0, 0, 1)
 
 [connection signal="detected" from="Room/LaserDetector" to="." method="_on_solved"]
 [connection signal="detected" from="Room/LaserDetector3" to="." method="_on_middle_dector_detected"]
+[connection signal="cleared" from="Room/LaserDetector3" to="." method="_on_middle_dector_cleared"]
 
 [editable path="Room/Track"]
 [editable path="Room/Track2"]
