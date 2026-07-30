@@ -12,7 +12,7 @@ extends GutTest
 const PlayerScene: PackedScene = preload("res://player/player.tscn")
 
 const MOVE_ACTIONS := ["move_up", "move_down", "move_left", "move_right",
-	"move_up_left", "move_up_right", "use", "click_move", "click_use"]
+	"move_up_left", "move_up_right", "use", "click_move", "click_use", "sprint"]
 
 var _saved_settings
 
@@ -155,6 +155,40 @@ func test_keyboard_use_still_works_alongside_mouse():
 	Input.action_press("use")
 	p._process_idle()
 	assert_signal_emitted(p, "attempt_use", "the keyboard use key still fires")
+
+
+# --------------------------------------------------------------------- sprint
+func test_new_direction_looks_first_and_arms_the_timer_without_sprint():
+	# The baseline the sprint case contrasts with: turning to a new direction
+	# enters LOOKING with the cooldown and does NOT move yet.
+	var p = _make_player()
+	p._facing = Util.DIRECTION.DOWN
+	watch_signals(p)
+	Input.action_press("move_up")  # four_key -> UP, different from facing
+	p._process_idle()
+	assert_signal_not_emitted(p, "attempt_move", "a fresh turn does not move on the same press")
+	assert_eq(p._state, Util.PLAYER_STATE.LOOKING, "entered LOOKING to turn first")
+	assert_almost_eq(p._time_left, p._LOOK_DURATION, 0.0001, "look cooldown armed")
+
+func test_sprint_skips_the_look_timer_and_moves_immediately():
+	# Holding sprint, a press in a new direction walks at once -- no LOOKING beat.
+	var p = _make_player()
+	p._facing = Util.DIRECTION.DOWN
+	watch_signals(p)
+	Input.action_press("sprint")
+	Input.action_press("move_up")  # four_key -> UP, different from facing
+	p._process_idle()
+	assert_signal_emitted_with_parameters(p, "attempt_move", [Util.DIRECTION.UP])
+	assert_eq(p._facing, Util.DIRECTION.UP, "still turns to face the new direction")
+	assert_eq(p._time_left, 0.0, "but no look cooldown is armed -- the timer is skipped")
+
+func test_sprint_with_no_direction_does_not_move():
+	# Shift alone is inert; it only suppresses the turn beat for a real direction.
+	var p = _make_player()
+	watch_signals(p)
+	Input.action_press("sprint")
+	p._process_idle()
+	assert_signal_not_emitted(p, "attempt_move", "holding sprint without a direction is a no-op")
 
 
 # ---------------------------------------------------------------------- move

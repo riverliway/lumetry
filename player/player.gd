@@ -81,8 +81,10 @@ func _process_idle() -> void:
 	if input_direction == _facing:
 		# If the player is already facing the input direction, attempt to move
 		attempt_move.emit(input_direction)
-	elif _prev_state == Util.PLAYER_STATE.MOVING:
-		# If the player just finished moving, we can skip the timer
+	elif _prev_state == Util.PLAYER_STATE.MOVING or (_sprinting() and input_direction != Util.DIRECTION.NONE):
+		# Skip the look timer and walk straight away, either because the player
+		# just finished a move (already mid-stride) or is holding the sprint key
+		# to suppress the turn-in-place beat a fresh direction change normally has.
 		_look(input_direction, false)
 		attempt_move.emit(input_direction)
 	else:
@@ -120,6 +122,12 @@ func _process_use() -> void:
 ## the save so a change in the options menu takes effect without a reload.
 func _six_key() -> bool:
 	return SaveData.get_setting("movement_scheme") == "six_key"
+
+
+## Whether the sprint key (shift) is held. Sprinting drops the look timer, so a
+## direction press walks immediately instead of turning in place first.
+func _sprinting() -> bool:
+	return Input.is_action_pressed("sprint")
 
 
 ## Whether a movement key for the active scheme was pressed this frame.
