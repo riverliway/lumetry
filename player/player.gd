@@ -12,6 +12,14 @@ var block_type := Util.BLOCK_TYPE.PLAYER
 const _FOUR_KEY_ACTIONS := ["move_up", "move_down", "move_left", "move_right"]
 const _SIX_KEY_ACTIONS := ["move_up_left", "move_up", "move_up_right", "move_left", "move_down", "move_right"]
 
+## Controller movement, independent of the movement_scheme setting (that only
+## governs the keyboard). The left stick (look_*) is analog and reaches all six
+## hex directions by angle -- look, then move after the same pause as a keyboard
+## tap. The D-pad (dpad_*) is four-directional and resolves diagonals by facing,
+## exactly like the 4-key keyboard scheme. A held bumper is the sprint key.
+const _LOOK_ACTIONS := ["look_up", "look_down", "look_left", "look_right"]
+const _DPAD_ACTIONS := ["dpad_up", "dpad_down", "dpad_left", "dpad_right"]
+
 var _move_start_pos := Vector2.ZERO ## The starting position of the current movement
 var _move_target := Vector2.ZERO ## The target position the player is moving to
 var _move_object = null ## The object to move (can be player or a pushed block)
@@ -77,7 +85,7 @@ func _process_idle() -> void:
 		attempt_use.emit(_facing)
 		return
 
-	var input_direction = _get_input_direction()
+	var input_direction = _input_direction()
 	if input_direction == _facing:
 		# If the player is already facing the input direction, attempt to move
 		attempt_move.emit(input_direction)
@@ -96,7 +104,7 @@ func _process_idle() -> void:
 func _process_look() -> void:
 	# If any new movement input is detected, look in that direction immediately
 	if _movement_just_pressed():
-		_look(_get_input_direction())
+		_look(_input_direction())
 
 	if _time_left <= 0:
 		_state = Util.PLAYER_STATE.IDLE
@@ -130,43 +138,88 @@ func _sprinting() -> bool:
 	return Input.is_action_pressed("sprint")
 
 
-## Whether a movement key for the active scheme was pressed this frame.
+## Whether a movement input (keyboard for the active scheme, or the controller
+## D-pad / left stick) was pressed this frame.
 func _movement_just_pressed() -> bool:
-	var actions = _SIX_KEY_ACTIONS if _six_key() else _FOUR_KEY_ACTIONS
+	var actions = (_SIX_KEY_ACTIONS if _six_key() else _FOUR_KEY_ACTIONS) + _DPAD_ACTIONS + _LOOK_ACTIONS
 	return actions.any(func(a): return Input.is_action_just_pressed(a))
 
 
-## Determines the movement direction from the current input, per the active scheme.
+## The intended hex direction from any input source: the keyboard first (per the
+## active scheme), then the controller (left stick, else D-pad). Keyboard and
+## controller aren't used at once, so checking the keyboard first leaves its
+## behaviour untouched and only falls through to the controller when idle.
+func _input_direction() -> Util.DIRECTION:
+	var dir := _get_input_direction()
+	if dir == Util.DIRECTION.NONE:
+		dir = _controller_direction()
+	return dir
+
+
+## Keyboard movement direction, per the active scheme.
 func _get_input_direction() -> Util.DIRECTION:
 	return _input_direction_six_key() if _six_key() else _input_direction_four_key()
+
+
+## Controller movement direction: the left stick (analog, six-way by angle) when
+## it is pushed past the deadzone, else the D-pad (four-way, diagonals by facing).
+func _controller_direction() -> Util.DIRECTION:
+	var stick := _stick_direction()
+	if stick != Util.DIRECTION.NONE:
+		return stick
+	return _dpad_direction()
+
+
+## The left stick's hex direction, or NONE while it rests inside the deadzone.
+func _stick_direction() -> Util.DIRECTION:
+	var stick := Input.get_vector("look_left", "look_right", "look_up", "look_down", _deadzone())
+	return Util.direction_from_vector(stick)
+
+
+## The configured joystick deadzone, read live so the options slider applies at once.
+func _deadzone() -> float:
+	return SaveData.get_setting("joystick_deadzone")
 
 
 ## Four-key scheme: WASD, where a bare left/right resolves to an up- or
 ## down-diagonal based on the direction the player last looked (`_facing`).
 func _input_direction_four_key() -> Util.DIRECTION:
-	if Input.is_action_pressed('move_up'):
-		if Input.is_action_pressed('move_left'):
+	return _resolve_four_key("move_up", "move_down", "move_left", "move_right")
+
+
+## The D-pad, resolved with the same four-key logic as the keyboard 4-key scheme
+## regardless of the movement_scheme setting (a D-pad has only four directions).
+func _dpad_direction() -> Util.DIRECTION:
+	return _resolve_four_key("dpad_up", "dpad_down", "dpad_left", "dpad_right")
+
+
+## Four-directional resolution shared by the keyboard 4-key scheme and the D-pad:
+## up/down give the cardinal (or a diagonal when combined with left/right), while
+## a bare left/right becomes an up- or down-diagonal based on `_facing`.
+func _resolve_four_key(up: String, down: String, left: String, right: String) -> Util.DIRECTION:
+	if Input.is_action_pressed(up):
+		if Input.is_action_pressed(left):
 			return Util.DIRECTION.UP_LEFT
-		elif Input.is_action_pressed('move_right'):
+		elif Input.is_action_pressed(right):
 			return Util.DIRECTION.UP_RIGHT
 
 		return Util.DIRECTION.UP
 
-	if Input.is_action_pressed('move_down'):
-		if Input.is_action_pressed('move_left'):
+	if Input.is_action_pressed(down):
+		if Input.is_action_pressed(left):
 			return Util.DIRECTION.DOWN_LEFT
-		elif Input.is_action_pressed('move_right'):
+		elif Input.is_action_pressed(right):
 			return Util.DIRECTION.DOWN_RIGHT
 
 		return Util.DIRECTION.DOWN
 
-	if Input.is_action_pressed('move_left'):
+	if Input.is_action_pressed(left):
 		if _facing in [Util.DIRECTION.UP, Util.DIRECTION.UP_LEFT, Util.DIRECTION.UP_RIGHT]:
 			return Util.DIRECTION.UP_LEFT
 
 		return Util.DIRECTION.DOWN_LEFT
 
-	if Input.is_action_pressed('move_right'):
+	if Input.is_action_pressed(right):
 		if _facing in [Util.DIRECTION.UP, Util.DIRECTION.UP_LEFT, Util.DIRECTION.UP_RIGHT]:
 			return Util.DIRECTION.UP_RIGHT
 

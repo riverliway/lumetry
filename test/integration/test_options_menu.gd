@@ -90,6 +90,22 @@ func test_movement_toggle_switches_between_the_two_schemes():
 	assert_eq(btn.text, "4-Key", "label updates back to 4-key")
 
 
+func test_open_reflects_saved_deadzone():
+	# Stored as a 0.0-1.0 fraction, shown on the slider as a percentage.
+	SaveData.data["settings"]["joystick_deadzone"] = 0.35
+	var menu = await _open_menu()
+	assert_eq(menu.get_node("Center/Panel/Box/Deadzone/Slider").value, 35.0, "deadzone slider synced from the fraction")
+	assert_eq(menu.get_node("Center/Panel/Box/Deadzone/Value").text, "35", "deadzone value label synced")
+
+
+func test_changing_the_deadzone_slider_persists_as_a_fraction():
+	SaveData.data["settings"]["joystick_deadzone"] = 0.2
+	var menu = await _open_menu()
+	menu.get_node("Center/Panel/Box/Deadzone/Slider").value = 40
+	assert_almost_eq(SaveData.get_setting("joystick_deadzone"), 0.40, 0.0001,
+		"the percentage slider is written back as a 0.0-1.0 fraction")
+
+
 func test_reset_is_hidden_unless_from_the_title_screen():
 	var menu = await _open_menu()  # in-game (pause) copy: show_reset defaults false
 	var reset = menu.get_node("Center/Panel/Box/ResetSave")

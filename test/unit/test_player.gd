@@ -12,7 +12,9 @@ extends GutTest
 const PlayerScene: PackedScene = preload("res://player/player.tscn")
 
 const MOVE_ACTIONS := ["move_up", "move_down", "move_left", "move_right",
-	"move_up_left", "move_up_right", "use", "click_move", "click_use", "sprint"]
+	"move_up_left", "move_up_right", "use", "click_move", "click_use", "sprint",
+	"dpad_up", "dpad_down", "dpad_left", "dpad_right",
+	"look_up", "look_down", "look_left", "look_right"]
 
 var _saved_settings
 
@@ -189,6 +191,61 @@ func test_sprint_with_no_direction_does_not_move():
 	Input.action_press("sprint")
 	p._process_idle()
 	assert_signal_not_emitted(p, "attempt_move", "holding sprint without a direction is a no-op")
+
+
+# ----------------------------------------------------------------- controller
+func test_no_controller_input_is_none():
+	var p = _make_player()
+	assert_eq(p._controller_direction(), Util.DIRECTION.NONE, "a resting controller -> NONE")
+
+func test_dpad_cardinals():
+	var p = _make_player()
+	Input.action_press("dpad_up")
+	assert_eq(p._controller_direction(), Util.DIRECTION.UP, "D-pad up -> UP")
+	Input.action_release("dpad_up")
+	Input.action_press("dpad_down")
+	assert_eq(p._controller_direction(), Util.DIRECTION.DOWN, "D-pad down -> DOWN")
+
+func test_dpad_uses_four_key_resolution_even_in_six_key_scheme():
+	# The scheme setting governs only the keyboard. In six-key a bare A is
+	# absolute (down-left), but the D-pad always resolves a bare left by facing.
+	var p = _make_player()
+	_set_scheme("six_key")
+	p._facing = Util.DIRECTION.UP
+	Input.action_press("dpad_left")
+	assert_eq(p._controller_direction(), Util.DIRECTION.UP_LEFT,
+		"D-pad left while facing up -> up-left (4-key), not six-key's down-left")
+
+func test_left_stick_maps_analog_push_to_a_hex_direction():
+	var p = _make_player()
+	Input.action_press("look_up")
+	assert_eq(p._controller_direction(), Util.DIRECTION.UP, "stick up -> UP")
+	Input.action_release("look_up")
+	Input.action_press("look_down")
+	assert_eq(p._controller_direction(), Util.DIRECTION.DOWN, "stick down -> DOWN")
+
+func test_left_stick_takes_priority_over_the_dpad():
+	# Both at once shouldn't fight: the analog stick wins.
+	var p = _make_player()
+	Input.action_press("look_down")
+	Input.action_press("dpad_up")
+	assert_eq(p._controller_direction(), Util.DIRECTION.DOWN, "stick beats the D-pad")
+
+func test_left_stick_looks_first_then_moves_when_facing_settles():
+	# Like a keyboard tap: a new stick direction turns in place (LOOKING) before
+	# it walks; once the player faces that way, holding the stick moves.
+	var p = _make_player()
+	p._facing = Util.DIRECTION.DOWN
+	watch_signals(p)
+	Input.action_press("look_up")
+	p._process_idle()
+	assert_signal_not_emitted(p, "attempt_move", "the stick looks before it walks")
+	assert_eq(p._facing, Util.DIRECTION.UP, "turned to face the stick")
+	assert_eq(p._state, Util.PLAYER_STATE.LOOKING, "entered LOOKING")
+	# Simulate the look timer having elapsed, back to idle, stick still held up.
+	p._state = Util.PLAYER_STATE.IDLE
+	p._process_idle()
+	assert_signal_emitted_with_parameters(p, "attempt_move", [Util.DIRECTION.UP])
 
 
 # ---------------------------------------------------------------------- move

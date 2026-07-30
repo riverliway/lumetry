@@ -62,8 +62,16 @@ const DEFAULTS := {
 		"colorblind_mode": "default",
 		"text_speed": "normal",
 		"movement_scheme": "six_key",
+		# Fraction (0.0-DEADZONE_MAX) of the joystick's travel ignored near center,
+		# so a resting/drifting stick doesn't register. Consumed by the player
+		# controller's analog look stick.
+		"joystick_deadzone": 0.2,
 	},
 }
+
+## joystick_deadzone is clamped to this range. Capped below 1.0 so a full push
+## always clears the deadzone and the stick can never be dead.
+const DEADZONE_MAX := 0.95
 
 ## The live save state -- always a fully populated, validated copy of the schema.
 var data: Dictionary = DEFAULTS.duplicate(true)
@@ -282,8 +290,9 @@ func get_setting(key: String) -> Variant:
 
 ## Sets a validated setting, saves, and emits `setting_changed`. Audio is clamped
 ## to 0-100; colorblind_mode must be one of COLORBLIND_MODES, text_speed one of
-## TEXT_SPEEDS, and movement_scheme one of MOVEMENT_SCHEMES. Unknown keys and
-## invalid values are ignored (no save, no signal).
+## TEXT_SPEEDS, and movement_scheme one of MOVEMENT_SCHEMES; joystick_deadzone is
+## clamped to 0.0-DEADZONE_MAX. Unknown keys and invalid values are ignored (no
+## save, no signal).
 func set_setting(key: String, value: Variant) -> void:
 	match key:
 		"master_audio", "music_audio", "sfx_audio":
@@ -303,6 +312,8 @@ func set_setting(key: String, value: Variant) -> void:
 				push_warning("SaveData: invalid movement_scheme '%s'" % value)
 				return
 			data["settings"]["movement_scheme"] = value
+		"joystick_deadzone":
+			data["settings"][key] = clampf(float(value), 0.0, DEADZONE_MAX)
 		_:
 			push_warning("SaveData: unknown setting '%s'" % key)
 			return
@@ -356,5 +367,7 @@ func _normalize(loaded: Dictionary) -> Dictionary:
 			result["settings"]["text_speed"] = settings["text_speed"]
 		if settings.get("movement_scheme") in MOVEMENT_SCHEMES:
 			result["settings"]["movement_scheme"] = settings["movement_scheme"]
+		if "joystick_deadzone" in settings:
+			result["settings"]["joystick_deadzone"] = clampf(float(settings["joystick_deadzone"]), 0.0, DEADZONE_MAX)
 
 	return result

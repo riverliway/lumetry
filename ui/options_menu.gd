@@ -1,7 +1,7 @@
 extends Control
 ## The options ("Calibrations") screen: master / music / SFX volume sliders, a
-## colorblind-mode toggle, a dialogue text-speed cycle, and a movement-scheme
-## toggle (4-key vs 6-key).
+## colorblind-mode toggle, a dialogue text-speed cycle, a movement-scheme toggle
+## (4-key vs 6-key), and a joystick deadzone slider.
 ##
 ## A reusable overlay, instanced into both the title menu and the in-level pause
 ## menu. It reads the current values from SaveData when opened and writes each
@@ -42,6 +42,8 @@ const RESET_PROMPT := "Reset all progress? This can't be undone."
 @onready var _colorblind: Button = $Center/Panel/Box/Colorblind/Toggle
 @onready var _text_speed: Button = $Center/Panel/Box/TextSpeed/Toggle
 @onready var _movement: Button = $Center/Panel/Box/Movement/Toggle
+@onready var _deadzone: HSlider = $Center/Panel/Box/Deadzone/Slider
+@onready var _deadzone_value: Label = $Center/Panel/Box/Deadzone/Value
 @onready var _reset: Button = $Center/Panel/Box/ResetSave
 @onready var _unlock: Button = $Center/Panel/Box/UnlockSave
 @onready var _confirm: Control = $Confirm
@@ -60,6 +62,7 @@ func _ready() -> void:
 	_colorblind.pressed.connect(_toggle_colorblind)
 	_text_speed.pressed.connect(_cycle_text_speed)
 	_movement.pressed.connect(_toggle_movement)
+	_bind_deadzone_slider()
 	_reset.pressed.connect(_open_reset_confirm)
 	_unlock.pressed.connect(_on_unlock)
 	_confirm.confirmed.connect(_on_reset_confirmed)
@@ -82,6 +85,8 @@ func open() -> void:
 	_refresh_colorblind_label()
 	_refresh_text_speed_label()
 	_refresh_movement_label()
+	# The setting is a 0.0-1.0 fraction; the slider shows it as a percentage.
+	_set_slider(_deadzone, _deadzone_value, roundi(SaveData.get_setting("joystick_deadzone") * 100.0))
 	_loading = false
 	show()
 	_nav.focus_first()
@@ -136,6 +141,15 @@ func _bind_slider(slider: HSlider, value_label: Label, key: String) -> void:
 func _set_slider(slider: HSlider, value_label: Label, percent) -> void:
 	slider.value = int(percent)
 	value_label.text = str(int(percent))
+
+
+## The joystick deadzone slider shows a percentage but stores the 0.0-1.0 fraction
+## the player controller expects, so it needs its own binding rather than _bind_slider.
+func _bind_deadzone_slider() -> void:
+	_deadzone.value_changed.connect(func(v: float) -> void:
+		_deadzone_value.text = str(int(v))
+		if not _loading:
+			SaveData.set_setting("joystick_deadzone", v / 100.0))
 
 
 func _toggle_colorblind() -> void:

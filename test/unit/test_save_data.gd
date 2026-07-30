@@ -240,6 +240,26 @@ func test_movement_scheme_default_and_validation():
 	s.set_setting("movement_scheme", "ten_key")
 	assert_eq(s.get_setting("movement_scheme"), "four_key", "invalid scheme ignored")
 
+func test_joystick_deadzone_default_and_clamp():
+	var s = _make()
+	s.load_from_disk()
+	assert_almost_eq(s.get_setting("joystick_deadzone"), 0.2, 0.0001, "deadzone defaults to 0.2")
+	s.set_setting("joystick_deadzone", 0.35)
+	assert_almost_eq(s.get_setting("joystick_deadzone"), 0.35, 0.0001, "valid fraction stored")
+	s.set_setting("joystick_deadzone", 5.0)
+	assert_almost_eq(s.get_setting("joystick_deadzone"), s.DEADZONE_MAX, 0.0001, "clamped to the max so the stick is never dead")
+	s.set_setting("joystick_deadzone", -1.0)
+	assert_eq(s.get_setting("joystick_deadzone"), 0.0, "clamped low to zero")
+
+func test_joystick_deadzone_survives_a_save_reload():
+	# The whole point of the setting is persistence; prove it round-trips a float.
+	var s = _make()
+	s.load_from_disk()
+	s.set_setting("joystick_deadzone", 0.45)
+	var reloaded = _make()
+	reloaded.load_from_disk()
+	assert_almost_eq(reloaded.get_setting("joystick_deadzone"), 0.45, 0.0001, "deadzone persisted across a reload")
+
 func test_setting_changed_signal_carries_key_and_value():
 	var s = _make()
 	s.load_from_disk()
