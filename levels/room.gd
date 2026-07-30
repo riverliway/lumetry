@@ -332,6 +332,17 @@ class Grid:
 		player.attempt_move.connect(_attempt_move)
 		player.attempt_use.connect(_attempt_use)
 
+	## Dismisses the pulsing interact hint sitting behind `block`, if it has one. The
+	## hint is a hand-placed InteractHint child in a level scene (only level 1's
+	## emitter and level 4's pad carry one); dismissing records it in the save (so
+	## it never returns) and removes it. A no-op for the blocks that never had one.
+	func _clear_interact_hint(block: Node) -> void:
+		if block == null:
+			return
+		for child in block.get_children():
+			if child is InteractHint:
+				child.dismiss()
+
 	## A hook for the player attempt use signal
 	## [br]`player_facing` is the direction the player is facing
 	func _attempt_use(player_facing: Util.DIRECTION) -> void:
@@ -349,6 +360,7 @@ class Grid:
 			if rotation_pad.interactable:
 				_rotate_pad_cell(new_cell)
 				player.use()
+				_clear_interact_hint(rotation_pad)  # first interaction -- stop nudging
 			return
 
 		# Only a player-interactable emitter toggles from the use verb; a fixed one
@@ -357,6 +369,7 @@ class Grid:
 			new_cell.block.use()
 			player.use()
 			handle_laser_physics()
+			_clear_interact_hint(new_cell.block)  # first interaction -- stop nudging
 
 	## Rotates the block on the given rotation pad one hex step clockwise and
 	## re-resolves the lasers. Ignores the pad's `interactable` flag -- that only

@@ -51,6 +51,10 @@ const DEFAULTS := {
 	# Ids of the one-time dialogues the player has already seen (e.g. the laser
 	# "singed" hint). Persisted so such a hint fires only the first time, ever.
 	"seen_dialogues": [],
+	# Ids of the interact-hint nudges (the pulsing circle behind level 1's emitter
+	# and level 4's pad) the player has already interacted with. Persisted so each
+	# hint shows only until its first interaction, ever -- see InteractHint.
+	"seen_hints": [],
 	"settings": {
 		"master_audio": 100,
 		"music_audio": 100,
@@ -235,6 +239,21 @@ func mark_dialogue_seen(id: String) -> void:
 	save()
 
 
+## Whether the interact-hint `id` has already been dismissed (the player has
+## interacted with the block it sat behind), so it should no longer appear.
+func has_seen_hint(id: String) -> bool:
+	return id in data["seen_hints"]
+
+
+## Records that the interact-hint `id` has been dismissed, and saves. A no-op (no
+## save) if it was already recorded.
+func mark_hint_seen(id: String) -> void:
+	if id in data["seen_hints"]:
+		return
+	data["seen_hints"].push_back(id)
+	save()
+
+
 func is_sandbox_unlocked() -> bool:
 	return data["sandbox_unlocked"]
 
@@ -314,6 +333,14 @@ func _normalize(loaded: Dictionary) -> Dictionary:
 			if entry is String and not entry in ids:
 				ids.push_back(entry)
 		result["seen_dialogues"] = ids
+
+	var hints = loaded.get("seen_hints")
+	if hints is Array:
+		var hint_ids: Array = []
+		for entry in hints:
+			if entry is String and not entry in hint_ids:
+				hint_ids.push_back(entry)
+		result["seen_hints"] = hint_ids
 
 	var settings = loaded.get("settings")
 	if settings is Dictionary:

@@ -350,3 +350,41 @@ func test_normalize_keeps_only_unique_string_dialogue_ids():
 	var s = _make()
 	s.load_from_disk()
 	assert_eq(s.data["seen_dialogues"], ["singed", "fried"], "non-strings dropped, duplicates collapsed")
+
+
+# ----------------------------------------------------------------- seen hints
+func test_no_hints_seen_by_default():
+	var s = _make()
+	s.load_from_disk()
+	assert_false(s.has_seen_hint("level1_emitter"), "no interact hint dismissed yet")
+
+func test_marking_a_hint_seen_persists_across_reload():
+	var a = _make()
+	a.load_from_disk()
+	a.mark_hint_seen("level1_emitter")
+	assert_true(a.has_seen_hint("level1_emitter"), "recorded on the live instance")
+	var b = _make()
+	b.load_from_disk()  # a separate instance reading the same slots
+	assert_true(b.has_seen_hint("level1_emitter"), "the dismissal survived the reload")
+
+func test_marking_a_hint_seen_twice_is_idempotent():
+	var s = _make()
+	s.load_from_disk()  # two initial writes -> counter 2
+	s.mark_hint_seen("level4_pad")
+	assert_eq(s._counter, 3, "the first mark saves")
+	s.mark_hint_seen("level4_pad")
+	assert_eq(s._counter, 3, "marking the same hint again does not save")
+	assert_eq(s.data["seen_hints"].size(), 1, "and does not duplicate the id")
+
+func test_reset_clears_seen_hints():
+	var s = _make()
+	s.load_from_disk()
+	s.mark_hint_seen("level1_emitter")
+	s.reset()
+	assert_false(s.has_seen_hint("level1_emitter"), "reset wipes the dismissed-hint record")
+
+func test_seen_hints_and_dialogues_are_independent():
+	var s = _make()
+	s.load_from_disk()
+	s.mark_hint_seen("level1_emitter")
+	assert_false(s.has_seen_dialogue("level1_emitter"), "a dismissed hint is not a seen dialogue")
