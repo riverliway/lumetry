@@ -4,6 +4,15 @@ extends GutTest
 ## starts on the first enabled button. Setup is deferred, so tests await a frame.
 
 const MenuNavScript := preload("res://ui/menu_nav.gd")
+const STICK_ACTIONS := ["look_up", "look_down", "look_left", "look_right"]
+
+
+func after_each() -> void:
+	# Release any simulated stick push so it can't bleed into the next test (the
+	# nav polls the stick every frame).
+	for a in STICK_ACTIONS:
+		if Input.is_action_pressed(a):
+			Input.action_release(a)
 
 
 ## A Control holding `count` buttons (those in `disabled` start disabled) plus a
@@ -90,3 +99,53 @@ func test_sliders_are_targets_and_left_right_adjust_them():
 	left.pressed = true
 	nav._unhandled_input(left)
 	assert_eq(slider.value, 50.0, "move_left steps the slider down")
+
+
+# --------------------------------------------------------------- analog stick
+func test_stick_side_maps_the_push_to_a_side():
+	var root := Control.new()
+	var nav := Node.new()
+	nav.set_script(MenuNavScript)
+	root.add_child(nav)
+	add_child_autofree(root)
+	Input.action_press("look_down")
+	assert_eq(nav._stick_side_now(), SIDE_BOTTOM, "stick down -> bottom")
+	Input.action_release("look_down")
+	Input.action_press("look_right")
+	assert_eq(nav._stick_side_now(), SIDE_RIGHT, "stick right -> right")
+	Input.action_release("look_right")
+	assert_eq(nav._stick_side_now(), -1, "a centred stick -> -1")
+
+
+func test_left_stick_moves_the_cursor_once_per_push():
+	var root := Control.new()
+	var top := Button.new()
+	top.name = "Top"
+	top.position = Vector2(0, 0)
+	top.size = Vector2(300, 100)
+	root.add_child(top)
+	var bottom := Button.new()
+	bottom.name = "Bottom"
+	bottom.position = Vector2(0, 400)
+	bottom.size = Vector2(300, 100)
+	root.add_child(bottom)
+	var nav := Node.new()
+	nav.set_script(MenuNavScript)
+	root.add_child(nav)
+	add_child_autofree(root)
+	await get_tree().process_frame
+	nav.set_process(false)  # drive the stick poll manually from here
+	assert_true(top.has_focus(), "cursor starts on the top button")
+
+	Input.action_press("look_down")
+	nav._process(0.0)
+	assert_true(bottom.has_focus(), "pushing the stick down moves the cursor down")
+	# Holding the stick does NOT keep scrolling -- one push, one move.
+	nav._process(0.0)
+	assert_true(bottom.has_focus(), "a held stick doesn't repeat")
+	# Re-centre then push again -> another move (back up).
+	Input.action_release("look_down")
+	nav._process(0.0)
+	Input.action_press("look_up")
+	nav._process(0.0)
+	assert_true(top.has_focus(), "re-pushing after centring moves again")

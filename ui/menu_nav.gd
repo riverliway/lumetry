@@ -1,9 +1,14 @@
 extends Node
 ## Reusable menu navigation. Add as a child of the node whose focusable descendants
 ## make up a menu (or point `buttons_root` at that node). The *focused* control is
-## the on-screen cursor: WASD (the move_* actions) moves it to the nearest control
-## in that direction, moving the mouse over one moves the cursor there, and the
-## built-in ui_accept (Space/Enter) or a mouse click presses it.
+## the on-screen cursor: WASD (the move_* actions) or a controller (the D-pad, via
+## the same move_* actions, and the left stick) moves it to the nearest control in
+## that direction, moving the mouse over one moves the cursor there, and the
+## built-in ui_accept (Space / Enter / controller A) or a mouse click presses it.
+##
+## Digital inputs (keyboard, D-pad) navigate on their press event; the analog left
+## stick is polled with edge detection, so one push moves the cursor once -- like a
+## WASD tap -- rather than scrolling while it is held.
 ##
 ## Buttons and sliders (Range) are both cursor targets. When the cursor is on a
 ## slider, left/right adjust its value by one step instead of jumping away; up/down
@@ -17,7 +22,15 @@ extends Node
 ## Node whose descendant controls form the menu. Defaults to this node's parent.
 @export var buttons_root: Node
 
+## Left-stick push past this fraction counts as a menu direction. Fixed (not the
+## gameplay joystick_deadzone) -- menu nav wants a firm, deliberate flick.
+const _STICK_DEADZONE := 0.5
+
 var _targets: Array[Control] = []
+
+## The side the left stick currently rests toward (a Side, or -1 when centred).
+## Navigation fires only when this changes, so a held stick moves the cursor once.
+var _stick_side := -1
 
 
 func _ready() -> void:
@@ -62,21 +75,49 @@ func _focusables(root: Node) -> Array:
 
 func _unhandled_input(event: InputEvent) -> void:
 	var side := _direction_side(event)
-	if side < 0:
-		return
+	if side >= 0 and _navigate(side):
+		get_viewport().set_input_as_handled()
+
+
+## Polls the analog left stick, navigating once each time it enters a new
+## direction. Digital inputs (keyboard, D-pad) go through _unhandled_input.
+func _process(_delta: float) -> void:
+	var side := _stick_side_now()
+	if side == _stick_side:
+		return  # still resting the same way (or still centred) -- no new push
+	_stick_side = side
+	if side >= 0:
+		_navigate(side)
+
+
+## Moves the cursor one step toward `side` (or nudges a focused slider), if this
+## MenuNav owns the focused control. Returns whether it acted. Shared by the
+## keyboard/D-pad event path and the left-stick polling.
+func _navigate(side: int) -> bool:
 	var focused := get_viewport().gui_get_focus_owner()
 	if focused == null or not _targets.has(focused):
-		return  # not our cursor -- let whoever owns it navigate
+		return false  # not our cursor -- let whoever owns it navigate
 	# On a slider, left/right change the value rather than leaving the control.
 	if focused is Range and (side == SIDE_LEFT or side == SIDE_RIGHT):
 		var step: float = focused.step if focused.step > 0.0 else 1.0
 		focused.value += step if side == SIDE_RIGHT else -step
-		get_viewport().set_input_as_handled()
-		return
+		return true
 	var neighbor := _nearest(focused, side)
 	if neighbor:
 		neighbor.grab_focus()
-		get_viewport().set_input_as_handled()
+		return true
+	return false
+
+
+## The side the left stick points toward, or -1 while it rests within the menu
+## deadzone. Analog, so it is quantised to the single dominant side.
+func _stick_side_now() -> int:
+	var v := Input.get_vector("look_left", "look_right", "look_up", "look_down", _STICK_DEADZONE)
+	if v == Vector2.ZERO:
+		return -1
+	if absf(v.x) >= absf(v.y):
+		return SIDE_RIGHT if v.x > 0.0 else SIDE_LEFT
+	return SIDE_BOTTOM if v.y > 0.0 else SIDE_TOP
 
 
 ## The nearest enabled target to `from` in the given direction, among our own.
@@ -112,7 +153,8 @@ func _nearest(from: Control, side: int) -> Control:
 	return best
 
 
-## Maps a pressed WASD move_* action to the Side to seek a neighbour on, else -1.
+## Maps a pressed move_* action (WASD or the D-pad, which shares them) to the Side
+## to seek a neighbour on, else -1. The analog stick is handled in _process.
 func _direction_side(event: InputEvent) -> int:
 	if event.is_action_pressed("move_up"):
 		return SIDE_TOP
