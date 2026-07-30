@@ -48,6 +48,7 @@ func _ready() -> void:
 	fit_to_screen()
 	add_child(PAUSE_MENU.instantiate())
 	_connect_win_condition()
+	_connect_hazard()
 
 
 ## Wires the default win condition: the room is solved once every detector is
@@ -63,6 +64,17 @@ func _connect_win_condition() -> void:
 		detector.detected.connect(_reevaluate)
 		detector.cleared.connect(_reevaluate)
 	_reevaluate()
+
+
+## Wires the laser-hazard reactions the room raises: frying the player (a beam
+## strikes them through their own action) resets the room after the "fried"
+## dialogue, and bumping into a beam surfaces the one-time "singed" hint. Every
+## level gets these (a bespoke level overrides _connect_win_condition, not _ready).
+func _connect_hazard() -> void:
+	if room == null:
+		return
+	room.player_fried.connect(_on_player_fried)
+	room.player_singed.connect(_on_player_singed)
 
 
 ## Recomputes the win condition after any detector turns on or off. The optional
@@ -99,6 +111,36 @@ func _on_unsolved() -> void:
 		return
 	_solved = false
 	unsolved.emit()
+
+
+# --- laser hazard -----------------------------------------------------------
+
+## The player fried themselves on a beam. The room has already switched every
+## emitter off, so the beams are gone; play the "fried" dialogue and reset the
+## room to its start. (Once the dialogue engine lands, the reset should wait for
+## the dialogue to be dismissed rather than firing immediately.)
+func _on_player_fried() -> void:
+	_play_dialogue("fried")
+	_reset_room()
+
+
+## The player tried to cross a beam (the move was refused). Show the "singed"
+## hint the first time it ever happens and remember it in the save, so the hint
+## never repeats -- across rooms or playthroughs.
+func _on_player_singed() -> void:
+	if SaveData.has_seen_dialogue("singed"):
+		return
+	SaveData.mark_dialogue_seen("singed")
+	_play_dialogue("singed")
+
+
+## Reloads the room to its starting state, fading through black -- the same reset
+## the pause menu offers. No-ops off a real numbered level (a synthetic test tree
+## has no scene to reload); see _level_number.
+func _reset_room() -> void:
+	if _level_number() < 1:
+		return
+	Transition.transition(func(): get_tree().reload_current_scene())
 
 
 # --- board presentation -----------------------------------------------------

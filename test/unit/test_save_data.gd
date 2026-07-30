@@ -309,3 +309,44 @@ func test_unlock_all_opens_every_level_and_the_sandbox():
 	assert_eq(s.get_level_state(2), s.LevelState.COMPLETED, "unlock_all never downgrades a completed level")
 	assert_true(s.is_sandbox_unlocked(), "sandbox unlocked")
 	assert_eq(s.data["levels"].size(), s.LEVEL_COUNT, "array not grown")
+
+
+# ------------------------------------------------------------- seen dialogues
+func test_no_dialogues_seen_by_default():
+	var s = _make()
+	s.load_from_disk()
+	assert_false(s.has_seen_dialogue("singed"), "nothing has been shown yet")
+
+func test_marking_a_dialogue_seen_persists_across_reload():
+	var a = _make()
+	a.load_from_disk()
+	a.mark_dialogue_seen("singed")
+	assert_true(a.has_seen_dialogue("singed"), "recorded on the live instance")
+	var b = _make()
+	b.load_from_disk()  # a separate instance reading the same slots
+	assert_true(b.has_seen_dialogue("singed"), "the record survived the reload")
+
+func test_marking_a_dialogue_seen_twice_is_idempotent():
+	var s = _make()
+	s.load_from_disk()  # two initial writes -> counter 2
+	s.mark_dialogue_seen("singed")
+	assert_eq(s._counter, 3, "the first mark saves")
+	s.mark_dialogue_seen("singed")
+	assert_eq(s._counter, 3, "marking the same dialogue again does not save")
+	assert_eq(s.data["seen_dialogues"].size(), 1, "and does not duplicate the id")
+
+func test_reset_clears_seen_dialogues():
+	var s = _make()
+	s.load_from_disk()
+	s.mark_dialogue_seen("singed")
+	s.reset()
+	assert_false(s.has_seen_dialogue("singed"), "reset wipes the seen-dialogue record")
+
+func test_normalize_keeps_only_unique_string_dialogue_ids():
+	# A hand-written slot with junk mixed in loads back as clean, deduped strings.
+	_write_file(_slot(1), _envelope(1, 100.0, _valid_payload({
+		"seen_dialogues": ["singed", "singed", 42, null, "fried"],
+	})))
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.data["seen_dialogues"], ["singed", "fried"], "non-strings dropped, duplicates collapsed")

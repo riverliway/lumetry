@@ -48,6 +48,9 @@ const DEFAULTS := {
 		LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED,
 		LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED, LevelState.LOCKED],
 	"sandbox_unlocked": false,
+	# Ids of the one-time dialogues the player has already seen (e.g. the laser
+	# "singed" hint). Persisted so such a hint fires only the first time, ever.
+	"seen_dialogues": [],
 	"settings": {
 		"master_audio": 100,
 		"music_audio": 100,
@@ -217,6 +220,21 @@ func complete_level(index: int) -> void:
 	save()
 
 
+# ------------------------------------------------------------------ dialogues
+## Whether the one-time dialogue `id` has already been shown to the player.
+func has_seen_dialogue(id: String) -> bool:
+	return id in data["seen_dialogues"]
+
+
+## Records that the one-time dialogue `id` has been shown, and saves. A no-op (no
+## save) if it was already recorded.
+func mark_dialogue_seen(id: String) -> void:
+	if id in data["seen_dialogues"]:
+		return
+	data["seen_dialogues"].push_back(id)
+	save()
+
+
 func is_sandbox_unlocked() -> bool:
 	return data["sandbox_unlocked"]
 
@@ -288,6 +306,14 @@ func _normalize(loaded: Dictionary) -> Dictionary:
 
 	if "sandbox_unlocked" in loaded:
 		result["sandbox_unlocked"] = bool(loaded["sandbox_unlocked"])
+
+	var seen = loaded.get("seen_dialogues")
+	if seen is Array:
+		var ids: Array = []
+		for entry in seen:
+			if entry is String and not entry in ids:
+				ids.push_back(entry)
+		result["seen_dialogues"] = ids
 
 	var settings = loaded.get("settings")
 	if settings is Dictionary:

@@ -1,6 +1,21 @@
 extends Node2D
 class_name Room
 
+## Emitted when a beam ends up striking the player as a result of the player's own
+## action -- toggling an emitter they stand in front of, rotating a mirror into
+## themselves, stepping into a beam's path, and so on. By the time it fires every
+## emitter in the room has already been switched off (so the beams are gone); the
+## listener (Level) plays the "fried" dialogue and resets the room.
+signal player_fried
+## Emitted when the player tries to walk across an active beam. The move is
+## refused (see Grid._attempt_move); the listener shows the one-time "singed"
+## hint the first time it ever happens.
+signal player_singed
+
+## Guards the fry reaction against re-entry while it is being handled (shutting the
+## emitters off re-resolves the lasers, which must not fire another fry).
+var _handling_fry := false
+
 ## Preloaded laser segment for dynamic creation of laser beams
 static var laser_segment_scene: PackedScene = preload("res://tileset/laser/laser_segment.tscn")
 ## Preloaded half-beam segment for drawing a bounce inside a mirror cell
@@ -32,6 +47,24 @@ func handle_laser_physics() -> void:
 	grid.handle_laser_physics()
 
 
+## Called by the grid when a settled resolve leaves a beam on the player's own
+## cell: the player fried themselves through their last action. Switches every
+## emitter off (so the beams vanish) and fires player_fried exactly once -- the
+## re-resolve during shut-off can't fry again since no beam remains.
+func _on_player_struck() -> void:
+	if _handling_fry:
+		return
+	_handling_fry = true
+	grid.shut_off_all_emitters()
+	player_fried.emit()
+
+
+## Called by the grid when the player's move into an active beam is refused. Just
+## forwards the event; the one-time gating lives in the Level.
+func _on_player_crossed_laser() -> void:
+	player_singed.emit()
+
+
 ## Rotates the block sitting on the given rotation pad one hex step clockwise
 ## (animating both) and re-resolves the lasers -- the programmatic equivalent of
 ## a player rotating it with the use verb, and unaffected by the pad's
@@ -57,6 +90,11 @@ class Grid:
 	## Collected mid-propagation and removed after it, so the freshly cleared
 	## cells re-propagate light on the next resolve.
 	var _cells_to_melt: Array = []
+
+	## Set during a resolve when a beam reaches the player's own cell -- the player
+	## fried themselves. Reset each resolve so it reflects the settled grid, and
+	## read by handle_laser_physics once the melt loop stabilizes.
+	var _player_struck := false
 
 	var WIDTH = 23 ## Number of cells in each row
 	var HEIGHT = 12 ## Number of cells in each column
@@ -105,6 +143,14 @@ class Grid:
 		for detector in detectors:
 			detector.end_pass()
 
+		# A beam left sitting on the player's own cell means the player fried
+		# themselves through their last action. `player` is only set once the room
+		# is live (Room._ready resolves the grid *before* connect_player), so the
+		# load-time resolve -- player still null -- never trips this; only
+		# player-driven re-resolves do.
+		if _player_struck and player != null:
+			resolve_room.call()._on_player_struck()
+
 	## Runs one full laser resolution on the current grid (no block removal):
 	## clears beams, resets per-pass state, propagates every active emitter, then
 	## fires each ready focuser to a fixpoint. Returns the meltable cells a
@@ -112,6 +158,7 @@ class Grid:
 	func _resolve_lasers() -> Array:
 		clear_laser_grid()
 		_cells_to_melt = []
+		_player_struck = false
 
 		# Reset per-resolve accumulators (the final resolve's state is the one kept).
 		for detector in find_detectors():
@@ -161,7 +208,14 @@ class Grid:
 			if cell == null:
 				# We must be out of bounds
 				return
-				
+
+			if cell.get_block_type() == Util.BLOCK_TYPE.PLAYER:
+				# The beam reached the player's own cell -- they fried themselves.
+				# Flag it (handle_laser_physics reacts once the grid settles) and
+				# stop the beam here, the same as any other solid block.
+				_player_struck = true
+				return
+
 			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_SHORT:
 				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				var incoming_dir = laser_facing
@@ -257,6 +311,15 @@ class Grid:
 			
 		return current_cell
 		
+	## Switches every emitter in the room off (interactable or not) and re-resolves,
+	## so all beams -- including any prism splits or focuser outputs they fed --
+	## clear. Used when the player fries themselves, right before the room resets.
+	func shut_off_all_emitters() -> void:
+		var index = find(func(cell): return cell.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER, false)
+		for i in range(0, len(index), 2):
+			grid[index[i]][index[i + 1]].block.activated = false
+		handle_laser_physics()
+
 	## Cleans lasers off all cells in the grid
 	func clear_laser_grid() -> void:
 		for c in WIDTH:
@@ -323,8 +386,13 @@ class Grid:
 	func _attempt_move(direction: Util.DIRECTION) -> void:
 		var current_cell = get_nearest_cell(player.position)
 		var new_cell = go(current_cell, direction)
-		if new_cell == null or (new_cell.get_block_type() == Util.BLOCK_TYPE.NONE and new_cell.is_laser_active()):
-			# Can't walk into lasers
+		if new_cell == null:
+			return
+
+		if new_cell.get_block_type() == Util.BLOCK_TYPE.NONE and new_cell.is_laser_active():
+			# Can't cross an active beam. Refuse the move and report it, so the
+			# first attempt ever surfaces the one-time "singed" hint.
+			resolve_room.call()._on_player_crossed_laser()
 			return
 
 		if new_cell.get_block_type() != Util.BLOCK_TYPE.NONE:

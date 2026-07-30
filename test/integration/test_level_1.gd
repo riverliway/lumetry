@@ -130,3 +130,30 @@ func test_synthetic_level_has_no_level_number():
 	# is why solving one in a test neither writes the save nor swaps the scene.
 	var level := build_level([])
 	assert_eq(level._level_number(), -1)
+
+
+# ------------------------------------------------- laser hazard (base Level wiring)
+func test_hazard_reactions_are_wired_to_the_room():
+	# _connect_hazard runs from _ready, so the base Level listens for both room
+	# hazards regardless of any per-level win-condition override.
+	var level := build_level([])
+	assert_true(level.room.player_fried.is_connected(level._on_player_fried),
+		"the fry reaction is wired")
+	assert_true(level.room.player_singed.is_connected(level._on_player_singed),
+		"the singed reaction is wired")
+
+func test_frying_the_player_reaches_the_level_and_clears_the_beam():
+	# Emitter above the player, off to start; the player toggles it onto themselves.
+	# The room fries them and the Level reaction runs (its reset no-ops off a real
+	# numbered level, so a synthetic tree is safe here).
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	emitter.activated = false
+	var level := build_level([emitter], Vector2i(5, 6))
+	watch_signals(level.room)
+
+	level.room.grid._attempt_use(Util.DIRECTION.UP)
+
+	assert_signal_emitted(level.room, "player_fried", "the room fried the player")
+	assert_false(emitter.activated, "every emitter was switched off")
+	assert_eq(active_laser_count(level.room), 0, "the beam is gone")
