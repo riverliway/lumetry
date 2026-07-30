@@ -7,4 +7,5 @@
 script = ExtResource("1_wire")
 
 [node name="Segment" type="Sprite2D" parent="."]
+position = Vector2(79, -17)
 texture = ExtResource("2_deact")
