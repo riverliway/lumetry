@@ -12,7 +12,7 @@ extends GutTest
 const PlayerScene: PackedScene = preload("res://player/player.tscn")
 
 const MOVE_ACTIONS := ["move_up", "move_down", "move_left", "move_right",
-	"move_up_left", "move_up_right", "use"]
+	"move_up_left", "move_up_right", "use", "click_move", "click_use"]
 
 var _saved_settings
 
@@ -96,6 +96,65 @@ func test_look_without_cooldown_skips_the_timer():
 	p._time_left = 0.0
 	p._look(Util.DIRECTION.UP, false)
 	assert_eq(p._time_left, 0.0, "start_cooldown=false leaves the timer unset")
+
+
+# ---------------------------------------------------------------------- face
+func test_face_aims_the_sprite_without_touching_the_state():
+	# _face is the shared aiming used by mouse look: facing + animation + flip,
+	# but no LOOKING state and no cooldown (unlike _look).
+	var p = _make_player()
+	p._state = Util.PLAYER_STATE.IDLE
+	p._time_left = 0.0
+	p._face(Util.DIRECTION.UP_LEFT)
+	assert_eq(p._facing, Util.DIRECTION.UP_LEFT, "facing updated")
+	assert_eq(p.animation, "idle_upright", "up diagonal animation")
+	assert_lt(p.scale.x, 0.0, "left diagonal flips the sprite")
+	assert_eq(p._state, Util.PLAYER_STATE.IDLE, "state is left untouched")
+	assert_eq(p._time_left, 0.0, "no cooldown armed")
+
+func test_face_none_leaves_facing_unchanged():
+	var p = _make_player()
+	var before = p._facing
+	p._face(Util.DIRECTION.NONE)
+	assert_eq(p._facing, before, "a NONE aim (cursor on the player) is a no-op")
+
+
+# ----------------------------------------------------------- mouse buttons
+func test_left_click_moves_toward_the_current_facing():
+	var p = _make_player()
+	p._facing = Util.DIRECTION.UP_RIGHT
+	watch_signals(p)
+	Input.action_press("click_move")
+	p._process_idle()
+	# left click moves in whatever direction the player faces
+	assert_signal_emitted_with_parameters(p, "attempt_move", [Util.DIRECTION.UP_RIGHT])
+
+func test_right_click_uses_in_the_current_facing():
+	var p = _make_player()
+	p._facing = Util.DIRECTION.DOWN
+	watch_signals(p)
+	Input.action_press("click_use")
+	p._process_idle()
+	# right click uses in the facing direction
+	assert_signal_emitted_with_parameters(p, "attempt_use", [Util.DIRECTION.DOWN])
+
+func test_mouse_and_keyboard_moves_coexist():
+	# With no click held, the keyboard path still drives movement -- the two
+	# schemes live side by side.
+	var p = _make_player()
+	p._facing = Util.DIRECTION.UP
+	watch_signals(p)
+	Input.action_press("move_up")  # four_key baseline -> UP, which matches facing
+	p._process_idle()
+	# a keyboard press still moves while mouse controls are available
+	assert_signal_emitted_with_parameters(p, "attempt_move", [Util.DIRECTION.UP])
+
+func test_keyboard_use_still_works_alongside_mouse():
+	var p = _make_player()
+	watch_signals(p)
+	Input.action_press("use")
+	p._process_idle()
+	assert_signal_emitted(p, "attempt_use", "the keyboard use key still fires")
 
 
 # ---------------------------------------------------------------------- move

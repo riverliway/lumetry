@@ -1,7 +1,7 @@
 extends AnimatedSprite2D
 class_name Player
-signal attempt_move ## Emitted when the player inputs a movement direction
-signal attempt_use ## Emitted when the player attempts to use an object, passes the direction the player is facing
+signal attempt_move(direction: Util.DIRECTION) ## Emitted when the player inputs a movement direction
+signal attempt_use(direction: Util.DIRECTION) ## Emitted when the player attempts to use an object, in the direction the player is facing
 
 var block_type := Util.BLOCK_TYPE.PLAYER
 
@@ -21,14 +21,31 @@ var _queue_state := Util.PLAYER_STATE.IDLE ## A temporary variable to hold the q
 var _prev_state := Util.PLAYER_STATE.IDLE ## The state of the player in the previous frame
 var _facing := Util.DIRECTION.DOWN
 
+## Viewport-space mouse position last frame, for detecting motion. Seeded in
+## _ready so the very first frame doesn't read as a spurious move.
+var _last_mouse_screen := Vector2.ZERO
+
 var _LOOK_DURATION := 0.2
 var _MOVE_DURATION := 0.5
 var _USE_DURATION := 1.0
 var _time_left := 0.0
 
 
+func _ready() -> void:
+	_last_mouse_screen = _mouse_screen_position()
+
+
 func _process(_delta: float) -> void:
-	_time_left = max(_time_left - _delta, 0) 
+	_time_left = max(_time_left - _delta, 0)
+
+	# Mouse look is additive to the keyboard schemes: moving the mouse snaps the
+	# facing to the cursor (a keyboard direction press overrides it again). Only
+	# a genuine move retargets, so a parked cursor never fights a keyboard player.
+	var mouse_screen := _mouse_screen_position()
+	var mouse_moved := mouse_screen != _last_mouse_screen
+	_last_mouse_screen = mouse_screen
+	if mouse_moved and _state != Util.PLAYER_STATE.USING:
+		_face(_cursor_direction())
 
 	match _state:
 		Util.PLAYER_STATE.IDLE:
@@ -46,6 +63,16 @@ func _process(_delta: float) -> void:
 
 ## Processes the idle state
 func _process_idle() -> void:
+	# Mouse buttons act on the current facing, which already tracks the cursor.
+	# Left = move (hold to keep walking), right = use. Available at all times,
+	# right alongside the keyboard.
+	if Input.is_action_pressed('click_use'):
+		attempt_use.emit(_facing)
+		return
+	if Input.is_action_pressed('click_move'):
+		attempt_move.emit(_facing)
+		return
+
 	if Input.is_action_pressed('use'):
 		attempt_use.emit(_facing)
 		return
@@ -159,8 +186,25 @@ func _input_direction_six_key() -> Util.DIRECTION:
 	return Util.DIRECTION.NONE
 
 
-## Makes the player look in a given direction without moving
+## Makes the player look in a given direction without moving. Enters the LOOKING
+## state (with a turn cooldown unless suppressed) so a keyboard tap turns before
+## it walks; the actual facing/sprite change is shared with mouse aiming via _face.
 func _look(direction: Util.DIRECTION, start_cooldown=true) -> void:
+	if direction == Util.DIRECTION.NONE:
+		return
+
+	_face(direction)
+	_state = Util.PLAYER_STATE.LOOKING
+	if start_cooldown:
+		_time_left = _LOOK_DURATION
+
+
+## Points the sprite in `direction` -- facing, horizontal flip, and animation --
+## without touching the state machine. Shared by keyboard look (_look) and the
+## continuous mouse aiming in _process, which must not knock the player out of
+## its current state. A NONE direction (e.g. the cursor sitting on the player)
+## leaves the facing untouched.
+func _face(direction: Util.DIRECTION) -> void:
 	if direction == Util.DIRECTION.NONE:
 		return
 
@@ -181,9 +225,19 @@ func _look(direction: Util.DIRECTION, start_cooldown=true) -> void:
 	else:
 		animation = 'idle_downright'
 
-	_state = Util.PLAYER_STATE.LOOKING
-	if start_cooldown:
-		_time_left = _LOOK_DURATION
+
+## The hex direction from the player toward the mouse cursor, or NONE when the
+## cursor sits on the player. Uses global positions, so the uniform level scale
+## doesn't matter -- a uniform scale preserves the angle.
+func _cursor_direction() -> Util.DIRECTION:
+	return Util.direction_from_vector(get_global_mouse_position() - global_position)
+
+
+## The mouse position in viewport (screen) space, or ZERO if the node isn't in a
+## viewport yet. Used only to detect motion between frames.
+func _mouse_screen_position() -> Vector2:
+	var vp := get_viewport()
+	return vp.get_mouse_position() if vp != null else Vector2.ZERO
 
 
 ## Actually starts the movement animation of the character to a new position

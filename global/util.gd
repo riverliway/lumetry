@@ -1,6 +1,11 @@
 # This script is loaded as a global in the project settings
 extends Node
 
+## Pixel span between adjacent cells, matching Room.Grid.SIZE. Duplicated here so
+## input code can map a screen/world vector to a hex direction without a grid
+## instance (the test fixture mirrors it for the same reason).
+const CELL_SIZE := Vector2(168, 192)
+
 
 ## Implements the modulus operator for floats (a % b)
 ## [br]`a` The number to modulus to, can be positive or negative
@@ -99,6 +104,40 @@ func rotate_direction_clockwise(direction: Util.DIRECTION, times=1) -> Util.DIRE
 ## Rotates a hexdirection counter-clockwise by a given number of times
 func rotate_direction_counterclockwise(direction: Util.DIRECTION, times=1) -> Util.DIRECTION:
 	return rotate_direction_clockwise(direction, -times)
+
+
+## The pixel offset from a cell to its neighbor in `direction`. Diagonals are half
+## a row tall, matching the 168x192 cell -- so UP/DOWN are vertical while the four
+## diagonals lean at the true hex angle. Mirrors Room.Grid.direction_to_offset;
+## NONE yields the zero vector.
+func direction_to_offset(direction: Util.DIRECTION) -> Vector2:
+	match direction:
+		Util.DIRECTION.UP:         return Vector2(0, -CELL_SIZE.y)
+		Util.DIRECTION.DOWN:       return Vector2(0, CELL_SIZE.y)
+		Util.DIRECTION.UP_LEFT:    return Vector2(-CELL_SIZE.x, -CELL_SIZE.y / 2.0)
+		Util.DIRECTION.UP_RIGHT:   return Vector2(CELL_SIZE.x, -CELL_SIZE.y / 2.0)
+		Util.DIRECTION.DOWN_LEFT:  return Vector2(-CELL_SIZE.x, CELL_SIZE.y / 2.0)
+		Util.DIRECTION.DOWN_RIGHT: return Vector2(CELL_SIZE.x, CELL_SIZE.y / 2.0)
+		_:                         return Vector2.ZERO
+
+
+## Snaps a world/board-space vector to the hex direction it points most nearly
+## along, comparing against each neighbor's true offset (so the uneven diagonal
+## angle is respected). Returns NONE for a zero vector. A uniform scale preserves
+## the angle, so a delta taken in scaled global space maps correctly.
+func direction_from_vector(delta: Vector2) -> Util.DIRECTION:
+	if delta.is_zero_approx():
+		return Util.DIRECTION.NONE
+	var target := delta.normalized()
+	var best := Util.DIRECTION.NONE
+	var best_dot := -INF
+	for dir in [Util.DIRECTION.UP, Util.DIRECTION.DOWN, Util.DIRECTION.UP_LEFT,
+			Util.DIRECTION.UP_RIGHT, Util.DIRECTION.DOWN_LEFT, Util.DIRECTION.DOWN_RIGHT]:
+		var dot := direction_to_offset(dir).normalized().dot(target)
+		if dot > best_dot:
+			best_dot = dot
+			best = dir
+	return best
 
 
 ## Handles the reflect operation for mirrors

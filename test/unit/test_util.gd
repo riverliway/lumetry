@@ -99,6 +99,33 @@ func test_rotate_ccw_is_inverse_of_cw():
 		var moved := Util.rotate_direction_clockwise(dir, 1)
 		assert_eq(Util.rotate_direction_counterclockwise(moved, 1), dir, "inverse for dir %d" % dir)
 
+# ----------------------------------------- direction_to_offset / from_vector
+func test_direction_to_offset_matches_the_cell_geometry():
+	assert_eq(Util.direction_to_offset(Util.DIRECTION.UP), Vector2(0, -Util.CELL_SIZE.y), "up is straight vertical")
+	assert_eq(Util.direction_to_offset(Util.DIRECTION.DOWN_RIGHT), Vector2(Util.CELL_SIZE.x, Util.CELL_SIZE.y / 2.0),
+		"a diagonal is half a row tall")
+	assert_eq(Util.direction_to_offset(Util.DIRECTION.NONE), Vector2.ZERO, "NONE has no offset")
+
+func test_direction_from_vector_snaps_each_neighbor_offset():
+	# The offset toward a neighbor must snap back to that same direction.
+	for dir in ALL_DIRS:
+		assert_eq(Util.direction_from_vector(Util.direction_to_offset(dir)), dir,
+			"offset for dir %d snaps back to it" % dir)
+
+func test_direction_from_vector_is_scale_invariant():
+	# A uniform scale preserves the angle, so a scaled offset snaps the same way.
+	var down_right := Util.direction_to_offset(Util.DIRECTION.DOWN_RIGHT)
+	assert_eq(Util.direction_from_vector(down_right * 0.37), Util.DIRECTION.DOWN_RIGHT, "scaled down")
+	assert_eq(Util.direction_from_vector(down_right * 12.0), Util.DIRECTION.DOWN_RIGHT, "scaled up")
+
+func test_direction_from_vector_picks_the_nearest_direction():
+	assert_eq(Util.direction_from_vector(Vector2(0, 100)), Util.DIRECTION.DOWN, "straight down")
+	assert_eq(Util.direction_from_vector(Vector2(0, -100)), Util.DIRECTION.UP, "straight up")
+	assert_eq(Util.direction_from_vector(Vector2(-100, 90)), Util.DIRECTION.DOWN_LEFT, "down and to the left")
+
+func test_direction_from_vector_zero_is_none():
+	assert_eq(Util.direction_from_vector(Vector2.ZERO), Util.DIRECTION.NONE, "no direction from a zero vector")
+
 # ---------------------------------------------------------- reflect_direction
 func test_reflect_passthrough_when_incoming_equals_facing():
 	assert_eq(Util.reflect_direction(Util.DIRECTION.UP, Util.DIRECTION.UP), Util.DIRECTION.UP)
