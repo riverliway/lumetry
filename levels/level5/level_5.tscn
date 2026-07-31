@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="8_awmj3"]
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
 [ext_resource type="Script" uid="uid://d18gkwblftu3w" path="res://levels/level5/level_5.gd" id="9_lvl1"]
+[ext_resource type="Script" uid="uid://c0hf6vgm47qvc" path="res://tileset/wire/wire.gd" id="10_wire"]
+[ext_resource type="Texture2D" uid="uid://p22e7a6opa43" path="res://tileset/wire/wire_deactivated.png" id="11_wseg"]
 
 [node name="Level5" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
@@ -1129,6 +1131,39 @@ texture = ExtResource("2_rlete")
 [node name="floor_22_11" type="Sprite2D" parent="Floor" unique_id=1428995712]
 position = Vector2(3775, 2095)
 texture = ExtResource("2_rlete")
+
+[node name="Wire" type="Node2D" parent="."]
+script = ExtResource("10_wire")
+
+[node name="Segment" type="Sprite2D" parent="Wire"]
+position = Vector2(2935, 1423)
+rotation = 1.0516502
+texture = ExtResource("11_wseg")
+
+[node name="Segment2" type="Sprite2D" parent="Wire"]
+position = Vector2(2767, 1519)
+rotation = -2.0899424
+texture = ExtResource("11_wseg")
+
+[node name="Segment3" type="Sprite2D" parent="Wire"]
+position = Vector2(2767, 1519)
+rotation = 2.0899424
+texture = ExtResource("11_wseg")
+
+[node name="Segment4" type="Sprite2D" parent="Wire"]
+position = Vector2(2599, 1423)
+rotation = -1.0516502
+texture = ExtResource("11_wseg")
+
+[node name="Segment5" type="Sprite2D" parent="Wire"]
+position = Vector2(2599, 1423)
+rotation = 1.0516502
+texture = ExtResource("11_wseg")
+
+[node name="Segment6" type="Sprite2D" parent="Wire"]
+position = Vector2(2431, 1519)
+rotation = -2.0899424
+texture = ExtResource("11_wseg")
 
 [node name="Room" type="Node2D" parent="." unique_id=1203397639]
 script = ExtResource("3_qnq8n")

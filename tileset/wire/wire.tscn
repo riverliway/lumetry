@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://bw1re0aesthcs"]
+[gd_scene format=3 uid="uid://bw1re0aesthcs"]
 
 [ext_resource type="Script" path="res://tileset/wire/wire.gd" id="1_wire"]
 [ext_resource type="Texture2D" uid="uid://p22e7a6opa43" path="res://tileset/wire/wire_deactivated.png" id="2_deact"]
