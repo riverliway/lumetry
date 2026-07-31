@@ -1132,37 +1132,37 @@ texture = ExtResource("2_rlete")
 position = Vector2(3775, 2095)
 texture = ExtResource("2_rlete")
 
-[node name="Wire" type="Node2D" parent="."]
+[node name="Wire" type="Node2D" parent="." unique_id=1336221507]
 script = ExtResource("10_wire")
 
-[node name="Segment" type="Sprite2D" parent="Wire"]
+[node name="Segment" type="Sprite2D" parent="Wire" unique_id=919075709]
 position = Vector2(2935, 1423)
 rotation = 1.0516502
 texture = ExtResource("11_wseg")
 
-[node name="Segment2" type="Sprite2D" parent="Wire"]
+[node name="Segment2" type="Sprite2D" parent="Wire" unique_id=2103124313]
 position = Vector2(2767, 1519)
-rotation = -2.0899424
+rotation = -2.0899425
 texture = ExtResource("11_wseg")
 
-[node name="Segment3" type="Sprite2D" parent="Wire"]
+[node name="Segment3" type="Sprite2D" parent="Wire" unique_id=489220294]
 position = Vector2(2767, 1519)
-rotation = 2.0899424
+rotation = 2.0899425
 texture = ExtResource("11_wseg")
 
-[node name="Segment4" type="Sprite2D" parent="Wire"]
+[node name="Segment4" type="Sprite2D" parent="Wire" unique_id=2067016913]
 position = Vector2(2599, 1423)
-rotation = -1.0516502
+rotation = -1.0516503
 texture = ExtResource("11_wseg")
 
-[node name="Segment5" type="Sprite2D" parent="Wire"]
+[node name="Segment5" type="Sprite2D" parent="Wire" unique_id=265382921]
 position = Vector2(2599, 1423)
 rotation = 1.0516502
 texture = ExtResource("11_wseg")
 
-[node name="Segment6" type="Sprite2D" parent="Wire"]
+[node name="Segment6" type="Sprite2D" parent="Wire" unique_id=351281706]
 position = Vector2(2431, 1519)
-rotation = -2.0899424
+rotation = -2.0899425
 texture = ExtResource("11_wseg")
 
 [node name="Room" type="Node2D" parent="." unique_id=1203397639]
@@ -1515,7 +1515,7 @@ position = Vector2(3276, 1061)
 
 [node name="LaserDetector3" parent="Room" unique_id=651469837 instance=ExtResource("9_ivh0a")]
 position = Vector2(2942, 1425)
-rotation = 2.211332
+rotation = -3.2567844
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
@@ -1534,8 +1534,8 @@ rotation = 1.5708
 color = Color(0, 0, 0, 1)
 
 [connection signal="detected" from="Room/LaserDetector" to="." method="_on_solved"]
-[connection signal="detected" from="Room/LaserDetector3" to="." method="_on_middle_dector_detected"]
 [connection signal="cleared" from="Room/LaserDetector3" to="." method="_on_middle_dector_cleared"]
+[connection signal="detected" from="Room/LaserDetector3" to="." method="_on_middle_dector_detected"]
 
 [editable path="Room/Track"]
 [editable path="Room/Track2"]
