@@ -1397,7 +1397,7 @@ position = Vector2(1579, 1034)
 
 [node name="InteractHint" type="Node2D" parent="Room/RotationPad"]
 script = ExtResource("10_hint")
-hint_id = "level4_pad"
+hint_id = "pad"
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
 position = Vector2(2600, 1446)

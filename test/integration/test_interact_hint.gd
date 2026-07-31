@@ -4,7 +4,7 @@ extends "res://test/fixtures/game_test.gd"
 ## the grid dismissing the hint the first time the player uses the block it sits
 ## behind.
 ##
-## The two real hints live in level_1.tscn / level_4.tscn; per the suite's
+## The two real hints live in level_2.tscn / level_4.tscn; per the suite's
 ## convention these tests never load those scenes -- they drive the mechanism on a
 ## bare hint node and on synthetic rooms with a hand-placed hint.
 
@@ -70,7 +70,7 @@ func test_using_an_emitter_dismisses_its_hint():
 	var emitter := make_block(EmitterScene, 5, 5)
 	emitter.laser_range = -1
 	var room := build_room([emitter], Vector2i(5, 4))
-	var hint = HintScript.new()  # id-less: dismissing won't touch the real save
+	var hint = HintScript.new()  # id-less: its own dismiss() persists nothing
 	emitter.add_child(hint)
 	assert_false(hint.is_queued_for_deletion(), "hint present before interacting")
 
@@ -88,8 +88,9 @@ func test_rotating_a_pad_dismisses_its_hint():
 
 	assert_true(hint.is_queued_for_deletion(), "rotating the pad dismissed its hint")
 
-func test_hint_survives_an_unrelated_interaction():
-	# Two emitters; using one must not dismiss the other's hint.
+func test_using_an_emitter_dismisses_every_emitter_hint():
+	# The flag is per KIND: interacting with ONE emitter retires the nudge on ALL
+	# emitters, so a hint behind a different emitter in the room also clears.
 	var used := make_block(EmitterScene, 5, 5)
 	used.laser_range = -1
 	var other := make_block(EmitterScene, 9, 5)
@@ -100,7 +101,32 @@ func test_hint_survives_an_unrelated_interaction():
 
 	room.grid._attempt_use(Util.DIRECTION.DOWN)  # uses `used`, not `other`
 
-	assert_false(hint.is_queued_for_deletion(), "an unrelated block's hint is untouched")
+	assert_true(hint.is_queued_for_deletion(), "using any emitter clears every emitter hint")
+
+func test_using_an_emitter_leaves_a_pad_hint_alone():
+	# Per KIND: an emitter interaction must not touch a rotation pad's hint.
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	var pad := make_block(RotationPadScene, 9, 5)
+	var room := build_room([emitter, pad], Vector2i(5, 4))
+	var hint = HintScript.new()
+	pad.add_child(hint)
+
+	room.grid._attempt_use(Util.DIRECTION.DOWN)  # toggles the emitter, not the pad
+
+	assert_false(hint.is_queued_for_deletion(), "an emitter interaction leaves pad hints alone")
+
+func test_interacting_records_the_kind_flag():
+	# The persistent flag flips on the first interaction with the KIND, even for an
+	# emitter that carries no hint node (so a later level's hint is pre-suppressed).
+	SaveData.data["seen_hints"] = []
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	var room := build_room([emitter], Vector2i(5, 4))
+
+	room.grid._attempt_use(Util.DIRECTION.DOWN)  # toggle the emitter
+
+	assert_true(SaveData.has_seen_hint("emitter"), "first emitter use records the emitter flag")
 
 
 const RotationPadScene: PackedScene = preload("res://tileset/rotation/rotation_pad.tscn")

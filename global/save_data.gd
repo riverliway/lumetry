@@ -51,9 +51,11 @@ const DEFAULTS := {
 	# Ids of the one-time dialogues the player has already seen (e.g. the laser
 	# "singed" hint). Persisted so such a hint fires only the first time, ever.
 	"seen_dialogues": [],
-	# Ids of the interact-hint nudges (the pulsing circle behind level 1's emitter
-	# and level 4's pad) the player has already interacted with. Persisted so each
-	# hint shows only until its first interaction, ever -- see InteractHint.
+	# Keys of the interact-hint nudges (the pulsing circle behind level 2's emitter
+	# and level 4's pad) whose kind the player has already interacted with. Keyed by
+	# KIND ("emitter" / "pad"), so interacting with any emitter (or any pad) retires
+	# that nudge forever. Persisted so each shows only until its first interaction,
+	# ever -- see InteractHint and Room.Grid._mark_first_interaction.
 	"seen_hints": [],
 	"settings": {
 		"master_audio": 100,

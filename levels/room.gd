@@ -332,16 +332,39 @@ class Grid:
 		player.attempt_move.connect(_attempt_move)
 		player.attempt_use.connect(_attempt_use)
 
-	## Dismisses the pulsing interact hint sitting behind `block`, if it has one. The
-	## hint is a hand-placed InteractHint child in a level scene (only level 1's
-	## emitter and level 4's pad carry one); dismissing records it in the save (so
-	## it never returns) and removes it. A no-op for the blocks that never had one.
-	func _clear_interact_hint(block: Node) -> void:
+	## The persistent hint key for `block`'s kind, or "" if that kind carries no
+	## first-interaction nudge. Only emitters and rotation pads are hinted.
+	func _hint_key_for(block: Node) -> String:
 		if block == null:
+			return ""
+		match block.block_type:
+			Util.BLOCK_TYPE.LASER_EMITTER:
+				return "emitter"
+			Util.BLOCK_TYPE.ROTATION_PAD:
+				return "pad"
+			_:
+				return ""
+
+	## Records the player's first interaction with `block`'s kind: flips the
+	## persistent hint flag for that kind (emitter/pad) so its nudge never shows
+	## again, in any level, and dismisses any matching hint currently in the room
+	## (each hint sits behind a block of its kind). Called on the first use of an
+	## emitter or rotation pad; a no-op for kinds that carry no hint. Because the
+	## flag is by kind, interacting with any emitter anywhere retires the emitter
+	## nudge -- see tileset/interact_hint.
+	func _mark_first_interaction(block: Node) -> void:
+		var key := _hint_key_for(block)
+		if key == "":
 			return
-		for child in block.get_children():
-			if child is InteractHint:
-				child.dismiss()
+		SaveData.mark_hint_seen(key)
+		var room = resolve_room.call()
+		if room == null:
+			return
+		for sibling in room.get_children():
+			if sibling.get(&"block_type") == block.block_type:
+				for child in sibling.get_children():
+					if child is InteractHint:
+						child.dismiss()
 
 	## A hook for the player attempt use signal
 	## [br]`player_facing` is the direction the player is facing
@@ -360,7 +383,7 @@ class Grid:
 			if rotation_pad.interactable:
 				_rotate_pad_cell(new_cell)
 				player.use()
-				_clear_interact_hint(rotation_pad)  # first interaction -- stop nudging
+				_mark_first_interaction(rotation_pad)  # first pad use -- stop nudging
 			return
 
 		# Only a player-interactable emitter toggles from the use verb; a fixed one
@@ -369,7 +392,7 @@ class Grid:
 			new_cell.block.use()
 			player.use()
 			handle_laser_physics()
-			_clear_interact_hint(new_cell.block)  # first interaction -- stop nudging
+			_mark_first_interaction(new_cell.block)  # first emitter use -- stop nudging
 
 	## Rotates the block on the given rotation pad one hex step clockwise and
 	## re-resolves the lasers. Ignores the pad's `interactable` flag -- that only

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="8_awmj3"]
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
 [ext_resource type="Script" uid="uid://dybgypcmi6dp4" path="res://levels/level2/level_2.gd" id="9_lvl1"]
+[ext_resource type="Script" uid="uid://dyacngsecrmkl" path="res://tileset/interact_hint/interact_hint.gd" id="10_hint"]
 
 [node name="Level2" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
@@ -1133,6 +1134,10 @@ script = ExtResource("3_qnq8n")
 
 [node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
 position = Vector2(1931, 470)
+
+[node name="InteractHint" type="Node2D" parent="Room/LaserEmitter"]
+script = ExtResource("10_hint")
+hint_id = "emitter"
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
 position = Vector2(1759, 365)
