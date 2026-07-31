@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://k1vggxbxxpto"]
+
+[ext_resource type="Script" path="res://ui/controls_display.gd" id="1_cd"]
+
+[node name="ControlsDisplay" type="CanvasLayer"]
+script = ExtResource("1_cd")
+
+[node name="Chip" type="PanelContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = -24.0
+grow_horizontal = 1
+grow_vertical = 0

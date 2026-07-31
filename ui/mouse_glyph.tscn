@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://uvym1xe14pbo"]
+
+[ext_resource type="Script" path="res://ui/mouse_glyph.gd" id="1_mouse"]
+
+[node name="MouseGlyph" type="Control"]
+custom_minimum_size = Vector2(52, 76)
+script = ExtResource("1_mouse")

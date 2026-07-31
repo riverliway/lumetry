@@ -9,10 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_2lrd6"]
 [ext_resource type="Script" uid="uid://yc2tjg0e3og3" path="res://levels/level1/level_1.gd" id="9_lvl1"]
 [ext_resource type="PackedScene" uid="uid://ccrate3blk700" path="res://tileset/crate/crate.tscn" id="10_8e3mo"]
+[ext_resource type="PackedScene" uid="uid://k1vggxbxxpto" path="res://ui/controls_display.tscn" id="11_controls"]
 [ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="floor_tile_tex"]
 
 [node name="Level1" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
+
+[node name="ControlsDisplay" parent="." instance=ExtResource("11_controls")]
 
 [node name="Background" type="Node2D" parent="." unique_id=809700269]
 
