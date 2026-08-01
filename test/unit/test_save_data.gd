@@ -408,3 +408,51 @@ func test_seen_hints_and_dialogues_are_independent():
 	s.load_from_disk()
 	s.mark_hint_seen("emitter")
 	assert_false(s.has_seen_dialogue("emitter"), "a dismissed hint is not a seen dialogue")
+
+
+# ------------------------------------------------------------- input bindings
+func test_no_input_bindings_by_default():
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.get_key_binding("use"), 0, "no keyboard override -> 0 (use the default)")
+	assert_eq(s.get_button_binding("use"), -1, "no joypad override -> -1 (use the default)")
+
+func test_set_and_get_input_bindings():
+	var s = _make()
+	s.load_from_disk()
+	s.set_key_binding("use", 70)      # KEY_F
+	s.set_button_binding("sprint", 3)
+	assert_eq(s.get_key_binding("use"), 70, "keyboard override stored")
+	assert_eq(s.get_button_binding("sprint"), 3, "joypad override stored")
+
+func test_clear_input_bindings():
+	var s = _make()
+	s.load_from_disk()
+	s.set_key_binding("use", 70)
+	s.set_button_binding("sprint", 3)
+	s.clear_input_bindings()
+	assert_eq(s.get_key_binding("use"), 0, "keyboard override cleared")
+	assert_eq(s.get_button_binding("sprint"), -1, "joypad override cleared")
+
+func test_input_bindings_survive_a_save_reload():
+	var s = _make()
+	s.load_from_disk()
+	s.set_key_binding("move_up", 84)  # KEY_T
+	var reloaded = _make()
+	reloaded.load_from_disk()  # a separate instance reading the same slots
+	assert_eq(reloaded.get_key_binding("move_up"), 84, "the override persisted across a reload")
+
+func test_normalize_keeps_only_int_input_bindings():
+	var s = _make()
+	var loaded = _valid_payload({"input_bindings": {"key": {"use": 70, "bad": "x"}, "btn": {"sprint": 3.0}}})
+	var result = s._normalize(loaded)
+	assert_eq(result["input_bindings"]["key"].get("use"), 70, "a valid int override is kept")
+	assert_false(result["input_bindings"]["key"].has("bad"), "a non-numeric override is dropped")
+	assert_eq(result["input_bindings"]["btn"].get("sprint"), 3, "a float override is coerced to int")
+
+func test_reset_clears_input_bindings():
+	var s = _make()
+	s.load_from_disk()
+	s.set_key_binding("use", 70)
+	s.reset()
+	assert_eq(s.get_key_binding("use"), 0, "reset wipes input remaps")

@@ -1,7 +1,8 @@
 extends Control
 ## The options ("Calibrations") screen: master / music / SFX volume sliders, a
-## colorblind-mode toggle, a dialogue text-speed cycle, a movement-scheme toggle
-## (4-key vs 6-key), and a joystick deadzone slider.
+## colorblind-mode toggle, a dialogue text-speed cycle, a joystick deadzone slider,
+## and a Controls button that opens the input-map screen (movement scheme + key
+## rebinding, GEN-565).
 ##
 ## A reusable overlay, instanced into both the title menu and the in-level pause
 ## menu. It reads the current values from SaveData when opened and writes each
@@ -28,8 +29,6 @@ signal closed
 ## Text-speed cycle order and the label shown for each (keys mirror SaveData.TEXT_SPEEDS).
 const TEXT_SPEED_ORDER := ["slow", "normal", "fast"]
 const TEXT_SPEED_LABEL := {"slow": "Slow", "normal": "Normal", "fast": "Fast"}
-## Label shown for each movement scheme (keys mirror SaveData.MOVEMENT_SCHEMES).
-const MOVEMENT_LABEL := {"four_key": "4-Key", "six_key": "6-Key"}
 ## Prompt shown before wiping the save; the action is irreversible.
 const RESET_PROMPT := "Reset all progress? This can't be undone."
 
@@ -41,12 +40,13 @@ const RESET_PROMPT := "Reset all progress? This can't be undone."
 @onready var _sfx_value: Label = $Center/Panel/Box/Sfx/Value
 @onready var _colorblind: Button = $Center/Panel/Box/Colorblind/Toggle
 @onready var _text_speed: Button = $Center/Panel/Box/TextSpeed/Toggle
-@onready var _movement: Button = $Center/Panel/Box/Movement/Toggle
 @onready var _deadzone: HSlider = $Center/Panel/Box/Deadzone/Slider
 @onready var _deadzone_value: Label = $Center/Panel/Box/Deadzone/Value
+@onready var _controls: Button = $Center/Panel/Box/Controls
 @onready var _reset: Button = $Center/Panel/Box/ResetSave
 @onready var _unlock: Button = $Center/Panel/Box/UnlockSave
 @onready var _confirm: Control = $Confirm
+@onready var _input_map: Control = $InputMap
 @onready var _nav: Node = $Center/Panel/Box/MenuNav
 
 ## True while open() pushes saved values into the sliders, so the value_changed
@@ -61,12 +61,13 @@ func _ready() -> void:
 	_bind_slider(_sfx, _sfx_value, "sfx_audio")
 	_colorblind.pressed.connect(_toggle_colorblind)
 	_text_speed.pressed.connect(_cycle_text_speed)
-	_movement.pressed.connect(_toggle_movement)
 	_bind_deadzone_slider()
+	_controls.pressed.connect(_open_controls)
 	_reset.pressed.connect(_open_reset_confirm)
 	_unlock.pressed.connect(_on_unlock)
 	_confirm.confirmed.connect(_on_reset_confirmed)
 	_confirm.canceled.connect(_on_reset_canceled)
+	_input_map.closed.connect(_on_controls_closed)
 	# Hidden AND disabled when not offered, so MenuNav never lands the cursor on them.
 	_reset.visible = show_reset
 	_reset.disabled = not show_reset
@@ -84,7 +85,6 @@ func open() -> void:
 	_set_slider(_sfx, _sfx_value, SaveData.get_setting("sfx_audio"))
 	_refresh_colorblind_label()
 	_refresh_text_speed_label()
-	_refresh_movement_label()
 	# The setting is a 0.0-1.0 fraction; the slider shows it as a percentage.
 	_set_slider(_deadzone, _deadzone_value, roundi(SaveData.get_setting("joystick_deadzone") * 100.0))
 	_loading = false
@@ -99,8 +99,8 @@ func close() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and event.is_action_pressed("pause"):  # ESC backs out
-		if _confirm.visible:
-			return  # the confirm dialog owns ESC while it's up (it cancels itself)
+		if _confirm.visible or _input_map.visible:
+			return  # an open overlay owns ESC while it's up (each closes itself)
 		close()
 		get_viewport().set_input_as_handled()
 
@@ -172,11 +172,11 @@ func _refresh_text_speed_label() -> void:
 	_text_speed.text = TEXT_SPEED_LABEL.get(SaveData.get_setting("text_speed"), "Normal")
 
 
-func _toggle_movement() -> void:
-	var current: String = SaveData.get_setting("movement_scheme")
-	SaveData.set_setting("movement_scheme", "six_key" if current == "four_key" else "four_key")
-	_refresh_movement_label()
+## Opens the input-map overlay (movement scheme + key/button rebinding). It closes
+## itself and emits `closed`, which returns the cursor to the Controls button.
+func _open_controls() -> void:
+	_input_map.open()
 
 
-func _refresh_movement_label() -> void:
-	_movement.text = MOVEMENT_LABEL.get(SaveData.get_setting("movement_scheme"), "6-Key")
+func _on_controls_closed() -> void:
+	_controls.grab_focus()

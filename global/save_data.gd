@@ -69,6 +69,17 @@ const DEFAULTS := {
 		# controller's analog look stick.
 		"joystick_deadzone": 0.2,
 	},
+	# Player-defined input remaps (GEN-565), applied to the InputMap at boot by the
+	# InputMapper autoload. Empty means "use the project defaults"; an entry
+	# overrides only that action's primary event, leaving any others intact.
+	#   key -> action name : physical keycode (int)    -- keyboard rebinds
+	#   btn -> action name : joypad button index (int) -- controller rebinds
+	# Movement is intentionally absent from btn: controller movement is the
+	# stick/D-pad and isn't rebindable.
+	"input_bindings": {
+		"key": {},
+		"btn": {},
+	},
 }
 
 ## joystick_deadzone is clamped to this range. Capped below 1.0 so a full push
@@ -323,6 +334,39 @@ func set_setting(key: String, value: Variant) -> void:
 	setting_changed.emit(key, data["settings"][key])
 
 
+# ------------------------------------------------------------- input bindings
+## The physical keycode the player has rebound `action`'s keyboard key to, or 0
+## when it uses the project default. Consumed by the InputMapper autoload.
+func get_key_binding(action: String) -> int:
+	return int(data["input_bindings"]["key"].get(action, 0))
+
+
+## The joypad button index the player has rebound `action`'s controller button
+## to, or -1 when it uses the project default. Consumed by the InputMapper autoload.
+func get_button_binding(action: String) -> int:
+	return int(data["input_bindings"]["btn"].get(action, -1))
+
+
+## Records a keyboard rebind for `action` and saves. The InputMapper applies it to
+## the live InputMap; this only persists the choice for the next boot.
+func set_key_binding(action: String, keycode: int) -> void:
+	data["input_bindings"]["key"][action] = keycode
+	save()
+
+
+## Records a controller-button rebind for `action` and saves.
+func set_button_binding(action: String, index: int) -> void:
+	data["input_bindings"]["btn"][action] = index
+	save()
+
+
+## Drops every rebind, so the InputMap falls back to the project defaults, and
+## saves. Backs the "Reset Controls" button.
+func clear_input_bindings() -> void:
+	data["input_bindings"] = {"key": {}, "btn": {}}
+	save()
+
+
 # ------------------------------------------------------------------- internal
 ## Returns a fully populated, validated copy of the schema with `loaded` values
 ## overlaid: correct types, exactly LEVEL_COUNT LevelState values for levels (each
@@ -371,5 +415,17 @@ func _normalize(loaded: Dictionary) -> Dictionary:
 			result["settings"]["movement_scheme"] = settings["movement_scheme"]
 		if "joystick_deadzone" in settings:
 			result["settings"]["joystick_deadzone"] = clampf(float(settings["joystick_deadzone"]), 0.0, DEADZONE_MAX)
+
+	var bindings = loaded.get("input_bindings")
+	if bindings is Dictionary:
+		for sub in ["key", "btn"]:
+			var overrides = bindings.get(sub)
+			if overrides is Dictionary:
+				var clean := {}
+				for action in overrides:
+					# JSON reloads numbers as floats; keep string->int entries only.
+					if action is String and (overrides[action] is int or overrides[action] is float):
+						clean[action] = int(overrides[action])
+				result["input_bindings"][sub] = clean
 
 	return result

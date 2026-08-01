@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://cinpmapmenu001"]
+
+[ext_resource type="Theme" uid="uid://bofbklpxqt5ff" path="res://ui/default_theme.tres" id="1_theme"]
+[ext_resource type="Script" path="res://ui/input_map_menu.gd" id="2_map"]
+[ext_resource type="Script" path="res://ui/menu_nav.gd" id="3_nav"]
+
+[node name="InputMapMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme = ExtResource("1_theme")
+script = ExtResource("2_map")
+
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="Center"]
+layout_mode = 2
+
+[node name="Box" type="VBoxContainer" parent="Center/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Title" type="Label" parent="Center/Panel/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 140
+text = "Controls"
+horizontal_alignment = 1
+
+[node name="Scheme" type="HBoxContainer" parent="Center/Panel/Box"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="Center/Panel/Box/Scheme"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+text = "Movement"
+vertical_alignment = 1
+
+[node name="Toggle" type="Button" parent="Center/Panel/Box/Scheme"]
+custom_minimum_size = Vector2(1060, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "6-Key"
+
+[node name="Device" type="HBoxContainer" parent="Center/Panel/Box"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Label" type="Label" parent="Center/Panel/Box/Device"]
+custom_minimum_size = Vector2(700, 0)
+layout_mode = 2
+text = "Device"
+vertical_alignment = 1
+
+[node name="Toggle" type="Button" parent="Center/Panel/Box/Device"]
+custom_minimum_size = Vector2(1060, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Keyboard"
+
+[node name="Rows" type="VBoxContainer" parent="Center/Panel/Box"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Reset" type="Button" parent="Center/Panel/Box"]
+layout_mode = 2
+text = "Reset Controls"
+
+[node name="Back" type="Button" parent="Center/Panel/Box"]
+layout_mode = 2
+text = "Back"
+
+[node name="MenuNav" type="Node" parent="Center/Panel/Box"]
+script = ExtResource("3_nav")

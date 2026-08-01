@@ -46,6 +46,25 @@ static func confirm_label(kind: Kind) -> String:
 	return "X" if kind == Kind.PLAYSTATION else "A"
 
 
+## Generic labels for the joypad buttons the game rebinds, keyed by SDL button
+## index (the Godot JoyButton values). The face button 0 defers to confirm_label
+## so it reads "X" on PlayStation; the rest are brand-agnostic placeholders good
+## enough for the Controls screen until real glyphs land (GEN-564). An unmapped
+## index falls back to "B<n>" so the label is always sensible.
+const _BUTTON_LABELS := {
+	1: "B", 2: "X", 3: "Y", 4: "Back", 5: "Guide", 6: "Start",
+	7: "LS", 8: "RS", 9: "LB", 10: "RB",
+}
+
+
+## The label to show for joypad button `index` on a `kind` controller, ready to
+## feed a KeyCap. Button 0 is the confirm/cross face button (brand-dependent).
+static func button_label(kind: Kind, index: int) -> String:
+	if index == 0:
+		return confirm_label(kind)
+	return _BUTTON_LABELS.get(index, "B%d" % index)
+
+
 static func _contains_any(haystack: String, needles: Array) -> bool:
 	for needle in needles:
 		if haystack.contains(needle):

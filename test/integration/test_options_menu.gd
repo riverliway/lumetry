@@ -77,17 +77,22 @@ func test_text_speed_cycles_and_wraps():
 	assert_eq(SaveData.get_setting("text_speed"), "slow", "fast wraps to slow")
 
 
-func test_movement_toggle_switches_between_the_two_schemes():
-	SaveData.data["settings"]["movement_scheme"] = "four_key"
+func test_controls_button_opens_the_input_map_overlay():
 	var menu = await _open_menu()
-	var btn = menu.get_node("Center/Panel/Box/Movement/Toggle")
-	assert_eq(btn.text, "4-Key", "open reflects the saved scheme")
-	btn.pressed.emit()
-	assert_eq(SaveData.get_setting("movement_scheme"), "six_key", "4-key -> 6-key")
-	assert_eq(btn.text, "6-Key", "label updates to 6-key")
-	btn.pressed.emit()
-	assert_eq(SaveData.get_setting("movement_scheme"), "four_key", "6-key -> 4-key")
-	assert_eq(btn.text, "4-Key", "label updates back to 4-key")
+	var input_map = menu.get_node("InputMap")
+	assert_false(input_map.visible, "the input-map overlay starts hidden")
+	menu.get_node("Center/Panel/Box/Controls").pressed.emit()
+	assert_true(input_map.visible, "Controls opens the input-map overlay")
+
+
+func test_esc_is_owned_by_the_input_map_overlay_while_it_is_open():
+	var menu = await _open_menu()
+	menu.get_node("Center/Panel/Box/Controls").pressed.emit()
+	var esc := InputEventAction.new()
+	esc.action = "pause"
+	esc.pressed = true
+	menu._unhandled_input(esc)
+	assert_true(menu.visible, "options stays open; the input-map overlay owns ESC")
 
 
 func test_open_reflects_saved_deadzone():

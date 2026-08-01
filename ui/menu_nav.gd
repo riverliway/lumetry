@@ -41,6 +41,24 @@ func _ready() -> void:
 
 
 func _setup() -> void:
+	_collect_targets()
+	# Auto-place the cursor only if the menu is actually on screen; a menu that
+	# starts hidden (a dialog) grabs focus itself when it opens.
+	var root: Node = buttons_root if buttons_root else get_parent()
+	if root is CanvasItem and root.is_visible_in_tree():
+		focus_first()
+
+
+## Re-scans for focusable targets after the menu's controls change at runtime --
+## e.g. an input-map screen rebuilding its rebind rows when the movement scheme or
+## the active device switches. Leaves the cursor alone; the caller re-focuses.
+func refresh() -> void:
+	_collect_targets()
+
+
+## Gathers the focusable controls under `buttons_root` into `_targets`, wiring
+## hover-to-focus and dropping disabled (locked) buttons.
+func _collect_targets() -> void:
 	var root: Node = buttons_root if buttons_root else get_parent()
 	_targets.clear()
 	for control in _focusables(root):
@@ -51,10 +69,6 @@ func _setup() -> void:
 		if not control.mouse_entered.is_connected(control.grab_focus):
 			control.mouse_entered.connect(control.grab_focus)  # hover moves the cursor
 		_targets.append(control)
-	# Auto-place the cursor only if the menu is actually on screen; a menu that
-	# starts hidden (a dialog) grabs focus itself when it opens.
-	if root is CanvasItem and root.is_visible_in_tree():
-		focus_first()
 
 
 ## Puts the cursor on the first enabled target, if any.

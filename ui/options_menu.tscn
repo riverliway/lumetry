@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://ui/options_menu.gd" id="2_opts"]
 [ext_resource type="Script" path="res://ui/menu_nav.gd" id="3_nav"]
 [ext_resource type="PackedScene" path="res://ui/confirm_dialog.tscn" id="4_confirm"]
+[ext_resource type="PackedScene" path="res://ui/input_map_menu.tscn" id="5_inputmap"]
 
 [node name="OptionsMenu" type="Control"]
 process_mode = 3
@@ -157,22 +158,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Normal"
 
-[node name="Movement" type="HBoxContainer" parent="Center/Panel/Box"]
-layout_mode = 2
-theme_override_constants/separation = 40
-
-[node name="Label" type="Label" parent="Center/Panel/Box/Movement"]
-custom_minimum_size = Vector2(700, 0)
-layout_mode = 2
-text = "Movement"
-vertical_alignment = 1
-
-[node name="Toggle" type="Button" parent="Center/Panel/Box/Movement"]
-custom_minimum_size = Vector2(1060, 0)
-layout_mode = 2
-size_flags_horizontal = 3
-text = "6-Key"
-
 [node name="Deadzone" type="HBoxContainer" parent="Center/Panel/Box"]
 layout_mode = 2
 theme_override_constants/separation = 40
@@ -199,6 +184,10 @@ text = "20"
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="Controls" type="Button" parent="Center/Panel/Box"]
+layout_mode = 2
+text = "Controls"
+
 [node name="ResetSave" type="Button" parent="Center/Panel/Box"]
 layout_mode = 2
 text = "Reset Save"
@@ -215,3 +204,5 @@ text = "Back"
 script = ExtResource("3_nav")
 
 [node name="Confirm" parent="." instance=ExtResource("4_confirm")]
+
+[node name="InputMap" parent="." instance=ExtResource("5_inputmap")]
