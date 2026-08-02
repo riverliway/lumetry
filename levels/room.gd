@@ -350,6 +350,20 @@ class Grid:
 				_player_struck = true
 				return
 
+			# The beam's last unit of range lands on this cell (an infinite beam is -1
+			# and never reaches 1). Whatever occupies it -- a mirror, prism, detector,
+			# crate -- sits at the very tip, so the beam runs out of range here and
+			# fades out under it instead of interacting: it never has the reach to
+			# bounce off the mirror, split in the prism, or register on the detector.
+			# This is the same dissolving tail _raycast_laser draws on an empty tip
+			# cell, extended to a tip cell that holds a block -- the counterpart to the
+			# fade already taking precedence over a block one cell *past* the tip. (The
+			# player is handled above: standing in the beam's final cell still fries.)
+			if laser_strength[0] == 1:
+				var seg := cell.add_laser(Util.rotate_direction_clockwise(laser_facing, 3), laser_facing, color, laser_rotation(laser_facing), true)
+				_reveal_step(ctx, [seg])
+				return
+
 			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_SHORT:
 				var input_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				var incoming_dir = laser_facing

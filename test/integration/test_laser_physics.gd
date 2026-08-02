@@ -134,6 +134,20 @@ func test_fade_tip_takes_precedence_over_a_mirror_just_out_of_range():
 	assert_eq(room.grid.grid[4][5].mirror_laser.filter(func(m): return m.is_active()).size(), 0,
 		"the mirror never bounces a beam that did not reach it")
 
+func test_fade_tip_takes_precedence_over_a_mirror_exactly_at_the_tip():
+	# A finite beam whose range is spent exactly on a mirror cell fades out under the
+	# mirror rather than bouncing -- the last unit of range lands on the mirror, so
+	# the beam has no reach left to reflect. Guards GEN: previously the tip cell
+	# holding a block still interacted (the mirror reflected) instead of fading.
+	var emitter := make_block(EmitterScene, 4, 2)
+	emitter.laser_range = 3  # lights (4,3), (4,4); the tip lands on the mirror at (4,5)
+	var mirror := make_block(MirrorScene, 4, 5, PI / 3.0)
+	var room := build_room([emitter, mirror])
+	assert_eq(room.grid.grid[4][5].laser[0].animation, &"fade", "the tip fades under the mirror")
+	assert_eq(room.grid.grid[4][5].mirror_laser.filter(func(m): return m.is_active()).size(), 0,
+		"the mirror does not bounce a beam whose range is spent on it")
+	assert_false(_has_lit_cell_off_column(room, 4), "no reflected beam leaves the mirror's column")
+
 func test_fade_frames_are_in_phase_with_the_solid_beam():
 	# The fade tip shares the beam's shimmer clock (AnimSync), so fade frame N must be
 	# the same brightness as solid frame N -- fade_i is white_i with only its alpha
