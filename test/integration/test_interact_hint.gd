@@ -129,4 +129,56 @@ func test_interacting_records_the_kind_flag():
 	assert_true(SaveData.has_seen_hint("emitter"), "first emitter use records the emitter flag")
 
 
+# ------------------------------------------- Space prompt (line-of-interaction)
+# The prompt shows exactly when the cell the player faces is the hinted block's
+# cell -- the same front-cell rule the use verb resolves through.
+func test_front_cell_is_true_when_adjacent_and_facing_the_block():
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	var room := build_room([emitter], Vector2i(5, 4))  # one cell above, facing down
+	assert_true(HintScript.front_cell_is(room.grid, cell_center(5, 4), Util.DIRECTION.DOWN, cell_center(5, 5)),
+		"the faced down-neighbour is the block's cell")
+
+func test_front_cell_is_false_when_facing_away():
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	var room := build_room([emitter], Vector2i(5, 4))
+	assert_false(HintScript.front_cell_is(room.grid, cell_center(5, 4), Util.DIRECTION.UP, cell_center(5, 5)),
+		"adjacent but facing the other way")
+
+func test_front_cell_is_false_when_not_adjacent():
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	var room := build_room([emitter], Vector2i(5, 2))
+	assert_false(HintScript.front_cell_is(room.grid, cell_center(5, 2), Util.DIRECTION.DOWN, cell_center(5, 5)),
+		"facing the block from two cells away -- the front cell is the gap")
+
+func test_prompt_active_uses_the_players_live_facing():
+	# The player defaults to facing DOWN and sits one cell above the emitter, so the
+	# use verb (and thus the prompt) is lined up with the block behind the hint.
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	var room := build_room([emitter], Vector2i(5, 4))
+	var hint = HintScript.new()
+	emitter.add_child(hint)  # _ready binds it to the room + connected player
+	assert_true(hint.facing_prompt_active(), "adjacent above, facing down -> prompt")
+
+func test_prompt_inactive_when_player_is_not_lined_up():
+	var emitter := make_block(EmitterScene, 5, 5)
+	emitter.laser_range = -1
+	# Facing down from (4,4) lands on (4,5), not the emitter's (5,5).
+	var room := build_room([emitter], Vector2i(4, 4))
+	var hint = HintScript.new()
+	emitter.add_child(hint)
+	assert_false(hint.facing_prompt_active(), "not facing the block's cell -> no prompt")
+
+func test_prompt_inactive_on_a_hint_with_no_owning_room():
+	# A bare hint node (unit context) has no grid/player, so it never prompts.
+	var hint = HintScript.new()
+	add_child(hint)
+	var inactive := not hint.facing_prompt_active()
+	hint.free()
+	assert_true(inactive, "no room bound -> no prompt, and no crash")
+
+
 const RotationPadScene: PackedScene = preload("res://tileset/rotation/rotation_pad.tscn")

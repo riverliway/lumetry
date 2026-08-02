@@ -301,6 +301,14 @@ func _face(direction: Util.DIRECTION) -> void:
 		animation = 'idle_downright'
 
 
+## The direction the player is currently facing (its look direction). Move and use
+## carry this on their signals, but systems that poll it per frame -- e.g. the
+## interact hint deciding whether the player is looking at the block it sits behind
+## -- read it here.
+func get_facing() -> Util.DIRECTION:
+	return _facing
+
+
 ## Whether a mouse aim button (move or use, the same buttons _process_idle acts
 ## on) is held. While held the player is steering with the cursor, so _process
 ## keeps the facing tracking it each frame -- including as the player walks and
