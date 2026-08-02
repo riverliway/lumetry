@@ -4,9 +4,10 @@ extends CanvasLayer
 ## and the ambient AnimSync clock all stop cleanly, since every one of them is
 ## driven by _process. ESC again, or Resume, unfreezes.
 ##
-## Options: Resume, Reset Room (reloads the room to its start -- a stand-in until
-## the in-place room-reset feature lands), Calibrations (opens the options overlay:
-## audio, colorblind mode, text speed), and Quit to Level Select. The whole menu
+## Options: Resume, Reset Room (reloads the room to its start -- kept alongside the
+## in-place hold-R-to-reset overlay, not a stand-in for it), Calibrations (opens the
+## options overlay: audio, colorblind mode, text speed), and Quit to Level Select.
+## The whole menu
 ## runs with PROCESS_MODE_ALWAYS (set in the scene) so it keeps working while the
 ## tree is paused; a child MenuNav drives the mouse/keyboard cursor.
 

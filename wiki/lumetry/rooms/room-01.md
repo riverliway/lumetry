@@ -8,6 +8,7 @@ Since this is the first room, the player is introduced to push mirrors. There is
 
 To softlock yourself:
 - push the mirror into the middle fork so it hits the crate. Then walk around the crate and push it down, trapping yourself in the top section
+- Push the mirror back down into its original position
 
 ## Dialogue
 

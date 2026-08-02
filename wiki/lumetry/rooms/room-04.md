@@ -4,10 +4,10 @@ Room 4 of 18, the first room in [Prof. Radian](#lumetry/characters/prof-radian.m
 
 ## Puzzle
 
-There are two mirrors on a circular track. The left mirror is already being hit by the beam but it is the wrong type of mirror. So you need to push the right mirror onto the rotation pad and rotate it once, move the left mirror out of the ways, and then move the rotated mirror into position. 
+You are trapped in the bottom left of the room and you HAVE to rotate the mirror directly above you, there are no other options. Once you are out of the corner, there are 3 real rotation pads that form the puzzle. You need to push the mirror down, rotate it once, then push it to the top of its track. Then send the beam through it.
 
 To softlock yourself:
-- You can't push two mirrors together this time, so you have to get a mirror that reflects from the bottom to the bottom left. Then block the laser with the other mirror until you get on the left side of the mirror and push it out to trap yourself in that pocket
+- send the beam through to hit the cardboard box, then kick the laser out, trapping yourself
 
 ## Dialogue
 

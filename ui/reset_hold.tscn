@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dqhkgomykx4b3"]
+
+[ext_resource type="Script" path="res://ui/reset_hold.gd" id="1_reset"]
+
+[node name="ResetHold" type="CanvasLayer"]
+
+[node name="Meter" type="Control" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -300.0
+offset_right = -100.0
+offset_bottom = -100.0
+mouse_filter = 2
+script = ExtResource("1_reset")

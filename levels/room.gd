@@ -34,6 +34,10 @@ static var laser_segment_scene: PackedScene = preload("res://tileset/laser/laser
 static var mirror_segment_scene: PackedScene = preload("res://tileset/laser/mirror_segment.tscn")
 ## Preloaded half-beam segment for drawing a split inside a prism cell
 static var prism_segment_scene: PackedScene = preload("res://tileset/laser/prism_segment.tscn")
+## Hold-to-reset overlay (R held for 3s), added to every room in _ready so the
+## feature is universal without touching each level scene. A screen-space
+## CanvasLayer, so the room's fit-to-screen scale doesn't affect it (GEN-571).
+const RESET_HOLD := preload("res://ui/reset_hold.tscn")
 ## Grid dimensions for this room, in cells. Set per level scene; the whole board
 ## is scaled to fit the screen (see levels/level.gd), so a bigger room just
 ## renders smaller rather than running off the edge.
@@ -49,6 +53,8 @@ func _ready() -> void:
 
 	grid.handle_laser_physics()
 	grid.connect_player($Player)
+	# Added after the block loop above so the overlay is never mistaken for a block.
+	add_child(RESET_HOLD.instantiate())
 
 
 func _process(delta: float) -> void:

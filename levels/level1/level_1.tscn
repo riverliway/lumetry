@@ -1193,7 +1193,7 @@ position = Vector2(1915, 1979)
 position = Vector2(2260, 1790)
 
 [node name="Wall27" parent="Room" unique_id=1262473126 instance=ExtResource("4_pgt2t")]
-position = Vector2(1897, 1792)
+position = Vector2(1929, 1805)
 
 [node name="Wall17" parent="Room" unique_id=452848440 instance=ExtResource("4_pgt2t")]
 position = Vector2(2092, 2083)

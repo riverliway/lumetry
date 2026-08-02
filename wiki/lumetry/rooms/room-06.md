@@ -4,10 +4,10 @@ Room 6 of 18, the final room in [Prof. Radian](#lumetry/characters/prof-radian.m
 
 ## Puzzle
 
-This is the first puzzle that really tests a "maze" like pattern of many different paths the laser could take. There are three mirrors on the left on tracks that the beam could take. The solution is to use the bottom mirror in the first column to hit the bottom mirror in the third column. 
+There is a greyed out rotation pad that can't be moved by hand. It gets rotated once the beam detector next to it lights up. The player needs to push the crate over, breaking the laser so they can get past it to turn on the laser which can move the rotation pad.
 
 To softlock yourself:
-* push the bottom mirror to block the laser, have the second mirror positions so the beam will form a triangle with the bottom mirror of the second column, then kick the mirror out of the way, locking yourself in the triangle
+* turn on both lasers, blocking one with a mirror and the other with the crate. then move into the softlock territory and push both back to unblock the lasers
 
 ## Dialogue
 
