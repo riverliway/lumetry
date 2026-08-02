@@ -143,11 +143,64 @@ def compile_laser_prism_cut() -> int:
     return count
 
 
+# --------------------------------------------------------------------------- #
+# Step 4: laser fade-out tail
+# --------------------------------------------------------------------------- #
+# The dissolving tip drawn as the last cell of a finite-range beam: the beam runs
+# out of energy, so it holds full strength for the top quarter of the cell, ramps
+# to nothing across the second quarter, and is gone for the bottom half. The beam
+# sprite points DOWN (+y) at rotation 0, so "top" is where the beam enters the
+# cell and "bottom" is the far, faded end -- the beam peters out as it travels.
+FADE_FULL_UNTIL = 0.25   # fraction of the height held at full opacity
+FADE_ZERO_FROM = 0.50    # fraction of the height fully transparent onward
+
+
+def fade_tail(tile: Image.Image) -> Image.Image:
+    """Fade a vertical beam out along its length: full opacity down to
+    FADE_FULL_UNTIL, a linear ramp to zero by FADE_ZERO_FROM, transparent below."""
+    im = tile.copy()
+    px = im.load()
+    w, h = im.size
+    for y in range(h):
+        t = y / h  # 0 at the top .. ~1 at the bottom
+        if t <= FADE_FULL_UNTIL:
+            m = 1.0
+        elif t >= FADE_ZERO_FROM:
+            m = 0.0
+        else:
+            m = 1.0 - (t - FADE_FULL_UNTIL) / (FADE_ZERO_FROM - FADE_FULL_UNTIL)
+        if m < 1.0:
+            for x in range(w):
+                r, g, b, a = px[x, y]
+                px[x, y] = (r, g, b, int(a * m))
+    return im
+
+
+def compile_laser_fade() -> int:
+    out_dir = ROOT / "tileset" / "laser" / "white_laser_fade"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    count = 0
+    for i, frame in enumerate(LASER_FRAMES, start=1):
+        src = LASER_DIR / frame
+        if not src.is_file():
+            print(f"[fade] missing source {src.relative_to(ROOT)}, skipping")
+            continue
+        tile = Image.open(src).convert("RGBA")
+        out = out_dir / f"laser_white_fade_{i}.png"
+        fade_tail(tile).save(out)
+        count += 1
+        print(f"  fade tail: {out.relative_to(ROOT)}")
+    print(f"[fade] wrote {count} sprite(s)\n" if count
+          else "[fade] nothing generated\n")
+    return count
+
+
 def main() -> None:
     print("== image compiler ==")
     expand_halftiles()
     compile_laser_mirror_cuts()
     compile_laser_prism_cut()
+    compile_laser_fade()
 
 
 if __name__ == "__main__":

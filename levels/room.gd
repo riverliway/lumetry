@@ -451,7 +451,14 @@ class Grid:
 			return c.get_block_type() in [Util.BLOCK_TYPE.NONE, Util.BLOCK_TYPE.WALL]
 
 		while _should_continue.call(current_cell, strength[0]):
-			var seg := current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color, laser_rotation(laser_direction))
+			# strength 1 is a finite beam's final cell (this step drops it to 0 and the
+			# loop stops), so draw the dissolving tail there -- the beam runs out of
+			# range and peters out rather than cutting off. An infinite beam is -1 and
+			# never hits 1, so it never fades; it always ends at a block or the edge.
+			# Because this fires the moment range is spent, it takes precedence over any
+			# mirror/prism/detector just past the tip -- the beam never reaches them.
+			var fade := strength[0] == 1
+			var seg := current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color, laser_rotation(laser_direction), fade)
 			_reveal_step(ctx, [seg])
 			current_cell = go(current_cell, laser_direction)
 			strength[0] -= 1
@@ -1013,7 +1020,8 @@ class Cell:
 	## [br]`from` is the direction the laser is coming from
 	## [br]`to` is the direction the laser is going to
 	## [br]`beam_rotation` is the sprite rotation from Grid.laser_rotation
-	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION, color: Util.LASER_COLOR, beam_rotation: float) -> LaserSegment:
+	## [br]`fade` draws the dissolving-tail sprite -- the final cell of a finite beam
+	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION, color: Util.LASER_COLOR, beam_rotation: float, fade := false) -> LaserSegment:
 		var available_segment = Util.find_elem(laser, func(ls): return !ls.is_active())
 		if len(available_segment) == 0:
 			var new_segment = Room.laser_segment_scene.instantiate()
@@ -1021,9 +1029,9 @@ class Cell:
 			new_segment.z_index = Util.Z_LASER
 			laser.push_back(new_segment)
 			resolve_room.call().add_child(new_segment)
-			new_segment.set_laser(from, to, color, beam_rotation)
+			new_segment.set_laser(from, to, color, beam_rotation, fade)
 			return new_segment
-		available_segment[0].set_laser(from, to, color, beam_rotation)
+		available_segment[0].set_laser(from, to, color, beam_rotation, fade)
 		return available_segment[0]
 
 	## Draws a mirror bounce here as two half-beam sprites (incoming + reflected),

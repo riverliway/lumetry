@@ -39,9 +39,11 @@ func is_active() -> bool:
 ## true pixel angle between cell centers -- see Grid.laser_rotation. Using the
 ## real geometry rather than an idealized 60-degree hex angle keeps angled
 ## beams collinear with the cells they pass through (no per-segment jag).
-func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LASER_COLOR, beam_rotation: float) -> void:
+## [br]`fade` Draw the dissolving-tail sprite instead of the solid beam -- used for
+## the final cell of a finite-range beam, so it peters out rather than cutting off.
+func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LASER_COLOR, beam_rotation: float, fade := false) -> void:
 	color = laser_color
-	animation = 'white'
+	animation = 'fade' if fade else 'white'
 	AnimSync.sync(self)
 	self_modulate = LASER_MODULATE.get(color, Color.WHITE)
 	if _symbol:

@@ -104,6 +104,36 @@ func test_range_limited_beam_stops_after_n_cells():
 	assert_false(room.grid.grid[4][6].is_laser_active(), "cell 4 beyond range is dark")
 	assert_eq(active_laser_count(room), 3, "exactly range-many segments lit")
 
+func test_finite_beam_fades_out_at_its_tip():
+	# The last cell of a finite beam draws the dissolving-tail sprite (the "fade"
+	# animation); the cells before it stay solid.
+	var emitter := make_block(EmitterScene, 4, 2)
+	emitter.laser_range = 3  # lights (4,3), (4,4), (4,5)
+	var room := build_room([emitter])
+	assert_eq(room.grid.grid[4][3].laser[0].animation, &"white", "first cell is solid")
+	assert_eq(room.grid.grid[4][4].laser[0].animation, &"white", "middle cell is solid")
+	assert_eq(room.grid.grid[4][5].laser[0].animation, &"fade", "the tip cell dissolves")
+
+func test_infinite_beam_never_fades():
+	# An infinite beam ends at a block or the grid edge, never by range, so no cell
+	# of it is ever the dissolving tail.
+	var emitter := make_block(EmitterScene, 4, 2)
+	emitter.laser_range = -1
+	var room := build_room([emitter])
+	assert_eq(room.grid.grid[4][11].laser[0].animation, &"white",
+		"the beam reaches the edge solid, not faded")
+
+func test_fade_tip_takes_precedence_over_a_mirror_just_out_of_range():
+	# A finite beam that runs out one cell short of a mirror fades at its tip and
+	# never bounces -- the range is spent before the beam reaches the mirror.
+	var emitter := make_block(EmitterScene, 4, 2)
+	emitter.laser_range = 2  # lights (4,3), (4,4); the mirror at (4,5) is out of reach
+	var mirror := make_block(MirrorScene, 4, 5, PI / 3.0)
+	var room := build_room([emitter, mirror])
+	assert_eq(room.grid.grid[4][4].laser[0].animation, &"fade", "the tip fades one cell short of the mirror")
+	assert_eq(room.grid.grid[4][5].mirror_laser.filter(func(m): return m.is_active()).size(), 0,
+		"the mirror never bounces a beam that did not reach it")
+
 # ------------------------------------------------------- mirror reflection
 func test_mirror_reflects_beam_off_its_column():
 	var emitter := make_block(EmitterScene, 4, 3)
