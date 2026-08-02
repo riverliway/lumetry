@@ -55,12 +55,13 @@ func _ready() -> void:
 	_connect_hazard()
 
 
-## Wires the default win condition: the room is solved once every detector is
-## lit. Room is a child, so Room._ready() has already built the grid and
-## registered every block; we connect each detector's on/off events to a
-## re-evaluation, then capture the initial state (a detector's first `detected`
-## fires during Room._ready(), before this could connect to it). A level with a
-## bespoke win condition overrides this to wire its own trigger instead.
+## Wires the default win condition: the room is solved once every GOAL detector is
+## lit at once (mechanism detectors are excluded -- see _reevaluate). Room is a
+## child, so Room._ready() has already built the grid and registered every block;
+## we connect each detector's on/off events to a re-evaluation, then capture the
+## initial state (a detector's first `detected` fires during Room._ready(), before
+## this could connect to it). A level with a bespoke win condition overrides this
+## to wire its own trigger instead.
 func _connect_win_condition() -> void:
 	if room == null or room.grid == null:
 		return
@@ -86,8 +87,11 @@ func _connect_hazard() -> void:
 ## `_on_solved`/`_on_unsolved` are idempotent, so this can be called freely (once
 ## per laser pass, per detector) -- the consequences fire only on the edge.
 func _reevaluate(_arg = null) -> void:
-	var detectors := room.grid.find_detectors()
-	var all_lit := not detectors.is_empty() and detectors.all(func(d): return d.is_hit)
+	# Only goal detectors count toward the win. Mechanism detectors (is_mechanism --
+	# the blue ones) drive an in-room device instead of the win, so they are left out
+	# here; the room is solved once every GOAL detector is lit at the same time.
+	var goals := room.grid.find_detectors().filter(func(d): return not d.is_mechanism)
+	var all_lit := not goals.is_empty() and goals.all(func(d): return d.is_hit)
 	if all_lit:
 		_on_solved()
 	else:

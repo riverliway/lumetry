@@ -87,6 +87,33 @@ func test_solved_signal_fires_on_the_solving_edge():
 	assert_true(level._solved)
 	assert_signal_emitted(level, "solved")
 
+func test_a_mechanism_detector_is_excluded_from_the_win():
+	# The blue mechanism detector drives an in-room device, not the win, so a lit
+	# goal solves the room even though a (dark) mechanism detector is also present.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var goal := make_block(DetectorScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var mech := make_block(DetectorScene, 10, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	mech.is_mechanism = true  # no emitter aimed at it -> stays dark
+	var level := build_level([emitter, goal, mech])
+	assert_true(level._solved, "the lit goal solves it; the dark mechanism does not count")
+
+func test_every_goal_detector_must_be_lit_at_once():
+	# Two goal detectors, each with its own emitter (the second starts dark). The
+	# room is solved only once BOTH goals are lit -- an AND across the goals.
+	var e1 := make_block(EmitterScene, 4, 3)
+	e1.laser_range = -1
+	var g1 := make_block(DetectorScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var e2 := make_block(EmitterScene, 10, 3)
+	e2.laser_range = -1
+	e2.activated = false  # second goal starts dark
+	var g2 := make_block(DetectorScene, 10, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var level := build_level([e1, g1, e2, g2])
+	assert_false(level._solved, "one goal lit is not enough")
+	e2.use()  # light the second goal
+	level.room.grid.handle_laser_physics()
+	assert_true(level._solved, "both goals lit at once -> solved")
+
 
 # ------------------------------------ board presentation (base Level: fit + dim)
 func test_wall_floor_is_dimmed_at_runtime():
