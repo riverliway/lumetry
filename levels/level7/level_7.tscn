@@ -1156,10 +1156,6 @@ visible = false
 [node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
 position = Vector2(2280, 1036)
 
-[node name="Mirror2" parent="Room" unique_id=754792108 instance=ExtResource("7_2rj0f")]
-position = Vector2(740, 1320)
-rotation = 2.5586526
-
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
 position = Vector2(2600, 1246)
 

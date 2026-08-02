@@ -3,7 +3,7 @@
 
 First create the Gray node (#295273) with all of the top walls, properly angled
 Then duplicate the node to GrayUp and move it up by exactly 190 px
-Make Gray zindex -80
+Make Gray zindex 25 and set relative to OFF
 Duplicate GrayUp to Blue and move it up by exactly 190px
 Change Blue nodes color to #447ca9
 Fill in the rest of the blue walls (left, right, bottom)

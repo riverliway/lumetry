@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://61dyt08xw7bx"]
+[gd_scene format=3 uid="uid://dg4l522skjk0l"]
 
 [ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="2_rlete"]
 [ext_resource type="Script" uid="uid://dtg4bvreeirqv" path="res://levels/room.gd" id="3_qnq8n"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="8_syimn"]
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
 [ext_resource type="Script" uid="uid://c2qsg78kdyw1o" path="res://levels/level5/level_5.gd" id="9_lvl1"]
-[ext_resource type="Script" uid="uid://dyacngsecrmkl" path="res://tileset/interact_hint/interact_hint.gd" id="10_hint"]
 
 [node name="Level4" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
@@ -1394,10 +1393,6 @@ rotation = -1.0471976
 
 [node name="RotationPad" parent="Room" unique_id=220370918 instance=ExtResource("8_syimn")]
 position = Vector2(1579, 1034)
-
-[node name="InteractHint" type="Node2D" parent="Room/RotationPad" unique_id=1720506287]
-script = ExtResource("10_hint")
-hint_id = "pad"
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
 position = Vector2(2600, 1446)

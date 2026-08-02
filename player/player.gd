@@ -29,6 +29,12 @@ var _queue_state := Util.PLAYER_STATE.IDLE ## A temporary variable to hold the q
 var _prev_state := Util.PLAYER_STATE.IDLE ## The state of the player in the previous frame
 var _facing := Util.DIRECTION.DOWN
 
+## While true the player ignores all control input -- movement, use, and mouse
+## aiming. A move or use already animating still finishes (only new input is
+## dropped). The level sets this during the pause after a death or a win, so the
+## player can register what happened before the room resets or advances (GEN-570).
+var input_locked := false
+
 ## Viewport-space mouse position last frame, for detecting motion. Seeded in
 ## _ready so the very first frame doesn't read as a spurious move.
 var _last_mouse_screen := Vector2.ZERO
@@ -56,7 +62,7 @@ func _process(_delta: float) -> void:
 	var mouse_screen := _mouse_screen_position()
 	var mouse_moved := mouse_screen != _last_mouse_screen
 	_last_mouse_screen = mouse_screen
-	if (mouse_moved or _mouse_aim_held()) and _state != Util.PLAYER_STATE.USING:
+	if not input_locked and (mouse_moved or _mouse_aim_held()) and _state != Util.PLAYER_STATE.USING:
 		_face(_cursor_direction())
 
 	match _state:
@@ -75,6 +81,9 @@ func _process(_delta: float) -> void:
 
 ## Processes the idle state
 func _process_idle() -> void:
+	if input_locked:
+		return
+
 	# Mouse buttons act on the current facing, which already tracks the cursor.
 	# Left = move (hold to keep walking), right = use. Available at all times,
 	# right alongside the keyboard.
@@ -107,7 +116,8 @@ func _process_idle() -> void:
 ## Processes the looking state
 func _process_look() -> void:
 	# If any new movement input is detected, look in that direction immediately
-	if _movement_just_pressed():
+	# (unless input is locked -- then just let the turn cooldown run out below).
+	if not input_locked and _movement_just_pressed():
 		_look(_input_direction())
 
 	if _time_left <= 0:

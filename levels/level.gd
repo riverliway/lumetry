@@ -37,6 +37,9 @@ const WALL_FLOOR_MODULATE := Color("ffffff26")
 const PAUSE_MENU := preload("res://ui/pause_menu.tscn")
 ## Where advancing past the final level lands (there is no next room to open).
 const LEVEL_SELECT_SCENE := "res://level_select.tscn"
+## Beat held after a death or a win before the dialogue and the room reset /
+## advance, with player input locked, so the player can register what happened.
+const POST_EVENT_DELAY := 3.0
 
 @onready var room: Room = $Room
 
@@ -98,10 +101,13 @@ func _on_solved(_arg = null) -> void:
 		return
 	_solved = true
 	solved.emit()
+	# Record the win now, before the pause -- closing the game during the beat
+	# must not lose progress the player already earned.
+	_save_progress()
+	await _pause_before_aftermath()
 	# Dialogue/achievements aren't implemented yet, so those two remain stubs.
 	_play_dialogue("level_%d_complete" % _level_number())
 	_grant_achievement("clear_level_%d" % _level_number())
-	_save_progress()
 	_advance_to_next_room()
 
 
@@ -116,10 +122,12 @@ func _on_unsolved() -> void:
 # --- laser hazard -----------------------------------------------------------
 
 ## The player fried themselves on a beam. The room has already switched every
-## emitter off, so the beams are gone; play the "fried" dialogue and reset the
-## room to its start. (Once the dialogue engine lands, the reset should wait for
-## the dialogue to be dismissed rather than firing immediately.)
+## emitter off, so the beams are gone; hold a locked-input beat so the death can
+## register, then play the "fried" dialogue and reset the room to its start.
+## (Once the dialogue engine lands, the reset should wait for the dialogue to be
+## dismissed rather than firing immediately.)
 func _on_player_fried() -> void:
+	await _pause_before_aftermath()
 	_play_dialogue("fried")
 	_reset_room()
 
@@ -132,6 +140,26 @@ func _on_player_singed() -> void:
 		return
 	SaveData.mark_dialogue_seen("singed")
 	_play_dialogue("singed")
+
+
+## Locks player input and holds for POST_EVENT_DELAY, giving the player a beat to
+## register a death or a win before the dialogue and the room reset / advance.
+## Input stays locked afterward -- the reset/advance brings up a fresh, unlocked
+## player. No-ops off a real numbered level (a synthetic test tree has no timing
+## to honour and awaiting a real timer would hang the tests), matching the guard
+## on _reset_room / _advance_to_next_room, so the callers stay synchronous there.
+func _pause_before_aftermath() -> void:
+	if _level_number() < 1:
+		return
+	_lock_player_input()
+	await get_tree().create_timer(POST_EVENT_DELAY).timeout
+
+
+## Stops the player from acting for the rest of this room (see Player.input_locked).
+func _lock_player_input() -> void:
+	var player := room.get_node_or_null("Player") if room else null
+	if player:
+		player.input_locked = true
 
 
 ## Reloads the room to its starting state, fading through black -- the same reset
