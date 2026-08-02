@@ -13,10 +13,10 @@ extends AnimatedSprite2D
 var block_type = Util.BLOCK_TYPE.LASER_EMITTER
 
 func _ready() -> void:
-  # Locked emitters (interactable == false) can't be toggled by the player, so
-  # show the greyed-out sprite as a hint. The disabled animation mirrors the
-  # active one frame-for-frame, so the global anim clock drives it identically.
-  animation = &"default" if interactable else &"disabled"
+	# Locked emitters (interactable == false) can't be toggled by the player, so
+	# show the greyed-out sprite as a hint. The disabled animation mirrors the
+	# active one frame-for-frame, so the global anim clock drives it identically.
+	animation = &"default" if interactable else &"disabled"
 
 func use() -> void:
-  activated = !activated
+	activated = !activated
