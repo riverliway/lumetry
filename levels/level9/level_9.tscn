@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="8_awmj3"]
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
 [ext_resource type="Script" uid="uid://b1rcpj5obqq0p" path="res://levels/level9/level_9.gd" id="9_lvl1"]
+[ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="10_68dj3"]
 
 [node name="Level9" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
@@ -1132,14 +1133,14 @@ texture = ExtResource("2_rlete")
 script = ExtResource("3_qnq8n")
 
 [node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
-position = Vector2(2767.0002, 944)
+position = Vector2(85, 371)
 rotation = 0.93375117
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
-position = Vector2(1759, 365)
+position = Vector2(84, 179)
 
 [node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_gfi6n")]
-position = Vector2(1421, 1328)
+position = Vector2(43, 751)
 
 [node name="Bottom" parent="Room/Track" index="1"]
 visible = false
@@ -1154,13 +1155,16 @@ visible = false
 visible = false
 
 [node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
-position = Vector2(2280, 1036)
+position = Vector2(79.000244, 944)
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
-position = Vector2(2600, 1246)
+position = Vector2(76, 1128)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
-position = Vector2(1072, 1517)
+position = Vector2(62, 560)
+
+[node name="RotationPad" parent="Room" unique_id=1185317205 instance=ExtResource("10_68dj3")]
+position = Vector2(78, 1325)
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
@@ -1171,10 +1175,10 @@ offset_bottom = 40.0
 
 [node name="Black13" type="ColorRect" parent="WallArt" unique_id=696716871]
 layout_mode = 0
-offset_left = 2884.0
-offset_top = -8.0
-offset_right = 3095.0
-offset_bottom = 331.0
+offset_left = 3757.0
+offset_top = 50.0
+offset_right = 3968.0
+offset_bottom = 389.0
 rotation = 1.5708
 color = Color(0, 0, 0, 1)
 
