@@ -124,6 +124,30 @@ func handle_laser_physics() -> void:
 	grid.handle_laser_physics()
 
 
+## Plays the room's opening reveal: re-lights every beam from dark and staggers the
+## segments in on the reveal clock (the same traveling-beam animation a player-driven
+## change uses), returning once the last one has appeared. The load-time resolve in
+## _ready draws the beams instantly so the room's logic is already settled; this
+## replays that light as an animation for the level intro. Awaited by Level, which
+## locks input, plays it, then rolls the intro dialogue.
+func play_intro() -> void:
+	grid.begin_intro()
+	handle_laser_physics()
+	var duration := _pending_reveal_duration()
+	if duration > 0.0:
+		await get_tree().create_timer(duration).timeout
+
+
+## The longest delay among the reveals the most recent resolve queued -- i.e. how long
+## its traveling-beam animation runs. 0 when nothing is staggering (an empty board or a
+## single-cell beam), so a caller can skip the wait.
+func _pending_reveal_duration() -> float:
+	var longest := 0.0
+	for entry in _laser_reveals:
+		longest = max(longest, entry[1])
+	return longest
+
+
 ## Switches every emitter off (so the beams vanish) and re-resolves. The Level
 ## calls this after the post-death beat, once the player has had a moment to see
 ## the beam that killed them.
@@ -195,6 +219,10 @@ class Grid:
 	## load-time resolve (player not yet connected) so a level opens already
 	## settled; true once the player is driving the room.
 	var _animating := false
+	## Set by begin_intro to make the very next resolve replay the whole board's
+	## light from dark as an animation (the level intro), overriding the player-gated
+	## default above and diffing against nothing so every lit cell staggers in.
+	var _force_intro := false
 
 	var WIDTH = 23 ## Number of cells in each row
 	var HEIGHT = 12 ## Number of cells in each column
@@ -219,6 +247,13 @@ class Grid:
 				
 			grid.push_back(col)
 			
+	## Arms the next handle_laser_physics call to replay the board's light as an
+	## animated reveal from dark -- the level intro. See _force_intro; consumed by
+	## the resolve it precedes. Room.play_intro pairs this with the wait for the
+	## reveal to finish.
+	func begin_intro() -> void:
+		_force_intro = true
+
 	## Wipes and re-computes the laser physics for the entire grid.
 	## A destructive beam can melt a block; removing it changes what light can
 	## reach, so we resolve, remove any melted blocks, and resolve again until the
@@ -235,8 +270,15 @@ class Grid:
 		# to animate, so each resolve below can diff the new light against the old
 		# and stagger only the newly-lit cells. The load-time resolve (no player
 		# connected yet) is instant, so a level opens with its beams already drawn.
-		_animating = player != null
-		_snapshot_segments()
+		# The intro (begin_intro) overrides that: it animates and diffs against an
+		# empty snapshot, so every lit cell counts as new and the whole board
+		# staggers in from dark, even though the load resolve already drew it.
+		_animating = player != null or _force_intro
+		if _force_intro:
+			_prev_sig.clear()
+			_force_intro = false
+		else:
+			_snapshot_segments()
 
 		var guard := 0
 		while guard < MELT_RESOLVE_LIMIT:

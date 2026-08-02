@@ -53,6 +53,22 @@ func _ready() -> void:
 	add_child(PAUSE_MENU.instantiate())
 	_connect_win_condition()
 	_connect_hazard()
+	_play_intro()
+
+
+## Opens the room: locks input, plays the traveling-beam reveal from dark (Room drew
+## the beams instantly on load; this animates that same light in), and -- once it
+## finishes -- rolls the intro dialogue and hands control back. Fire-and-forget: the
+## input lock is set before the first await, so the player is held from the first
+## frame. No-ops off a real numbered level (a synthetic test tree has no intro; see
+## _level_number), so tests keep the instant load-time resolve.
+func _play_intro() -> void:
+	if _level_number() < 1:
+		return
+	_lock_player_input()
+	await room.play_intro()
+	_play_dialogue("level_%d_intro" % _level_number())
+	_unlock_player_input()
 
 
 ## Wires the default win condition: the room is solved once every GOAL detector is
@@ -188,6 +204,14 @@ func _lock_player_input() -> void:
 	var player := room.get_node_or_null("Player") if room else null
 	if player:
 		player.input_locked = true
+
+
+## Restores player control (the counterpart to _lock_player_input) -- used after the
+## intro, where the same player keeps playing rather than being replaced by a reload.
+func _unlock_player_input() -> void:
+	var player := room.get_node_or_null("Player") if room else null
+	if player:
+		player.input_locked = false
 
 
 ## Reloads the room to its starting state, fading through black -- the same reset

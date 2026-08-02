@@ -81,6 +81,27 @@ func test_an_unchanged_beam_is_not_reanimated():
 	assert_true(room._laser_reveals.is_empty(), "nothing queued for an unchanged beam")
 
 
+# ------------------------------------------------- the intro replays from dark
+func test_intro_reveals_the_whole_beam_from_dark():
+	# The level intro (Room.play_intro -> Grid.begin_intro) forces the next resolve to
+	# animate the entire board in from dark, even though the load resolve already drew
+	# it opaque and nothing about the beam changed -- the opposite of the unchanged
+	# beam above. This is what makes the beams travel in when a level opens.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var room := build_room([emitter])
+	assert_eq(_transparent_count(room), 0, "the load resolve left the beam opaque")
+
+	room.grid.begin_intro()
+	room.grid.handle_laser_physics()
+	assert_gt(_transparent_count(room), 0, "the intro re-hides the beam and staggers it in")
+	assert_false(room._laser_reveals.is_empty(), "the intro queues staggered reveals")
+
+	room._process(10.0)  # fast-forward past every scheduled delay
+	assert_eq(_transparent_count(room), 0, "the intro reveal finishes: every segment opaque")
+	assert_true(room._laser_reveals.is_empty(), "the intro reveal queue drains")
+
+
 func test_only_the_newly_extended_cells_reanimate():
 	# Extending a beam's range must leave the already-lit stretch opaque and only
 	# fade in the cells past where it used to stop -- the divergence point.
