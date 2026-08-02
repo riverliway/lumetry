@@ -1132,34 +1132,35 @@ position = Vector2(3775, 2095)
 texture = ExtResource("2_rlete")
 
 [node name="Wire" type="Node2D" parent="." unique_id=1336221507]
+position = Vector2(-57, 476)
 script = ExtResource("10_wire")
 
 [node name="Segment" type="Sprite2D" parent="Wire" unique_id=919075709]
-position = Vector2(2599, 847)
+position = Vector2(2656, 563)
 rotation = -1.0516503
 texture = ExtResource("11_wseg")
 
 [node name="Segment2" type="Sprite2D" parent="Wire" unique_id=2103124313]
-position = Vector2(2767, 943)
+position = Vector2(2824, 659)
 rotation = 2.0899425
 texture = ExtResource("11_wseg")
 
 [node name="Segment3" type="Sprite2D" parent="Wire" unique_id=489220294]
-position = Vector2(2767, 943)
+position = Vector2(2824, 659)
 rotation = -1.0516503
 texture = ExtResource("11_wseg")
 
 [node name="Segment4" type="Sprite2D" parent="Wire" unique_id=2067016913]
-position = Vector2(2935, 1039)
+position = Vector2(2992, 755)
 rotation = 2.0899425
 texture = ExtResource("11_wseg")
 
 [node name="Segment5" type="Sprite2D" parent="Wire" unique_id=265382921]
-position = Vector2(2935, 1039)
+position = Vector2(2992, 755)
 texture = ExtResource("11_wseg")
 
 [node name="Segment6" type="Sprite2D" parent="Wire" unique_id=351281706]
-position = Vector2(2935, 1231)
+position = Vector2(2992, 947)
 rotation = 3.1415927
 texture = ExtResource("11_wseg")
 
@@ -1167,134 +1168,143 @@ texture = ExtResource("11_wseg")
 script = ExtResource("3_qnq8n")
 
 [node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
-position = Vector2(1261, 655)
+position = Vector2(1249, 844)
 activated = false
 
 [node name="LaserEmitter2" parent="Room" unique_id=1873044988 instance=ExtResource("4_it373")]
-position = Vector2(2939, 1235)
+position = Vector2(2927, 1424)
 rotation = 1.0576695
 activated = false
 interactable = false
 
 [node name="Crate" parent="Room" unique_id=1107701639 instance=ExtResource("5_skltk")]
-position = Vector2(1938, 852)
+position = Vector2(1926, 1041)
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
-position = Vector2(1754, 564)
+position = Vector2(1742, 753)
 
 [node name="Wall2" parent="Room" unique_id=1372305116 instance=ExtResource("5_lto8c")]
-position = Vector2(1592, 466)
+position = Vector2(1580, 655)
 
 [node name="Wall3" parent="Room" unique_id=1622944208 instance=ExtResource("5_lto8c")]
-position = Vector2(1425, 374)
+position = Vector2(1413, 563)
 
 [node name="Wall4" parent="Room" unique_id=1897880830 instance=ExtResource("5_lto8c")]
-position = Vector2(1263, 467)
+position = Vector2(1251, 656)
 
 [node name="Wall5" parent="Room" unique_id=521627988 instance=ExtResource("5_lto8c")]
-position = Vector2(1087, 373)
+position = Vector2(1075, 562)
 
 [node name="Wall6" parent="Room" unique_id=817346127 instance=ExtResource("5_lto8c")]
-position = Vector2(926, 479)
+position = Vector2(914, 668)
 
 [node name="Wall7" parent="Room" unique_id=1573094423 instance=ExtResource("5_lto8c")]
-position = Vector2(915, 850)
+position = Vector2(903, 1039)
+
+[node name="Wall22" parent="Room" unique_id=647417926 instance=ExtResource("5_lto8c")]
+position = Vector2(733, 1146)
 
 [node name="Wall8" parent="Room" unique_id=1309669650 instance=ExtResource("5_lto8c")]
-position = Vector2(919, 1052)
+position = Vector2(907, 1241)
 
 [node name="Wall9" parent="Room" unique_id=1958403962 instance=ExtResource("5_lto8c")]
-position = Vector2(752, 1133)
+position = Vector2(740, 1322)
 
 [node name="Wall27" parent="Room" unique_id=571119913 instance=ExtResource("5_lto8c")]
-position = Vector2(759, 759)
+position = Vector2(747, 948)
 
 [node name="Wall28" parent="Room" unique_id=1805021751 instance=ExtResource("5_lto8c")]
-position = Vector2(742, 570)
+position = Vector2(730, 759)
 
 [node name="Wall10" parent="Room" unique_id=1550863359 instance=ExtResource("5_lto8c")]
-position = Vector2(919, 1611)
+position = Vector2(907, 1800)
 
 [node name="Wall11" parent="Room" unique_id=94539414 instance=ExtResource("5_lto8c")]
-position = Vector2(1080, 1702)
+position = Vector2(1068, 1891)
 
 [node name="Wall12" parent="Room" unique_id=2014971209 instance=ExtResource("5_lto8c")]
-position = Vector2(1258, 1806)
+position = Vector2(1246, 1995)
+
+[node name="Wall26" parent="Room" unique_id=1361492227 instance=ExtResource("5_lto8c")]
+position = Vector2(1404, 2074)
 
 [node name="Wall13" parent="Room" unique_id=336697949 instance=ExtResource("5_lto8c")]
-position = Vector2(1435, 1719)
+position = Vector2(1423, 1908)
 
 [node name="Wall14" parent="Room" unique_id=282186709 instance=ExtResource("5_lto8c")]
-position = Vector2(1613, 1812)
+position = Vector2(1601, 2001)
 
 [node name="Wall15" parent="Room" unique_id=736169846 instance=ExtResource("5_lto8c")]
-position = Vector2(1777, 1918)
+position = Vector2(1765, 2107)
 
 [node name="Wall16" parent="Room" unique_id=396352351 instance=ExtResource("5_lto8c")]
-position = Vector2(1946, 1840)
+position = Vector2(1934, 2029)
 
 [node name="Wall17" parent="Room" unique_id=452848440 instance=ExtResource("5_lto8c")]
-position = Vector2(2102, 1913)
+position = Vector2(2090, 2102)
 
 [node name="Wall18" parent="Room" unique_id=1820783559 instance=ExtResource("5_lto8c")]
-position = Vector2(2260, 1827)
+position = Vector2(2248, 2016)
 
 [node name="Wall19" parent="Room" unique_id=741667525 instance=ExtResource("5_lto8c")]
-position = Vector2(2430, 1910)
+position = Vector2(2418, 2099)
 
 [node name="Wall20" parent="Room" unique_id=529499427 instance=ExtResource("5_lto8c")]
-position = Vector2(2602, 1822)
+position = Vector2(2590, 2011)
 
 [node name="Wall21" parent="Room" unique_id=2070242513 instance=ExtResource("5_lto8c")]
-position = Vector2(2760, 1720)
+position = Vector2(2748, 1909)
 
 [node name="Wall23" parent="Room" unique_id=794739877 instance=ExtResource("5_lto8c")]
-position = Vector2(2920, 1618)
+position = Vector2(2908, 1807)
 
 [node name="Wall24" parent="Room" unique_id=403842860 instance=ExtResource("5_lto8c")]
-position = Vector2(3091, 1525)
+position = Vector2(3079, 1714)
 
 [node name="Wall25" parent="Room" unique_id=537699470 instance=ExtResource("5_lto8c")]
-position = Vector2(3106, 1332)
+position = Vector2(3094, 1521)
 
 [node name="Wall30" parent="Room" unique_id=1738940874 instance=ExtResource("5_lto8c")]
-position = Vector2(3101, 1139)
+position = Vector2(3089, 1328)
 
 [node name="Wall31" parent="Room" unique_id=615730350 instance=ExtResource("5_lto8c")]
-position = Vector2(3099, 951)
+position = Vector2(3087, 1140)
 
 [node name="Wall32" parent="Room" unique_id=467759955 instance=ExtResource("5_lto8c")]
-position = Vector2(749, 1342)
+position = Vector2(737, 1531)
 
 [node name="Wall33" parent="Room" unique_id=1454671043 instance=ExtResource("5_lto8c")]
-position = Vector2(757, 1529)
+position = Vector2(745, 1718)
 
 [node name="Wall34" parent="Room" unique_id=1249988948 instance=ExtResource("5_lto8c")]
-position = Vector2(2765, 772)
+position = Vector2(2753, 961)
+
+[node name="Wall42" parent="Room" unique_id=1549674005 instance=ExtResource("5_lto8c")]
+position = Vector2(2934, 857)
 
 [node name="Wall35" parent="Room" unique_id=225628869 instance=ExtResource("5_lto8c")]
-position = Vector2(2930, 845)
+position = Vector2(2918, 1034)
 
 [node name="Wall36" parent="Room" unique_id=168376847 instance=ExtResource("5_lto8c")]
-position = Vector2(2773, 548)
+position = Vector2(2761, 737)
 
 [node name="Wall37" parent="Room" unique_id=879168032 instance=ExtResource("5_lto8c")]
-position = Vector2(2609, 446)
+position = Vector2(2597, 635)
 
 [node name="Wall38" parent="Room" unique_id=1853995387 instance=ExtResource("5_lto8c")]
-position = Vector2(2429, 377)
+position = Vector2(2417, 566)
 
 [node name="Wall39" parent="Room" unique_id=740967232 instance=ExtResource("5_lto8c")]
-position = Vector2(2271, 271)
+position = Vector2(2259, 460)
 
 [node name="Wall40" parent="Room" unique_id=2008063900 instance=ExtResource("5_lto8c")]
-position = Vector2(2102, 365)
+position = Vector2(2090, 554)
 
 [node name="Wall41" parent="Room" unique_id=1964311963 instance=ExtResource("5_lto8c")]
-position = Vector2(1930, 465)
+position = Vector2(1918, 654)
 
 [node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_gfi6n")]
-position = Vector2(1408, 1151)
+position = Vector2(1396, 1340)
 
 [node name="Top" parent="Room/Track" index="0"]
 visible = false
@@ -1309,7 +1319,7 @@ visible = false
 visible = false
 
 [node name="Track2" parent="Room" unique_id=1532517799 instance=ExtResource("6_gfi6n")]
-position = Vector2(1234, 1022)
+position = Vector2(1222, 1211)
 
 [node name="Top" parent="Room/Track2" index="0"]
 visible = false
@@ -1327,7 +1337,7 @@ visible = false
 visible = false
 
 [node name="Track3" parent="Room" unique_id=1300629869 instance=ExtResource("6_gfi6n")]
-position = Vector2(1590, 1241)
+position = Vector2(1578, 1430)
 
 [node name="Top" parent="Room/Track3" index="0"]
 visible = false
@@ -1342,7 +1352,7 @@ visible = false
 visible = false
 
 [node name="Track4" parent="Room" unique_id=166549804 instance=ExtResource("6_gfi6n")]
-position = Vector2(1751, 1338)
+position = Vector2(1739, 1527)
 
 [node name="Top" parent="Room/Track4" index="0"]
 visible = false
@@ -1351,7 +1361,7 @@ visible = false
 visible = false
 
 [node name="Track5" parent="Room" unique_id=843109642 instance=ExtResource("6_gfi6n")]
-position = Vector2(1922, 1395)
+position = Vector2(1910, 1584)
 
 [node name="Top" parent="Room/Track5" index="0"]
 visible = false
@@ -1366,7 +1376,7 @@ visible = false
 visible = false
 
 [node name="Track6" parent="Room" unique_id=1838933302 instance=ExtResource("6_gfi6n")]
-position = Vector2(2093, 1524)
+position = Vector2(2081, 1713)
 
 [node name="Top" parent="Room/Track6" index="0"]
 visible = false
@@ -1381,7 +1391,7 @@ visible = false
 visible = false
 
 [node name="Track8" parent="Room" unique_id=83382034 instance=ExtResource("6_gfi6n")]
-position = Vector2(2296, 1645)
+position = Vector2(2284, 1834)
 
 [node name="Top" parent="Room/Track8" index="0"]
 visible = false
@@ -1399,7 +1409,7 @@ visible = false
 visible = false
 
 [node name="Track9" parent="Room" unique_id=638700052 instance=ExtResource("6_gfi6n")]
-position = Vector2(1395, 1533)
+position = Vector2(1383, 1722)
 
 [node name="Top" parent="Room/Track9" index="0"]
 visible = false
@@ -1417,7 +1427,7 @@ visible = false
 visible = false
 
 [node name="Track11" parent="Room" unique_id=682349737 instance=ExtResource("6_gfi6n")]
-position = Vector2(1584, 1424)
+position = Vector2(1572, 1613)
 
 [node name="Top" parent="Room/Track11" index="0"]
 visible = false
@@ -1432,7 +1442,7 @@ visible = false
 visible = false
 
 [node name="Track10" parent="Room" unique_id=1577571269 instance=ExtResource("6_gfi6n")]
-position = Vector2(1917, 1205)
+position = Vector2(1905, 1394)
 
 [node name="Top" parent="Room/Track10" index="0"]
 visible = false
@@ -1451,42 +1461,325 @@ visible = false
 visible = false
 
 [node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
-position = Vector2(1759.9999, 1330)
+position = Vector2(1747.9999, 1519)
 rotation = 1.5707964
 
 [node name="Mirror3" parent="Room" unique_id=1151430872 instance=ExtResource("7_2rj0f")]
-position = Vector2(1262, 1047.0001)
+position = Vector2(1250, 1236.0001)
 rotation = 2.0943952
 
 [node name="Mirror2" parent="Room" unique_id=754792108 instance=ExtResource("7_2rj0f")]
-position = Vector2(2255, 1623.9999)
+position = Vector2(2243, 1812.9999)
 rotation = 2.443461
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
-position = Vector2(2600, 1246)
+position = Vector2(2588, 1435)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
-position = Vector2(2596, 849)
+position = Vector2(2584, 1038)
 rotation = 0.58119464
 is_mechanism = true
 
 [node name="LaserDetector2" parent="Room" unique_id=67004239 instance=ExtResource("9_ivh0a")]
-position = Vector2(2258, 659)
+position = Vector2(2246, 848)
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
 layout_mode = 3
 anchors_preset = 0
+offset_top = 203.0
+offset_right = 40.0
+offset_bottom = 243.0
+
+[node name="Gray" type="Control" parent="WallArt" unique_id=1113602138]
+z_index = 25
+z_as_relative = false
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Black13" type="ColorRect" parent="WallArt" unique_id=696716871]
+[node name="Gray1" type="ColorRect" parent="WallArt/Gray" unique_id=1454618122]
 layout_mode = 0
-offset_left = 3811.0
-offset_top = -36.0
-offset_right = 4022.0
-offset_bottom = 303.0
-rotation = 1.5708
+offset_left = 1089.9757
+offset_top = -341.68896
+offset_right = 1707.2382
+offset_bottom = 649.8579
+rotation = 1.0471976
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray2" type="ColorRect" parent="WallArt/Gray" unique_id=1023224921]
+layout_mode = 0
+offset_left = 1738.0
+offset_top = 22.996948
+offset_right = 2117.2656
+offset_bottom = 1014.5438
+rotation = 1.5707964
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray3" type="ColorRect" parent="WallArt/Gray" unique_id=1276944590]
+layout_mode = 0
+offset_left = 904.0
+offset_top = 67.99997
+offset_right = 1521.2625
+offset_bottom = 1059.5469
+rotation = -1.0471976
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray4" type="ColorRect" parent="WallArt/Gray" unique_id=1192111088]
+layout_mode = 0
+offset_left = 2313.0002
+offset_top = -467.00003
+offset_right = 2930.2627
+offset_bottom = 524.5469
+rotation = 1.0471976
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray5" type="ColorRect" parent="WallArt/Gray" unique_id=696716871]
+layout_mode = 0
+offset_left = 2030.0
+offset_top = -9.999939
+offset_right = 2647.2622
+offset_bottom = 2060.2683
+rotation = -0.84823
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="GrayUp" type="Control" parent="WallArt" unique_id=730736436]
+anchors_preset = 0
+offset_top = -191.0
+offset_right = 40.0
+offset_bottom = -151.0
+
+[node name="Gray1" type="ColorRect" parent="WallArt/GrayUp" unique_id=1129665393]
+layout_mode = 0
+offset_left = 1089.9757
+offset_top = -341.68896
+offset_right = 1707.2382
+offset_bottom = 649.8579
+rotation = 1.0471976
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray2" type="ColorRect" parent="WallArt/GrayUp" unique_id=1103980336]
+layout_mode = 0
+offset_left = 1738.0
+offset_top = 22.996948
+offset_right = 2117.2656
+offset_bottom = 1014.5438
+rotation = 1.5707964
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray3" type="ColorRect" parent="WallArt/GrayUp" unique_id=1525633837]
+layout_mode = 0
+offset_left = 904.0
+offset_top = 67.99997
+offset_right = 1521.2625
+offset_bottom = 1059.5469
+rotation = -1.0471976
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray4" type="ColorRect" parent="WallArt/GrayUp" unique_id=959361918]
+layout_mode = 0
+offset_left = 2313.0002
+offset_top = -467.00003
+offset_right = 2930.2627
+offset_bottom = 524.5469
+rotation = 1.0471976
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Gray5" type="ColorRect" parent="WallArt/GrayUp" unique_id=716591774]
+layout_mode = 0
+offset_left = 2030.0
+offset_top = -9.999939
+offset_right = 2647.2622
+offset_bottom = 2060.2683
+rotation = -0.84823
+color = Color(0.15971932, 0.32240677, 0.4509765, 1)
+
+[node name="Blue" type="Control" parent="WallArt" unique_id=363200891]
+anchors_preset = 0
+offset_top = -191.0
+offset_right = 40.0
+offset_bottom = -151.0
+
+[node name="Blue1" type="ColorRect" parent="WallArt/Blue" unique_id=765885102]
+layout_mode = 0
+offset_left = 1089.9757
+offset_top = -530.6738
+offset_right = 1707.2382
+offset_bottom = 460.87305
+rotation = 1.0471976
+color = Color(0.26666668, 0.4862745, 0.6627451, 1)
+
+[node name="Blue2" type="ColorRect" parent="WallArt/Blue" unique_id=434764379]
+layout_mode = 0
+offset_left = 1738.0
+offset_top = -165.98792
+offset_right = 2117.2656
+offset_bottom = 825.55896
+rotation = 1.5707964
+color = Color(0.26666668, 0.4862745, 0.6627451, 1)
+
+[node name="Blue3" type="ColorRect" parent="WallArt/Blue" unique_id=1428705589]
+layout_mode = 0
+offset_left = 904.0
+offset_top = -120.98489
+offset_right = 1521.2625
+offset_bottom = 870.562
+rotation = -1.0471976
+color = Color(0.26666668, 0.4862745, 0.6627451, 1)
+
+[node name="Blue4" type="ColorRect" parent="WallArt/Blue" unique_id=608719617]
+layout_mode = 0
+offset_left = 2313.0002
+offset_top = -655.98486
+offset_right = 2930.2627
+offset_bottom = 335.562
+rotation = 1.0471976
+color = Color(0.26666668, 0.4862745, 0.6627451, 1)
+
+[node name="Blue5" type="ColorRect" parent="WallArt/Blue" unique_id=1777985935]
+layout_mode = 0
+offset_left = 2030.0
+offset_top = -198.9848
+offset_right = 2647.2622
+offset_bottom = 1871.2834
+rotation = -0.84823
+color = Color(0.26666668, 0.4862745, 0.6627451, 1)
+
+[node name="Blue6" type="ColorRect" parent="WallArt/Blue" unique_id=1463428863]
+layout_mode = 0
+offset_left = 3104.0
+offset_top = 573.0
+offset_right = 3363.3037
+offset_bottom = 2102.4507
+color = Color(0.26784262, 0.48547095, 0.6624427, 1)
+
+[node name="Blue7" type="ColorRect" parent="WallArt/Blue" unique_id=307320176]
+layout_mode = 0
+offset_left = 3516.0
+offset_top = 1467.0
+offset_right = 3775.3037
+offset_bottom = 2996.4507
+rotation = 1.0471976
+color = Color(0.26784262, 0.48547095, 0.6624427, 1)
+
+[node name="Blue9" type="ColorRect" parent="WallArt/Blue" unique_id=974097441]
+layout_mode = 0
+offset_left = 386.00003
+offset_top = 1948.9999
+offset_right = 645.3037
+offset_bottom = 3478.4504
+rotation = -1.2915436
+color = Color(0.26784262, 0.48547095, 0.6624427, 1)
+
+[node name="Blue8" type="ColorRect" parent="WallArt/Blue" unique_id=411067226]
+layout_mode = 0
+offset_left = 2864.0
+offset_top = 2069.0
+offset_right = 3123.3037
+offset_bottom = 3598.4507
+rotation = 1.5707964
+color = Color(0.26784262, 0.48547095, 0.6624427, 1)
+
+[node name="Blue10" type="ColorRect" parent="WallArt/Blue" unique_id=1435804603]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 246.0
+offset_right = 755.3037
+offset_bottom = 1855.0
+color = Color(0.26784262, 0.48547095, 0.6624427, 1)
+
+[node name="Black" type="Control" parent="WallArt" unique_id=1207840233]
+anchors_preset = 0
+offset_top = -191.0
+offset_right = 40.0
+offset_bottom = -151.0
+
+[node name="Blue1" type="ColorRect" parent="WallArt/Black" unique_id=1156636995]
+layout_mode = 0
+offset_left = 1089.9757
+offset_top = -610.6738
+offset_right = 1707.2382
+offset_bottom = 380.87305
+rotation = 1.0471976
+color = Color(0, 0, 0, 1)
+
+[node name="Blue2" type="ColorRect" parent="WallArt/Black" unique_id=757851326]
+layout_mode = 0
+offset_left = 1738.0
+offset_top = -245.98792
+offset_right = 2117.2656
+offset_bottom = 745.55896
+rotation = 1.5707964
+color = Color(0, 0, 0, 1)
+
+[node name="Blue3" type="ColorRect" parent="WallArt/Black" unique_id=270524574]
+layout_mode = 0
+offset_left = 904.0
+offset_top = -200.9849
+offset_right = 1521.2625
+offset_bottom = 790.562
+rotation = -1.0471976
+color = Color(0, 0, 0, 1)
+
+[node name="Blue4" type="ColorRect" parent="WallArt/Black" unique_id=1269079425]
+layout_mode = 0
+offset_left = 2313.0002
+offset_top = -735.98486
+offset_right = 2930.2627
+offset_bottom = 255.56201
+rotation = 1.0471976
+color = Color(0, 0, 0, 1)
+
+[node name="Blue5" type="ColorRect" parent="WallArt/Black" unique_id=1068764650]
+layout_mode = 0
+offset_left = 2030.0
+offset_top = -278.9848
+offset_right = 2647.2622
+offset_bottom = 1791.2834
+rotation = -0.84823
+color = Color(0, 0, 0, 1)
+
+[node name="Blue6" type="ColorRect" parent="WallArt/Black" unique_id=1733967137]
+layout_mode = 0
+offset_left = 3184.0
+offset_top = -227.0
+offset_right = 4224.0
+offset_bottom = 2781.0
+color = Color(0, 0, 0, 1)
+
+[node name="Blue7" type="ColorRect" parent="WallArt/Black" unique_id=1063910486]
+layout_mode = 0
+offset_left = 3516.0
+offset_top = 1547.0
+offset_right = 3954.3826
+offset_bottom = 3076.4507
+rotation = 1.0471976
+color = Color(0, 0, 0, 1)
+
+[node name="Blue9" type="ColorRect" parent="WallArt/Black" unique_id=984762304]
+layout_mode = 0
+offset_left = 360.1126
+offset_top = 2119.28
+offset_right = 713.3346
+offset_bottom = 3648.7305
+rotation = -1.2915436
+color = Color(0, 0, 0, 1)
+
+[node name="Blue8" type="ColorRect" parent="WallArt/Black" unique_id=899348070]
+layout_mode = 0
+offset_left = 3378.793
+offset_top = 2149.0
+offset_right = 3812.4624
+offset_bottom = 5015.252
+rotation = 1.5707964
+color = Color(0, 0, 0, 1)
+
+[node name="Blue10" type="ColorRect" parent="WallArt/Black" unique_id=9912526]
+layout_mode = 0
+offset_left = -475.0
+offset_top = -220.0
+offset_right = 675.3037
+offset_bottom = 2746.0
 color = Color(0, 0, 0, 1)
 
 [connection signal="cleared" from="Room/LaserDetector" to="." method="_on_first_detector_off"]
