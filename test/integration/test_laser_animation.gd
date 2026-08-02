@@ -99,3 +99,44 @@ func test_only_the_newly_extended_cells_reanimate():
 	# The extension is genuinely new, so it travels in.
 	assert_true(room.grid.grid[4][9].is_laser_active(), "beam now reaches the extended range")
 	assert_gt(_transparent_count(room), 0, "the newly reached cells fade in")
+
+
+# ----------------------------------- a detector reports in step with the beam
+func test_a_detector_reports_its_hit_only_once_the_beam_reveals():
+	# A detector's `detected` -- which a level uses to light a wire or power a linked
+	# emitter -- must wait until the traveling beam visually reaches it, not fire the
+	# instant physics resolves (so a mechanism doesn't react ahead of the beam).
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var detector := make_block(DetectorScene, 4, 8, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var room := build_room([emitter, detector], Vector2i(20, 0))
+	var d = room.grid.grid[4][8].block
+	emitter.use(); room.grid.handle_laser_physics(); room._process(10.0)  # settle the beam OFF
+	watch_signals(d)
+
+	emitter.use(); room.grid.handle_laser_physics()  # ON -- the beam travels toward it
+	assert_true(d.is_hit, "the hit settles logically the same tick the beam is drawn")
+	assert_signal_not_emitted(d, "detected", "but it is not reported before the beam arrives")
+
+	room._process(10.0)  # let the beam finish travelling to the detector
+	assert_signal_emitted(d, "detected", "reported once the beam has reached it")
+
+
+func test_a_hit_that_breaks_before_it_reveals_is_never_reported():
+	# If the beam stops reaching the detector before its reveal completes (the player
+	# re-resolved in between), the pending report is dropped -- the wire/device it
+	# would drive must not blip on for a beam the player never actually saw connect.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = -1
+	var detector := make_block(DetectorScene, 4, 8, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	var room := build_room([emitter, detector], Vector2i(20, 0))
+	var d = room.grid.grid[4][8].block
+	emitter.use(); room.grid.handle_laser_physics(); room._process(10.0)  # settle OFF
+	watch_signals(d)
+
+	emitter.use(); room.grid.handle_laser_physics()  # ON -- report pending mid-reveal
+	emitter.use(); room.grid.handle_laser_physics()  # OFF again before the beam arrived
+	room._process(10.0)
+
+	assert_signal_not_emitted(d, "detected", "a hit that never revealed is never reported")
+	assert_false(d.is_hit, "and it ends logically un-hit")

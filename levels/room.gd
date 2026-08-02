@@ -24,6 +24,12 @@ var _handling_fry := false
 ## flips it opaque once _reveal_clock passes its scheduled time. The per-cell
 ## delays are assigned in Grid._reveal_step (only the newly-lit cells stagger).
 var _laser_reveals: Array = []
+## Reactions to run partway through the current reveal, keyed to the same clock as
+## the segment fades: each entry is [callable, fire_at_seconds]. Used so a detector
+## reports its hit -- lighting a wire, powering a linked emitter -- only once its
+## striking beam has visually reached it (Grid._defer_report_for). Dropped and
+## re-derived every pass, like the segment reveals.
+var _reveal_callbacks: Array = []
 ## Seconds elapsed since the current reveal batch began; reset every resolve so
 ## each batch's delays are measured from the moment that resolve finished.
 var _reveal_clock := 0.0
@@ -58,11 +64,13 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	# Drive the traveling-beam reveal: fade in each queued segment once the clock
-	# reaches its scheduled time. Idle (no allocation) whenever nothing is pending.
-	if _laser_reveals.is_empty():
+	# Drive the traveling-beam reveal: fade in each queued segment, and run each
+	# queued reaction, once the clock reaches its scheduled time. Idle (no allocation)
+	# whenever nothing is pending.
+	if _laser_reveals.is_empty() and _reveal_callbacks.is_empty():
 		return
 	_reveal_clock += delta
+
 	var pending: Array = []
 	for entry in _laser_reveals:
 		var seg: CanvasItem = entry[0]
@@ -74,12 +82,28 @@ func _process(delta: float) -> void:
 			pending.push_back(entry)
 	_laser_reveals = pending
 
+	# Fire due reactions after removing them from the queue: a detector's report can
+	# re-enter handle_laser_physics (a linked emitter lighting), which clears and
+	# repopulates _reveal_callbacks -- so the due list must already be detached.
+	if not _reveal_callbacks.is_empty():
+		var due: Array = []
+		var later: Array = []
+		for entry in _reveal_callbacks:
+			if _reveal_clock >= entry[1]:
+				due.push_back(entry[0])
+			else:
+				later.push_back(entry)
+		_reveal_callbacks = later
+		for fn in due:
+			fn.call()
+
 
 ## Starts a fresh reveal batch: drops any still-pending reveals from an animation
 ## the player interrupted (this resolve re-draws or hides those segments anyway)
 ## and restarts the clock so every delay queued below is measured from now.
 func begin_laser_reveal() -> void:
 	_laser_reveals.clear()
+	_reveal_callbacks.clear()  # interrupted detector reactions are re-derived this pass
 	_reveal_clock = 0.0
 
 
@@ -87,6 +111,13 @@ func begin_laser_reveal() -> void:
 ## caller has already set seg.modulate.a = 0 so it stays invisible until then.
 func schedule_laser_reveal(seg: CanvasItem, delay: float) -> void:
 	_laser_reveals.push_back([seg, delay])
+
+
+## Queues `fn` to run `delay` seconds into the current reveal batch, on the same
+## clock as the segment fades -- used so a detector reports its hit in step with
+## the beam reaching it (Grid._defer_report_for).
+func schedule_reveal_callback(delay: float, fn: Callable) -> void:
+	_reveal_callbacks.push_back([fn, delay])
 
 
 func handle_laser_physics() -> void:
@@ -216,7 +247,12 @@ class Grid:
 				cell.melt()
 			guard += 1
 
+		# Settle each detector. Injecting the deferral here (rather than in the
+		# detector) keeps the timing policy with the reveal it rides on: a rising edge
+		# reported once its beam has travelled to the detector, a clear reported at once.
+		var deferrer := _defer_report_for(resolve_room.call())
 		for detector in detectors:
+			detector.defer_report = deferrer
 			detector.end_pass()
 
 		# A beam left sitting on the player's own cell means the player fried
@@ -226,6 +262,20 @@ class Grid:
 		# player-driven re-resolves do.
 		if _player_struck and player != null:
 			resolve_room.call()._on_player_struck()
+
+	## Builds the timing policy a detector uses to report a hit (see
+	## LaserDetector.defer_report). While animating, a rising edge (delay > 0) is held
+	## on the room's reveal clock until the striking beam reaches the detector, so a
+	## wire or linked emitter it drives lights up in step with the beam rather than
+	## ahead of it. A clear (delay 0), a non-animating pass, or a missing room reports
+	## at once, preserving the load-time and headless behaviour.
+	func _defer_report_for(room) -> Callable:
+		var animating := _animating
+		return func(delay: float, apply: Callable) -> void:
+			if delay <= 0.0 or not animating or room == null:
+				apply.call()
+			else:
+				room.schedule_reveal_callback(delay, apply)
 
 	## Runs one full laser resolution on the current grid (no block removal):
 	## clears beams, resets per-pass state, propagates every active emitter, then
@@ -339,10 +389,12 @@ class Grid:
 				# detector sprite sits above Z_LASER and hides the cut) regardless of
 				# arc -- the beam physically reaches it either way. The detector only
 				# registers a hit if the beam arrived through its sensitive front arc.
-				_reveal_step(ctx, [_draw_half_beam(cell, laser_facing, color, false)])
+				# The stub's reveal delay is when the beam visually reaches the detector,
+				# so a hit reported this pass waits for it (see LaserDetector.end_pass).
+				var reveal_delay := _reveal_step(ctx, [_draw_half_beam(cell, laser_facing, color, false)])
 				var from_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				if detector_hit_directions(cell.block_facing).has(from_dir):
-					cell.block.mark_hit(color)
+					cell.block.mark_hit(color, reveal_delay)
 				return
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.LASER_FOCUSER:
@@ -792,7 +844,9 @@ class Grid:
 	## still in the unchanged prefix an unchanged step is shown opaque immediately;
 	## the first changed step diverges the beam, and each step after it staggers by
 	## one more LASER_STEP_DELAY. Non-animating resolves (load time) show at once.
-	func _reveal_step(ctx: Dictionary, segs: Array) -> void:
+	## Returns the seconds into the reveal at which this step appears (0 when shown at
+	## once), so a detector struck here can wait for its beam to arrive.
+	func _reveal_step(ctx: Dictionary, segs: Array) -> float:
 		if not ctx["diverged"]:
 			var changed := false
 			for seg in segs:
@@ -802,7 +856,7 @@ class Grid:
 			if not changed:
 				for seg in segs:
 					seg.modulate.a = 1.0
-				return
+				return 0.0
 			ctx["diverged"] = true
 			ctx["index"] = 0
 		else:
@@ -815,6 +869,7 @@ class Grid:
 				resolve_room.call().schedule_laser_reveal(seg, delay)
 			else:
 				seg.modulate.a = 1.0
+		return delay if _animating else 0.0
 
 	## Whether `seg` differs from what it showed before this resolve -- true if it
 	## was dark then (not in the snapshot) or its visual signature changed.

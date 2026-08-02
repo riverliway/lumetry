@@ -84,6 +84,9 @@ func test_solved_signal_fires_on_the_solving_edge():
 	watch_signals(level)
 	emitter.use()  # turn on -> beam reaches the detector
 	level.room.grid.handle_laser_physics()
+	# The win follows the detector's `detected`, which now waits for the beam to
+	# visually reach it -- step the reveal clock so the solve lands.
+	level.room._process(10.0)
 	assert_true(level._solved)
 	assert_signal_emitted(level, "solved")
 
@@ -112,6 +115,7 @@ func test_every_goal_detector_must_be_lit_at_once():
 	assert_false(level._solved, "one goal lit is not enough")
 	e2.use()  # light the second goal
 	level.room.grid.handle_laser_physics()
+	level.room._process(10.0)  # let the second beam reach its goal (detected is reveal-timed)
 	assert_true(level._solved, "both goals lit at once -> solved")
 
 

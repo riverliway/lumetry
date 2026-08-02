@@ -225,8 +225,11 @@ func test_detector_emits_detected_signal_on_recompute():
 	watch_signals(d)
 	emitter.use()  # on again
 	room.grid.handle_laser_physics()
+	# The hit settles logically at once, but `detected` waits until the traveling
+	# beam has visually reached the detector -- step the reveal clock to get there.
+	assert_true(d.is_hit, "logically hit the same tick the beam is drawn")
+	room._process(10.0)
 	assert_signal_emitted_with_parameters(d, "detected", [Util.LASER_COLOR.WHITE])
-	assert_true(d.is_hit)
 
 func test_detector_emits_cleared_when_beam_stops_reaching_it():
 	# The detector starts hit; once the beam no longer reaches it, the falling
