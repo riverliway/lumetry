@@ -1467,6 +1467,7 @@ position = Vector2(2600, 1246)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
 position = Vector2(2596, 849)
+rotation = 0.58119464
 is_mechanism = true
 
 [node name="LaserDetector2" parent="Room" unique_id=67004239 instance=ExtResource("9_ivh0a")]

@@ -1,20 +1,19 @@
-[gd_scene format=3 uid="uid://dg4l522skjk0l"]
+[gd_scene format=3 uid="uid://61dyt08xw7bx"]
 
 [ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="2_rlete"]
 [ext_resource type="Script" uid="uid://dtg4bvreeirqv" path="res://levels/room.gd" id="3_qnq8n"]
 [ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="4_it373"]
 [ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/wall/wall.tscn" id="5_lto8c"]
 [ext_resource type="PackedScene" uid="uid://bid0ygivbhoey" path="res://tileset/track/track.tscn" id="6_gfi6n"]
-[ext_resource type="PackedScene" uid="uid://ccrate3blk700" path="res://tileset/crate/crate.tscn" id="6_vasyk"]
 [ext_resource type="PackedScene" uid="uid://edblwq6jllx4" path="res://tileset/mirror/mirror.tscn" id="7_2rj0f"]
-[ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="8_730aj"]
+[ext_resource type="PackedScene" uid="uid://ccrate3blk700" path="res://tileset/crate/crate.tscn" id="7_w2n1e"]
 [ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="8_awmj3"]
+[ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="8_syimn"]
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
-[ext_resource type="Script" uid="uid://d18gkwblftu3w" path="res://levels/level5/level_5.gd" id="9_lvl1"]
-[ext_resource type="Script" uid="uid://c0hf6vgm47qvc" path="res://tileset/wire/wire.gd" id="10_wire"]
-[ext_resource type="Texture2D" uid="uid://p22e7a6opa43" path="res://tileset/wire/wire_deactivated.png" id="11_wseg"]
+[ext_resource type="Script" uid="uid://c2qsg78kdyw1o" path="res://levels/level5/level_5.gd" id="9_lvl1"]
+[ext_resource type="Script" uid="uid://dyacngsecrmkl" path="res://tileset/interact_hint/interact_hint.gd" id="10_hint"]
 
-[node name="Level5" type="Node2D" unique_id=1134870724]
+[node name="Level4" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
 
 [node name="Background" type="Node2D" parent="." unique_id=809700269]
@@ -1132,188 +1131,123 @@ texture = ExtResource("2_rlete")
 position = Vector2(3775, 2095)
 texture = ExtResource("2_rlete")
 
-[node name="Wire" type="Node2D" parent="." unique_id=1336221507]
-script = ExtResource("10_wire")
-
-[node name="Segment" type="Sprite2D" parent="Wire" unique_id=919075709]
-position = Vector2(2935, 1423)
-rotation = 1.0516502
-texture = ExtResource("11_wseg")
-
-[node name="Segment2" type="Sprite2D" parent="Wire" unique_id=2103124313]
-position = Vector2(2767, 1519)
-rotation = -2.0899425
-texture = ExtResource("11_wseg")
-
-[node name="Segment3" type="Sprite2D" parent="Wire" unique_id=489220294]
-position = Vector2(2767, 1519)
-rotation = 2.0899425
-texture = ExtResource("11_wseg")
-
-[node name="Segment4" type="Sprite2D" parent="Wire" unique_id=2067016913]
-position = Vector2(2599, 1423)
-rotation = -1.0516503
-texture = ExtResource("11_wseg")
-
-[node name="Segment5" type="Sprite2D" parent="Wire" unique_id=265382921]
-position = Vector2(2599, 1423)
-rotation = 1.0516502
-texture = ExtResource("11_wseg")
-
-[node name="Segment6" type="Sprite2D" parent="Wire" unique_id=351281706]
-position = Vector2(2431, 1519)
-rotation = -2.0899425
-texture = ExtResource("11_wseg")
-
 [node name="Room" type="Node2D" parent="." unique_id=1203397639]
 script = ExtResource("3_qnq8n")
 
 [node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
-position = Vector2(591.0001, 468)
-rotation = -0.9948377
-
-[node name="LaserEmitter2" parent="Room" unique_id=793682740 instance=ExtResource("4_it373")]
-position = Vector2(1434, 1506)
-rotation = -2.0525072
-activated = false
+position = Vector2(1253, 1815.9999)
+rotation = 3.1101768
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
-position = Vector2(1759, 365)
+position = Vector2(1935, 669)
 
 [node name="Wall26" parent="Room" unique_id=1576315835 instance=ExtResource("5_lto8c")]
-position = Vector2(923, 278)
-
-[node name="Wall28" parent="Room" unique_id=1058624319 instance=ExtResource("5_lto8c")]
-position = Vector2(1081, 382)
-
-[node name="Wall29" parent="Room" unique_id=702439751 instance=ExtResource("5_lto8c")]
-position = Vector2(1271, 278)
-
-[node name="Wall42" parent="Room" unique_id=8176329 instance=ExtResource("5_lto8c")]
-position = Vector2(3445, 1140)
-
-[node name="Wall43" parent="Room" unique_id=1067559512 instance=ExtResource("5_lto8c")]
-position = Vector2(3445, 1337)
-
-[node name="Wall44" parent="Room" unique_id=116117233 instance=ExtResource("5_lto8c")]
-position = Vector2(3289, 1432)
+position = Vector2(1759, 760)
 
 [node name="Wall2" parent="Room" unique_id=1372305116 instance=ExtResource("5_lto8c")]
-position = Vector2(1592, 466)
+position = Vector2(1592, 666)
 
 [node name="Wall3" parent="Room" unique_id=1622944208 instance=ExtResource("5_lto8c")]
-position = Vector2(1425, 374)
+position = Vector2(1421, 375)
 
 [node name="Wall4" parent="Room" unique_id=1897880830 instance=ExtResource("5_lto8c")]
-position = Vector2(757, 373)
+position = Vector2(1256, 299)
 
 [node name="Wall5" parent="Room" unique_id=521627988 instance=ExtResource("5_lto8c")]
-position = Vector2(586, 270)
+position = Vector2(911, 672)
+
+[node name="Wall23" parent="Room" unique_id=869155754 instance=ExtResource("5_lto8c")]
+position = Vector2(917, 482)
+
+[node name="Wall24" parent="Room" unique_id=1293059039 instance=ExtResource("5_lto8c")]
+position = Vector2(1086, 376)
+
+[node name="Wall25" parent="Room" unique_id=1872138512 instance=ExtResource("5_lto8c")]
+position = Vector2(1598, 490)
 
 [node name="Wall6" parent="Room" unique_id=817346127 instance=ExtResource("5_lto8c")]
-position = Vector2(426, 369)
+position = Vector2(922, 867)
 
 [node name="Wall7" parent="Room" unique_id=1573094423 instance=ExtResource("5_lto8c")]
-position = Vector2(407, 566)
+position = Vector2(919, 1054)
 
 [node name="Wall8" parent="Room" unique_id=1309669650 instance=ExtResource("5_lto8c")]
-position = Vector2(411, 750)
+position = Vector2(919, 1252)
 
 [node name="Wall9" parent="Room" unique_id=1958403962 instance=ExtResource("5_lto8c")]
-position = Vector2(580, 873)
+position = Vector2(921, 1439)
 
 [node name="Wall10" parent="Room" unique_id=1550863359 instance=ExtResource("5_lto8c")]
-position = Vector2(751, 1333)
+position = Vector2(1073, 1735)
 
 [node name="Wall11" parent="Room" unique_id=94539414 instance=ExtResource("5_lto8c")]
-position = Vector2(908, 1428)
+position = Vector2(1080, 1902)
 
 [node name="Wall12" parent="Room" unique_id=2014971209 instance=ExtResource("5_lto8c")]
-position = Vector2(1088, 1544)
-
-[node name="Wall27" parent="Room" unique_id=587535948 instance=ExtResource("5_lto8c")]
-position = Vector2(1254, 1622)
+position = Vector2(1258, 2006)
 
 [node name="Wall13" parent="Room" unique_id=336697949 instance=ExtResource("5_lto8c")]
-position = Vector2(1435, 1719)
+position = Vector2(1435, 1919)
 
 [node name="Wall14" parent="Room" unique_id=282186709 instance=ExtResource("5_lto8c")]
-position = Vector2(1613, 1812)
+position = Vector2(1590, 1826)
 
 [node name="Wall15" parent="Room" unique_id=736169846 instance=ExtResource("5_lto8c")]
-position = Vector2(1777, 1918)
+position = Vector2(1772, 1732)
 
 [node name="Wall16" parent="Room" unique_id=396352351 instance=ExtResource("5_lto8c")]
-position = Vector2(1946, 1840)
+position = Vector2(1931, 1825)
 
 [node name="Wall17" parent="Room" unique_id=452848440 instance=ExtResource("5_lto8c")]
-position = Vector2(2102, 1913)
+position = Vector2(2263, 1627)
 
 [node name="Wall18" parent="Room" unique_id=1820783559 instance=ExtResource("5_lto8c")]
-position = Vector2(2260, 1827)
+position = Vector2(2086, 1720)
 
 [node name="Wall19" parent="Room" unique_id=741667525 instance=ExtResource("5_lto8c")]
-position = Vector2(2425, 1915)
+position = Vector2(2436, 1730)
 
 [node name="Wall20" parent="Room" unique_id=529499427 instance=ExtResource("5_lto8c")]
-position = Vector2(2602, 1822)
+position = Vector2(2602, 1635)
 
 [node name="Wall21" parent="Room" unique_id=2070242513 instance=ExtResource("5_lto8c")]
-position = Vector2(2781, 1920)
+position = Vector2(2749, 1528)
 
 [node name="Wall22" parent="Room" unique_id=202434801 instance=ExtResource("5_lto8c")]
-position = Vector2(2934, 1806)
-
-[node name="Wall23" parent="Room" unique_id=794739877 instance=ExtResource("5_lto8c")]
-position = Vector2(2920, 1618)
-
-[node name="Wall24" parent="Room" unique_id=403842860 instance=ExtResource("5_lto8c")]
-position = Vector2(3091, 1525)
-
-[node name="Wall25" parent="Room" unique_id=537699470 instance=ExtResource("5_lto8c")]
-position = Vector2(3292, 862)
+position = Vector2(2932, 1441)
 
 [node name="Wall30" parent="Room" unique_id=1738940874 instance=ExtResource("5_lto8c")]
-position = Vector2(3449, 933)
+position = Vector2(3101, 1339)
 
 [node name="Wall31" parent="Room" unique_id=615730350 instance=ExtResource("5_lto8c")]
-position = Vector2(3099, 951)
+position = Vector2(3099, 1151)
 
 [node name="Wall32" parent="Room" unique_id=467759955 instance=ExtResource("5_lto8c")]
-position = Vector2(589, 1078)
-
-[node name="Wall33" parent="Room" unique_id=1454671043 instance=ExtResource("5_lto8c")]
-position = Vector2(571, 1247)
+position = Vector2(930, 1636)
 
 [node name="Wall34" parent="Room" unique_id=1249988948 instance=ExtResource("5_lto8c")]
-position = Vector2(2932, 668)
+position = Vector2(2765, 972)
 
 [node name="Wall35" parent="Room" unique_id=225628869 instance=ExtResource("5_lto8c")]
-position = Vector2(2930, 845)
+position = Vector2(2930, 1045)
 
 [node name="Wall36" parent="Room" unique_id=168376847 instance=ExtResource("5_lto8c")]
-position = Vector2(2773, 548)
+position = Vector2(2773, 748)
 
 [node name="Wall37" parent="Room" unique_id=879168032 instance=ExtResource("5_lto8c")]
-position = Vector2(2609, 446)
+position = Vector2(2609, 646)
 
 [node name="Wall38" parent="Room" unique_id=1853995387 instance=ExtResource("5_lto8c")]
-position = Vector2(2435, 367)
+position = Vector2(2435, 567)
 
 [node name="Wall39" parent="Room" unique_id=740967232 instance=ExtResource("5_lto8c")]
-position = Vector2(2265, 475)
+position = Vector2(2265, 675)
 
 [node name="Wall40" parent="Room" unique_id=2008063900 instance=ExtResource("5_lto8c")]
-position = Vector2(2102, 365)
-
-[node name="Wall41" parent="Room" unique_id=1964311963 instance=ExtResource("5_lto8c")]
-position = Vector2(1928, 276)
-
-[node name="Crate" parent="Room" unique_id=28301587 instance=ExtResource("6_vasyk")]
-position = Vector2(2273, 845)
+position = Vector2(2102, 565)
 
 [node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_gfi6n")]
-position = Vector2(1570, 881)
+position = Vector2(1233, 1067)
 
 [node name="Top" parent="Room/Track" index="0"]
 visible = false
@@ -1327,38 +1261,56 @@ visible = false
 [node name="BottomRight" parent="Room/Track" index="5"]
 visible = false
 
-[node name="Track2" parent="Room" unique_id=1532517799 instance=ExtResource("6_gfi6n")]
-position = Vector2(1744, 735)
+[node name="Crate" parent="Room" unique_id=1448453805 instance=ExtResource("7_w2n1e")]
+position = Vector2(1256, 663)
 
-[node name="Top" parent="Room/Track2" index="0"]
-visible = false
+[node name="Track2" parent="Room" unique_id=1532517799 instance=ExtResource("6_gfi6n")]
+position = Vector2(1230, 1427)
 
 [node name="Bottom" parent="Room/Track2" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track2" index="2"]
 visible = false
 
 [node name="TopLeft" parent="Room/Track2" index="3"]
 visible = false
 
-[node name="BottomRight" parent="Room/Track2" index="5"]
+[node name="TopRight" parent="Room/Track2" index="4"]
 visible = false
 
 [node name="Track3" parent="Room" unique_id=1300629869 instance=ExtResource("6_gfi6n")]
-position = Vector2(1581, 1044)
+position = Vector2(1417, 1537)
+
+[node name="Top" parent="Room/Track3" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track3" index="1"]
+visible = false
 
 [node name="BottomLeft" parent="Room/Track3" index="2"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track3" index="3"]
-visible = false
-
-[node name="TopRight" parent="Room/Track3" index="4"]
 visible = false
 
 [node name="BottomRight" parent="Room/Track3" index="5"]
 visible = false
 
+[node name="Track9" parent="Room" unique_id=58596214 instance=ExtResource("6_gfi6n")]
+position = Vector2(1240, 1241)
+
+[node name="BottomLeft" parent="Room/Track9" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track9" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track9" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track9" index="5"]
+visible = false
+
 [node name="Track4" parent="Room" unique_id=166549804 instance=ExtResource("6_gfi6n")]
-position = Vector2(1940, 649)
+position = Vector2(1576, 1456)
 
 [node name="Top" parent="Room/Track4" index="0"]
 visible = false
@@ -1369,61 +1321,31 @@ visible = false
 [node name="TopLeft" parent="Room/Track4" index="3"]
 visible = false
 
-[node name="TopRight" parent="Room/Track4" index="4"]
+[node name="BottomRight" parent="Room/Track4" index="5"]
 visible = false
 
 [node name="Track5" parent="Room" unique_id=843109642 instance=ExtResource("6_gfi6n")]
-position = Vector2(2104, 742)
-
-[node name="Top" parent="Room/Track5" index="0"]
-visible = false
+position = Vector2(1766, 1353)
 
 [node name="Bottom" parent="Room/Track5" index="1"]
 visible = false
 
-[node name="BottomLeft" parent="Room/Track5" index="2"]
+[node name="TopLeft" parent="Room/Track5" index="3"]
 visible = false
 
 [node name="TopRight" parent="Room/Track5" index="4"]
 visible = false
 
-[node name="Track6" parent="Room" unique_id=1152991107 instance=ExtResource("6_gfi6n")]
-position = Vector2(2274, 846)
-
-[node name="Top" parent="Room/Track6" index="0"]
+[node name="BottomRight" parent="Room/Track5" index="5"]
 visible = false
 
-[node name="BottomLeft" parent="Room/Track6" index="2"]
+[node name="Track8" parent="Room" unique_id=83382034 instance=ExtResource("6_gfi6n")]
+position = Vector2(1776, 1154)
+
+[node name="Top" parent="Room/Track8" index="0"]
 visible = false
 
-[node name="TopRight" parent="Room/Track6" index="4"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track6" index="5"]
-visible = false
-
-[node name="Track7" parent="Room" unique_id=1343545202 instance=ExtResource("6_gfi6n")]
-position = Vector2(2287, 1060)
-
-[node name="BottomLeft" parent="Room/Track7" index="2"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track7" index="3"]
-visible = false
-
-[node name="TopRight" parent="Room/Track7" index="4"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track7" index="5"]
-visible = false
-
-[node name="Track8" parent="Room" unique_id=1972506059 instance=ExtResource("6_gfi6n")]
-position = Vector2(2285, 1248)
-
-[node name="Bottom" parent="Room/Track8" index="1"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track8" index="3"]
+[node name="BottomLeft" parent="Room/Track8" index="2"]
 visible = false
 
 [node name="TopRight" parent="Room/Track8" index="4"]
@@ -1432,91 +1354,56 @@ visible = false
 [node name="BottomRight" parent="Room/Track8" index="5"]
 visible = false
 
-[node name="Track9" parent="Room" unique_id=1563032926 instance=ExtResource("6_gfi6n")]
-position = Vector2(2127, 1342)
+[node name="Track6" parent="Room" unique_id=1152991107 instance=ExtResource("6_gfi6n")]
+position = Vector2(1584, 1048)
 
-[node name="Top" parent="Room/Track9" index="0"]
+[node name="Top" parent="Room/Track6" index="0"]
 visible = false
 
-[node name="Bottom" parent="Room/Track9" index="1"]
+[node name="Bottom" parent="Room/Track6" index="1"]
 visible = false
 
-[node name="TopLeft" parent="Room/Track9" index="3"]
+[node name="BottomLeft" parent="Room/Track6" index="2"]
 visible = false
 
-[node name="BottomRight" parent="Room/Track9" index="5"]
+[node name="TopRight" parent="Room/Track6" index="4"]
 visible = false
 
-[node name="Track10" parent="Room" unique_id=2034856104 instance=ExtResource("6_gfi6n")]
-position = Vector2(1950, 1439)
+[node name="Track7" parent="Room" unique_id=1343545202 instance=ExtResource("6_gfi6n")]
+position = Vector2(1422, 947)
 
-[node name="Top" parent="Room/Track10" index="0"]
+[node name="Top" parent="Room/Track7" index="0"]
 visible = false
 
-[node name="Bottom" parent="Room/Track10" index="1"]
+[node name="Bottom" parent="Room/Track7" index="1"]
 visible = false
 
-[node name="BottomLeft" parent="Room/Track10" index="2"]
+[node name="TopLeft" parent="Room/Track7" index="3"]
 visible = false
 
-[node name="BottomRight" parent="Room/Track10" index="5"]
+[node name="TopRight" parent="Room/Track7" index="4"]
 visible = false
-
-[node name="Track11" parent="Room" unique_id=1376772342 instance=ExtResource("6_gfi6n")]
-position = Vector2(1788, 1343)
-
-[node name="Top" parent="Room/Track11" index="0"]
-visible = false
-
-[node name="Bottom" parent="Room/Track11" index="1"]
-visible = false
-
-[node name="BottomLeft" parent="Room/Track11" index="2"]
-visible = false
-
-[node name="TopRight" parent="Room/Track11" index="4"]
-visible = false
-
-[node name="Track12" parent="Room" unique_id=1869842527 instance=ExtResource("6_gfi6n")]
-position = Vector2(1602, 1249)
-
-[node name="Bottom" parent="Room/Track12" index="1"]
-visible = false
-
-[node name="BottomLeft" parent="Room/Track12" index="2"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track12" index="3"]
-visible = false
-
-[node name="TopRight" parent="Room/Track12" index="4"]
-visible = false
-
-[node name="RotationPad" parent="Room" unique_id=127538999 instance=ExtResource("8_730aj")]
-position = Vector2(2427, 1515)
-interactable = false
-
-[node name="RotationPad2" parent="Room" unique_id=1735921560 instance=ExtResource("8_730aj")]
-position = Vector2(1927, 652)
 
 [node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
-position = Vector2(1581, 1220)
-rotation = 0.6981317
+position = Vector2(1253, 1048)
+rotation = 0.58294
 
 [node name="Mirror2" parent="Room" unique_id=754792108 instance=ExtResource("7_2rj0f")]
-position = Vector2(2430, 1523)
-rotation = 2.5586526
+position = Vector2(1578, 1455)
+rotation = -1.0471976
+
+[node name="RotationPad" parent="Room" unique_id=220370918 instance=ExtResource("8_syimn")]
+position = Vector2(1579, 1034)
+
+[node name="InteractHint" type="Node2D" parent="Room/RotationPad" unique_id=1720506287]
+script = ExtResource("10_hint")
+hint_id = "pad"
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
-position = Vector2(2107, 565)
+position = Vector2(2600, 1446)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
-position = Vector2(3276, 1061)
-
-[node name="LaserDetector3" parent="Room" unique_id=651469837 instance=ExtResource("9_ivh0a")]
-position = Vector2(2942, 1425)
-rotation = -3.2567844
-is_mechanism = true
+position = Vector2(2267, 1047)
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
@@ -1535,18 +1422,13 @@ rotation = 1.5708
 color = Color(0, 0, 0, 1)
 
 [connection signal="detected" from="Room/LaserDetector" to="." method="_on_solved"]
-[connection signal="cleared" from="Room/LaserDetector3" to="." method="_on_middle_dector_cleared"]
-[connection signal="detected" from="Room/LaserDetector3" to="." method="_on_middle_dector_detected"]
 
 [editable path="Room/Track"]
 [editable path="Room/Track2"]
 [editable path="Room/Track3"]
+[editable path="Room/Track9"]
 [editable path="Room/Track4"]
 [editable path="Room/Track5"]
+[editable path="Room/Track8"]
 [editable path="Room/Track6"]
 [editable path="Room/Track7"]
-[editable path="Room/Track8"]
-[editable path="Room/Track9"]
-[editable path="Room/Track10"]
-[editable path="Room/Track11"]
-[editable path="Room/Track12"]
