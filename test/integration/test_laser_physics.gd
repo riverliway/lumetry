@@ -134,6 +134,24 @@ func test_fade_tip_takes_precedence_over_a_mirror_just_out_of_range():
 	assert_eq(room.grid.grid[4][5].mirror_laser.filter(func(m): return m.is_active()).size(), 0,
 		"the mirror never bounces a beam that did not reach it")
 
+func test_fade_frames_are_in_phase_with_the_solid_beam():
+	# The fade tip shares the beam's shimmer clock (AnimSync), so fade frame N must be
+	# the same brightness as solid frame N -- fade_i is white_i with only its alpha
+	# reduced. If the two fade textures get paired to the wrong frames (a stale
+	# .tscn/.import uid mapping), frame 0 shows the dim texture and the tip pulses out
+	# of phase with the rest of the beam. Sample the full-opacity top, where the fade
+	# is byte-for-byte the solid beam by construction.
+	var seg = preload("res://tileset/laser/laser_segment.tscn").instantiate()
+	add_child_autofree(seg)
+	var sf: SpriteFrames = seg.sprite_frames
+	for f in range(2):
+		var w := sf.get_frame_texture(&"white", f).get_image()
+		var d := sf.get_frame_texture(&"fade", f).get_image()
+		var x := int(w.get_width() * 0.5)
+		var y := int(w.get_height() * 0.12)  # top quarter -> full opacity in the fade
+		assert_almost_eq(d.get_pixel(x, y).r, w.get_pixel(x, y).r, 0.02,
+			"fade frame %d matches the solid beam's frame %d (in phase)" % [f, f])
+
 # ------------------------------------------------------- mirror reflection
 func test_mirror_reflects_beam_off_its_column():
 	var emitter := make_block(EmitterScene, 4, 3)

@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dg46j1b6lff1u" path="res://tileset/laser/white_laser/laser_white_1.png" id="5_w6lrc"]
 [ext_resource type="Texture2D" uid="uid://deb570lrxcb3t" path="res://tileset/laser/white_laser/laser_white_2.png" id="6_hl80p"]
 [ext_resource type="Script" path="res://tileset/color_symbol/color_symbol.gd" id="7_sym"]
-[ext_resource type="Texture2D" uid="uid://cbgycx1tqsk2w" path="res://tileset/laser/white_laser_fade/laser_white_fade_1.png" id="8_fade1"]
-[ext_resource type="Texture2D" uid="uid://dsx6vngvk6ncy" path="res://tileset/laser/white_laser_fade/laser_white_fade_2.png" id="9_fade2"]
+[ext_resource type="Texture2D" uid="uid://dsx6vngvk6ncy" path="res://tileset/laser/white_laser_fade/laser_white_fade_1.png" id="8_fade1"]
+[ext_resource type="Texture2D" uid="uid://cbgycx1tqsk2w" path="res://tileset/laser/white_laser_fade/laser_white_fade_2.png" id="9_fade2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_yo1vm"]
 animations = [{
