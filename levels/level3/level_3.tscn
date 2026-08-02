@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dtg4bvreeirqv" path="res://levels/room.gd" id="3_qnq8n"]
 [ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="4_it373"]
 [ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/wall/wall.tscn" id="5_lto8c"]
-[ext_resource type="PackedScene" uid="uid://cmelt3blk700" path="res://tileset/meltable/meltable.tscn" id="5_skltk"]
+[ext_resource type="PackedScene" uid="uid://ccrate3blk700" path="res://tileset/crate/crate.tscn" id="5_skltk"]
 [ext_resource type="PackedScene" uid="uid://bid0ygivbhoey" path="res://tileset/track/track.tscn" id="6_gfi6n"]
 [ext_resource type="PackedScene" uid="uid://edblwq6jllx4" path="res://tileset/mirror/mirror.tscn" id="7_2rj0f"]
 [ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="8_awmj3"]
@@ -1142,8 +1142,8 @@ rotation = 1.0576695
 activated = false
 interactable = false
 
-[node name="Meltable" parent="Room" unique_id=615123837 instance=ExtResource("5_skltk")]
-position = Vector2(1914, 839)
+[node name="Crate" parent="Room" unique_id=1107701639 instance=ExtResource("5_skltk")]
+position = Vector2(1938, 852)
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
 position = Vector2(1754, 564)
@@ -1433,6 +1433,7 @@ position = Vector2(2600, 1246)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
 position = Vector2(2596, 849)
+is_mechanism = true
 
 [node name="LaserDetector2" parent="Room" unique_id=67004239 instance=ExtResource("9_ivh0a")]
 position = Vector2(2258, 659)

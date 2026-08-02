@@ -60,6 +60,37 @@ func test_no_signals_when_never_hit():
 	d.free()
 
 
+# ------------------------------------------------------ role placeholder art
+func test_goal_detector_keeps_the_red_sprite_by_default():
+	# A detector is an end-level "goal" unless a level marks it otherwise, and
+	# goals keep the default red dome.
+	var d = DetectorScene.instantiate()
+	assert_false(d.is_mechanism, "defaults to an end-level goal detector")
+	assert_eq(d.texture.resource_path, "res://tileset/detector/detector.png",
+		"goal detectors keep the red dome")
+	d.free()
+
+func test_mechanism_detector_switches_to_the_blue_sprite():
+	# A middle-level "mechanism" detector (drives an in-room device, not the win)
+	# swaps to the blue placeholder so the two roles read differently at a glance.
+	var d = DetectorScene.instantiate()
+	d.is_mechanism = true
+	assert_eq(d.texture.resource_path, "res://tileset/detector/detector_blue.png",
+		"middle-level mechanism detectors go blue")
+	d.free()
+
+func test_role_does_not_change_hit_behaviour():
+	# The look is the only difference; a blue mechanism detector still edge-fires
+	# detected/cleared exactly like a goal detector.
+	var d = DetectorScene.instantiate()
+	d.is_mechanism = true
+	watch_signals(d)
+	d.begin_pass(); d.mark_hit(Util.LASER_COLOR.WHITE); d.end_pass()
+	assert_true(d.is_hit, "still registers a hit")
+	assert_signal_emitted(d, "detected", "still fires detected regardless of role")
+	d.free()
+
+
 # ---------------------------------------------------------- front-arc geometry
 func test_front_arc_is_facing_plus_two_neighbors():
 	# A detector facing UP is sensitive to beams arriving from UP and its two

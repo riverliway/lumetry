@@ -17,7 +17,25 @@ signal detected(color: Util.LASER_COLOR)
 ## Emitted when a beam stops striking the sensitive face.
 signal cleared()
 
+## Placeholder programmer art for telling the two detector roles apart: an
+## end-level "goal" detector (the room's win target) keeps the red dome, while a
+## middle-level "mechanism" detector -- one that drives an in-room device (a
+## gated emitter, a rotation pad, ...) rather than winning the room -- shows blue.
+## The dome is a solid colour, so we swap the whole texture rather than modulate
+## it (multiplying solid red by blue would darken to near-black, not read as blue).
+const _GOAL_TEXTURE := preload("res://tileset/detector/detector.png")
+const _MECHANISM_TEXTURE := preload("res://tileset/detector/detector_blue.png")
+
 var block_type := Util.BLOCK_TYPE.LASER_DETECTOR
+
+## Whether this is a middle-level mechanism detector (blue) rather than an
+## end-level goal detector (red). Set per-instance in the level scene; assigning
+## it swaps the sprite so the two roles read differently at a glance. Only the
+## look changes -- the hit/signal behaviour is identical for both roles.
+@export var is_mechanism := false:
+	set(value):
+		is_mechanism = value
+		texture = _MECHANISM_TEXTURE if is_mechanism else _GOAL_TEXTURE
 
 ## Whether a beam currently strikes the sensitive face.
 var is_hit := false
