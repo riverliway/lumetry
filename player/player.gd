@@ -47,12 +47,16 @@ func _process(_delta: float) -> void:
 	_time_left = max(_time_left - _delta, 0)
 
 	# Mouse look is additive to the keyboard schemes: moving the mouse snaps the
-	# facing to the cursor (a keyboard direction press overrides it again). Only
-	# a genuine move retargets, so a parked cursor never fights a keyboard player.
+	# facing to the cursor (a keyboard direction press overrides it again). A
+	# parked cursor normally never retargets, so it can't fight a keyboard player
+	# -- but while a mouse aim button is held the player is steering with the
+	# cursor, so the facing keeps tracking it every frame even without mouse
+	# motion. That matters while walking toward the cursor: the player's own
+	# movement changes the player->cursor angle, so a held click must re-aim.
 	var mouse_screen := _mouse_screen_position()
 	var mouse_moved := mouse_screen != _last_mouse_screen
 	_last_mouse_screen = mouse_screen
-	if mouse_moved and _state != Util.PLAYER_STATE.USING:
+	if (mouse_moved or _mouse_aim_held()) and _state != Util.PLAYER_STATE.USING:
 		_face(_cursor_direction())
 
 	match _state:
@@ -285,6 +289,14 @@ func _face(direction: Util.DIRECTION) -> void:
 		animation = 'idle_upright'
 	else:
 		animation = 'idle_downright'
+
+
+## Whether a mouse aim button (move or use, the same buttons _process_idle acts
+## on) is held. While held the player is steering with the cursor, so _process
+## keeps the facing tracking it each frame -- including as the player walks and
+## its own movement, not the mouse, changes the player->cursor angle.
+func _mouse_aim_held() -> bool:
+	return Input.is_action_pressed('click_move') or Input.is_action_pressed('click_use')
 
 
 ## The hex direction from the player toward the mouse cursor, or NONE when the

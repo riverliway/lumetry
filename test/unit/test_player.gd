@@ -159,6 +159,42 @@ func test_keyboard_use_still_works_alongside_mouse():
 	assert_signal_emitted(p, "attempt_use", "the keyboard use key still fires")
 
 
+# ------------------------------------------------ mouse look re-aims on hold
+func test_mouse_aim_held_true_only_while_a_click_button_is_pressed():
+	var p = _make_player()
+	assert_false(p._mouse_aim_held(), "no mouse button held")
+	Input.action_press("click_move")
+	assert_true(p._mouse_aim_held(), "left click (move) counts as aiming")
+	Input.action_release("click_move")
+	Input.action_press("click_use")
+	assert_true(p._mouse_aim_held(), "right click (use) counts as aiming")
+
+func test_held_click_reaims_at_the_cursor_without_mouse_motion():
+	# GEN-567: walking toward the cursor moves the player, which changes the
+	# player->cursor angle even though the mouse itself never moves. A held aim
+	# button must re-face toward the cursor each frame, not only on mouse motion.
+	var p = _make_player()
+	p.global_position = Vector2(500, 300)  # off the (origin) cursor -> a real angle
+	var target := p._cursor_direction()
+	assert_ne(target, Util.DIRECTION.NONE, "setup: the cursor sits off the player")
+	p._facing = Util.rotate_direction_clockwise(target)  # start facing elsewhere
+	p._last_mouse_screen = p._mouse_screen_position()     # no mouse motion this frame
+	Input.action_press("click_move")
+	p._process(0.016)
+	assert_eq(p._facing, target, "a held click re-aims at the cursor with no mouse motion")
+
+func test_parked_cursor_without_a_held_click_leaves_facing_alone():
+	# The complement that guards the design: a still cursor with no button held
+	# must NOT retarget, so a parked mouse never fights a keyboard player.
+	var p = _make_player()
+	p.global_position = Vector2(500, 300)
+	var elsewhere := Util.rotate_direction_clockwise(p._cursor_direction())
+	p._facing = elsewhere
+	p._last_mouse_screen = p._mouse_screen_position()  # no motion, and no click held
+	p._process(0.016)
+	assert_eq(p._facing, elsewhere, "a parked cursor with no held click leaves facing untouched")
+
+
 # --------------------------------------------------------------------- sprint
 func test_new_direction_looks_first_and_arms_the_timer_without_sprint():
 	# The baseline the sprint case contrasts with: turning to a new direction
