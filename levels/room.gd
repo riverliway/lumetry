@@ -965,20 +965,29 @@ class Cell:
 
 	## Draws a mirror bounce here as two half-beam sprites (incoming + reflected),
 	## pooled like the straight segments. Transforms come from Grid.mirror_bounce_transforms.
+	## Each bounce claims its own pair of segments from the pool, so a mirror struck
+	## by two beams in one resolve draws both bounces instead of the second
+	## overwriting the first (GEN-573).
 	func add_mirror_laser(is_long: bool, color: Util.LASER_COLOR, incoming_xf: Transform2D, reflected_xf: Transform2D) -> Array:
 		return [
-			_set_mirror_segment(0, is_long, color, incoming_xf),
-			_set_mirror_segment(1, is_long, color, reflected_xf),
+			_claim_mirror_segment(is_long, color, incoming_xf),
+			_claim_mirror_segment(is_long, color, reflected_xf),
 		]
 
-	func _set_mirror_segment(index: int, is_long: bool, color: Util.LASER_COLOR, xf: Transform2D) -> MirrorSegment:
-		while mirror_laser.size() <= index:
+	## Sets the next inactive mirror segment in the pool (growing it if every one is
+	## already lit) and returns it. set_mirror shows the segment, so a second claim in
+	## the same bounce can't hand back the one just taken.
+	func _claim_mirror_segment(is_long: bool, color: Util.LASER_COLOR, xf: Transform2D) -> MirrorSegment:
+		var available = Util.find_elem(mirror_laser, func(ms): return !ms.is_active())
+		if len(available) == 0:
 			var seg = Room.mirror_segment_scene.instantiate()
 			seg.z_index = Util.Z_LASER
 			mirror_laser.push_back(seg)
 			resolve_room.call().add_child(seg)
-		mirror_laser[index].set_mirror(is_long, color, xf)
-		return mirror_laser[index]
+			seg.set_mirror(is_long, color, xf)
+			return seg
+		available[0].set_mirror(is_long, color, xf)
+		return available[0]
 
 	## Draws a prism split here as four flat-cut half-beam sprites, pooled like the
 	## straight segments. `colors[i]` and `transforms[i]` come from Grid._draw_prism_split.

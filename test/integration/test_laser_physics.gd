@@ -129,6 +129,23 @@ func test_mirror_cell_draws_two_bounce_segments():
 	assert_almost_eq(mcell.mirror_laser[0].transform.y.normalized().dot(d_down), 1.0, 0.001,
 		"incoming half-beam points along the entry direction")
 
+func test_mirror_struck_by_two_beams_draws_both_bounces():
+	# GEN-573: one mirror hit by two separate beams in the same resolve must render
+	# BOTH bounces, not just the last. The short mirror at (4,5) faces DOWN_LEFT; a
+	# beam arriving DOWN (from the emitter above) reflects to UP_LEFT, and a beam
+	# arriving UP (from the emitter below) reflects to DOWN_RIGHT -- each drawing its
+	# own pair of half-beam segments, for four in the cell.
+	var top := make_block(EmitterScene, 4, 3)  # faces DOWN
+	top.laser_range = -1
+	var bottom := make_block(EmitterScene, 4, 6, Util.get_rotation_from_direction(Util.DIRECTION.UP))
+	bottom.laser_range = -1
+	var mirror := make_block(MirrorScene, 4, 5, PI / 3.0)
+	# Park the player clear of the DOWN_RIGHT reflected beam (it would pass (5,5)).
+	var room := build_room([top, bottom, mirror], Vector2i(20, 0))
+	var mcell = room.grid.grid[4][5]
+	var active = mcell.mirror_laser.filter(func(m): return m.is_active())
+	assert_eq(active.size(), 4, "two beams bouncing off one mirror draw two segments each")
+
 # ---------------------------------------------------------- prism splitting
 func test_prism_splits_white_beam_into_three_colors():
 	var emitter := make_block(EmitterScene, 4, 3)
