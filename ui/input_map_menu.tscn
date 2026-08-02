@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://cinpmapmenu001"]
+[gd_scene format=3 uid="uid://c7x22m5lw1emi"]
 
 [ext_resource type="Theme" uid="uid://bofbklpxqt5ff" path="res://ui/default_theme.tres" id="1_theme"]
 [ext_resource type="Script" path="res://ui/input_map_menu.gd" id="2_map"]

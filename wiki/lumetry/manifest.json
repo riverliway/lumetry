@@ -1,0 +1,218 @@
+{
+  "tree": [
+    {
+      "name": "art-direction.md",
+      "type": "file",
+      "path": "lumetry/art-direction.md"
+    },
+    {
+      "name": "characters",
+      "type": "directory",
+      "children": [
+        {
+          "name": "lux.md",
+          "type": "file",
+          "path": "lumetry/characters/lux.md"
+        },
+        {
+          "name": "prof-candela.md",
+          "type": "file",
+          "path": "lumetry/characters/prof-candela.md"
+        },
+        {
+          "name": "prof-joule.md",
+          "type": "file",
+          "path": "lumetry/characters/prof-joule.md"
+        },
+        {
+          "name": "prof-lumen.md",
+          "type": "file",
+          "path": "lumetry/characters/prof-lumen.md"
+        },
+        {
+          "name": "prof-newton.md",
+          "type": "file",
+          "path": "lumetry/characters/prof-newton.md"
+        },
+        {
+          "name": "prof-radian.md",
+          "type": "file",
+          "path": "lumetry/characters/prof-radian.md"
+        },
+        {
+          "name": "tess.md",
+          "type": "file",
+          "path": "lumetry/characters/tess.md"
+        }
+      ]
+    },
+    {
+      "name": "gameplay",
+      "type": "directory",
+      "children": [
+        {
+          "name": "achievements.md",
+          "type": "file",
+          "path": "lumetry/gameplay/achievements.md"
+        },
+        {
+          "name": "dialogue.md",
+          "type": "file",
+          "path": "lumetry/gameplay/dialogue.md"
+        },
+        {
+          "name": "overview.md",
+          "type": "file",
+          "path": "lumetry/gameplay/overview.md"
+        }
+      ]
+    },
+    {
+      "name": "lumetry.md",
+      "type": "file",
+      "path": "lumetry/lumetry.md"
+    },
+    {
+      "name": "mechanics",
+      "type": "directory",
+      "children": [
+        {
+          "name": "beam-focuser.md",
+          "type": "file",
+          "path": "lumetry/mechanics/beam-focuser.md"
+        },
+        {
+          "name": "beam-length.md",
+          "type": "file",
+          "path": "lumetry/mechanics/beam-length.md"
+        },
+        {
+          "name": "cooperation.md",
+          "type": "file",
+          "path": "lumetry/mechanics/cooperation.md"
+        },
+        {
+          "name": "detectors.md",
+          "type": "file",
+          "path": "lumetry/mechanics/detectors.md"
+        },
+        {
+          "name": "laser-emitters.md",
+          "type": "file",
+          "path": "lumetry/mechanics/laser-emitters.md"
+        },
+        {
+          "name": "prisms.md",
+          "type": "file",
+          "path": "lumetry/mechanics/prisms.md"
+        },
+        {
+          "name": "pushable-mirrors.md",
+          "type": "file",
+          "path": "lumetry/mechanics/pushable-mirrors.md"
+        },
+        {
+          "name": "rotation-pads.md",
+          "type": "file",
+          "path": "lumetry/mechanics/rotation-pads.md"
+        }
+      ]
+    },
+    {
+      "name": "rooms",
+      "type": "directory",
+      "children": [
+        {
+          "name": "room-01.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-01.md"
+        },
+        {
+          "name": "room-02.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-02.md"
+        },
+        {
+          "name": "room-03.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-03.md"
+        },
+        {
+          "name": "room-04.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-04.md"
+        },
+        {
+          "name": "room-05.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-05.md"
+        },
+        {
+          "name": "room-06.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-06.md"
+        },
+        {
+          "name": "room-07.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-07.md"
+        },
+        {
+          "name": "room-08.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-08.md"
+        },
+        {
+          "name": "room-09.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-09.md"
+        },
+        {
+          "name": "room-10.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-10.md"
+        },
+        {
+          "name": "room-11.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-11.md"
+        },
+        {
+          "name": "room-12.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-12.md"
+        },
+        {
+          "name": "room-13.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-13.md"
+        },
+        {
+          "name": "room-14.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-14.md"
+        },
+        {
+          "name": "room-15.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-15.md"
+        },
+        {
+          "name": "room-16.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-16.md"
+        },
+        {
+          "name": "room-17.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-17.md"
+        },
+        {
+          "name": "room-18.md",
+          "type": "file",
+          "path": "lumetry/rooms/room-18.md"
+        }
+      ]
+    }
+  ]
+}
