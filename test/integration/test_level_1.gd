@@ -157,3 +157,13 @@ func test_frying_the_player_reaches_the_level_and_clears_the_beam():
 	assert_signal_emitted(level.room, "player_fried", "the room fried the player")
 	assert_false(emitter.activated, "every emitter was switched off")
 	assert_eq(active_laser_count(level.room), 0, "the beam is gone")
+
+func test_lock_player_input_freezes_the_player():
+	# The post-death / post-win pause (GEN-570) locks the player so nothing the
+	# player does registers during the beat. The timed wait itself only runs on a
+	# real numbered level; the lock helper is exercised directly here.
+	var level := build_level([])
+	var player = level.get_node("Room/Player")
+	assert_false(player.input_locked, "player starts unlocked")
+	level._lock_player_input()
+	assert_true(player.input_locked, "locking the level locks the player")

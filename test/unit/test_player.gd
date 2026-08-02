@@ -195,6 +195,40 @@ func test_parked_cursor_without_a_held_click_leaves_facing_alone():
 	assert_eq(p._facing, elsewhere, "a parked cursor with no held click leaves facing untouched")
 
 
+# ------------------------------------------------------------ input lock
+func test_input_locked_drops_mouse_and_keyboard_actions():
+	# GEN-570: during the post-death / post-win pause the player ignores every
+	# control -- no move or use fires from a mouse button, the use key, or a
+	# keyboard direction that matches the current facing (which normally walks).
+	var p = _make_player()
+	p._facing = Util.DIRECTION.UP
+	p.input_locked = true
+	watch_signals(p)
+	Input.action_press("click_use")
+	p._process_idle()
+	Input.action_release("click_use")
+	Input.action_press("click_move")
+	p._process_idle()
+	Input.action_release("click_move")
+	Input.action_press("move_up")  # matches facing -> would move if unlocked
+	p._process_idle()
+	assert_signal_not_emitted(p, "attempt_move", "a locked player never moves")
+	assert_signal_not_emitted(p, "attempt_use", "a locked player never uses")
+	assert_eq(p._state, Util.PLAYER_STATE.IDLE, "and stays idle")
+
+func test_input_locked_stops_mouse_aim_retargeting():
+	# A held aim button would normally re-face toward the cursor each frame; a
+	# locked player must not turn either.
+	var p = _make_player()
+	p.global_position = Vector2(500, 300)
+	var elsewhere := Util.rotate_direction_clockwise(p._cursor_direction())
+	p._facing = elsewhere
+	p.input_locked = true
+	Input.action_press("click_move")
+	p._process(0.016)
+	assert_eq(p._facing, elsewhere, "a locked player does not re-aim at the cursor")
+
+
 # --------------------------------------------------------------------- sprint
 func test_new_direction_looks_first_and_arms_the_timer_without_sprint():
 	# The baseline the sprint case contrasts with: turning to a new direction
