@@ -410,6 +410,77 @@ func test_seen_hints_and_dialogues_are_independent():
 	assert_false(s.has_seen_dialogue("emitter"), "a dismissed hint is not a seen dialogue")
 
 
+# ------------------------------------------------------ per-level fry/softlock
+func test_nothing_fried_or_softlocked_by_default():
+	var s = _make()
+	s.load_from_disk()
+	assert_false(s.has_fried_level(0), "no fry recorded yet")
+	assert_false(s.has_softlocked_level(0), "no softlock recorded yet")
+
+func test_recording_a_fry_persists_across_reload():
+	var a = _make()
+	a.load_from_disk()
+	a.record_level_fry(2)  # level 3
+	assert_true(a.has_fried_level(2), "recorded on the live instance")
+	var b = _make()
+	b.load_from_disk()
+	assert_true(b.has_fried_level(2), "the fry survived the reload")
+
+func test_recording_a_softlock_persists_across_reload():
+	var a = _make()
+	a.load_from_disk()
+	a.record_level_softlock(4)  # level 5
+	assert_true(a.has_softlocked_level(4), "recorded on the live instance")
+	var b = _make()
+	b.load_from_disk()
+	assert_true(b.has_softlocked_level(4), "the softlock survived the reload")
+
+func test_recording_the_same_fry_twice_is_idempotent():
+	var s = _make()
+	s.load_from_disk()  # two initial writes -> counter 2
+	s.record_level_fry(2)
+	assert_eq(s._counter, 3, "the first record saves")
+	s.record_level_fry(2)
+	assert_eq(s._counter, 3, "recording the same level again does not save")
+	assert_eq(s.data["fried_levels"].size(), 1, "and does not duplicate the index")
+
+func test_out_of_range_fry_or_softlock_is_ignored():
+	var s = _make()
+	s.load_from_disk()
+	s.record_level_fry(-1)
+	s.record_level_fry(SaveData.LEVEL_COUNT)
+	s.record_level_softlock(999)
+	assert_true(s.data["fried_levels"].is_empty(), "out-of-range fry ignored")
+	assert_true(s.data["softlocked_levels"].is_empty(), "out-of-range softlock ignored")
+
+func test_fry_and_softlock_are_independent():
+	var s = _make()
+	s.load_from_disk()
+	s.record_level_fry(3)
+	assert_false(s.has_softlocked_level(3), "a fry is not a softlock")
+
+func test_reset_clears_fry_and_softlock_history():
+	var s = _make()
+	s.load_from_disk()
+	s.record_level_fry(1)
+	s.record_level_softlock(1)
+	s.reset()
+	assert_false(s.has_fried_level(1), "reset wipes the fry history")
+	assert_false(s.has_softlocked_level(1), "reset wipes the softlock history")
+
+func test_normalize_keeps_only_valid_level_indices():
+	# A hand-written slot with junk mixed in loads back as clean, in-range, deduped
+	# indices (JSON reloads numbers as floats, so 2.0 becomes 2).
+	_write_file(_slot(1), _envelope(1, 100.0, _valid_payload({
+		"fried_levels": [2, 2.0, -1, SaveData.LEVEL_COUNT, "x", 5],
+		"softlocked_levels": [0, 17],
+	})))
+	var s = _make()
+	s.load_from_disk()
+	assert_eq(s.data["fried_levels"], [2, 5], "out-of-range and non-numeric dropped, duplicates collapsed")
+	assert_eq(s.data["softlocked_levels"], [0, 17], "valid indices kept")
+
+
 # ------------------------------------------------------------- input bindings
 func test_no_input_bindings_by_default():
 	var s = _make()

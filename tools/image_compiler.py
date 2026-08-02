@@ -23,7 +23,7 @@ Usage (from the project root):
 from pathlib import Path
 import math
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -195,12 +195,59 @@ def compile_laser_fade() -> int:
     return count
 
 
+# --------------------------------------------------------------------------- #
+# Step 5: level-select status icons (placeholder art)
+# --------------------------------------------------------------------------- #
+# Flat placeholder badges the level selector shows on a level the player has
+# fried in (a laser-hazard death) or softlocked in (manually reset a stuck
+# puzzle). There is no source art yet, so these are drawn from scratch and kept
+# deliberately simple: a lightning bolt for the fry, a padlock for the softlock.
+ICON_SIZE = 128
+
+
+def make_fry_icon() -> Image.Image:
+    """A lightning bolt -- 'zapped by the laser'. Yellow fill, dark-red outline."""
+    im = Image.new("RGBA", (ICON_SIZE, ICON_SIZE), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    bolt = [(74, 8), (34, 70), (60, 70), (50, 120), (94, 54), (66, 54)]
+    d.polygon(bolt, fill=(255, 209, 46, 255))
+    d.line(bolt + [bolt[0]], fill=(122, 22, 12, 255), width=5, joint="curve")
+    return im
+
+
+def make_softlock_icon() -> Image.Image:
+    """A padlock -- 'stuck / had to reset'. Blue-grey body, dark outline."""
+    im = Image.new("RGBA", (ICON_SIZE, ICON_SIZE), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    outline = (28, 32, 46, 255)
+    # Shackle: the top half of an ellipse, arcing up out of the body.
+    d.arc((44, 22, 84, 80), start=180, end=360, fill=outline, width=14)
+    # Body.
+    d.rounded_rectangle((30, 58, 98, 120), radius=12, fill=(126, 146, 178, 255), outline=outline, width=5)
+    # Keyhole: a circle over a tapering slot.
+    d.ellipse((57, 74, 71, 88), fill=outline)
+    d.polygon([(61, 84), (67, 84), (70, 106), (58, 106)], fill=outline)
+    return im
+
+
+def compile_status_icons() -> int:
+    out_dir = ROOT / "ui" / "icons"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    make_fry_icon().save(out_dir / "fry.png")
+    make_softlock_icon().save(out_dir / "softlock.png")
+    print(f"  fry:      {(out_dir / 'fry.png').relative_to(ROOT)}")
+    print(f"  softlock: {(out_dir / 'softlock.png').relative_to(ROOT)}")
+    print("[icons] wrote 2 placeholder icon(s)\n")
+    return 2
+
+
 def main() -> None:
     print("== image compiler ==")
     expand_halftiles()
     compile_laser_mirror_cuts()
     compile_laser_prism_cut()
     compile_laser_fade()
+    compile_status_icons()
 
 
 if __name__ == "__main__":

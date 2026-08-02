@@ -57,6 +57,12 @@ const DEFAULTS := {
 	# that nudge forever. Persisted so each shows only until its first interaction,
 	# ever -- see InteractHint and Room.Grid._mark_first_interaction.
 	"seen_hints": [],
+	# 0-based indices of the levels the player has ever fried in (a laser-hazard
+	# death) or softlocked in (manually reset a stuck puzzle). Each drives a badge on
+	# that level's level-select button. Sparse index sets, like the seen_* lists
+	# above, so they survive LEVEL_COUNT changes.
+	"fried_levels": [],
+	"softlocked_levels": [],
 	"settings": {
 		"master_audio": 100,
 		"music_audio": 100,
@@ -245,6 +251,37 @@ func complete_level(index: int) -> void:
 	save()
 
 
+# ---------------------------------------------------------- per-level history
+## Whether the player has ever fried (a laser-hazard death) in level `index`
+## (0-based). Drives the fry badge on the level-select button.
+func has_fried_level(index: int) -> bool:
+	return index in data["fried_levels"]
+
+
+## Records that the player fried in level `index` (0-based), and saves. A no-op (no
+## save) if already recorded or the index is out of range.
+func record_level_fry(index: int) -> void:
+	if index < 0 or index >= LEVEL_COUNT or index in data["fried_levels"]:
+		return
+	data["fried_levels"].push_back(index)
+	save()
+
+
+## Whether the player has ever softlocked (manually reset a stuck puzzle) in level
+## `index` (0-based). Drives the softlock badge on the level-select button.
+func has_softlocked_level(index: int) -> bool:
+	return index in data["softlocked_levels"]
+
+
+## Records that the player softlocked in level `index` (0-based), and saves. A
+## no-op (no save) if already recorded or the index is out of range.
+func record_level_softlock(index: int) -> void:
+	if index < 0 or index >= LEVEL_COUNT or index in data["softlocked_levels"]:
+		return
+	data["softlocked_levels"].push_back(index)
+	save()
+
+
 # ------------------------------------------------------------------ dialogues
 ## Whether the one-time dialogue `id` has already been shown to the player.
 func has_seen_dialogue(id: String) -> bool:
@@ -398,6 +435,19 @@ func _normalize(loaded: Dictionary) -> Dictionary:
 			if entry is String and not entry in hint_ids:
 				hint_ids.push_back(entry)
 		result["seen_hints"] = hint_ids
+
+	# Per-level history: keep only in-range, de-duplicated level indices. JSON
+	# reloads numbers as floats, so accept a numeric entry and coerce to int.
+	for key in ["fried_levels", "softlocked_levels"]:
+		var recorded = loaded.get(key)
+		if recorded is Array:
+			var indices: Array = []
+			for entry in recorded:
+				if entry is int or entry is float:
+					var i := int(entry)
+					if i >= 0 and i < LEVEL_COUNT and not i in indices:
+						indices.push_back(i)
+			result[key] = indices
 
 	var settings = loaded.get("settings")
 	if settings is Dictionary:

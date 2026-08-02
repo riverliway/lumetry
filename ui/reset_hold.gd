@@ -62,6 +62,9 @@ func _draw() -> void:
 
 
 ## Reloads the current room to its starting state, fading through black -- the
-## same reset the pause menu's Reset Room button and a death use.
+## same reset the pause menu's Reset Room button and a death use. A full hold is
+## the player signalling they were stuck, so it also records a softlock for the
+## level-select badge before reloading.
 func _reload_room() -> void:
+	Level.record_softlock(get_tree().current_scene)
 	Transition.transition(func(): get_tree().reload_current_scene())

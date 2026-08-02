@@ -132,10 +132,32 @@ func _on_unsolved() -> void:
 ## (Once the dialogue engine lands, the reset should wait for the dialogue to be
 ## dismissed rather than firing immediately.)
 func _on_player_fried() -> void:
+	_record_fry()  # remember it happened here, for the level-select badge
 	await _pause_before_aftermath()  # hold with the killing beam still on screen
 	room.shut_off_all_emitters()     # now the beams go dark -- the player has seen them
 	_play_dialogue("fried")
 	_reset_room()
+
+
+## Records that the player fried in this level, for the level-select fry badge.
+## No-op off a real numbered level (a synthetic test tree has no level number).
+func _record_fry() -> void:
+	var n := _level_number()
+	if n >= 1:
+		SaveData.record_level_fry(n - 1)  # 0-based
+
+
+## Records that the player softlocked -- manually reset -- in the level `scene`
+## belongs to, for the level-select softlock badge. Static so the reset paths (the
+## hold-R overlay and the pause menu's Reset Room) can call it without a Level
+## reference; both reload the current scene, which is a Level. No-op off a real
+## numbered level (or a null scene, e.g. in a test).
+static func record_softlock(scene: Node) -> void:
+	if scene == null:
+		return
+	var n := level_number_from_path(scene.scene_file_path)
+	if n >= 1:
+		SaveData.record_level_softlock(n - 1)  # 0-based
 
 
 ## The player tried to cross a beam (the move was refused). Show the "singed"

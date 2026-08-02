@@ -40,11 +40,14 @@ func test_playable_levels_enabled_locked_levels_disabled():
 	assert_true(selector.get_node("Level3").disabled, "locked level 3 is disabled")
 
 func test_completed_level_is_tinted():
+	# The tint is self_modulate (button art only), so it never bleeds onto the
+	# status-badge children; modulate itself stays untouched.
 	SaveData.data["levels"][0] = SaveData.LevelState.UNLOCKED
 	SaveData.data["levels"][1] = SaveData.LevelState.COMPLETED
 	var selector := _make_selector(2)
-	assert_eq(selector.get_node("Level1").modulate, Color.WHITE, "unlocked level is untinted")
-	assert_eq(selector.get_node("Level2").modulate, LevelSelectScript.COMPLETED_TINT, "completed level is tinted")
+	assert_eq(selector.get_node("Level1").self_modulate, Color.WHITE, "unlocked level is untinted")
+	assert_eq(selector.get_node("Level2").self_modulate, LevelSelectScript.COMPLETED_TINT, "completed level is tinted")
+	assert_eq(selector.get_node("Level2").modulate, Color.WHITE, "modulate stays default so badge children are not tinted")
 
 func test_playable_buttons_are_wired_locked_are_inert():
 	SaveData.data["levels"][0] = SaveData.LevelState.UNLOCKED

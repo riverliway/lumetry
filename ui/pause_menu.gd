@@ -51,6 +51,7 @@ func resume() -> void:
 
 func _on_reset_room() -> void:
 	get_tree().paused = false
+	Level.record_softlock(get_tree().current_scene)  # a manual reset -> softlock badge
 	Transition.transition(func(): get_tree().reload_current_scene())
 
 
