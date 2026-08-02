@@ -1395,7 +1395,7 @@ rotation = -1.0471976
 [node name="RotationPad" parent="Room" unique_id=220370918 instance=ExtResource("8_syimn")]
 position = Vector2(1579, 1034)
 
-[node name="InteractHint" type="Node2D" parent="Room/RotationPad"]
+[node name="InteractHint" type="Node2D" parent="Room/RotationPad" unique_id=1720506287]
 script = ExtResource("10_hint")
 hint_id = "pad"
 
