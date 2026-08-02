@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
 [ext_resource type="Script" uid="uid://4x7fpaeayq43" path="res://levels/level7/level_7.gd" id="9_lvl1"]
 [ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="10_68dj3"]
+[ext_resource type="PackedScene" uid="uid://ccrate3blk700" path="res://tileset/crate/crate.tscn" id="10_d8hei"]
+[ext_resource type="Script" uid="uid://c0hf6vgm47qvc" path="res://tileset/wire/wire.gd" id="11_wire"]
+[ext_resource type="Texture2D" uid="uid://p22e7a6opa43" path="res://tileset/wire/wire_deactivated.png" id="12_wseg"]
 
 [node name="Level7" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
@@ -1129,18 +1132,79 @@ texture = ExtResource("2_rlete")
 position = Vector2(3775, 2095)
 texture = ExtResource("2_rlete")
 
+[node name="Wire" type="Node2D" parent="." unique_id=1336221507]
+script = ExtResource("11_wire")
+
+[node name="Segment" type="Sprite2D" parent="Wire" unique_id=919075709]
+position = Vector2(1927, 655)
+texture = ExtResource("12_wseg")
+
+[node name="Segment2" type="Sprite2D" parent="Wire" unique_id=2103124313]
+position = Vector2(1927, 847)
+rotation = 3.1415927
+texture = ExtResource("12_wseg")
+
+[node name="Segment3" type="Sprite2D" parent="Wire" unique_id=489220294]
+position = Vector2(1927, 847)
+texture = ExtResource("12_wseg")
+
+[node name="Segment4" type="Sprite2D" parent="Wire" unique_id=2067016913]
+position = Vector2(1927, 1039)
+rotation = 3.1415927
+texture = ExtResource("12_wseg")
+
+[node name="Segment5" type="Sprite2D" parent="Wire" unique_id=265382921]
+position = Vector2(1927, 1039)
+texture = ExtResource("12_wseg")
+
+[node name="Segment6" type="Sprite2D" parent="Wire" unique_id=351281706]
+position = Vector2(1927, 1231)
+rotation = 3.1415927
+texture = ExtResource("12_wseg")
+
 [node name="Room" type="Node2D" parent="." unique_id=1203397639]
 script = ExtResource("3_qnq8n")
 
 [node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
-position = Vector2(85, 371)
-rotation = 0.93375117
+position = Vector2(922.9999, 1813)
+rotation = 4.1067595
+
+[node name="LaserEmitter2" parent="Room" unique_id=404703433 instance=ExtResource("4_it373")]
+position = Vector2(1081.9999, 753)
+rotation = -1.118756
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
-position = Vector2(84, 179)
+position = Vector2(1938, 464)
+
+[node name="Wall2" parent="Room" unique_id=667440245 instance=ExtResource("5_lto8c")]
+position = Vector2(754, 1710)
+
+[node name="Wall7" parent="Room" unique_id=1171155853 instance=ExtResource("5_lto8c")]
+position = Vector2(920, 1619)
+
+[node name="Wall3" parent="Room" unique_id=1739704765 instance=ExtResource("5_lto8c")]
+position = Vector2(772, 1910)
+
+[node name="Wall4" parent="Room" unique_id=6402604 instance=ExtResource("5_lto8c")]
+position = Vector2(927, 2014)
+
+[node name="Wall6" parent="Room" unique_id=1144789673 instance=ExtResource("5_lto8c")]
+position = Vector2(1771, 1131)
+
+[node name="Wall9" parent="Room" unique_id=1321663390 instance=ExtResource("5_lto8c")]
+position = Vector2(1759, 371)
+
+[node name="Wall8" parent="Room" unique_id=742654025 instance=ExtResource("5_lto8c")]
+position = Vector2(1422, 1329)
+
+[node name="Wall10" parent="Room" unique_id=468959646 instance=ExtResource("5_lto8c")]
+position = Vector2(1420, 1146)
+
+[node name="Wall5" parent="Room" unique_id=2141101405 instance=ExtResource("5_lto8c")]
+position = Vector2(1124, 2080)
 
 [node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_gfi6n")]
-position = Vector2(43, 751)
+position = Vector2(1570, 1458)
 
 [node name="Bottom" parent="Room/Track" index="1"]
 visible = false
@@ -1154,17 +1218,203 @@ visible = false
 [node name="TopRight" parent="Room/Track" index="4"]
 visible = false
 
-[node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
-position = Vector2(79.000244, 944)
+[node name="Track2" parent="Room" unique_id=378385951 instance=ExtResource("6_gfi6n")]
+position = Vector2(1751, 1547)
+
+[node name="Top" parent="Room/Track2" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track2" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track2" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track2" index="4"]
+visible = false
+
+[node name="Track9" parent="Room" unique_id=1339223538 instance=ExtResource("6_gfi6n")]
+position = Vector2(2088, 981)
+
+[node name="Top" parent="Room/Track9" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track9" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track9" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track9" index="4"]
+visible = false
+
+[node name="Track10" parent="Room" unique_id=77591705 instance=ExtResource("6_gfi6n")]
+position = Vector2(2265, 1061)
+
+[node name="Top" parent="Room/Track10" index="0"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track10" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track10" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track10" index="5"]
+visible = false
+
+[node name="Track11" parent="Room" unique_id=1300814420 instance=ExtResource("6_gfi6n")]
+position = Vector2(1593, 1052)
+
+[node name="Top" parent="Room/Track11" index="0"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track11" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track11" index="3"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track11" index="5"]
+visible = false
+
+[node name="Track12" parent="Room" unique_id=1737943317 instance=ExtResource("6_gfi6n")]
+position = Vector2(1926, 864)
+
+[node name="Top" parent="Room/Track12" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track12" index="1"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track12" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track12" index="4"]
+visible = false
+
+[node name="Track3" parent="Room" unique_id=1232897542 instance=ExtResource("6_gfi6n")]
+position = Vector2(1930, 1643)
+
+[node name="Top" parent="Room/Track3" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track3" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track3" index="2"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track3" index="5"]
+visible = false
+
+[node name="Track4" parent="Room" unique_id=1437046304 instance=ExtResource("6_gfi6n")]
+position = Vector2(2102, 1551)
+
+[node name="Top" parent="Room/Track4" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track4" index="1"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track4" index="3"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track4" index="5"]
+visible = false
+
+[node name="Track8" parent="Room" unique_id=720040487 instance=ExtResource("6_gfi6n")]
+position = Vector2(1765, 966)
+
+[node name="Top" parent="Room/Track8" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track8" index="1"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track8" index="3"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track8" index="5"]
+visible = false
+
+[node name="Track5" parent="Room" unique_id=704691363 instance=ExtResource("6_gfi6n")]
+position = Vector2(2272, 1455)
+
+[node name="Bottom" parent="Room/Track5" index="1"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track5" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track5" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track5" index="5"]
+visible = false
+
+[node name="Track6" parent="Room" unique_id=1983214612 instance=ExtResource("6_gfi6n")]
+position = Vector2(2267, 1255)
+
+[node name="BottomLeft" parent="Room/Track6" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track6" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track6" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track6" index="5"]
+visible = false
+
+[node name="Track7" parent="Room" unique_id=1224791995 instance=ExtResource("6_gfi6n")]
+position = Vector2(1581, 1253)
+
+[node name="BottomLeft" parent="Room/Track7" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track7" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track7" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track7" index="5"]
+visible = false
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
-position = Vector2(76, 1128)
+position = Vector2(746, 1146)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
-position = Vector2(62, 560)
+position = Vector2(1921, 687)
+is_mechanism = true
+
+[node name="LaserDetector2" parent="Room" unique_id=1012800773 instance=ExtResource("9_ivh0a")]
+position = Vector2(2917, 1419.0001)
+rotation = 2.2095869
+
+[node name="LaserDetector3" parent="Room" unique_id=2078731870 instance=ExtResource("9_ivh0a")]
+position = Vector2(2915.0002, 1792.0002)
+rotation = -4.0735984
 
 [node name="RotationPad" parent="Room" unique_id=1185317205 instance=ExtResource("10_68dj3")]
-position = Vector2(78, 1325)
+position = Vector2(1923, 1223)
+interactable = false
+
+[node name="RotationPad2" parent="Room" unique_id=1867010880 instance=ExtResource("10_68dj3")]
+position = Vector2(1763, 1531)
+
+[node name="Crate" parent="Room" unique_id=791694051 instance=ExtResource("10_d8hei")]
+position = Vector2(1589, 1051)
+
+[node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
+position = Vector2(1928, 1222)
+rotation = 0.5235988
+
+[node name="Mirror2" parent="Room" unique_id=1887989734 instance=ExtResource("7_2rj0f")]
+position = Vector2(2260, 1428)
+rotation = 0.5235988
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
@@ -1182,6 +1432,18 @@ offset_bottom = 389.0
 rotation = 1.5708
 color = Color(0, 0, 0, 1)
 
-[connection signal="detected" from="Room/LaserDetector" to="." method="_on_solved"]
+[connection signal="detected" from="Room/LaserDetector" to="." method="_on_mechanism_detected"]
+[connection signal="cleared" from="Room/LaserDetector" to="." method="_on_mechanism_cleared"]
 
 [editable path="Room/Track"]
+[editable path="Room/Track2"]
+[editable path="Room/Track9"]
+[editable path="Room/Track10"]
+[editable path="Room/Track11"]
+[editable path="Room/Track12"]
+[editable path="Room/Track3"]
+[editable path="Room/Track4"]
+[editable path="Room/Track8"]
+[editable path="Room/Track5"]
+[editable path="Room/Track6"]
+[editable path="Room/Track7"]

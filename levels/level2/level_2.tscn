@@ -1431,10 +1431,10 @@ offset_bottom = 40.0
 
 [node name="Black13" type="ColorRect" parent="WallArt" unique_id=696716871]
 layout_mode = 0
-offset_left = 2884.0
-offset_top = -8.0
-offset_right = 3095.0
-offset_bottom = 331.0
+offset_left = 3764.0
+offset_top = -21.0
+offset_right = 3975.0
+offset_bottom = 318.0
 rotation = 1.5708
 color = Color(0, 0, 0, 1)
 
