@@ -1142,9 +1142,6 @@ hint_id = "emitter"
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
 position = Vector2(1748, 539)
 
-[node name="Wall26" parent="Room" unique_id=1576315835 instance=ExtResource("5_lto8c")]
-position = Vector2(1748, 734)
-
 [node name="Wall2" parent="Room" unique_id=1372305116 instance=ExtResource("5_lto8c")]
 position = Vector2(1581, 640)
 
@@ -1298,23 +1295,8 @@ visible = false
 [node name="BottomRight" parent="Room/Track3" index="5"]
 visible = false
 
-[node name="Track4" parent="Room" unique_id=166549804 instance=ExtResource("6_gfi6n")]
-position = Vector2(1752, 1103)
-
-[node name="Top" parent="Room/Track4" index="0"]
-visible = false
-
-[node name="Bottom" parent="Room/Track4" index="1"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track4" index="3"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track4" index="5"]
-visible = false
-
 [node name="Track5" parent="Room" unique_id=843109642 instance=ExtResource("6_gfi6n")]
-position = Vector2(1937, 1005)
+position = Vector2(1792, 1124)
 
 [node name="Top" parent="Room/Track5" index="0"]
 visible = false
@@ -1377,7 +1359,7 @@ visible = false
 visible = false
 
 [node name="Track6" parent="Room" unique_id=1152991107 instance=ExtResource("6_gfi6n")]
-position = Vector2(2088, 1114)
+position = Vector2(1943, 1233)
 
 [node name="Top" parent="Room/Track6" index="0"]
 visible = false
@@ -1391,26 +1373,11 @@ visible = false
 [node name="TopRight" parent="Room/Track6" index="4"]
 visible = false
 
-[node name="Track7" parent="Room" unique_id=1343545202 instance=ExtResource("6_gfi6n")]
-position = Vector2(2270, 1211)
-
-[node name="Top" parent="Room/Track7" index="0"]
-visible = false
-
-[node name="Bottom" parent="Room/Track7" index="1"]
-visible = false
-
-[node name="BottomLeft" parent="Room/Track7" index="2"]
-visible = false
-
-[node name="TopRight" parent="Room/Track7" index="4"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track7" index="5"]
+[node name="BottomRight" parent="Room/Track6" index="5"]
 visible = false
 
 [node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
-position = Vector2(1747, 1117)
+position = Vector2(1779, 1131)
 
 [node name="Mirror2" parent="Room" unique_id=754792108 instance=ExtResource("7_2rj0f")]
 position = Vector2(1404, 1500)
@@ -1443,10 +1410,8 @@ color = Color(0, 0, 0, 1)
 [editable path="Room/Track"]
 [editable path="Room/Track2"]
 [editable path="Room/Track3"]
-[editable path="Room/Track4"]
 [editable path="Room/Track5"]
 [editable path="Room/Track8"]
 [editable path="Room/Track9"]
 [editable path="Room/Track10"]
 [editable path="Room/Track6"]
-[editable path="Room/Track7"]

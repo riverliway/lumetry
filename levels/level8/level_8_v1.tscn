@@ -1,21 +1,18 @@
-[gd_scene format=3 uid="uid://cstoem6wa10f8"]
+[gd_scene format=3 uid="uid://c42skarkfp0q"]
 
-[ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="2_rlete"]
-[ext_resource type="Script" uid="uid://dtg4bvreeirqv" path="res://levels/room.gd" id="3_qnq8n"]
-[ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="4_it373"]
-[ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/wall/wall.tscn" id="5_lto8c"]
-[ext_resource type="PackedScene" uid="uid://bid0ygivbhoey" path="res://tileset/track/track.tscn" id="6_gfi6n"]
-[ext_resource type="PackedScene" uid="uid://edblwq6jllx4" path="res://tileset/mirror/mirror.tscn" id="7_2rj0f"]
-[ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="8_awmj3"]
-[ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
-[ext_resource type="Script" uid="uid://4x7fpaeayq43" path="res://levels/level6/level_6.gd" id="9_lvl1"]
-[ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="10_68dj3"]
-[ext_resource type="PackedScene" uid="uid://ccrate3blk700" path="res://tileset/crate/crate.tscn" id="10_d8hei"]
-[ext_resource type="Script" uid="uid://c0hf6vgm47qvc" path="res://tileset/wire/wire.gd" id="11_wire"]
-[ext_resource type="Texture2D" uid="uid://p22e7a6opa43" path="res://tileset/wire/wire_deactivated.png" id="12_wseg"]
+[ext_resource type="Script" uid="uid://veduetd4c2ju" path="res://levels/level8/level_8.gd" id="1_si7o3"]
+[ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="2_a1x4b"]
+[ext_resource type="Script" uid="uid://dtg4bvreeirqv" path="res://levels/room.gd" id="3_x6par"]
+[ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="4_3iq86"]
+[ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/wall/wall.tscn" id="5_1ch5s"]
+[ext_resource type="PackedScene" uid="uid://bid0ygivbhoey" path="res://tileset/track/track.tscn" id="6_s68j8"]
+[ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="7_fasph"]
+[ext_resource type="PackedScene" uid="uid://edblwq6jllx4" path="res://tileset/mirror/mirror.tscn" id="8_jckhx"]
+[ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="9_jwmxo"]
+[ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="10_luib5"]
 
 [node name="Level6" type="Node2D" unique_id=1134870724]
-script = ExtResource("9_lvl1")
+script = ExtResource("1_si7o3")
 
 [node name="Background" type="Node2D" parent="." unique_id=809700269]
 
@@ -30,1279 +27,1245 @@ color = Color(0.306923, 0.306923, 0.306923, 1)
 
 [node name="floor_0_0" type="Sprite2D" parent="Floor" unique_id=1491462939]
 position = Vector2(79, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_1" type="Sprite2D" parent="Floor" unique_id=1601658802]
 position = Vector2(79, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_2" type="Sprite2D" parent="Floor" unique_id=1662105041]
 position = Vector2(79, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_3" type="Sprite2D" parent="Floor" unique_id=188225655]
 position = Vector2(79, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_4" type="Sprite2D" parent="Floor" unique_id=2009303500]
 position = Vector2(79, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_5" type="Sprite2D" parent="Floor" unique_id=16429549]
 position = Vector2(79, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_6" type="Sprite2D" parent="Floor" unique_id=1475453769]
 position = Vector2(79, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_7" type="Sprite2D" parent="Floor" unique_id=1297352453]
 position = Vector2(79, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_8" type="Sprite2D" parent="Floor" unique_id=1492751326]
 position = Vector2(79, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_9" type="Sprite2D" parent="Floor" unique_id=1958651734]
 position = Vector2(79, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_10" type="Sprite2D" parent="Floor" unique_id=314615092]
 position = Vector2(79, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_0_11" type="Sprite2D" parent="Floor" unique_id=790457892]
 position = Vector2(79, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_0" type="Sprite2D" parent="Floor" unique_id=225801041]
 position = Vector2(247, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_1" type="Sprite2D" parent="Floor" unique_id=1176361649]
 position = Vector2(247, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_2" type="Sprite2D" parent="Floor" unique_id=655640966]
 position = Vector2(247, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_3" type="Sprite2D" parent="Floor" unique_id=1224111934]
 position = Vector2(247, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_4" type="Sprite2D" parent="Floor" unique_id=288589906]
 position = Vector2(247, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_5" type="Sprite2D" parent="Floor" unique_id=1754033072]
 position = Vector2(247, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_6" type="Sprite2D" parent="Floor" unique_id=223922770]
 position = Vector2(247, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_7" type="Sprite2D" parent="Floor" unique_id=1225854566]
 position = Vector2(247, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_8" type="Sprite2D" parent="Floor" unique_id=1985688859]
 position = Vector2(247, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_9" type="Sprite2D" parent="Floor" unique_id=559119246]
 position = Vector2(247, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_10" type="Sprite2D" parent="Floor" unique_id=1405332142]
 position = Vector2(247, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_1_11" type="Sprite2D" parent="Floor" unique_id=1045425301]
 position = Vector2(247, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_0" type="Sprite2D" parent="Floor" unique_id=1244591439]
 position = Vector2(415, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_1" type="Sprite2D" parent="Floor" unique_id=818097930]
 position = Vector2(415, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_2" type="Sprite2D" parent="Floor" unique_id=1741501230]
 position = Vector2(415, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_3" type="Sprite2D" parent="Floor" unique_id=1163888814]
 position = Vector2(415, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_4" type="Sprite2D" parent="Floor" unique_id=1761647814]
 position = Vector2(415, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_5" type="Sprite2D" parent="Floor" unique_id=771332411]
 position = Vector2(415, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_6" type="Sprite2D" parent="Floor" unique_id=147414518]
 position = Vector2(415, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_7" type="Sprite2D" parent="Floor" unique_id=1962420078]
 position = Vector2(415, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_8" type="Sprite2D" parent="Floor" unique_id=909764409]
 position = Vector2(415, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_9" type="Sprite2D" parent="Floor" unique_id=1717738630]
 position = Vector2(415, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_10" type="Sprite2D" parent="Floor" unique_id=1284393282]
 position = Vector2(415, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_2_11" type="Sprite2D" parent="Floor" unique_id=1287369260]
 position = Vector2(415, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_0" type="Sprite2D" parent="Floor" unique_id=112259956]
 position = Vector2(583, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_1" type="Sprite2D" parent="Floor" unique_id=1289927403]
 position = Vector2(583, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_2" type="Sprite2D" parent="Floor" unique_id=1967727590]
 position = Vector2(583, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_3" type="Sprite2D" parent="Floor" unique_id=1560852276]
 position = Vector2(583, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_4" type="Sprite2D" parent="Floor" unique_id=1758593392]
 position = Vector2(583, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_5" type="Sprite2D" parent="Floor" unique_id=1855802764]
 position = Vector2(583, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_6" type="Sprite2D" parent="Floor" unique_id=98420227]
 position = Vector2(583, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_7" type="Sprite2D" parent="Floor" unique_id=341040901]
 position = Vector2(583, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_8" type="Sprite2D" parent="Floor" unique_id=83072149]
 position = Vector2(583, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_9" type="Sprite2D" parent="Floor" unique_id=1543873096]
 position = Vector2(583, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_10" type="Sprite2D" parent="Floor" unique_id=970419374]
 position = Vector2(583, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_3_11" type="Sprite2D" parent="Floor" unique_id=2078212672]
 position = Vector2(583, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_0" type="Sprite2D" parent="Floor" unique_id=422579070]
 position = Vector2(751, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_1" type="Sprite2D" parent="Floor" unique_id=1132696910]
 position = Vector2(751, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_2" type="Sprite2D" parent="Floor" unique_id=1204512182]
 position = Vector2(751, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_3" type="Sprite2D" parent="Floor" unique_id=957527149]
 position = Vector2(751, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_4" type="Sprite2D" parent="Floor" unique_id=2003869063]
 position = Vector2(751, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_5" type="Sprite2D" parent="Floor" unique_id=2062217144]
 position = Vector2(751, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_6" type="Sprite2D" parent="Floor" unique_id=513172008]
 position = Vector2(751, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_7" type="Sprite2D" parent="Floor" unique_id=1915877584]
 position = Vector2(751, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_8" type="Sprite2D" parent="Floor" unique_id=2039928061]
 position = Vector2(751, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_9" type="Sprite2D" parent="Floor" unique_id=326916656]
 position = Vector2(751, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_10" type="Sprite2D" parent="Floor" unique_id=1608616781]
 position = Vector2(751, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_4_11" type="Sprite2D" parent="Floor" unique_id=267064965]
 position = Vector2(751, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_0" type="Sprite2D" parent="Floor" unique_id=1811405090]
 position = Vector2(919, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_1" type="Sprite2D" parent="Floor" unique_id=1403968138]
 position = Vector2(919, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_2" type="Sprite2D" parent="Floor" unique_id=499492970]
 position = Vector2(919, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_3" type="Sprite2D" parent="Floor" unique_id=95701687]
 position = Vector2(919, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_4" type="Sprite2D" parent="Floor" unique_id=1613201358]
 position = Vector2(919, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_5" type="Sprite2D" parent="Floor" unique_id=765721636]
 position = Vector2(919, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_6" type="Sprite2D" parent="Floor" unique_id=1748365185]
 position = Vector2(919, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_7" type="Sprite2D" parent="Floor" unique_id=2126225186]
 position = Vector2(919, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_8" type="Sprite2D" parent="Floor" unique_id=290285491]
 position = Vector2(919, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_9" type="Sprite2D" parent="Floor" unique_id=883145069]
 position = Vector2(919, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_10" type="Sprite2D" parent="Floor" unique_id=1106307345]
 position = Vector2(919, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_5_11" type="Sprite2D" parent="Floor" unique_id=336363861]
 position = Vector2(919, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_0" type="Sprite2D" parent="Floor" unique_id=413735348]
 position = Vector2(1087, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_1" type="Sprite2D" parent="Floor" unique_id=593689854]
 position = Vector2(1087, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_2" type="Sprite2D" parent="Floor" unique_id=1323866605]
 position = Vector2(1087, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_3" type="Sprite2D" parent="Floor" unique_id=1548688527]
 position = Vector2(1087, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_4" type="Sprite2D" parent="Floor" unique_id=1560646331]
 position = Vector2(1087, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_5" type="Sprite2D" parent="Floor" unique_id=789648812]
 position = Vector2(1087, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_6" type="Sprite2D" parent="Floor" unique_id=1491455767]
 position = Vector2(1087, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_7" type="Sprite2D" parent="Floor" unique_id=1989061764]
 position = Vector2(1087, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_8" type="Sprite2D" parent="Floor" unique_id=1707935830]
 position = Vector2(1087, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_9" type="Sprite2D" parent="Floor" unique_id=493696313]
 position = Vector2(1087, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_10" type="Sprite2D" parent="Floor" unique_id=1804852345]
 position = Vector2(1087, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_6_11" type="Sprite2D" parent="Floor" unique_id=333575614]
 position = Vector2(1087, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_0" type="Sprite2D" parent="Floor" unique_id=89372214]
 position = Vector2(1255, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_1" type="Sprite2D" parent="Floor" unique_id=486547315]
 position = Vector2(1255, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_2" type="Sprite2D" parent="Floor" unique_id=240354482]
 position = Vector2(1255, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_3" type="Sprite2D" parent="Floor" unique_id=1499424478]
 position = Vector2(1255, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_4" type="Sprite2D" parent="Floor" unique_id=1468000821]
 position = Vector2(1255, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_5" type="Sprite2D" parent="Floor" unique_id=1845567766]
 position = Vector2(1255, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_6" type="Sprite2D" parent="Floor" unique_id=1003039092]
 position = Vector2(1255, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_7" type="Sprite2D" parent="Floor" unique_id=1033279347]
 position = Vector2(1255, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_8" type="Sprite2D" parent="Floor" unique_id=1849385245]
 position = Vector2(1255, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_9" type="Sprite2D" parent="Floor" unique_id=897433144]
 position = Vector2(1255, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_10" type="Sprite2D" parent="Floor" unique_id=972397235]
 position = Vector2(1255, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_7_11" type="Sprite2D" parent="Floor" unique_id=152662887]
 position = Vector2(1255, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_0" type="Sprite2D" parent="Floor" unique_id=512236245]
 position = Vector2(1423, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_1" type="Sprite2D" parent="Floor" unique_id=418925265]
 position = Vector2(1423, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_2" type="Sprite2D" parent="Floor" unique_id=2138026247]
 position = Vector2(1423, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_3" type="Sprite2D" parent="Floor" unique_id=1986838699]
 position = Vector2(1423, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_4" type="Sprite2D" parent="Floor" unique_id=1269271236]
 position = Vector2(1423, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_5" type="Sprite2D" parent="Floor" unique_id=1520062342]
 position = Vector2(1423, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_6" type="Sprite2D" parent="Floor" unique_id=184255315]
 position = Vector2(1423, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_7" type="Sprite2D" parent="Floor" unique_id=1648237876]
 position = Vector2(1423, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_8" type="Sprite2D" parent="Floor" unique_id=1822884480]
 position = Vector2(1423, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_9" type="Sprite2D" parent="Floor" unique_id=1143006014]
 position = Vector2(1423, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_10" type="Sprite2D" parent="Floor" unique_id=1160200733]
 position = Vector2(1423, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_8_11" type="Sprite2D" parent="Floor" unique_id=1441917135]
 position = Vector2(1423, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_0" type="Sprite2D" parent="Floor" unique_id=1519164562]
 position = Vector2(1591, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_1" type="Sprite2D" parent="Floor" unique_id=522095372]
 position = Vector2(1591, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_2" type="Sprite2D" parent="Floor" unique_id=2113265906]
 position = Vector2(1591, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_3" type="Sprite2D" parent="Floor" unique_id=340473400]
 position = Vector2(1591, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_4" type="Sprite2D" parent="Floor" unique_id=1210191965]
 position = Vector2(1591, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_5" type="Sprite2D" parent="Floor" unique_id=1887318239]
 position = Vector2(1591, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_6" type="Sprite2D" parent="Floor" unique_id=1623615030]
 position = Vector2(1591, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_7" type="Sprite2D" parent="Floor" unique_id=896731050]
 position = Vector2(1591, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_8" type="Sprite2D" parent="Floor" unique_id=1793447830]
 position = Vector2(1591, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_9" type="Sprite2D" parent="Floor" unique_id=191322554]
 position = Vector2(1591, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_10" type="Sprite2D" parent="Floor" unique_id=899550147]
 position = Vector2(1591, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_9_11" type="Sprite2D" parent="Floor" unique_id=1635496069]
 position = Vector2(1591, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_0" type="Sprite2D" parent="Floor" unique_id=338667995]
 position = Vector2(1759, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_1" type="Sprite2D" parent="Floor" unique_id=469107646]
 position = Vector2(1759, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_2" type="Sprite2D" parent="Floor" unique_id=266065578]
 position = Vector2(1759, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_3" type="Sprite2D" parent="Floor" unique_id=1446233931]
 position = Vector2(1759, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_4" type="Sprite2D" parent="Floor" unique_id=1496261515]
 position = Vector2(1759, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_5" type="Sprite2D" parent="Floor" unique_id=1684286294]
 position = Vector2(1759, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_6" type="Sprite2D" parent="Floor" unique_id=614658085]
 position = Vector2(1759, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_7" type="Sprite2D" parent="Floor" unique_id=530942031]
 position = Vector2(1759, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_8" type="Sprite2D" parent="Floor" unique_id=1286081163]
 position = Vector2(1759, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_9" type="Sprite2D" parent="Floor" unique_id=765318397]
 position = Vector2(1759, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_10" type="Sprite2D" parent="Floor" unique_id=44515980]
 position = Vector2(1759, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_10_11" type="Sprite2D" parent="Floor" unique_id=727831487]
 position = Vector2(1759, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_0" type="Sprite2D" parent="Floor" unique_id=857825521]
 position = Vector2(1927, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_1" type="Sprite2D" parent="Floor" unique_id=1015284049]
 position = Vector2(1927, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_2" type="Sprite2D" parent="Floor" unique_id=187608972]
 position = Vector2(1927, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_3" type="Sprite2D" parent="Floor" unique_id=1899996399]
 position = Vector2(1927, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_4" type="Sprite2D" parent="Floor" unique_id=536160157]
 position = Vector2(1927, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_5" type="Sprite2D" parent="Floor" unique_id=1183901358]
 position = Vector2(1927, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_6" type="Sprite2D" parent="Floor" unique_id=2104900131]
 position = Vector2(1927, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_7" type="Sprite2D" parent="Floor" unique_id=526514257]
 position = Vector2(1927, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_8" type="Sprite2D" parent="Floor" unique_id=921899049]
 position = Vector2(1927, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_9" type="Sprite2D" parent="Floor" unique_id=197150741]
 position = Vector2(1927, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_10" type="Sprite2D" parent="Floor" unique_id=1197561641]
 position = Vector2(1927, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_11_11" type="Sprite2D" parent="Floor" unique_id=1808064782]
 position = Vector2(1927, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_0" type="Sprite2D" parent="Floor" unique_id=645152060]
 position = Vector2(2095, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_1" type="Sprite2D" parent="Floor" unique_id=499976863]
 position = Vector2(2095, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_2" type="Sprite2D" parent="Floor" unique_id=783291482]
 position = Vector2(2095, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_3" type="Sprite2D" parent="Floor" unique_id=1011154690]
 position = Vector2(2095, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_4" type="Sprite2D" parent="Floor" unique_id=1102188686]
 position = Vector2(2095, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_5" type="Sprite2D" parent="Floor" unique_id=510843545]
 position = Vector2(2095, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_6" type="Sprite2D" parent="Floor" unique_id=369048730]
 position = Vector2(2095, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_7" type="Sprite2D" parent="Floor" unique_id=1983710219]
 position = Vector2(2095, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_8" type="Sprite2D" parent="Floor" unique_id=1304677951]
 position = Vector2(2095, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_9" type="Sprite2D" parent="Floor" unique_id=420521153]
 position = Vector2(2095, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_10" type="Sprite2D" parent="Floor" unique_id=411149987]
 position = Vector2(2095, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_12_11" type="Sprite2D" parent="Floor" unique_id=1629732348]
 position = Vector2(2095, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_0" type="Sprite2D" parent="Floor" unique_id=229574882]
 position = Vector2(2263, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_1" type="Sprite2D" parent="Floor" unique_id=1120469591]
 position = Vector2(2263, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_2" type="Sprite2D" parent="Floor" unique_id=1122959389]
 position = Vector2(2263, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_3" type="Sprite2D" parent="Floor" unique_id=1679355147]
 position = Vector2(2263, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_4" type="Sprite2D" parent="Floor" unique_id=1074593971]
 position = Vector2(2263, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_5" type="Sprite2D" parent="Floor" unique_id=1262647254]
 position = Vector2(2263, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_6" type="Sprite2D" parent="Floor" unique_id=847543387]
 position = Vector2(2263, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_7" type="Sprite2D" parent="Floor" unique_id=1190282288]
 position = Vector2(2263, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_8" type="Sprite2D" parent="Floor" unique_id=1834801213]
 position = Vector2(2263, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_9" type="Sprite2D" parent="Floor" unique_id=2086092551]
 position = Vector2(2263, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_10" type="Sprite2D" parent="Floor" unique_id=659317398]
 position = Vector2(2263, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_13_11" type="Sprite2D" parent="Floor" unique_id=1297999539]
 position = Vector2(2263, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_0" type="Sprite2D" parent="Floor" unique_id=1225306243]
 position = Vector2(2431, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_1" type="Sprite2D" parent="Floor" unique_id=1149887718]
 position = Vector2(2431, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_2" type="Sprite2D" parent="Floor" unique_id=71227968]
 position = Vector2(2431, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_3" type="Sprite2D" parent="Floor" unique_id=274060603]
 position = Vector2(2431, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_4" type="Sprite2D" parent="Floor" unique_id=137616948]
 position = Vector2(2431, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_5" type="Sprite2D" parent="Floor" unique_id=804487142]
 position = Vector2(2431, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_6" type="Sprite2D" parent="Floor" unique_id=1908674999]
 position = Vector2(2431, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_7" type="Sprite2D" parent="Floor" unique_id=144801019]
 position = Vector2(2431, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_8" type="Sprite2D" parent="Floor" unique_id=1210091437]
 position = Vector2(2431, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_9" type="Sprite2D" parent="Floor" unique_id=398997229]
 position = Vector2(2431, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_10" type="Sprite2D" parent="Floor" unique_id=284411042]
 position = Vector2(2431, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_14_11" type="Sprite2D" parent="Floor" unique_id=1421431992]
 position = Vector2(2431, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_0" type="Sprite2D" parent="Floor" unique_id=1524458765]
 position = Vector2(2599, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_1" type="Sprite2D" parent="Floor" unique_id=868658849]
 position = Vector2(2599, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_2" type="Sprite2D" parent="Floor" unique_id=742806256]
 position = Vector2(2599, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_3" type="Sprite2D" parent="Floor" unique_id=1607347210]
 position = Vector2(2599, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_4" type="Sprite2D" parent="Floor" unique_id=892855776]
 position = Vector2(2599, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_5" type="Sprite2D" parent="Floor" unique_id=1408734464]
 position = Vector2(2599, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_6" type="Sprite2D" parent="Floor" unique_id=1896426925]
 position = Vector2(2599, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_7" type="Sprite2D" parent="Floor" unique_id=1551261077]
 position = Vector2(2599, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_8" type="Sprite2D" parent="Floor" unique_id=1581478812]
 position = Vector2(2599, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_9" type="Sprite2D" parent="Floor" unique_id=307390813]
 position = Vector2(2599, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_10" type="Sprite2D" parent="Floor" unique_id=754638417]
 position = Vector2(2599, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_15_11" type="Sprite2D" parent="Floor" unique_id=828354043]
 position = Vector2(2599, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_0" type="Sprite2D" parent="Floor" unique_id=1778440036]
 position = Vector2(2767, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_1" type="Sprite2D" parent="Floor" unique_id=1446929452]
 position = Vector2(2767, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_2" type="Sprite2D" parent="Floor" unique_id=979759973]
 position = Vector2(2767, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_3" type="Sprite2D" parent="Floor" unique_id=1716485093]
 position = Vector2(2767, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_4" type="Sprite2D" parent="Floor" unique_id=363626012]
 position = Vector2(2767, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_5" type="Sprite2D" parent="Floor" unique_id=1969844586]
 position = Vector2(2767, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_6" type="Sprite2D" parent="Floor" unique_id=99686439]
 position = Vector2(2767, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_7" type="Sprite2D" parent="Floor" unique_id=1923080734]
 position = Vector2(2767, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_8" type="Sprite2D" parent="Floor" unique_id=1278526435]
 position = Vector2(2767, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_9" type="Sprite2D" parent="Floor" unique_id=2090634600]
 position = Vector2(2767, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_10" type="Sprite2D" parent="Floor" unique_id=1301909365]
 position = Vector2(2767, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_16_11" type="Sprite2D" parent="Floor" unique_id=336053685]
 position = Vector2(2767, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_0" type="Sprite2D" parent="Floor" unique_id=1720117927]
 position = Vector2(2935, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_1" type="Sprite2D" parent="Floor" unique_id=1074893001]
 position = Vector2(2935, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_2" type="Sprite2D" parent="Floor" unique_id=57499706]
 position = Vector2(2935, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_3" type="Sprite2D" parent="Floor" unique_id=273709790]
 position = Vector2(2935, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_4" type="Sprite2D" parent="Floor" unique_id=1421642578]
 position = Vector2(2935, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_5" type="Sprite2D" parent="Floor" unique_id=1833818017]
 position = Vector2(2935, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_6" type="Sprite2D" parent="Floor" unique_id=544734450]
 position = Vector2(2935, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_7" type="Sprite2D" parent="Floor" unique_id=349016998]
 position = Vector2(2935, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_8" type="Sprite2D" parent="Floor" unique_id=193591693]
 position = Vector2(2935, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_9" type="Sprite2D" parent="Floor" unique_id=2123780182]
 position = Vector2(2935, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_10" type="Sprite2D" parent="Floor" unique_id=1329608904]
 position = Vector2(2935, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_17_11" type="Sprite2D" parent="Floor" unique_id=560431349]
 position = Vector2(2935, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_0" type="Sprite2D" parent="Floor" unique_id=1868008690]
 position = Vector2(3103, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_1" type="Sprite2D" parent="Floor" unique_id=72769857]
 position = Vector2(3103, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_2" type="Sprite2D" parent="Floor" unique_id=243617917]
 position = Vector2(3103, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_3" type="Sprite2D" parent="Floor" unique_id=818353842]
 position = Vector2(3103, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_4" type="Sprite2D" parent="Floor" unique_id=1100396529]
 position = Vector2(3103, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_5" type="Sprite2D" parent="Floor" unique_id=1817390041]
 position = Vector2(3103, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_6" type="Sprite2D" parent="Floor" unique_id=840816419]
 position = Vector2(3103, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_7" type="Sprite2D" parent="Floor" unique_id=1048486383]
 position = Vector2(3103, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_8" type="Sprite2D" parent="Floor" unique_id=397511625]
 position = Vector2(3103, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_9" type="Sprite2D" parent="Floor" unique_id=1271780067]
 position = Vector2(3103, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_10" type="Sprite2D" parent="Floor" unique_id=1416091305]
 position = Vector2(3103, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_18_11" type="Sprite2D" parent="Floor" unique_id=1533238968]
 position = Vector2(3103, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_0" type="Sprite2D" parent="Floor" unique_id=1083307196]
 position = Vector2(3271, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_1" type="Sprite2D" parent="Floor" unique_id=1936431016]
 position = Vector2(3271, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_2" type="Sprite2D" parent="Floor" unique_id=162932893]
 position = Vector2(3271, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_3" type="Sprite2D" parent="Floor" unique_id=1065284624]
 position = Vector2(3271, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_4" type="Sprite2D" parent="Floor" unique_id=580886465]
 position = Vector2(3271, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_5" type="Sprite2D" parent="Floor" unique_id=2145684194]
 position = Vector2(3271, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_6" type="Sprite2D" parent="Floor" unique_id=600580076]
 position = Vector2(3271, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_7" type="Sprite2D" parent="Floor" unique_id=1624480954]
 position = Vector2(3271, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_8" type="Sprite2D" parent="Floor" unique_id=1238423827]
 position = Vector2(3271, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_9" type="Sprite2D" parent="Floor" unique_id=127285834]
 position = Vector2(3271, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_10" type="Sprite2D" parent="Floor" unique_id=952012690]
 position = Vector2(3271, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_19_11" type="Sprite2D" parent="Floor" unique_id=2129879771]
 position = Vector2(3271, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_0" type="Sprite2D" parent="Floor" unique_id=1444848182]
 position = Vector2(3439, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_1" type="Sprite2D" parent="Floor" unique_id=2044397134]
 position = Vector2(3439, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_2" type="Sprite2D" parent="Floor" unique_id=612936324]
 position = Vector2(3439, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_3" type="Sprite2D" parent="Floor" unique_id=1338234879]
 position = Vector2(3439, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_4" type="Sprite2D" parent="Floor" unique_id=1613272271]
 position = Vector2(3439, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_5" type="Sprite2D" parent="Floor" unique_id=1826912555]
 position = Vector2(3439, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_6" type="Sprite2D" parent="Floor" unique_id=450666146]
 position = Vector2(3439, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_7" type="Sprite2D" parent="Floor" unique_id=1878168016]
 position = Vector2(3439, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_8" type="Sprite2D" parent="Floor" unique_id=520870291]
 position = Vector2(3439, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_9" type="Sprite2D" parent="Floor" unique_id=769911331]
 position = Vector2(3439, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_10" type="Sprite2D" parent="Floor" unique_id=1135349820]
 position = Vector2(3439, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_20_11" type="Sprite2D" parent="Floor" unique_id=1352217216]
 position = Vector2(3439, 2095)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_0" type="Sprite2D" parent="Floor" unique_id=1941437330]
 position = Vector2(3607, 79)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_1" type="Sprite2D" parent="Floor" unique_id=1773565250]
 position = Vector2(3607, 271)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_2" type="Sprite2D" parent="Floor" unique_id=1932980202]
 position = Vector2(3607, 463)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_3" type="Sprite2D" parent="Floor" unique_id=1989360153]
 position = Vector2(3607, 655)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_4" type="Sprite2D" parent="Floor" unique_id=145581918]
 position = Vector2(3607, 847)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_5" type="Sprite2D" parent="Floor" unique_id=1511682528]
 position = Vector2(3607, 1039)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_6" type="Sprite2D" parent="Floor" unique_id=1199955243]
 position = Vector2(3607, 1231)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_7" type="Sprite2D" parent="Floor" unique_id=1102307183]
 position = Vector2(3607, 1423)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_8" type="Sprite2D" parent="Floor" unique_id=1190693720]
 position = Vector2(3607, 1615)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_9" type="Sprite2D" parent="Floor" unique_id=1133603828]
 position = Vector2(3607, 1807)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_10" type="Sprite2D" parent="Floor" unique_id=1049439118]
 position = Vector2(3607, 1999)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_21_11" type="Sprite2D" parent="Floor" unique_id=1128524940]
 position = Vector2(3607, 2191)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_0" type="Sprite2D" parent="Floor" unique_id=1284345144]
 position = Vector2(3775, -17)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_1" type="Sprite2D" parent="Floor" unique_id=29833159]
 position = Vector2(3775, 175)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_2" type="Sprite2D" parent="Floor" unique_id=943646984]
 position = Vector2(3775, 367)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_3" type="Sprite2D" parent="Floor" unique_id=198766294]
 position = Vector2(3775, 559)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_4" type="Sprite2D" parent="Floor" unique_id=374230440]
 position = Vector2(3775, 751)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_5" type="Sprite2D" parent="Floor" unique_id=1534618159]
 position = Vector2(3775, 943)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_6" type="Sprite2D" parent="Floor" unique_id=886272070]
 position = Vector2(3775, 1135)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_7" type="Sprite2D" parent="Floor" unique_id=1110191126]
 position = Vector2(3775, 1327)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_8" type="Sprite2D" parent="Floor" unique_id=1679703887]
 position = Vector2(3775, 1519)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_9" type="Sprite2D" parent="Floor" unique_id=623449775]
 position = Vector2(3775, 1711)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_10" type="Sprite2D" parent="Floor" unique_id=1016275837]
 position = Vector2(3775, 1903)
-texture = ExtResource("2_rlete")
+texture = ExtResource("2_a1x4b")
 
 [node name="floor_22_11" type="Sprite2D" parent="Floor" unique_id=1428995712]
 position = Vector2(3775, 2095)
-texture = ExtResource("2_rlete")
-
-[node name="Wire" type="Node2D" parent="." unique_id=1336221507]
-script = ExtResource("11_wire")
-
-[node name="Segment" type="Sprite2D" parent="Wire" unique_id=919075709]
-position = Vector2(2095, 751)
-texture = ExtResource("12_wseg")
-
-[node name="Segment2" type="Sprite2D" parent="Wire" unique_id=2103124313]
-position = Vector2(2095, 943)
-rotation = 3.1415927
-texture = ExtResource("12_wseg")
-
-[node name="Segment3" type="Sprite2D" parent="Wire" unique_id=489220294]
-position = Vector2(2095, 943)
-texture = ExtResource("12_wseg")
-
-[node name="Segment4" type="Sprite2D" parent="Wire" unique_id=2067016913]
-position = Vector2(2095, 1135)
-rotation = 3.1415927
-texture = ExtResource("12_wseg")
-
-[node name="Segment5" type="Sprite2D" parent="Wire" unique_id=265382921]
-position = Vector2(2095, 1135)
-texture = ExtResource("12_wseg")
-
-[node name="Segment6" type="Sprite2D" parent="Wire" unique_id=351281706]
-position = Vector2(2095, 1327)
-rotation = 3.1415927
-texture = ExtResource("12_wseg")
+texture = ExtResource("2_a1x4b")
 
 [node name="Room" type="Node2D" parent="." unique_id=1203397639]
-script = ExtResource("3_qnq8n")
+script = ExtResource("3_x6par")
 
-[node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
-position = Vector2(1088.9999, 1896)
-rotation = 4.1067595
+[node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_3iq86")]
+position = Vector2(1256, 1985)
+rotation = 3.1241393
 
-[node name="LaserEmitter2" parent="Room" unique_id=404703433 instance=ExtResource("4_it373")]
-position = Vector2(1247.9999, 836)
-rotation = -1.118756
+[node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_1ch5s")]
+position = Vector2(1086, 2093)
 
-[node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
-position = Vector2(2086, 364)
+[node name="Wall2" parent="Room" unique_id=207679746 instance=ExtResource("5_1ch5s")]
+position = Vector2(927, 1993)
 
-[node name="Wall11" parent="Room" unique_id=1135904965 instance=ExtResource("5_lto8c")]
-position = Vector2(2267, 470)
+[node name="Wall3" parent="Room" unique_id=594323914 instance=ExtResource("5_1ch5s")]
+position = Vector2(754, 1882)
 
-[node name="Wall12" parent="Room" unique_id=1416662654 instance=ExtResource("5_lto8c")]
-position = Vector2(2437, 567)
+[node name="Wall4" parent="Room" unique_id=356205070 instance=ExtResource("5_1ch5s")]
+position = Vector2(756, 1697)
 
-[node name="Wall20" parent="Room" unique_id=183430203 instance=ExtResource("5_lto8c")]
-position = Vector2(2596, 471)
+[node name="Wall5" parent="Room" unique_id=26763150 instance=ExtResource("5_1ch5s")]
+position = Vector2(756, 1501)
 
-[node name="Wall21" parent="Room" unique_id=266946292 instance=ExtResource("5_lto8c")]
-position = Vector2(2774, 564)
+[node name="Wall6" parent="Room" unique_id=1733824002 instance=ExtResource("5_1ch5s")]
+position = Vector2(760, 1313)
 
-[node name="Wall22" parent="Room" unique_id=1759553188 instance=ExtResource("5_lto8c")]
-position = Vector2(2935, 657)
+[node name="Wall7" parent="Room" unique_id=970078321 instance=ExtResource("5_1ch5s")]
+position = Vector2(758, 1130)
 
-[node name="Wall23" parent="Room" unique_id=1215225412 instance=ExtResource("5_lto8c")]
-position = Vector2(3124, 763)
+[node name="Wall8" parent="Room" unique_id=2091003417 instance=ExtResource("5_1ch5s")]
+position = Vector2(749, 940)
 
-[node name="Wall24" parent="Room" unique_id=1657965725 instance=ExtResource("5_lto8c")]
-position = Vector2(2926, 844)
+[node name="Wall9" parent="Room" unique_id=1076889436 instance=ExtResource("5_1ch5s")]
+position = Vector2(756, 750)
 
-[node name="Wall25" parent="Room" unique_id=700581451 instance=ExtResource("5_lto8c")]
-position = Vector2(2929, 1042)
+[node name="Wall10" parent="Room" unique_id=2009785886 instance=ExtResource("5_1ch5s")]
+position = Vector2(752, 536)
 
-[node name="Wall26" parent="Room" unique_id=199645383 instance=ExtResource("5_lto8c")]
-position = Vector2(3100, 1150)
+[node name="Wall11" parent="Room" unique_id=613884181 instance=ExtResource("5_1ch5s")]
+position = Vector2(927, 452)
 
-[node name="Wall27" parent="Room" unique_id=377279525 instance=ExtResource("5_lto8c")]
-position = Vector2(3096, 1322)
+[node name="Wall12" parent="Room" unique_id=1680865469 instance=ExtResource("5_1ch5s")]
+position = Vector2(1098, 355)
 
-[node name="Wall28" parent="Room" unique_id=182467536 instance=ExtResource("5_lto8c")]
-position = Vector2(3079, 1540)
+[node name="Wall13" parent="Room" unique_id=133575494 instance=ExtResource("5_1ch5s")]
+position = Vector2(1268, 452)
 
-[node name="Wall29" parent="Room" unique_id=1957105151 instance=ExtResource("5_lto8c")]
-position = Vector2(3109, 1717)
+[node name="Wall14" parent="Room" unique_id=1940233159 instance=ExtResource("5_1ch5s")]
+position = Vector2(1428, 361)
 
-[node name="Wall30" parent="Room" unique_id=2012810592 instance=ExtResource("5_lto8c")]
-position = Vector2(3277, 2016)
+[node name="Wall15" parent="Room" unique_id=779990197 instance=ExtResource("5_1ch5s")]
+position = Vector2(1601, 456)
 
-[node name="Wall31" parent="Room" unique_id=1279036412 instance=ExtResource("5_lto8c")]
-position = Vector2(3089, 1908)
+[node name="Wall16" parent="Room" unique_id=259924376 instance=ExtResource("5_1ch5s")]
+position = Vector2(1769, 565)
 
-[node name="Wall32" parent="Room" unique_id=906235260 instance=ExtResource("5_lto8c")]
-position = Vector2(2936, 2004)
+[node name="Wall17" parent="Room" unique_id=1653515628 instance=ExtResource("5_1ch5s")]
+position = Vector2(1935, 460)
 
-[node name="Wall33" parent="Room" unique_id=477561211 instance=ExtResource("5_lto8c")]
-position = Vector2(2754, 2093)
+[node name="Wall18" parent="Room" unique_id=190019520 instance=ExtResource("5_1ch5s")]
+position = Vector2(2097, 557)
 
-[node name="Wall34" parent="Room" unique_id=77522225 instance=ExtResource("5_lto8c")]
-position = Vector2(2596, 2004)
+[node name="Wall19" parent="Room" unique_id=332014342 instance=ExtResource("5_1ch5s")]
+position = Vector2(2280, 658)
 
-[node name="Wall36" parent="Room" unique_id=145286517 instance=ExtResource("5_lto8c")]
-position = Vector2(2239, 1989)
+[node name="Wall20" parent="Room" unique_id=630257578 instance=ExtResource("5_1ch5s")]
+position = Vector2(2446, 555)
 
-[node name="Wall37" parent="Room" unique_id=1121871565 instance=ExtResource("5_lto8c")]
-position = Vector2(1412, 2108)
+[node name="Wall21" parent="Room" unique_id=1281333656 instance=ExtResource("5_1ch5s")]
+position = Vector2(2598, 660)
 
-[node name="Wall38" parent="Room" unique_id=1284709033 instance=ExtResource("5_lto8c")]
-position = Vector2(1588, 2010)
+[node name="Wall22" parent="Room" unique_id=922609408 instance=ExtResource("5_1ch5s")]
+position = Vector2(2798, 759)
 
-[node name="Wall39" parent="Room" unique_id=686380646 instance=ExtResource("5_lto8c")]
-position = Vector2(1750, 2089)
+[node name="Wall23" parent="Room" unique_id=1501728741 instance=ExtResource("5_1ch5s")]
+position = Vector2(2937, 647)
 
-[node name="Wall40" parent="Room" unique_id=1192462762 instance=ExtResource("5_lto8c")]
-position = Vector2(1924, 1989)
+[node name="Wall24" parent="Room" unique_id=1017026606 instance=ExtResource("5_1ch5s")]
+position = Vector2(3120, 757)
 
-[node name="Wall41" parent="Room" unique_id=539030070 instance=ExtResource("5_lto8c")]
-position = Vector2(2092, 2083)
+[node name="Wall25" parent="Room" unique_id=588508731 instance=ExtResource("5_1ch5s")]
+position = Vector2(3286, 856)
 
-[node name="Wall35" parent="Room" unique_id=1376451110 instance=ExtResource("5_lto8c")]
-position = Vector2(2410, 2104)
+[node name="Wall26" parent="Room" unique_id=273843049 instance=ExtResource("5_1ch5s")]
+position = Vector2(1271, 2197)
 
-[node name="Wall2" parent="Room" unique_id=667440245 instance=ExtResource("5_lto8c")]
-position = Vector2(920, 1793)
+[node name="Wall27" parent="Room" unique_id=2034258301 instance=ExtResource("5_1ch5s")]
+position = Vector2(1423, 2090)
 
-[node name="Wall7" parent="Room" unique_id=1171155853 instance=ExtResource("5_lto8c")]
-position = Vector2(912, 1597)
+[node name="Wall28" parent="Room" unique_id=1348367879 instance=ExtResource("5_1ch5s")]
+position = Vector2(1606, 1981)
 
-[node name="Wall3" parent="Room" unique_id=1739704765 instance=ExtResource("5_lto8c")]
-position = Vector2(938, 1993)
+[node name="Wall29" parent="Room" unique_id=1378128151 instance=ExtResource("5_1ch5s")]
+position = Vector2(1768, 2093)
 
-[node name="Wall4" parent="Room" unique_id=6402604 instance=ExtResource("5_lto8c")]
-position = Vector2(1093, 2097)
+[node name="Wall30" parent="Room" unique_id=214169222 instance=ExtResource("5_1ch5s")]
+position = Vector2(1955, 1983)
 
-[node name="Wall6" parent="Room" unique_id=1144789673 instance=ExtResource("5_lto8c")]
-position = Vector2(1937, 1214)
+[node name="Wall31" parent="Room" unique_id=73870102 instance=ExtResource("5_1ch5s")]
+position = Vector2(2102, 1899)
 
-[node name="Wall9" parent="Room" unique_id=1321663390 instance=ExtResource("5_lto8c")]
-position = Vector2(1925, 454)
+[node name="Wall32" parent="Room" unique_id=1428240952 instance=ExtResource("5_1ch5s")]
+position = Vector2(2279, 2004)
 
-[node name="Wall8" parent="Room" unique_id=742654025 instance=ExtResource("5_lto8c")]
-position = Vector2(1416, 559)
+[node name="Wall33" parent="Room" unique_id=1235961342 instance=ExtResource("5_1ch5s")]
+position = Vector2(2450, 1892)
 
-[node name="Wall13" parent="Room" unique_id=1096904806 instance=ExtResource("5_lto8c")]
-position = Vector2(1565, 474)
+[node name="Wall34" parent="Room" unique_id=1643718276 instance=ExtResource("5_1ch5s")]
+position = Vector2(2608, 1804)
 
-[node name="Wall14" parent="Room" unique_id=246940680 instance=ExtResource("5_lto8c")]
-position = Vector2(1259, 659)
+[node name="Wall35" parent="Room" unique_id=1754879229 instance=ExtResource("5_1ch5s")]
+position = Vector2(2772, 1890)
 
-[node name="Wall15" parent="Room" unique_id=1397692081 instance=ExtResource("5_lto8c")]
-position = Vector2(1088, 758)
+[node name="Wall36" parent="Room" unique_id=676667537 instance=ExtResource("5_1ch5s")]
+position = Vector2(2940, 1810)
 
-[node name="Wall16" parent="Room" unique_id=1138263602 instance=ExtResource("5_lto8c")]
-position = Vector2(1089, 946)
+[node name="Wall37" parent="Room" unique_id=604665995 instance=ExtResource("5_1ch5s")]
+position = Vector2(3121, 1696)
 
-[node name="Wall17" parent="Room" unique_id=732225895 instance=ExtResource("5_lto8c")]
-position = Vector2(1072, 1156)
+[node name="Wall38" parent="Room" unique_id=779048280 instance=ExtResource("5_1ch5s")]
+position = Vector2(3291, 1599)
 
-[node name="Wall18" parent="Room" unique_id=1478450391 instance=ExtResource("5_lto8c")]
-position = Vector2(927, 1233)
+[node name="Wall39" parent="Room" unique_id=1448059635 instance=ExtResource("5_1ch5s")]
+position = Vector2(3287, 1409)
 
-[node name="Wall19" parent="Room" unique_id=725437792 instance=ExtResource("5_lto8c")]
-position = Vector2(912, 1429)
+[node name="Wall40" parent="Room" unique_id=1698506351 instance=ExtResource("5_1ch5s")]
+position = Vector2(3283, 1226)
 
-[node name="Wall10" parent="Room" unique_id=468959646 instance=ExtResource("5_lto8c")]
-position = Vector2(1765, 569)
+[node name="Wall41" parent="Room" unique_id=40480977 instance=ExtResource("5_1ch5s")]
+position = Vector2(3277, 1036)
 
-[node name="Wall5" parent="Room" unique_id=2141101405 instance=ExtResource("5_lto8c")]
-position = Vector2(1290, 2163)
+[node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_s68j8")]
+position = Vector2(1241, 1599)
 
-[node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_gfi6n")]
-position = Vector2(1736, 1541)
-
-[node name="Bottom" parent="Room/Track" index="1"]
+[node name="Top" parent="Room/Track" index="0"]
 visible = false
 
-[node name="BottomLeft" parent="Room/Track" index="2"]
+[node name="Bottom" parent="Room/Track" index="1"]
 visible = false
 
 [node name="TopLeft" parent="Room/Track" index="3"]
@@ -1311,8 +1274,8 @@ visible = false
 [node name="TopRight" parent="Room/Track" index="4"]
 visible = false
 
-[node name="Track2" parent="Room" unique_id=378385951 instance=ExtResource("6_gfi6n")]
-position = Vector2(1917, 1630)
+[node name="Track2" parent="Room" unique_id=1532517799 instance=ExtResource("6_s68j8")]
+position = Vector2(1438, 1677)
 
 [node name="Top" parent="Room/Track2" index="0"]
 visible = false
@@ -1326,68 +1289,11 @@ visible = false
 [node name="TopRight" parent="Room/Track2" index="4"]
 visible = false
 
-[node name="Track9" parent="Room" unique_id=1339223538 instance=ExtResource("6_gfi6n")]
-position = Vector2(2254, 1064)
-
-[node name="Top" parent="Room/Track9" index="0"]
+[node name="BottomRight" parent="Room/Track2" index="5"]
 visible = false
 
-[node name="Bottom" parent="Room/Track9" index="1"]
-visible = false
-
-[node name="BottomLeft" parent="Room/Track9" index="2"]
-visible = false
-
-[node name="TopRight" parent="Room/Track9" index="4"]
-visible = false
-
-[node name="Track10" parent="Room" unique_id=77591705 instance=ExtResource("6_gfi6n")]
-position = Vector2(2431, 1144)
-
-[node name="Top" parent="Room/Track10" index="0"]
-visible = false
-
-[node name="BottomLeft" parent="Room/Track10" index="2"]
-visible = false
-
-[node name="TopRight" parent="Room/Track10" index="4"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track10" index="5"]
-visible = false
-
-[node name="Track11" parent="Room" unique_id=1300814420 instance=ExtResource("6_gfi6n")]
-position = Vector2(1759, 1135)
-
-[node name="Top" parent="Room/Track11" index="0"]
-visible = false
-
-[node name="BottomLeft" parent="Room/Track11" index="2"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track11" index="3"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track11" index="5"]
-visible = false
-
-[node name="Track12" parent="Room" unique_id=1737943317 instance=ExtResource("6_gfi6n")]
-position = Vector2(2092, 947)
-
-[node name="Top" parent="Room/Track12" index="0"]
-visible = false
-
-[node name="Bottom" parent="Room/Track12" index="1"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track12" index="3"]
-visible = false
-
-[node name="TopRight" parent="Room/Track12" index="4"]
-visible = false
-
-[node name="Track3" parent="Room" unique_id=1232897542 instance=ExtResource("6_gfi6n")]
-position = Vector2(2096, 1726)
+[node name="Track3" parent="Room" unique_id=940849364 instance=ExtResource("6_s68j8")]
+position = Vector2(1248, 1224)
 
 [node name="Top" parent="Room/Track3" index="0"]
 visible = false
@@ -1395,14 +1301,14 @@ visible = false
 [node name="Bottom" parent="Room/Track3" index="1"]
 visible = false
 
-[node name="BottomLeft" parent="Room/Track3" index="2"]
+[node name="TopLeft" parent="Room/Track3" index="3"]
 visible = false
 
-[node name="BottomRight" parent="Room/Track3" index="5"]
+[node name="TopRight" parent="Room/Track3" index="4"]
 visible = false
 
-[node name="Track4" parent="Room" unique_id=1437046304 instance=ExtResource("6_gfi6n")]
-position = Vector2(2268, 1634)
+[node name="Track4" parent="Room" unique_id=818905325 instance=ExtResource("6_s68j8")]
+position = Vector2(1449, 1307)
 
 [node name="Top" parent="Room/Track4" index="0"]
 visible = false
@@ -1410,29 +1316,20 @@ visible = false
 [node name="Bottom" parent="Room/Track4" index="1"]
 visible = false
 
-[node name="TopLeft" parent="Room/Track4" index="3"]
+[node name="BottomLeft" parent="Room/Track4" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track4" index="4"]
 visible = false
 
 [node name="BottomRight" parent="Room/Track4" index="5"]
 visible = false
 
-[node name="Track8" parent="Room" unique_id=720040487 instance=ExtResource("6_gfi6n")]
-position = Vector2(1931, 1049)
+[node name="Track5" parent="Room" unique_id=1714245494 instance=ExtResource("6_s68j8")]
+position = Vector2(1250, 828)
 
-[node name="Top" parent="Room/Track8" index="0"]
+[node name="Top" parent="Room/Track5" index="0"]
 visible = false
-
-[node name="Bottom" parent="Room/Track8" index="1"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track8" index="3"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track8" index="5"]
-visible = false
-
-[node name="Track5" parent="Room" unique_id=704691363 instance=ExtResource("6_gfi6n")]
-position = Vector2(2438, 1538)
 
 [node name="Bottom" parent="Room/Track5" index="1"]
 visible = false
@@ -1443,16 +1340,70 @@ visible = false
 [node name="TopRight" parent="Room/Track5" index="4"]
 visible = false
 
-[node name="BottomRight" parent="Room/Track5" index="5"]
+[node name="Track7" parent="Room" unique_id=783584507 instance=ExtResource("6_s68j8")]
+position = Vector2(1091, 934)
+
+[node name="Top" parent="Room/Track7" index="0"]
 visible = false
 
-[node name="Track6" parent="Room" unique_id=1983214612 instance=ExtResource("6_gfi6n")]
-position = Vector2(2433, 1338)
+[node name="Bottom" parent="Room/Track7" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track7" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track7" index="3"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track7" index="5"]
+visible = false
+
+[node name="Track8" parent="Room" unique_id=522618240 instance=ExtResource("6_s68j8")]
+position = Vector2(1092, 1313)
+
+[node name="Top" parent="Room/Track8" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track8" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track8" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track8" index="3"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track8" index="5"]
+visible = false
+
+[node name="Track9" parent="Room" unique_id=1063693039 instance=ExtResource("6_s68j8")]
+position = Vector2(1077, 1691)
+
+[node name="Top" parent="Room/Track9" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track9" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track9" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track9" index="3"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track9" index="5"]
+visible = false
+
+[node name="Track6" parent="Room" unique_id=1259673878 instance=ExtResource("6_s68j8")]
+position = Vector2(1451, 915)
+
+[node name="Top" parent="Room/Track6" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track6" index="1"]
+visible = false
 
 [node name="BottomLeft" parent="Room/Track6" index="2"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track6" index="3"]
 visible = false
 
 [node name="TopRight" parent="Room/Track6" index="4"]
@@ -1461,53 +1412,99 @@ visible = false
 [node name="BottomRight" parent="Room/Track6" index="5"]
 visible = false
 
-[node name="Track7" parent="Room" unique_id=1224791995 instance=ExtResource("6_gfi6n")]
-position = Vector2(1747, 1336)
+[node name="RotationPad" parent="Room" unique_id=1552353498 instance=ExtResource("7_fasph")]
+position = Vector2(1250, 1586)
 
-[node name="BottomLeft" parent="Room/Track7" index="2"]
-visible = false
+[node name="RotationPad2" parent="Room" unique_id=1334082720 instance=ExtResource("7_fasph")]
+position = Vector2(1254, 1210)
 
-[node name="TopLeft" parent="Room/Track7" index="3"]
-visible = false
+[node name="RotationPad3" parent="Room" unique_id=1668971868 instance=ExtResource("7_fasph")]
+position = Vector2(1245, 826)
 
-[node name="TopRight" parent="Room/Track7" index="4"]
-visible = false
+[node name="RotationPad5" parent="Room" unique_id=2097181116 instance=ExtResource("7_fasph")]
+position = Vector2(2092, 1118)
 
-[node name="BottomRight" parent="Room/Track7" index="5"]
-visible = false
+[node name="RotationPad6" parent="Room" unique_id=207576564 instance=ExtResource("7_fasph")]
+position = Vector2(2089, 1313)
 
-[node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
-position = Vector2(1088, 1335)
+[node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("8_jckhx")]
+position = Vector2(1753, 1122.0001)
+rotation = 0.9896017
 
-[node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
-position = Vector2(2087, 770)
-is_mechanism = true
+[node name="Mirror7" parent="Room" unique_id=1732294856 instance=ExtResource("8_jckhx")]
+position = Vector2(1754, 923.99994)
+rotation = 1.5707964
 
-[node name="LaserDetector2" parent="Room" unique_id=1012800773 instance=ExtResource("9_ivh0a")]
-position = Vector2(2893, 1410.0001)
-rotation = 2.2095869
+[node name="Mirror5" parent="Room" unique_id=2044098582 instance=ExtResource("8_jckhx")]
+position = Vector2(1752, 1507.0001)
+rotation = 3.1415927
 
-[node name="LaserDetector3" parent="Room" unique_id=2078731870 instance=ExtResource("9_ivh0a")]
-position = Vector2(2919.0002, 1788)
-rotation = -4.0735984
+[node name="Mirror6" parent="Room" unique_id=1536365653 instance=ExtResource("8_jckhx")]
+position = Vector2(1753.0001, 1309)
+rotation = 0.6981317
 
-[node name="RotationPad" parent="Room" unique_id=1185317205 instance=ExtResource("10_68dj3")]
-position = Vector2(2089, 1306)
-interactable = false
+[node name="Mirror8" parent="Room" unique_id=25417655 instance=ExtResource("8_jckhx")]
+position = Vector2(2421.7, 1132.0002)
+rotation = 1.5707964
 
-[node name="RotationPad2" parent="Room" unique_id=1867010880 instance=ExtResource("10_68dj3")]
-position = Vector2(1929, 1614)
+[node name="Mirror9" parent="Room" unique_id=1584848890 instance=ExtResource("8_jckhx")]
+position = Vector2(2422.7, 934)
+rotation = 1.5707964
 
-[node name="Crate" parent="Room" unique_id=791694051 instance=ExtResource("10_d8hei")]
-position = Vector2(1755, 1134)
+[node name="Mirror17" parent="Room" unique_id=490429460 instance=ExtResource("8_jckhx")]
+position = Vector2(2940, 836.00006)
+rotation = 1.5707964
 
-[node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
-position = Vector2(2094, 1305)
-rotation = 0.5235988
+[node name="Mirror18" parent="Room" unique_id=1219640781 instance=ExtResource("8_jckhx")]
+position = Vector2(3114, 1126)
+rotation = 0.4660029
 
-[node name="Mirror2" parent="Room" unique_id=1887989734 instance=ExtResource("7_2rj0f")]
-position = Vector2(2426, 1511)
-rotation = 0.5235988
+[node name="Mirror10" parent="Room" unique_id=1867584307 instance=ExtResource("8_jckhx")]
+position = Vector2(2420.7, 1517.0001)
+rotation = 1.5707964
+
+[node name="Mirror11" parent="Room" unique_id=804947428 instance=ExtResource("8_jckhx")]
+position = Vector2(2421.7, 1319)
+rotation = 1.5707964
+
+[node name="Mirror12" parent="Room" unique_id=907062440 instance=ExtResource("8_jckhx")]
+position = Vector2(2092, 1115.0001)
+rotation = 2.0472713
+
+[node name="Mirror15" parent="Room" unique_id=95407673 instance=ExtResource("8_jckhx")]
+position = Vector2(2080.7002, 1317)
+rotation = 2.0943952
+
+[node name="Mirror2" parent="Room" unique_id=754792108 instance=ExtResource("8_jckhx")]
+position = Vector2(1092, 1695)
+rotation = 1.5707964
+
+[node name="Mirror3" parent="Room" unique_id=844644662 instance=ExtResource("8_jckhx")]
+position = Vector2(1089, 1310.0001)
+rotation = 1.5132004
+
+[node name="Mirror13" parent="Room" unique_id=390597295 instance=ExtResource("8_jckhx")]
+position = Vector2(1431.9999, 1304)
+rotation = 3.1415927
+
+[node name="Mirror16" parent="Room" unique_id=606394220 instance=ExtResource("8_jckhx")]
+position = Vector2(1431, 1694.0001)
+rotation = 3.1415927
+
+[node name="Mirror14" parent="Room" unique_id=199450785 instance=ExtResource("8_jckhx")]
+position = Vector2(1436, 925.0001)
+rotation = 3.1415927
+
+[node name="Mirror4" parent="Room" unique_id=273490839 instance=ExtResource("8_jckhx")]
+position = Vector2(1088, 926)
+rotation = 1.5707964
+
+[node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("9_jwmxo")]
+position = Vector2(2765, 1505)
+
+[node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("10_luib5")]
+position = Vector2(3112, 932)
+rotation = 0.9302605
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
@@ -1518,25 +1515,21 @@ offset_bottom = 40.0
 
 [node name="Black13" type="ColorRect" parent="WallArt" unique_id=696716871]
 layout_mode = 0
-offset_left = 3757.0
-offset_top = 50.0
-offset_right = 3968.0
-offset_bottom = 389.0
+offset_left = 3582.0
+offset_top = 82.0
+offset_right = 3793.0
+offset_bottom = 421.0
 rotation = 1.5708
 color = Color(0, 0, 0, 1)
 
-[connection signal="cleared" from="Room/LaserDetector" to="." method="_on_mechanism_cleared"]
-[connection signal="detected" from="Room/LaserDetector" to="." method="_on_mechanism_detected"]
+[connection signal="detected" from="Room/LaserDetector" to="." method="_on_solved"]
 
 [editable path="Room/Track"]
 [editable path="Room/Track2"]
-[editable path="Room/Track9"]
-[editable path="Room/Track10"]
-[editable path="Room/Track11"]
-[editable path="Room/Track12"]
 [editable path="Room/Track3"]
 [editable path="Room/Track4"]
-[editable path="Room/Track8"]
 [editable path="Room/Track5"]
-[editable path="Room/Track6"]
 [editable path="Room/Track7"]
+[editable path="Room/Track8"]
+[editable path="Room/Track9"]
+[editable path="Room/Track6"]

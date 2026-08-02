@@ -1135,6 +1135,7 @@ script = ExtResource("3_qnq8n")
 [node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
 position = Vector2(1256, 1985)
 rotation = 3.1241393
+laser_range = 15
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
 position = Vector2(1086, 2093)
@@ -1170,13 +1171,13 @@ position = Vector2(752, 536)
 position = Vector2(927, 452)
 
 [node name="Wall12" parent="Room" unique_id=1680865469 instance=ExtResource("5_lto8c")]
-position = Vector2(1098, 355)
+position = Vector2(1100, 564)
 
 [node name="Wall13" parent="Room" unique_id=133575494 instance=ExtResource("5_lto8c")]
 position = Vector2(1268, 452)
 
 [node name="Wall14" parent="Room" unique_id=1940233159 instance=ExtResource("5_lto8c")]
-position = Vector2(1428, 361)
+position = Vector2(1430, 570)
 
 [node name="Wall15" parent="Room" unique_id=779990197 instance=ExtResource("5_lto8c")]
 position = Vector2(1601, 456)
@@ -1185,13 +1186,13 @@ position = Vector2(1601, 456)
 position = Vector2(1769, 565)
 
 [node name="Wall17" parent="Room" unique_id=1653515628 instance=ExtResource("5_lto8c")]
-position = Vector2(1935, 460)
+position = Vector2(1922, 464)
 
 [node name="Wall18" parent="Room" unique_id=190019520 instance=ExtResource("5_lto8c")]
 position = Vector2(2097, 557)
 
 [node name="Wall19" parent="Room" unique_id=332014342 instance=ExtResource("5_lto8c")]
-position = Vector2(2280, 658)
+position = Vector2(2250, 484)
 
 [node name="Wall20" parent="Room" unique_id=630257578 instance=ExtResource("5_lto8c")]
 position = Vector2(2446, 555)
@@ -1224,10 +1225,10 @@ position = Vector2(1606, 1981)
 position = Vector2(1768, 2093)
 
 [node name="Wall30" parent="Room" unique_id=214169222 instance=ExtResource("5_lto8c")]
-position = Vector2(1955, 1983)
+position = Vector2(1915, 2174)
 
 [node name="Wall31" parent="Room" unique_id=73870102 instance=ExtResource("5_lto8c")]
-position = Vector2(2102, 1899)
+position = Vector2(2109, 2109)
 
 [node name="Wall32" parent="Room" unique_id=1428240952 instance=ExtResource("5_lto8c")]
 position = Vector2(2279, 2004)
@@ -1340,6 +1341,57 @@ visible = false
 [node name="TopRight" parent="Room/Track5" index="4"]
 visible = false
 
+[node name="Track10" parent="Room" unique_id=905475895 instance=ExtResource("6_gfi6n")]
+position = Vector2(2097, 933)
+
+[node name="Top" parent="Room/Track10" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track10" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track10" index="2"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track10" index="5"]
+visible = false
+
+[node name="Track11" parent="Room" unique_id=2121643187 instance=ExtResource("6_gfi6n")]
+position = Vector2(1933, 860)
+
+[node name="Top" parent="Room/Track11" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track11" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track11" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track11" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track11" index="4"]
+visible = false
+
+[node name="Track12" parent="Room" unique_id=1796803489 instance=ExtResource("6_gfi6n")]
+position = Vector2(2271, 848)
+
+[node name="Top" parent="Room/Track12" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track12" index="1"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track12" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track12" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track12" index="5"]
+visible = false
+
 [node name="Track7" parent="Room" unique_id=783584507 instance=ExtResource("6_gfi6n")]
 position = Vector2(1091, 934)
 
@@ -1435,6 +1487,10 @@ rotation = 0.9896017
 position = Vector2(1754, 923.99994)
 rotation = 1.5707964
 
+[node name="Mirror19" parent="Room" unique_id=50672612 instance=ExtResource("7_2rj0f")]
+position = Vector2(1587, 658)
+rotation = 1.5707964
+
 [node name="Mirror5" parent="Room" unique_id=2044098582 instance=ExtResource("7_2rj0f")]
 position = Vector2(1752, 1507.0001)
 rotation = 3.1415927
@@ -1451,20 +1507,32 @@ rotation = 1.5707964
 position = Vector2(2422.7, 934)
 rotation = 1.5707964
 
+[node name="Mirror21" parent="Room" unique_id=48679228 instance=ExtResource("7_2rj0f")]
+position = Vector2(2271, 854.00006)
+rotation = 1.1065388
+
 [node name="Mirror17" parent="Room" unique_id=490429460 instance=ExtResource("7_2rj0f")]
 position = Vector2(2940, 836.00006)
 rotation = 1.5707964
 
 [node name="Mirror18" parent="Room" unique_id=1219640781 instance=ExtResource("7_2rj0f")]
-position = Vector2(3114, 1126)
-rotation = 0.4660029
+position = Vector2(2939, 1414)
+rotation = 1.5707964
+
+[node name="Mirror22" parent="Room" unique_id=1435390701 instance=ExtResource("7_2rj0f")]
+position = Vector2(3090, 1513)
+rotation = 0.9896017
 
 [node name="Mirror10" parent="Room" unique_id=1867584307 instance=ExtResource("7_2rj0f")]
-position = Vector2(2420.7, 1517.0001)
+position = Vector2(1927, 1996.0001)
 rotation = 1.5707964
 
 [node name="Mirror11" parent="Room" unique_id=804947428 instance=ExtResource("7_2rj0f")]
 position = Vector2(2421.7, 1319)
+rotation = 1.5707964
+
+[node name="Mirror20" parent="Room" unique_id=2104202242 instance=ExtResource("7_2rj0f")]
+position = Vector2(2420, 1521.0001)
 rotation = 1.5707964
 
 [node name="Mirror12" parent="Room" unique_id=907062440 instance=ExtResource("7_2rj0f")]
@@ -1500,7 +1568,7 @@ position = Vector2(1088, 926)
 rotation = 1.5707964
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
-position = Vector2(2765, 1505)
+position = Vector2(2088, 1709)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
 position = Vector2(3112, 932)
@@ -1529,6 +1597,9 @@ color = Color(0, 0, 0, 1)
 [editable path="Room/Track3"]
 [editable path="Room/Track4"]
 [editable path="Room/Track5"]
+[editable path="Room/Track10"]
+[editable path="Room/Track11"]
+[editable path="Room/Track12"]
 [editable path="Room/Track7"]
 [editable path="Room/Track8"]
 [editable path="Room/Track9"]
