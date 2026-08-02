@@ -146,6 +146,22 @@ func test_mirror_struck_by_two_beams_draws_both_bounces():
 	var active = mcell.mirror_laser.filter(func(m): return m.is_active())
 	assert_eq(active.size(), 4, "two beams bouncing off one mirror draw two segments each")
 
+func test_mirror_hit_edge_on_terminates_the_beam_with_a_half_segment():
+	# A beam travelling straight into a short mirror whose surface runs along the same
+	# axis can't reflect. Rather than vanishing a cell short, the beam terminates
+	# inside the mirror with a flat-cut half-beam, exactly like a crate or detector.
+	var emitter := make_block(EmitterScene, 4, 3)  # faces DOWN
+	emitter.laser_range = -1
+	var mirror := make_block(MirrorScene, 4, 5)  # rotation 0 -> short mirror facing DOWN (vertical)
+	var room := build_room([emitter, mirror], Vector2i(20, 0))
+	var mcell = room.grid.grid[4][5]
+	assert_eq(mcell.mirror_laser.filter(func(m): return m.is_active()).size(), 0,
+		"an un-reflectable hit draws no bounce segments")
+	assert_eq(mcell.half_laser.filter(func(h): return h.is_active()).size(), 1,
+		"the beam ends inside the mirror with one flat-cut half-beam, like a crate")
+	assert_true(room.grid.grid[4][4].is_laser_active(), "beam reaches the cell before the mirror")
+	assert_false(room.grid.grid[4][6].is_laser_active(), "and does not continue past it")
+
 # ---------------------------------------------------------- prism splitting
 func test_prism_splits_white_beam_into_three_colors():
 	var emitter := make_block(EmitterScene, 4, 3)

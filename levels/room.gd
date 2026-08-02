@@ -305,7 +305,11 @@ class Grid:
 				var incoming_dir = laser_facing
 				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, false)
 				if laser_facing == input_dir:
-					# The mirror reflected back along the input path, so quit out
+					# The beam met a face this mirror can't reflect off (the reflection
+					# would go straight back down its input). Terminate it inside the
+					# mirror with a flat-cut half-beam, the way a crate or detector does,
+					# so the beam ends at the block instead of vanishing a cell short.
+					_reveal_step(ctx, [_draw_half_beam(cell, incoming_dir, color, false)])
 					return
 
 				_reveal_step(ctx, _draw_mirror_bounce(cell, incoming_dir, laser_facing, false, color))
@@ -318,7 +322,11 @@ class Grid:
 				var incoming_dir = laser_facing
 				laser_facing = Util.reflect_direction(input_dir, cell.block_facing, true)
 				if laser_facing == input_dir:
-					# The mirror reflected back along the input path, so quit out
+					# The beam met a face this mirror can't reflect off (the reflection
+					# would go straight back down its input). Terminate it inside the
+					# mirror with a flat-cut half-beam, the way a crate or detector does,
+					# so the beam ends at the block instead of vanishing a cell short.
+					_reveal_step(ctx, [_draw_half_beam(cell, incoming_dir, color, false)])
 					return
 
 				_reveal_step(ctx, _draw_mirror_bounce(cell, incoming_dir, laser_facing, true, color))
