@@ -3,17 +3,18 @@ class_name Room
 
 ## Emitted when a beam ends up striking the player as a result of the player's own
 ## action -- toggling an emitter they stand in front of, rotating a mirror into
-## themselves, stepping into a beam's path, and so on. By the time it fires every
-## emitter in the room has already been switched off (so the beams are gone); the
-## listener (Level) plays the "fried" dialogue and resets the room.
+## themselves, stepping into a beam's path, and so on. The beams are left ON so
+## the player can see what killed them; the listener (Level) holds a beat, then
+## switches the emitters off, plays the "fried" dialogue, and resets the room.
 signal player_fried
 ## Emitted when the player tries to walk across an active beam. The move is
 ## refused (see Grid._attempt_move); the listener shows the one-time "singed"
 ## hint the first time it ever happens.
 signal player_singed
 
-## Guards the fry reaction against re-entry while it is being handled (shutting the
-## emitters off re-resolves the lasers, which must not fire another fry).
+## Latched once the player has fried themselves, so a beam left on the player's
+## cell across further resolves fires player_fried only once. Cleared by the room
+## reload the death sequence ends in.
 var _handling_fry := false
 
 ## Pending laser-segment reveals for the traveling-beam animation. Each entry is
@@ -86,15 +87,22 @@ func handle_laser_physics() -> void:
 	grid.handle_laser_physics()
 
 
+## Switches every emitter off (so the beams vanish) and re-resolves. The Level
+## calls this after the post-death beat, once the player has had a moment to see
+## the beam that killed them.
+func shut_off_all_emitters() -> void:
+	grid.shut_off_all_emitters()
+
+
 ## Called by the grid when a settled resolve leaves a beam on the player's own
-## cell: the player fried themselves through their last action. Switches every
-## emitter off (so the beams vanish) and fires player_fried exactly once -- the
-## re-resolve during shut-off can't fry again since no beam remains.
+## cell: the player fried themselves through their last action. Fires player_fried
+## exactly once (the _handling_fry latch guards re-entry). The beams are left on
+## so the player can see what killed them -- the Level shuts them off after the
+## post-death beat (see Level._on_player_fried).
 func _on_player_struck() -> void:
 	if _handling_fry:
 		return
 	_handling_fry = true
-	grid.shut_off_all_emitters()
 	player_fried.emit()
 
 

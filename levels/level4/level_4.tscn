@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="8_syimn"]
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_ivh0a"]
 [ext_resource type="Script" uid="uid://0yposkppgvdk" path="res://levels/level4/level_4.gd" id="9_lvl1"]
-[ext_resource type="Script" uid="uid://dyacngsecrmkl" path="res://tileset/interact_hint/interact_hint.gd" id="10_hint"]
 
 [node name="Level4" type="Node2D" unique_id=1134870724]
 script = ExtResource("9_lvl1")
@@ -1134,11 +1133,101 @@ texture = ExtResource("2_rlete")
 script = ExtResource("3_qnq8n")
 
 [node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_it373")]
-position = Vector2(384.00006, 986.0002)
-rotation = 3.1101768
+position = Vector2(926.00006, 644)
+rotation = 0.061086524
 
 [node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_lto8c")]
-position = Vector2(1935, 669)
+position = Vector2(926, 1816)
+
+[node name="Wall5" parent="Room" unique_id=403256773 instance=ExtResource("5_lto8c")]
+position = Vector2(1082, 1911)
+
+[node name="Wall6" parent="Room" unique_id=2011117225 instance=ExtResource("5_lto8c")]
+position = Vector2(1261, 1818)
+
+[node name="Wall7" parent="Room" unique_id=1659477720 instance=ExtResource("5_lto8c")]
+position = Vector2(1428, 1908)
+
+[node name="Wall8" parent="Room" unique_id=53733264 instance=ExtResource("5_lto8c")]
+position = Vector2(1585, 1813)
+
+[node name="Wall9" parent="Room" unique_id=1698900293 instance=ExtResource("5_lto8c")]
+position = Vector2(1763, 1908)
+
+[node name="Wall10" parent="Room" unique_id=2118853802 instance=ExtResource("5_lto8c")]
+position = Vector2(1919, 1819)
+
+[node name="Wall11" parent="Room" unique_id=262474314 instance=ExtResource("5_lto8c")]
+position = Vector2(2080, 1905)
+
+[node name="Wall12" parent="Room" unique_id=2086332490 instance=ExtResource("5_lto8c")]
+position = Vector2(2260, 2008)
+
+[node name="Wall13" parent="Room" unique_id=579672998 instance=ExtResource("5_lto8c")]
+position = Vector2(2448, 2099)
+
+[node name="Wall14" parent="Room" unique_id=569085279 instance=ExtResource("5_lto8c")]
+position = Vector2(2588, 2013)
+
+[node name="Wall15" parent="Room" unique_id=1940851270 instance=ExtResource("5_lto8c")]
+position = Vector2(2769, 1905)
+
+[node name="Wall16" parent="Room" unique_id=346841276 instance=ExtResource("5_lto8c")]
+position = Vector2(2763, 1732)
+
+[node name="Wall17" parent="Room" unique_id=1257825148 instance=ExtResource("5_lto8c")]
+position = Vector2(2769, 1516)
+
+[node name="Wall18" parent="Room" unique_id=2061809215 instance=ExtResource("5_lto8c")]
+position = Vector2(2767, 1333)
+
+[node name="Wall19" parent="Room" unique_id=1037103201 instance=ExtResource("5_lto8c")]
+position = Vector2(2756, 1136)
+
+[node name="Wall20" parent="Room" unique_id=1355608126 instance=ExtResource("5_lto8c")]
+position = Vector2(2762, 953)
+
+[node name="Wall21" parent="Room" unique_id=1424402722 instance=ExtResource("5_lto8c")]
+position = Vector2(2777, 759)
+
+[node name="Wall22" parent="Room" unique_id=1666922565 instance=ExtResource("5_lto8c")]
+position = Vector2(2766, 562)
+
+[node name="Wall23" parent="Room" unique_id=1133486535 instance=ExtResource("5_lto8c")]
+position = Vector2(2589, 461)
+
+[node name="Wall24" parent="Room" unique_id=801065078 instance=ExtResource("5_lto8c")]
+position = Vector2(2421, 367)
+
+[node name="Wall25" parent="Room" unique_id=2030588805 instance=ExtResource("5_lto8c")]
+position = Vector2(2253, 468)
+
+[node name="Wall26" parent="Room" unique_id=774262637 instance=ExtResource("5_lto8c")]
+position = Vector2(2102, 562)
+
+[node name="Wall27" parent="Room" unique_id=1478815271 instance=ExtResource("5_lto8c")]
+position = Vector2(1938, 670)
+
+[node name="Wall28" parent="Room" unique_id=1662986401 instance=ExtResource("5_lto8c")]
+position = Vector2(1768, 561)
+
+[node name="Wall29" parent="Room" unique_id=1080671583 instance=ExtResource("5_lto8c")]
+position = Vector2(1595, 475)
+
+[node name="Wall30" parent="Room" unique_id=1749539345 instance=ExtResource("5_lto8c")]
+position = Vector2(1394, 388)
+
+[node name="Wall31" parent="Room" unique_id=355039291 instance=ExtResource("5_lto8c")]
+position = Vector2(1259, 460)
+
+[node name="Wall2" parent="Room" unique_id=1622507061 instance=ExtResource("5_lto8c")]
+position = Vector2(746, 1718)
+
+[node name="Wall3" parent="Room" unique_id=288854025 instance=ExtResource("5_lto8c")]
+position = Vector2(746, 1518)
+
+[node name="Wall4" parent="Room" unique_id=622173632 instance=ExtResource("5_lto8c")]
+position = Vector2(755, 1340)
 
 [node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_gfi6n")]
 position = Vector2(372.13806, 1222.356)
@@ -1155,22 +1244,43 @@ visible = false
 [node name="BottomRight" parent="Room/Track" index="5"]
 visible = false
 
-[node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
-position = Vector2(406, 1563)
-rotation = 0.58294
-
 [node name="RotationPad" parent="Room" unique_id=220370918 instance=ExtResource("8_syimn")]
-position = Vector2(457, 382)
+position = Vector2(929, 1230)
 
-[node name="InteractHint" type="Node2D" parent="Room/RotationPad" unique_id=1720506287]
-script = ExtResource("10_hint")
-hint_id = "pad"
+[node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("7_2rj0f")]
+position = Vector2(917, 1242.9999)
+rotation = -0.58119464
+
+[node name="RotationPad2" parent="Room" unique_id=2083630227 instance=ExtResource("8_syimn")]
+position = Vector2(1944.1052, 1409.291)
+
+[node name="Mirror3" parent="Room" unique_id=877022734 instance=ExtResource("7_2rj0f")]
+position = Vector2(1932.1052, 1422.2909)
+rotation = -0.58119464
+
+[node name="RotationPad3" parent="Room" unique_id=216608172 instance=ExtResource("8_syimn")]
+position = Vector2(1928.1052, 840.291)
+
+[node name="Mirror4" parent="Room" unique_id=1219023975 instance=ExtResource("7_2rj0f")]
+position = Vector2(1916.1052, 853.2909)
+rotation = -0.9302605
+
+[node name="RotationPad4" parent="Room" unique_id=100345651 instance=ExtResource("8_syimn")]
+position = Vector2(2433, 1708)
+
+[node name="Mirror5" parent="Room" unique_id=2147261613 instance=ExtResource("7_2rj0f")]
+position = Vector2(2421, 1720.9999)
+
+[node name="Mirror2" parent="Room" unique_id=234394803 instance=ExtResource("7_2rj0f")]
+position = Vector2(1594.0001, 1616.0001)
+rotation = 1.5707964
 
 [node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("8_awmj3")]
-position = Vector2(2600, 1446)
+position = Vector2(910, 1612)
 
 [node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("9_ivh0a")]
-position = Vector2(352, 712)
+position = Vector2(2411, 585.99994)
+rotation = 0.9320058
 
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
@@ -1181,10 +1291,10 @@ offset_bottom = 40.0
 
 [node name="Black13" type="ColorRect" parent="WallArt" unique_id=696716871]
 layout_mode = 0
-offset_left = 2884.0
-offset_top = -8.0
-offset_right = 3095.0
-offset_bottom = 331.0
+offset_left = 3745.0
+offset_top = 1.0
+offset_right = 3956.0
+offset_bottom = 340.0
 rotation = 1.5708
 color = Color(0, 0, 0, 1)
 

@@ -121,13 +121,14 @@ func _on_unsolved() -> void:
 
 # --- laser hazard -----------------------------------------------------------
 
-## The player fried themselves on a beam. The room has already switched every
-## emitter off, so the beams are gone; hold a locked-input beat so the death can
-## register, then play the "fried" dialogue and reset the room to its start.
+## The player fried themselves on a beam. The room leaves the killing beam ON;
+## hold a locked-input beat so the player can see what got them, THEN switch the
+## emitters off, play the "fried" dialogue, and reset the room to its start.
 ## (Once the dialogue engine lands, the reset should wait for the dialogue to be
 ## dismissed rather than firing immediately.)
 func _on_player_fried() -> void:
-	await _pause_before_aftermath()
+	await _pause_before_aftermath()  # hold with the killing beam still on screen
+	room.shut_off_all_emitters()     # now the beams go dark -- the player has seen them
 	_play_dialogue("fried")
 	_reset_room()
 

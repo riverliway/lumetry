@@ -7,9 +7,10 @@ extends "res://test/fixtures/game_test.gd"
 ##    `player_singed` so the first attempt ever can surface a hint.
 ##  - Frying: a beam that ends up on the player's OWN cell -- because the player
 ##    toggled an emitter they stood in front of, rotated a mirror into the beam,
-##    or stepped into its path -- switches every emitter off and raises
-##    `player_fried`. The load-time resolve never fries (the player isn't
-##    connected yet), so a level can start with the player parked anywhere.
+##    or stepped into its path -- raises `player_fried`, leaving the beam ON so
+##    the player can see what killed them (the Level shuts it off after a beat).
+##    The load-time resolve never fries (the player isn't connected yet), so a
+##    level can start with the player parked anywhere.
 
 const RotationPadScene: PackedScene = preload("res://tileset/rotation/rotation_pad.tscn")
 
@@ -33,8 +34,9 @@ func test_toggling_an_emitter_onto_yourself_fries_you():
 
 	assert_signal_emitted(room, "player_fried", "toggling the beam onto yourself fries you")
 	assert_signal_emit_count(room, "player_fried", 1, "it fires exactly once")
-	assert_false(emitter.activated, "the fry switched the emitter back off")
-	assert_eq(active_laser_count(room), 0, "and the beam is gone")
+	# The emitter is LEFT ON (old behaviour switched it off here) so the player can
+	# see what killed them; the Level shuts it off after the post-death beat.
+	assert_true(emitter.activated, "the emitter stays on, not switched off by the fry")
 
 
 func test_rotating_an_emitter_into_yourself_fries_you():
@@ -49,8 +51,7 @@ func test_rotating_an_emitter_into_yourself_fries_you():
 	room.rotate_pad(pad)  # DOWN_RIGHT -> DOWN, now aimed at the player
 
 	assert_signal_emitted(room, "player_fried", "rotating the beam onto yourself fries you")
-	assert_false(emitter.activated, "the fry switched the emitter off")
-	assert_eq(active_laser_count(room), 0, "and the beam is gone")
+	assert_true(emitter.activated, "the emitter stays on, not switched off by the fry")
 
 
 func test_stepping_into_a_beam_you_were_blocking_fries_you():
@@ -68,7 +69,23 @@ func test_stepping_into_a_beam_you_were_blocking_fries_you():
 
 	assert_eq(_player_cell(room, player), [5, 6], "the move into the dark cell was allowed")
 	assert_signal_emitted(room, "player_fried", "the beam caught up and fried the player")
-	assert_eq(active_laser_count(room), 0, "the fry cleared every beam")
+	assert_gt(active_laser_count(room), 0, "the killing beam stays on so the player can see it")
+
+
+func test_shut_off_all_emitters_clears_the_beams():
+	# The public shut-off the Level runs after the post-death beat: every emitter
+	# goes off and the beams clear. (During real play this is what finally darkens
+	# the beam that killed the player, once they have had a moment to see it.)
+	var emitter := make_block(EmitterScene, 5, 5)  # faces DOWN, column 5
+	emitter.laser_range = -1
+	var room := build_room([emitter], Vector2i(8, 8))  # player well clear of the beam
+	assert_true(emitter.activated, "emitter starts on")
+	assert_gt(active_laser_count(room), 0, "and its beam is drawn")
+
+	room.shut_off_all_emitters()
+
+	assert_false(emitter.activated, "shut_off_all_emitters switched the emitter off")
+	assert_eq(active_laser_count(room), 0, "and cleared every beam")
 
 
 func test_beam_that_never_reaches_the_player_does_not_fry():
