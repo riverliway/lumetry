@@ -37,9 +37,10 @@ const WALL_FLOOR_MODULATE := Color("ffffff26")
 const PAUSE_MENU := preload("res://ui/pause_menu.tscn")
 ## Where advancing past the final level lands (there is no next room to open).
 const LEVEL_SELECT_SCENE := "res://level_select.tscn"
-## Beat held after a death or a win before the dialogue and the room reset /
-## advance, with player input locked, so the player can register what happened.
-const POST_EVENT_DELAY := 3.0
+## Beat (seconds) held after a death or a win before the dialogue and the room
+## reset / advance, with player input locked, so the player can register what
+## happened.
+const POST_EVENT_DELAY := 1.0
 
 @onready var room: Room = $Room
 
