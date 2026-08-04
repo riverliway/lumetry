@@ -1,0 +1,1530 @@
+[gd_scene format=3 uid="uid://ca0dth4pxtr7"]
+
+[ext_resource type="Script" uid="uid://mwl7bs1q41ja" path="res://levels/level7/level_7.gd" id="1_sj8ml"]
+[ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="2_gahnw"]
+[ext_resource type="Script" uid="uid://dtg4bvreeirqv" path="res://levels/room.gd" id="3_lbxk8"]
+[ext_resource type="PackedScene" uid="uid://cij7mo7my7bp7" path="res://tileset/laser/laser_emitter.tscn" id="4_0whhs"]
+[ext_resource type="PackedScene" uid="uid://dxapfb2nplqn0" path="res://tileset/wall/wall.tscn" id="5_25xnt"]
+[ext_resource type="PackedScene" uid="uid://bid0ygivbhoey" path="res://tileset/track/track.tscn" id="6_yx48u"]
+[ext_resource type="PackedScene" uid="uid://cret8xx0a7s6g" path="res://tileset/rotation/rotation_pad.tscn" id="7_t4krg"]
+[ext_resource type="PackedScene" uid="uid://edblwq6jllx4" path="res://tileset/mirror/mirror.tscn" id="8_32rh5"]
+[ext_resource type="PackedScene" uid="uid://bvuq7rylynww4" path="res://player/player.tscn" id="9_f28if"]
+[ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="10_0fxuy"]
+
+[node name="Level7" type="Node2D" unique_id=1134870724]
+script = ExtResource("1_sj8ml")
+
+[node name="Background" type="Node2D" parent="." unique_id=809700269]
+
+[node name="GreyBack" type="ColorRect" parent="Background" unique_id=757847415]
+offset_left = -51.0
+offset_top = -97.0
+offset_right = 3868.0
+offset_bottom = 2235.0
+color = Color(0.306923, 0.306923, 0.306923, 1)
+
+[node name="Floor" type="Node2D" parent="." unique_id=1451744526]
+
+[node name="floor_0_0" type="Sprite2D" parent="Floor" unique_id=1491462939]
+position = Vector2(79, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_1" type="Sprite2D" parent="Floor" unique_id=1601658802]
+position = Vector2(79, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_2" type="Sprite2D" parent="Floor" unique_id=1662105041]
+position = Vector2(79, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_3" type="Sprite2D" parent="Floor" unique_id=188225655]
+position = Vector2(79, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_4" type="Sprite2D" parent="Floor" unique_id=2009303500]
+position = Vector2(79, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_5" type="Sprite2D" parent="Floor" unique_id=16429549]
+position = Vector2(79, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_6" type="Sprite2D" parent="Floor" unique_id=1475453769]
+position = Vector2(79, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_7" type="Sprite2D" parent="Floor" unique_id=1297352453]
+position = Vector2(79, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_8" type="Sprite2D" parent="Floor" unique_id=1492751326]
+position = Vector2(79, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_9" type="Sprite2D" parent="Floor" unique_id=1958651734]
+position = Vector2(79, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_10" type="Sprite2D" parent="Floor" unique_id=314615092]
+position = Vector2(79, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_0_11" type="Sprite2D" parent="Floor" unique_id=790457892]
+position = Vector2(79, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_0" type="Sprite2D" parent="Floor" unique_id=225801041]
+position = Vector2(247, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_1" type="Sprite2D" parent="Floor" unique_id=1176361649]
+position = Vector2(247, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_2" type="Sprite2D" parent="Floor" unique_id=655640966]
+position = Vector2(247, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_3" type="Sprite2D" parent="Floor" unique_id=1224111934]
+position = Vector2(247, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_4" type="Sprite2D" parent="Floor" unique_id=288589906]
+position = Vector2(247, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_5" type="Sprite2D" parent="Floor" unique_id=1754033072]
+position = Vector2(247, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_6" type="Sprite2D" parent="Floor" unique_id=223922770]
+position = Vector2(247, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_7" type="Sprite2D" parent="Floor" unique_id=1225854566]
+position = Vector2(247, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_8" type="Sprite2D" parent="Floor" unique_id=1985688859]
+position = Vector2(247, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_9" type="Sprite2D" parent="Floor" unique_id=559119246]
+position = Vector2(247, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_10" type="Sprite2D" parent="Floor" unique_id=1405332142]
+position = Vector2(247, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_1_11" type="Sprite2D" parent="Floor" unique_id=1045425301]
+position = Vector2(247, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_0" type="Sprite2D" parent="Floor" unique_id=1244591439]
+position = Vector2(415, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_1" type="Sprite2D" parent="Floor" unique_id=818097930]
+position = Vector2(415, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_2" type="Sprite2D" parent="Floor" unique_id=1741501230]
+position = Vector2(415, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_3" type="Sprite2D" parent="Floor" unique_id=1163888814]
+position = Vector2(415, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_4" type="Sprite2D" parent="Floor" unique_id=1761647814]
+position = Vector2(415, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_5" type="Sprite2D" parent="Floor" unique_id=771332411]
+position = Vector2(415, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_6" type="Sprite2D" parent="Floor" unique_id=147414518]
+position = Vector2(415, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_7" type="Sprite2D" parent="Floor" unique_id=1962420078]
+position = Vector2(415, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_8" type="Sprite2D" parent="Floor" unique_id=909764409]
+position = Vector2(415, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_9" type="Sprite2D" parent="Floor" unique_id=1717738630]
+position = Vector2(415, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_10" type="Sprite2D" parent="Floor" unique_id=1284393282]
+position = Vector2(415, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_2_11" type="Sprite2D" parent="Floor" unique_id=1287369260]
+position = Vector2(415, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_0" type="Sprite2D" parent="Floor" unique_id=112259956]
+position = Vector2(583, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_1" type="Sprite2D" parent="Floor" unique_id=1289927403]
+position = Vector2(583, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_2" type="Sprite2D" parent="Floor" unique_id=1967727590]
+position = Vector2(583, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_3" type="Sprite2D" parent="Floor" unique_id=1560852276]
+position = Vector2(583, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_4" type="Sprite2D" parent="Floor" unique_id=1758593392]
+position = Vector2(583, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_5" type="Sprite2D" parent="Floor" unique_id=1855802764]
+position = Vector2(583, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_6" type="Sprite2D" parent="Floor" unique_id=98420227]
+position = Vector2(583, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_7" type="Sprite2D" parent="Floor" unique_id=341040901]
+position = Vector2(583, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_8" type="Sprite2D" parent="Floor" unique_id=83072149]
+position = Vector2(583, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_9" type="Sprite2D" parent="Floor" unique_id=1543873096]
+position = Vector2(583, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_10" type="Sprite2D" parent="Floor" unique_id=970419374]
+position = Vector2(583, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_3_11" type="Sprite2D" parent="Floor" unique_id=2078212672]
+position = Vector2(583, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_0" type="Sprite2D" parent="Floor" unique_id=422579070]
+position = Vector2(751, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_1" type="Sprite2D" parent="Floor" unique_id=1132696910]
+position = Vector2(751, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_2" type="Sprite2D" parent="Floor" unique_id=1204512182]
+position = Vector2(751, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_3" type="Sprite2D" parent="Floor" unique_id=957527149]
+position = Vector2(751, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_4" type="Sprite2D" parent="Floor" unique_id=2003869063]
+position = Vector2(751, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_5" type="Sprite2D" parent="Floor" unique_id=2062217144]
+position = Vector2(751, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_12" type="Sprite2D" parent="Floor" unique_id=482458437]
+position = Vector2(751, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_6" type="Sprite2D" parent="Floor" unique_id=513172008]
+position = Vector2(751, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_7" type="Sprite2D" parent="Floor" unique_id=1915877584]
+position = Vector2(751, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_8" type="Sprite2D" parent="Floor" unique_id=2039928061]
+position = Vector2(751, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_9" type="Sprite2D" parent="Floor" unique_id=326916656]
+position = Vector2(751, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_10" type="Sprite2D" parent="Floor" unique_id=1608616781]
+position = Vector2(751, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_4_11" type="Sprite2D" parent="Floor" unique_id=267064965]
+position = Vector2(751, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_0" type="Sprite2D" parent="Floor" unique_id=1811405090]
+position = Vector2(919, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_1" type="Sprite2D" parent="Floor" unique_id=1403968138]
+position = Vector2(919, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_2" type="Sprite2D" parent="Floor" unique_id=499492970]
+position = Vector2(919, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_3" type="Sprite2D" parent="Floor" unique_id=95701687]
+position = Vector2(919, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_4" type="Sprite2D" parent="Floor" unique_id=1613201358]
+position = Vector2(919, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_5" type="Sprite2D" parent="Floor" unique_id=765721636]
+position = Vector2(919, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_6" type="Sprite2D" parent="Floor" unique_id=1748365185]
+position = Vector2(919, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_7" type="Sprite2D" parent="Floor" unique_id=2126225186]
+position = Vector2(919, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_12" type="Sprite2D" parent="Floor" unique_id=641477776]
+position = Vector2(919, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_8" type="Sprite2D" parent="Floor" unique_id=290285491]
+position = Vector2(919, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_9" type="Sprite2D" parent="Floor" unique_id=883145069]
+position = Vector2(919, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_10" type="Sprite2D" parent="Floor" unique_id=1106307345]
+position = Vector2(919, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_5_11" type="Sprite2D" parent="Floor" unique_id=336363861]
+position = Vector2(919, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_0" type="Sprite2D" parent="Floor" unique_id=413735348]
+position = Vector2(1087, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_1" type="Sprite2D" parent="Floor" unique_id=593689854]
+position = Vector2(1087, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_2" type="Sprite2D" parent="Floor" unique_id=1323866605]
+position = Vector2(1087, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_3" type="Sprite2D" parent="Floor" unique_id=1548688527]
+position = Vector2(1087, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_4" type="Sprite2D" parent="Floor" unique_id=1560646331]
+position = Vector2(1087, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_5" type="Sprite2D" parent="Floor" unique_id=789648812]
+position = Vector2(1087, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_6" type="Sprite2D" parent="Floor" unique_id=1491455767]
+position = Vector2(1087, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_7" type="Sprite2D" parent="Floor" unique_id=1989061764]
+position = Vector2(1087, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_8" type="Sprite2D" parent="Floor" unique_id=1707935830]
+position = Vector2(1087, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_9" type="Sprite2D" parent="Floor" unique_id=493696313]
+position = Vector2(1087, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_10" type="Sprite2D" parent="Floor" unique_id=1804852345]
+position = Vector2(1087, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_6_11" type="Sprite2D" parent="Floor" unique_id=333575614]
+position = Vector2(1087, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_0" type="Sprite2D" parent="Floor" unique_id=89372214]
+position = Vector2(1255, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_1" type="Sprite2D" parent="Floor" unique_id=486547315]
+position = Vector2(1255, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_2" type="Sprite2D" parent="Floor" unique_id=240354482]
+position = Vector2(1255, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_3" type="Sprite2D" parent="Floor" unique_id=1499424478]
+position = Vector2(1255, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_4" type="Sprite2D" parent="Floor" unique_id=1468000821]
+position = Vector2(1255, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_5" type="Sprite2D" parent="Floor" unique_id=1845567766]
+position = Vector2(1255, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_6" type="Sprite2D" parent="Floor" unique_id=1003039092]
+position = Vector2(1255, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_7" type="Sprite2D" parent="Floor" unique_id=1033279347]
+position = Vector2(1255, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_8" type="Sprite2D" parent="Floor" unique_id=1849385245]
+position = Vector2(1255, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_9" type="Sprite2D" parent="Floor" unique_id=897433144]
+position = Vector2(1255, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_10" type="Sprite2D" parent="Floor" unique_id=972397235]
+position = Vector2(1255, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_7_11" type="Sprite2D" parent="Floor" unique_id=152662887]
+position = Vector2(1255, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_0" type="Sprite2D" parent="Floor" unique_id=512236245]
+position = Vector2(1423, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_1" type="Sprite2D" parent="Floor" unique_id=418925265]
+position = Vector2(1423, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_2" type="Sprite2D" parent="Floor" unique_id=2138026247]
+position = Vector2(1423, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_3" type="Sprite2D" parent="Floor" unique_id=1986838699]
+position = Vector2(1423, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_4" type="Sprite2D" parent="Floor" unique_id=1269271236]
+position = Vector2(1423, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_5" type="Sprite2D" parent="Floor" unique_id=1520062342]
+position = Vector2(1423, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_6" type="Sprite2D" parent="Floor" unique_id=184255315]
+position = Vector2(1423, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_7" type="Sprite2D" parent="Floor" unique_id=1648237876]
+position = Vector2(1423, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_8" type="Sprite2D" parent="Floor" unique_id=1822884480]
+position = Vector2(1423, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_9" type="Sprite2D" parent="Floor" unique_id=1143006014]
+position = Vector2(1423, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_10" type="Sprite2D" parent="Floor" unique_id=1160200733]
+position = Vector2(1423, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_8_11" type="Sprite2D" parent="Floor" unique_id=1441917135]
+position = Vector2(1423, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_0" type="Sprite2D" parent="Floor" unique_id=1519164562]
+position = Vector2(1591, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_1" type="Sprite2D" parent="Floor" unique_id=522095372]
+position = Vector2(1591, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_2" type="Sprite2D" parent="Floor" unique_id=2113265906]
+position = Vector2(1591, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_3" type="Sprite2D" parent="Floor" unique_id=340473400]
+position = Vector2(1591, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_4" type="Sprite2D" parent="Floor" unique_id=1210191965]
+position = Vector2(1591, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_5" type="Sprite2D" parent="Floor" unique_id=1887318239]
+position = Vector2(1591, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_6" type="Sprite2D" parent="Floor" unique_id=1623615030]
+position = Vector2(1591, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_7" type="Sprite2D" parent="Floor" unique_id=896731050]
+position = Vector2(1591, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_8" type="Sprite2D" parent="Floor" unique_id=1793447830]
+position = Vector2(1591, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_9" type="Sprite2D" parent="Floor" unique_id=191322554]
+position = Vector2(1591, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_10" type="Sprite2D" parent="Floor" unique_id=899550147]
+position = Vector2(1591, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_9_11" type="Sprite2D" parent="Floor" unique_id=1635496069]
+position = Vector2(1591, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_0" type="Sprite2D" parent="Floor" unique_id=338667995]
+position = Vector2(1759, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_1" type="Sprite2D" parent="Floor" unique_id=469107646]
+position = Vector2(1759, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_2" type="Sprite2D" parent="Floor" unique_id=266065578]
+position = Vector2(1759, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_3" type="Sprite2D" parent="Floor" unique_id=1446233931]
+position = Vector2(1759, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_4" type="Sprite2D" parent="Floor" unique_id=1496261515]
+position = Vector2(1759, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_5" type="Sprite2D" parent="Floor" unique_id=1684286294]
+position = Vector2(1759, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_6" type="Sprite2D" parent="Floor" unique_id=614658085]
+position = Vector2(1759, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_7" type="Sprite2D" parent="Floor" unique_id=530942031]
+position = Vector2(1759, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_8" type="Sprite2D" parent="Floor" unique_id=1286081163]
+position = Vector2(1759, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_9" type="Sprite2D" parent="Floor" unique_id=765318397]
+position = Vector2(1759, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_10" type="Sprite2D" parent="Floor" unique_id=44515980]
+position = Vector2(1759, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_10_11" type="Sprite2D" parent="Floor" unique_id=727831487]
+position = Vector2(1759, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_0" type="Sprite2D" parent="Floor" unique_id=857825521]
+position = Vector2(1927, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_1" type="Sprite2D" parent="Floor" unique_id=1015284049]
+position = Vector2(1927, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_2" type="Sprite2D" parent="Floor" unique_id=187608972]
+position = Vector2(1927, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_3" type="Sprite2D" parent="Floor" unique_id=1899996399]
+position = Vector2(1927, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_4" type="Sprite2D" parent="Floor" unique_id=536160157]
+position = Vector2(1927, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_5" type="Sprite2D" parent="Floor" unique_id=1183901358]
+position = Vector2(1927, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_6" type="Sprite2D" parent="Floor" unique_id=2104900131]
+position = Vector2(1927, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_7" type="Sprite2D" parent="Floor" unique_id=526514257]
+position = Vector2(1927, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_8" type="Sprite2D" parent="Floor" unique_id=921899049]
+position = Vector2(1927, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_9" type="Sprite2D" parent="Floor" unique_id=197150741]
+position = Vector2(1927, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_10" type="Sprite2D" parent="Floor" unique_id=1197561641]
+position = Vector2(1927, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_11_11" type="Sprite2D" parent="Floor" unique_id=1808064782]
+position = Vector2(1927, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_0" type="Sprite2D" parent="Floor" unique_id=645152060]
+position = Vector2(2095, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_1" type="Sprite2D" parent="Floor" unique_id=499976863]
+position = Vector2(2095, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_2" type="Sprite2D" parent="Floor" unique_id=783291482]
+position = Vector2(2095, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_3" type="Sprite2D" parent="Floor" unique_id=1011154690]
+position = Vector2(2095, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_4" type="Sprite2D" parent="Floor" unique_id=1102188686]
+position = Vector2(2095, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_5" type="Sprite2D" parent="Floor" unique_id=510843545]
+position = Vector2(2095, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_6" type="Sprite2D" parent="Floor" unique_id=369048730]
+position = Vector2(2095, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_7" type="Sprite2D" parent="Floor" unique_id=1983710219]
+position = Vector2(2095, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_8" type="Sprite2D" parent="Floor" unique_id=1304677951]
+position = Vector2(2095, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_9" type="Sprite2D" parent="Floor" unique_id=420521153]
+position = Vector2(2095, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_10" type="Sprite2D" parent="Floor" unique_id=411149987]
+position = Vector2(2095, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_12_11" type="Sprite2D" parent="Floor" unique_id=1629732348]
+position = Vector2(2095, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_0" type="Sprite2D" parent="Floor" unique_id=229574882]
+position = Vector2(2263, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_1" type="Sprite2D" parent="Floor" unique_id=1120469591]
+position = Vector2(2263, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_2" type="Sprite2D" parent="Floor" unique_id=1122959389]
+position = Vector2(2263, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_3" type="Sprite2D" parent="Floor" unique_id=1679355147]
+position = Vector2(2263, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_4" type="Sprite2D" parent="Floor" unique_id=1074593971]
+position = Vector2(2263, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_5" type="Sprite2D" parent="Floor" unique_id=1262647254]
+position = Vector2(2263, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_6" type="Sprite2D" parent="Floor" unique_id=847543387]
+position = Vector2(2263, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_7" type="Sprite2D" parent="Floor" unique_id=1190282288]
+position = Vector2(2263, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_8" type="Sprite2D" parent="Floor" unique_id=1834801213]
+position = Vector2(2263, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_9" type="Sprite2D" parent="Floor" unique_id=2086092551]
+position = Vector2(2263, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_10" type="Sprite2D" parent="Floor" unique_id=659317398]
+position = Vector2(2263, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_13_11" type="Sprite2D" parent="Floor" unique_id=1297999539]
+position = Vector2(2263, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_0" type="Sprite2D" parent="Floor" unique_id=1225306243]
+position = Vector2(2431, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_1" type="Sprite2D" parent="Floor" unique_id=1149887718]
+position = Vector2(2431, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_2" type="Sprite2D" parent="Floor" unique_id=71227968]
+position = Vector2(2431, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_3" type="Sprite2D" parent="Floor" unique_id=274060603]
+position = Vector2(2431, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_4" type="Sprite2D" parent="Floor" unique_id=137616948]
+position = Vector2(2431, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_5" type="Sprite2D" parent="Floor" unique_id=804487142]
+position = Vector2(2431, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_6" type="Sprite2D" parent="Floor" unique_id=1908674999]
+position = Vector2(2431, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_7" type="Sprite2D" parent="Floor" unique_id=144801019]
+position = Vector2(2431, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_8" type="Sprite2D" parent="Floor" unique_id=1210091437]
+position = Vector2(2431, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_9" type="Sprite2D" parent="Floor" unique_id=398997229]
+position = Vector2(2431, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_10" type="Sprite2D" parent="Floor" unique_id=284411042]
+position = Vector2(2431, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_14_11" type="Sprite2D" parent="Floor" unique_id=1421431992]
+position = Vector2(2431, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_0" type="Sprite2D" parent="Floor" unique_id=1524458765]
+position = Vector2(2599, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_1" type="Sprite2D" parent="Floor" unique_id=868658849]
+position = Vector2(2599, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_2" type="Sprite2D" parent="Floor" unique_id=742806256]
+position = Vector2(2599, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_3" type="Sprite2D" parent="Floor" unique_id=1607347210]
+position = Vector2(2599, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_4" type="Sprite2D" parent="Floor" unique_id=892855776]
+position = Vector2(2599, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_5" type="Sprite2D" parent="Floor" unique_id=1408734464]
+position = Vector2(2599, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_6" type="Sprite2D" parent="Floor" unique_id=1896426925]
+position = Vector2(2599, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_7" type="Sprite2D" parent="Floor" unique_id=1551261077]
+position = Vector2(2599, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_8" type="Sprite2D" parent="Floor" unique_id=1581478812]
+position = Vector2(2599, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_9" type="Sprite2D" parent="Floor" unique_id=307390813]
+position = Vector2(2599, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_10" type="Sprite2D" parent="Floor" unique_id=754638417]
+position = Vector2(2599, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_15_11" type="Sprite2D" parent="Floor" unique_id=828354043]
+position = Vector2(2599, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_0" type="Sprite2D" parent="Floor" unique_id=1778440036]
+position = Vector2(2767, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_1" type="Sprite2D" parent="Floor" unique_id=1446929452]
+position = Vector2(2767, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_2" type="Sprite2D" parent="Floor" unique_id=979759973]
+position = Vector2(2767, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_3" type="Sprite2D" parent="Floor" unique_id=1716485093]
+position = Vector2(2767, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_4" type="Sprite2D" parent="Floor" unique_id=363626012]
+position = Vector2(2767, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_5" type="Sprite2D" parent="Floor" unique_id=1969844586]
+position = Vector2(2767, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_6" type="Sprite2D" parent="Floor" unique_id=99686439]
+position = Vector2(2767, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_7" type="Sprite2D" parent="Floor" unique_id=1923080734]
+position = Vector2(2767, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_8" type="Sprite2D" parent="Floor" unique_id=1278526435]
+position = Vector2(2767, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_9" type="Sprite2D" parent="Floor" unique_id=2090634600]
+position = Vector2(2767, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_10" type="Sprite2D" parent="Floor" unique_id=1301909365]
+position = Vector2(2767, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_16_11" type="Sprite2D" parent="Floor" unique_id=336053685]
+position = Vector2(2767, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_0" type="Sprite2D" parent="Floor" unique_id=1720117927]
+position = Vector2(2935, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_1" type="Sprite2D" parent="Floor" unique_id=1074893001]
+position = Vector2(2935, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_2" type="Sprite2D" parent="Floor" unique_id=57499706]
+position = Vector2(2935, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_3" type="Sprite2D" parent="Floor" unique_id=273709790]
+position = Vector2(2935, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_4" type="Sprite2D" parent="Floor" unique_id=1421642578]
+position = Vector2(2935, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_5" type="Sprite2D" parent="Floor" unique_id=1833818017]
+position = Vector2(2935, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_6" type="Sprite2D" parent="Floor" unique_id=544734450]
+position = Vector2(2935, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_7" type="Sprite2D" parent="Floor" unique_id=349016998]
+position = Vector2(2935, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_8" type="Sprite2D" parent="Floor" unique_id=193591693]
+position = Vector2(2935, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_9" type="Sprite2D" parent="Floor" unique_id=2123780182]
+position = Vector2(2935, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_10" type="Sprite2D" parent="Floor" unique_id=1329608904]
+position = Vector2(2935, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_17_11" type="Sprite2D" parent="Floor" unique_id=560431349]
+position = Vector2(2935, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_0" type="Sprite2D" parent="Floor" unique_id=1868008690]
+position = Vector2(3103, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_1" type="Sprite2D" parent="Floor" unique_id=72769857]
+position = Vector2(3103, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_2" type="Sprite2D" parent="Floor" unique_id=243617917]
+position = Vector2(3103, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_3" type="Sprite2D" parent="Floor" unique_id=818353842]
+position = Vector2(3103, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_4" type="Sprite2D" parent="Floor" unique_id=1100396529]
+position = Vector2(3103, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_5" type="Sprite2D" parent="Floor" unique_id=1817390041]
+position = Vector2(3103, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_6" type="Sprite2D" parent="Floor" unique_id=840816419]
+position = Vector2(3103, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_7" type="Sprite2D" parent="Floor" unique_id=1048486383]
+position = Vector2(3103, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_8" type="Sprite2D" parent="Floor" unique_id=397511625]
+position = Vector2(3103, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_9" type="Sprite2D" parent="Floor" unique_id=1271780067]
+position = Vector2(3103, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_10" type="Sprite2D" parent="Floor" unique_id=1416091305]
+position = Vector2(3103, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_18_11" type="Sprite2D" parent="Floor" unique_id=1533238968]
+position = Vector2(3103, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_0" type="Sprite2D" parent="Floor" unique_id=1083307196]
+position = Vector2(3271, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_1" type="Sprite2D" parent="Floor" unique_id=1936431016]
+position = Vector2(3271, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_2" type="Sprite2D" parent="Floor" unique_id=162932893]
+position = Vector2(3271, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_3" type="Sprite2D" parent="Floor" unique_id=1065284624]
+position = Vector2(3271, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_4" type="Sprite2D" parent="Floor" unique_id=580886465]
+position = Vector2(3271, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_5" type="Sprite2D" parent="Floor" unique_id=2145684194]
+position = Vector2(3271, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_6" type="Sprite2D" parent="Floor" unique_id=600580076]
+position = Vector2(3271, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_7" type="Sprite2D" parent="Floor" unique_id=1624480954]
+position = Vector2(3271, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_8" type="Sprite2D" parent="Floor" unique_id=1238423827]
+position = Vector2(3271, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_9" type="Sprite2D" parent="Floor" unique_id=127285834]
+position = Vector2(3271, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_10" type="Sprite2D" parent="Floor" unique_id=952012690]
+position = Vector2(3271, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_19_11" type="Sprite2D" parent="Floor" unique_id=2129879771]
+position = Vector2(3271, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_0" type="Sprite2D" parent="Floor" unique_id=1444848182]
+position = Vector2(3439, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_1" type="Sprite2D" parent="Floor" unique_id=2044397134]
+position = Vector2(3439, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_2" type="Sprite2D" parent="Floor" unique_id=612936324]
+position = Vector2(3439, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_3" type="Sprite2D" parent="Floor" unique_id=1338234879]
+position = Vector2(3439, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_4" type="Sprite2D" parent="Floor" unique_id=1613272271]
+position = Vector2(3439, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_5" type="Sprite2D" parent="Floor" unique_id=1826912555]
+position = Vector2(3439, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_6" type="Sprite2D" parent="Floor" unique_id=450666146]
+position = Vector2(3439, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_7" type="Sprite2D" parent="Floor" unique_id=1878168016]
+position = Vector2(3439, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_8" type="Sprite2D" parent="Floor" unique_id=520870291]
+position = Vector2(3439, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_9" type="Sprite2D" parent="Floor" unique_id=769911331]
+position = Vector2(3439, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_10" type="Sprite2D" parent="Floor" unique_id=1135349820]
+position = Vector2(3439, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_20_11" type="Sprite2D" parent="Floor" unique_id=1352217216]
+position = Vector2(3439, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_0" type="Sprite2D" parent="Floor" unique_id=1941437330]
+position = Vector2(3607, 79)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_1" type="Sprite2D" parent="Floor" unique_id=1773565250]
+position = Vector2(3607, 271)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_2" type="Sprite2D" parent="Floor" unique_id=1932980202]
+position = Vector2(3607, 463)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_3" type="Sprite2D" parent="Floor" unique_id=1989360153]
+position = Vector2(3607, 655)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_4" type="Sprite2D" parent="Floor" unique_id=145581918]
+position = Vector2(3607, 847)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_5" type="Sprite2D" parent="Floor" unique_id=1511682528]
+position = Vector2(3607, 1039)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_6" type="Sprite2D" parent="Floor" unique_id=1199955243]
+position = Vector2(3607, 1231)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_7" type="Sprite2D" parent="Floor" unique_id=1102307183]
+position = Vector2(3607, 1423)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_8" type="Sprite2D" parent="Floor" unique_id=1190693720]
+position = Vector2(3607, 1615)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_9" type="Sprite2D" parent="Floor" unique_id=1133603828]
+position = Vector2(3607, 1807)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_10" type="Sprite2D" parent="Floor" unique_id=1049439118]
+position = Vector2(3607, 1999)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_21_11" type="Sprite2D" parent="Floor" unique_id=1128524940]
+position = Vector2(3607, 2191)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_0" type="Sprite2D" parent="Floor" unique_id=1284345144]
+position = Vector2(3775, -17)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_1" type="Sprite2D" parent="Floor" unique_id=29833159]
+position = Vector2(3775, 175)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_2" type="Sprite2D" parent="Floor" unique_id=943646984]
+position = Vector2(3775, 367)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_3" type="Sprite2D" parent="Floor" unique_id=198766294]
+position = Vector2(3775, 559)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_4" type="Sprite2D" parent="Floor" unique_id=374230440]
+position = Vector2(3775, 751)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_5" type="Sprite2D" parent="Floor" unique_id=1534618159]
+position = Vector2(3775, 943)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_6" type="Sprite2D" parent="Floor" unique_id=886272070]
+position = Vector2(3775, 1135)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_7" type="Sprite2D" parent="Floor" unique_id=1110191126]
+position = Vector2(3775, 1327)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_8" type="Sprite2D" parent="Floor" unique_id=1679703887]
+position = Vector2(3775, 1519)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_9" type="Sprite2D" parent="Floor" unique_id=623449775]
+position = Vector2(3775, 1711)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_10" type="Sprite2D" parent="Floor" unique_id=1016275837]
+position = Vector2(3775, 1903)
+texture = ExtResource("2_gahnw")
+
+[node name="floor_22_11" type="Sprite2D" parent="Floor" unique_id=1428995712]
+position = Vector2(3775, 2095)
+texture = ExtResource("2_gahnw")
+
+[node name="Room" type="Node2D" parent="." unique_id=1203397639]
+script = ExtResource("3_lbxk8")
+
+[node name="LaserEmitter" parent="Room" unique_id=1803502148 instance=ExtResource("4_0whhs")]
+position = Vector2(2774, 927.9999)
+rotation = 0.93375117
+laser_range = 13
+
+[node name="Wall" parent="Room" unique_id=1874488209 instance=ExtResource("5_25xnt")]
+position = Vector2(2434.211, 555)
+
+[node name="Wall2" parent="Room" unique_id=1732087646 instance=ExtResource("5_25xnt")]
+position = Vector2(2265.211, 488)
+
+[node name="Wall3" parent="Room" unique_id=244226785 instance=ExtResource("5_25xnt")]
+position = Vector2(2094.211, 567)
+
+[node name="Wall10" parent="Room" unique_id=2047324634 instance=ExtResource("5_25xnt")]
+position = Vector2(1935.2109, 467)
+
+[node name="Wall11" parent="Room" unique_id=584315658 instance=ExtResource("5_25xnt")]
+position = Vector2(1770.2109, 575)
+
+[node name="Wall12" parent="Room" unique_id=1942021038 instance=ExtResource("5_25xnt")]
+position = Vector2(1599.2109, 479)
+
+[node name="Wall13" parent="Room" unique_id=1774288311 instance=ExtResource("5_25xnt")]
+position = Vector2(1431.2109, 572)
+
+[node name="Wall14" parent="Room" unique_id=1780724591 instance=ExtResource("5_25xnt")]
+position = Vector2(1269.2109, 663)
+
+[node name="Wall15" parent="Room" unique_id=935478989 instance=ExtResource("5_25xnt")]
+position = Vector2(1116.2109, 759)
+
+[node name="Wall16" parent="Room" unique_id=7145196 instance=ExtResource("5_25xnt")]
+position = Vector2(924.211, 850)
+
+[node name="Wall17" parent="Room" unique_id=1685444105 instance=ExtResource("5_25xnt")]
+position = Vector2(740, 955)
+
+[node name="Wall18" parent="Room" unique_id=604071869 instance=ExtResource("5_25xnt")]
+position = Vector2(756, 1145)
+
+[node name="Wall19" parent="Room" unique_id=718303630 instance=ExtResource("5_25xnt")]
+position = Vector2(754, 1364)
+
+[node name="Wall20" parent="Room" unique_id=1551449231 instance=ExtResource("5_25xnt")]
+position = Vector2(779, 1543)
+
+[node name="Wall36" parent="Room" unique_id=1966482533 instance=ExtResource("5_25xnt")]
+position = Vector2(757, 1708)
+
+[node name="Wall21" parent="Room" unique_id=705053666 instance=ExtResource("5_25xnt")]
+position = Vector2(936.211, 1803)
+
+[node name="Wall22" parent="Room" unique_id=1700395219 instance=ExtResource("5_25xnt")]
+position = Vector2(1101.2109, 1912)
+
+[node name="Wall23" parent="Room" unique_id=1419700575 instance=ExtResource("5_25xnt")]
+position = Vector2(1278.2109, 2006)
+
+[node name="Wall24" parent="Room" unique_id=1691372165 instance=ExtResource("5_25xnt")]
+position = Vector2(1441.2109, 2099)
+
+[node name="Wall25" parent="Room" unique_id=638088832 instance=ExtResource("5_25xnt")]
+position = Vector2(1610.2109, 2198)
+
+[node name="Wall26" parent="Room" unique_id=1205663464 instance=ExtResource("5_25xnt")]
+position = Vector2(1779.2109, 2095)
+
+[node name="Wall27" parent="Room" unique_id=1344278190 instance=ExtResource("5_25xnt")]
+position = Vector2(1933.2109, 2194)
+
+[node name="Wall28" parent="Room" unique_id=1004039777 instance=ExtResource("5_25xnt")]
+position = Vector2(2104.211, 2100)
+
+[node name="Wall29" parent="Room" unique_id=1007546882 instance=ExtResource("5_25xnt")]
+position = Vector2(2275.211, 2006)
+
+[node name="Wall30" parent="Room" unique_id=1150538649 instance=ExtResource("5_25xnt")]
+position = Vector2(2431.211, 1912)
+
+[node name="Wall31" parent="Room" unique_id=1234798961 instance=ExtResource("5_25xnt")]
+position = Vector2(2608, 1985)
+
+[node name="Wall32" parent="Room" unique_id=858762873 instance=ExtResource("5_25xnt")]
+position = Vector2(2780, 1920)
+
+[node name="Wall33" parent="Room" unique_id=2018128493 instance=ExtResource("5_25xnt")]
+position = Vector2(2946, 1807)
+
+[node name="Wall34" parent="Room" unique_id=2135457266 instance=ExtResource("5_25xnt")]
+position = Vector2(3110, 1701)
+
+[node name="Wall35" parent="Room" unique_id=398541392 instance=ExtResource("5_25xnt")]
+position = Vector2(3294, 1606)
+
+[node name="Wall4" parent="Room" unique_id=1085498379 instance=ExtResource("5_25xnt")]
+position = Vector2(2604.211, 653)
+
+[node name="Wall5" parent="Room" unique_id=1037311102 instance=ExtResource("5_25xnt")]
+position = Vector2(2768, 755)
+
+[node name="Wall37" parent="Room" unique_id=1334509850 instance=ExtResource("5_25xnt")]
+position = Vector2(2948, 867)
+
+[node name="Wall6" parent="Room" unique_id=1410982436 instance=ExtResource("5_25xnt")]
+position = Vector2(3437, 1312)
+
+[node name="Wall38" parent="Room" unique_id=2013478420 instance=ExtResource("5_25xnt")]
+position = Vector2(3129, 934)
+
+[node name="Wall7" parent="Room" unique_id=218129204 instance=ExtResource("5_25xnt")]
+position = Vector2(3300, 1051)
+
+[node name="Wall8" parent="Room" unique_id=19330833 instance=ExtResource("5_25xnt")]
+position = Vector2(3449, 1540)
+
+[node name="Wall9" parent="Room" unique_id=818586889 instance=ExtResource("5_25xnt")]
+position = Vector2(3438, 1139)
+
+[node name="Track" parent="Room" unique_id=370637231 instance=ExtResource("6_yx48u")]
+position = Vector2(2439.211, 757)
+
+[node name="Top" parent="Room/Track" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track" index="4"]
+visible = false
+
+[node name="Track2" parent="Room" unique_id=207683020 instance=ExtResource("6_yx48u")]
+position = Vector2(2614.211, 845)
+
+[node name="Top" parent="Room/Track2" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track2" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track2" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track2" index="4"]
+visible = false
+
+[node name="Track3" parent="Room" unique_id=1586553354 instance=ExtResource("6_yx48u")]
+position = Vector2(2789.211, 947)
+
+[node name="Top" parent="Room/Track3" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track3" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track3" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track3" index="4"]
+visible = false
+
+[node name="Track4" parent="Room" unique_id=580886826 instance=ExtResource("6_yx48u")]
+position = Vector2(2962.211, 1045)
+
+[node name="Top" parent="Room/Track4" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track4" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track4" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track4" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track4" index="5"]
+visible = false
+
+[node name="Track5" parent="Room" unique_id=1759864759 instance=ExtResource("6_yx48u")]
+position = Vector2(1778.2109, 1510)
+
+[node name="Top" parent="Room/Track5" index="0"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track5" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track5" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track5" index="4"]
+visible = false
+
+[node name="Track11" parent="Room" unique_id=790191754 instance=ExtResource("6_yx48u")]
+position = Vector2(1937.2109, 1801)
+
+[node name="Bottom" parent="Room/Track11" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track11" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track11" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track11" index="5"]
+visible = false
+
+[node name="Track7" parent="Room" unique_id=1480801538 instance=ExtResource("6_yx48u")]
+position = Vector2(1952.2109, 1609)
+
+[node name="Top" parent="Room/Track7" index="0"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track7" index="2"]
+visible = false
+
+[node name="TopRight" parent="Room/Track7" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track7" index="5"]
+visible = false
+
+[node name="Track8" parent="Room" unique_id=2003118949 instance=ExtResource("6_yx48u")]
+position = Vector2(1781.2109, 1708)
+
+[node name="Bottom" parent="Room/Track8" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track8" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track8" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track8" index="4"]
+visible = false
+
+[node name="Track6" parent="Room" unique_id=1299465408 instance=ExtResource("6_yx48u")]
+position = Vector2(2105.211, 942)
+
+[node name="Top" parent="Room/Track6" index="0"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track6" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track6" index="3"]
+visible = false
+
+[node name="TopRight" parent="Room/Track6" index="4"]
+visible = false
+
+[node name="Track9" parent="Room" unique_id=2084934479 instance=ExtResource("6_yx48u")]
+position = Vector2(2279.211, 1041)
+
+[node name="Top" parent="Room/Track9" index="0"]
+visible = false
+
+[node name="Bottom" parent="Room/Track9" index="1"]
+visible = false
+
+[node name="TopRight" parent="Room/Track9" index="4"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track9" index="5"]
+visible = false
+
+[node name="Track10" parent="Room" unique_id=1386616636 instance=ExtResource("6_yx48u")]
+position = Vector2(2108.211, 1140)
+
+[node name="Bottom" parent="Room/Track10" index="1"]
+visible = false
+
+[node name="BottomLeft" parent="Room/Track10" index="2"]
+visible = false
+
+[node name="TopLeft" parent="Room/Track10" index="3"]
+visible = false
+
+[node name="BottomRight" parent="Room/Track10" index="5"]
+visible = false
+
+[node name="RotationPad" parent="Room" unique_id=1185317205 instance=ExtResource("7_t4krg")]
+position = Vector2(1944.2109, 1031)
+
+[node name="RotationPad4" parent="Room" unique_id=476410633 instance=ExtResource("7_t4krg")]
+position = Vector2(2269, 1033)
+
+[node name="Mirror" parent="Room" unique_id=345722183 instance=ExtResource("8_32rh5")]
+position = Vector2(1939.2108, 1039.9999)
+
+[node name="RotationPad3" parent="Room" unique_id=433657690 instance=ExtResource("7_t4krg")]
+position = Vector2(1440.2112, 1516)
+
+[node name="Mirror6" parent="Room" unique_id=1194958655 instance=ExtResource("8_32rh5")]
+position = Vector2(1435.2109, 1524.9999)
+rotation = 2.560398
+
+[node name="Mirror5" parent="Room" unique_id=690370816 instance=ExtResource("8_32rh5")]
+position = Vector2(2618.2112, 1427)
+
+[node name="Mirror11" parent="Room" unique_id=1000684103 instance=ExtResource("8_32rh5")]
+position = Vector2(2279.211, 1039)
+rotation = 0.5235988
+
+[node name="Mirror4" parent="Room" unique_id=391570327 instance=ExtResource("8_32rh5")]
+position = Vector2(2268.211, 1610)
+rotation = 1.5707964
+
+[node name="Mirror12" parent="Room" unique_id=1263553767 instance=ExtResource("8_32rh5")]
+position = Vector2(2610, 1809)
+rotation = 1.5707964
+
+[node name="Mirror15" parent="Room" unique_id=1358013510 instance=ExtResource("8_32rh5")]
+position = Vector2(3285.0002, 1425)
+
+[node name="Mirror13" parent="Room" unique_id=1041085900 instance=ExtResource("8_32rh5")]
+position = Vector2(2621.211, 1035.0001)
+rotation = 3.1415927
+
+[node name="Mirror2" parent="Room" unique_id=1884946490 instance=ExtResource("8_32rh5")]
+position = Vector2(1104.2109, 942.00006)
+rotation = 1.1047934
+
+[node name="Mirror10" parent="Room" unique_id=1734817460 instance=ExtResource("8_32rh5")]
+position = Vector2(1270.2109, 1422)
+rotation = 3.1991885
+
+[node name="Mirror7" parent="Room" unique_id=2045646197 instance=ExtResource("8_32rh5")]
+position = Vector2(1437.2109, 751)
+rotation = 1.0471976
+
+[node name="Mirror3" parent="Room" unique_id=796010589 instance=ExtResource("8_32rh5")]
+position = Vector2(1602.2109, 1996)
+rotation = 1.5707964
+
+[node name="Mirror9" parent="Room" unique_id=1998412513 instance=ExtResource("8_32rh5")]
+position = Vector2(1765.0001, 1697.9999)
+rotation = 1.1065388
+
+[node name="Mirror14" parent="Room" unique_id=1839934016 instance=ExtResource("8_32rh5")]
+position = Vector2(1771, 1515.0001)
+rotation = -0.9878563
+
+[node name="Player" parent="Room" unique_id=724861794 instance=ExtResource("9_f28if")]
+position = Vector2(1952.2109, 658)
+
+[node name="LaserDetector" parent="Room" unique_id=1015740166 instance=ExtResource("10_0fxuy")]
+position = Vector2(1111.2109, 1707.0001)
+rotation = 3.9566615
+
+[node name="WallArt" type="Control" parent="." unique_id=1119903716]
+z_index = 100
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Black13" type="ColorRect" parent="WallArt" unique_id=696716871]
+layout_mode = 0
+offset_left = 3757.0
+offset_top = 50.0
+offset_right = 3968.0
+offset_bottom = 389.0
+rotation = 1.5708
+color = Color(0, 0, 0, 1)
+
+[connection signal="detected" from="Room/LaserDetector" to="." method="_on_solved"]
+
+[editable path="Room/Track"]
+[editable path="Room/Track2"]
+[editable path="Room/Track3"]
+[editable path="Room/Track4"]
+[editable path="Room/Track5"]
+[editable path="Room/Track11"]
+[editable path="Room/Track7"]
+[editable path="Room/Track8"]
+[editable path="Room/Track6"]
+[editable path="Room/Track9"]
+[editable path="Room/Track10"]
