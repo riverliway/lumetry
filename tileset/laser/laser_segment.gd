@@ -24,7 +24,7 @@ const LASER_MODULATE := {
 ## traveling-beam reveal, so darkening must leave it alone (Color.darkened does).
 ## The finite-emitter sprite is pre-darkened by the same amount in
 ## tools/image_compiler.py so beam and emitter match.
-const FINITE_DARKEN := 0.45
+const FINITE_DARKEN := 0.15
 
 ## The tint to apply over the white base sprite for a beam of `color`, dimmed if
 ## the beam is finite-range. Shared by every laser sprite type (straight,

@@ -205,7 +205,7 @@ def compile_laser_fade() -> int:
 # artist can drop real frames over the same filenames later. Both the active and
 # the greyed-out (locked) sets are darkened, so a finite emitter reads as finite
 # whether or not the player can toggle it.
-FINITE_DARKEN = 0.45  # keep in sync with LaserSegment.FINITE_DARKEN
+FINITE_DARKEN = 0.15  # keep in sync with LaserSegment.FINITE_DARKEN
 
 EMITTER_DIR = ROOT / "tileset" / "laser"
 FINITE_EMITTER_FRAMES = {
