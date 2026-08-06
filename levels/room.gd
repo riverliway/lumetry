@@ -344,7 +344,9 @@ class Grid:
 		for i in range(0, len(emitters_index), 2):
 			var emitter_cell = grid[emitters_index[i]][emitters_index[i + 1]]
 			if emitter_cell.block.activated:
-				_propagate_laser(emitter_cell, emitter_cell.block.laser_range, emitter_cell.block_facing, Util.LASER_COLOR.WHITE, _new_anim_ctx())
+				# A finite-range emitter (laser_range != -1) fires a dimmed beam, so it
+				# reads as weaker than an infinite one; the flag rides the whole path.
+				_propagate_laser(emitter_cell, emitter_cell.block.laser_range, emitter_cell.block_facing, Util.LASER_COLOR.WHITE, _new_anim_ctx(), emitter_cell.block.laser_range != -1)
 
 		# A focuser fires only once its three back ports are fed; one focuser's
 		# destructive output can feed another, so resolve to a fixpoint.
@@ -365,7 +367,11 @@ class Grid:
 	## [br]`ctx` carries the traveling-beam reveal state for this beam path -- how
 	## far past the point where it diverged from the previous frame's beam we are,
 	## so each newly-lit cell can stagger its reveal (see _reveal_step / _new_anim_ctx).
-	func _propagate_laser(emitter: Cell, strength: int, laser_direction: Util.DIRECTION, color: Util.LASER_COLOR, ctx: Dictionary) -> void:
+	## [br]`finite` dims every segment of this beam (see LaserSegment.beam_modulate)
+	## so a finite-range beam reads as weaker than an infinite one. It rides along
+	## the whole path -- including any mirror bounces and prism splits, which a
+	## finite beam can still make before its range runs out at the tip.
+	func _propagate_laser(emitter: Cell, strength: int, laser_direction: Util.DIRECTION, color: Util.LASER_COLOR, ctx: Dictionary, finite := false) -> void:
 		var laser_strength: Array[int] = [strength]
 
 		# Draw the stub of beam emerging from an emitter's face: the raycast below
@@ -373,11 +379,11 @@ class Grid:
 		# The emitter sprite sits above Z_LASER and hides the flat cut. Guarded to
 		# real emitters -- focusers and prisms also call this but draw their own beams.
 		if emitter.get_block_type() == Util.BLOCK_TYPE.LASER_EMITTER:
-			_reveal_step(ctx, [_draw_half_beam(emitter, laser_direction, color, true)])
+			_reveal_step(ctx, [_draw_half_beam(emitter, laser_direction, color, true, finite)])
 
 		# Propogate once from the emitter first, and then continue the propogation below
 		# because we don't want to continue the propogation if it hits a different emitter
-		var cell = _raycast_laser(go(emitter, laser_direction), laser_strength, laser_direction, color, ctx)
+		var cell = _raycast_laser(go(emitter, laser_direction), laser_strength, laser_direction, color, ctx, finite)
 		var laser_facing = laser_direction
 		
 		while laser_strength[0] != 0:
@@ -402,7 +408,7 @@ class Grid:
 			# fade already taking precedence over a block one cell *past* the tip. (The
 			# player is handled above: standing in the beam's final cell still fries.)
 			if laser_strength[0] == 1:
-				var seg := cell.add_laser(Util.rotate_direction_clockwise(laser_facing, 3), laser_facing, color, laser_rotation(laser_facing), true)
+				var seg := cell.add_laser(Util.rotate_direction_clockwise(laser_facing, 3), laser_facing, color, laser_rotation(laser_facing), true, finite)
 				_reveal_step(ctx, [seg])
 				return
 
@@ -415,12 +421,12 @@ class Grid:
 					# would go straight back down its input). Terminate it inside the
 					# mirror with a flat-cut half-beam, the way a crate or detector does,
 					# so the beam ends at the block instead of vanishing a cell short.
-					_reveal_step(ctx, [_draw_half_beam(cell, incoming_dir, color, false)])
+					_reveal_step(ctx, [_draw_half_beam(cell, incoming_dir, color, false, finite)])
 					return
 
-				_reveal_step(ctx, _draw_mirror_bounce(cell, incoming_dir, laser_facing, false, color))
+				_reveal_step(ctx, _draw_mirror_bounce(cell, incoming_dir, laser_facing, false, color, finite))
 				laser_strength[0] -= 1
-				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color, ctx)
+				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color, ctx, finite)
 				continue
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.MIRROR_LONG:
@@ -432,12 +438,12 @@ class Grid:
 					# would go straight back down its input). Terminate it inside the
 					# mirror with a flat-cut half-beam, the way a crate or detector does,
 					# so the beam ends at the block instead of vanishing a cell short.
-					_reveal_step(ctx, [_draw_half_beam(cell, incoming_dir, color, false)])
+					_reveal_step(ctx, [_draw_half_beam(cell, incoming_dir, color, false, finite)])
 					return
 
-				_reveal_step(ctx, _draw_mirror_bounce(cell, incoming_dir, laser_facing, true, color))
+				_reveal_step(ctx, _draw_mirror_bounce(cell, incoming_dir, laser_facing, true, color, finite))
 				laser_strength[0] -= 1
-				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color, ctx)
+				cell = _raycast_laser(go(cell, laser_facing), laser_strength, laser_facing, color, ctx, finite)
 				continue
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.LASER_DETECTOR:
@@ -447,7 +453,7 @@ class Grid:
 				# registers a hit if the beam arrived through its sensitive front arc.
 				# The stub's reveal delay is when the beam visually reaches the detector,
 				# so a hit reported this pass waits for it (see LaserDetector.end_pass).
-				var reveal_delay := _reveal_step(ctx, [_draw_half_beam(cell, laser_facing, color, false)])
+				var reveal_delay := _reveal_step(ctx, [_draw_half_beam(cell, laser_facing, color, false, finite)])
 				var from_dir = Util.rotate_direction_clockwise(laser_facing, 3)
 				if detector_hit_directions(cell.block_facing).has(from_dir):
 					cell.block.mark_hit(color, reveal_delay)
@@ -474,7 +480,7 @@ class Grid:
 				# (unlike walls, which are laser-transparent). Draw a flat-cut
 				# half-beam striking the crate face; the crate sprite sits above
 				# Z_LASER and hides the cut end, so the beam looks like it stops dead.
-				_reveal_step(ctx, [_draw_half_beam(cell, laser_facing, color, false)])
+				_reveal_step(ctx, [_draw_half_beam(cell, laser_facing, color, false, finite)])
 				return
 
 			if cell.get_block_type() == Util.BLOCK_TYPE.PRISIM:
@@ -482,13 +488,14 @@ class Grid:
 					# Colored lasers are absorbed by the prism
 					return
 
-				_reveal_step(ctx, _draw_prism_split(cell, laser_facing))
+				_reveal_step(ctx, _draw_prism_split(cell, laser_facing, finite))
 				# Split the laser into three colored lasers. Each output beam gets its
 				# own copy of the reveal context, so it keeps staggering forward from
-				# the prism independently of its siblings.
-				_propagate_laser(cell, laser_strength[0] - 1, Util.rotate_direction_clockwise(laser_facing), Util.LASER_COLOR.CYAN, ctx.duplicate())
-				_propagate_laser(cell, laser_strength[0] - 1, laser_facing, Util.LASER_COLOR.MAGENTA, ctx.duplicate())
-				_propagate_laser(cell, laser_strength[0] - 1, Util.rotate_direction_counterclockwise(laser_facing), Util.LASER_COLOR.YELLOW, ctx.duplicate())
+				# the prism independently of its siblings, and inherits this beam's
+				# finite dimming so a split off a finite beam stays dim.
+				_propagate_laser(cell, laser_strength[0] - 1, Util.rotate_direction_clockwise(laser_facing), Util.LASER_COLOR.CYAN, ctx.duplicate(), finite)
+				_propagate_laser(cell, laser_strength[0] - 1, laser_facing, Util.LASER_COLOR.MAGENTA, ctx.duplicate(), finite)
+				_propagate_laser(cell, laser_strength[0] - 1, Util.rotate_direction_counterclockwise(laser_facing), Util.LASER_COLOR.YELLOW, ctx.duplicate(), finite)
 				
 			return
 			
@@ -496,7 +503,7 @@ class Grid:
 	## [br]`cell` is the starting cell
 	## [br]`laser_direction` is the direction to shoot the laser in
 	## [br]Returns the non-air cell that the laser collided with
-	func _raycast_laser(cell: Cell, strength: Array[int], laser_direction: Util.DIRECTION, color: Util.LASER_COLOR, ctx: Dictionary) -> Cell:
+	func _raycast_laser(cell: Cell, strength: Array[int], laser_direction: Util.DIRECTION, color: Util.LASER_COLOR, ctx: Dictionary, finite := false) -> Cell:
 		var current_cell = cell
 
 		var _should_continue = func (c: Cell, s: int) -> bool:
@@ -514,7 +521,7 @@ class Grid:
 			# Because this fires the moment range is spent, it takes precedence over any
 			# mirror/prism/detector just past the tip -- the beam never reaches them.
 			var fade := strength[0] == 1
-			var seg := current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color, laser_rotation(laser_direction), fade)
+			var seg := current_cell.add_laser(Util.rotate_direction_clockwise(laser_direction, 3), laser_direction, color, laser_rotation(laser_direction), fade, finite)
 			_reveal_step(ctx, [seg])
 			current_cell = go(current_cell, laser_direction)
 			strength[0] -= 1
@@ -853,9 +860,9 @@ class Grid:
 	## Renders a bounce in a mirror cell as two half-beam sprites (incoming +
 	## reflected). The mirror cell holds no straight segment; this is its beam.
 	## Returns the two segments so the caller can stagger their reveal.
-	func _draw_mirror_bounce(cell: Cell, incoming_dir: Util.DIRECTION, outgoing_dir: Util.DIRECTION, is_long: bool, color: Util.LASER_COLOR) -> Array:
+	func _draw_mirror_bounce(cell: Cell, incoming_dir: Util.DIRECTION, outgoing_dir: Util.DIRECTION, is_long: bool, color: Util.LASER_COLOR, finite := false) -> Array:
 		var xfs = mirror_bounce_transforms(cell, incoming_dir, outgoing_dir, is_long)
-		return cell.add_mirror_laser(is_long, color, xfs[0], xfs[1])
+		return cell.add_mirror_laser(is_long, color, xfs[0], xfs[1], finite)
 
 	## Renders the split in a prism cell as four flat-cut half-beams: the incoming
 	## white beam and the straight (magenta), clockwise (cyan) and counter-clockwise
@@ -863,7 +870,7 @@ class Grid:
 	## flat, so a plain rotation orients it; the incoming beam points along the entry
 	## direction while each output points its full end outward (rotate 3 = reverse).
 	## Returns the four segments so the caller can stagger their reveal.
-	func _draw_prism_split(cell: Cell, incoming_dir: Util.DIRECTION) -> Array:
+	func _draw_prism_split(cell: Cell, incoming_dir: Util.DIRECTION, finite := false) -> Array:
 		var cyan_dir := Util.rotate_direction_clockwise(incoming_dir)
 		var yellow_dir := Util.rotate_direction_counterclockwise(incoming_dir)
 		var colors := [Util.LASER_COLOR.WHITE, Util.LASER_COLOR.MAGENTA, Util.LASER_COLOR.CYAN, Util.LASER_COLOR.YELLOW]
@@ -873,7 +880,7 @@ class Grid:
 			Transform2D(laser_rotation(Util.rotate_direction_clockwise(cyan_dir, 3)), cell.pos),
 			Transform2D(laser_rotation(Util.rotate_direction_clockwise(yellow_dir, 3)), cell.pos),
 		]
-		return cell.add_prism_laser(colors, transforms)
+		return cell.add_prism_laser(colors, transforms, finite)
 
 	## Draws a flat-cut half-beam connecting the main beam to a block sprite at a
 	## beam endpoint: where a beam emerges from an emitter (`outward` = true) or
@@ -884,9 +891,9 @@ class Grid:
 	## end away from the block, an inward one back toward where the beam came from
 	## (rotate 3 = reverse). The cut always sits at the cell center.
 	## Returns the segment so the caller can stagger its reveal.
-	func _draw_half_beam(cell: Cell, beam_dir: Util.DIRECTION, color: Util.LASER_COLOR, outward: bool) -> PrismSegment:
+	func _draw_half_beam(cell: Cell, beam_dir: Util.DIRECTION, color: Util.LASER_COLOR, outward: bool, finite := false) -> PrismSegment:
 		var sprite_dir := Util.rotate_direction_clockwise(beam_dir, 3) if outward else beam_dir
-		return cell.add_half_laser(color, Transform2D(laser_rotation(sprite_dir), cell.pos))
+		return cell.add_half_laser(color, Transform2D(laser_rotation(sprite_dir), cell.pos), finite)
 
 	# --------------------------------------------------- traveling-beam reveal
 	# A beam is drawn instantly and completely (physics and detectors read the
@@ -1077,7 +1084,8 @@ class Cell:
 	## [br]`to` is the direction the laser is going to
 	## [br]`beam_rotation` is the sprite rotation from Grid.laser_rotation
 	## [br]`fade` draws the dissolving-tail sprite -- the final cell of a finite beam
-	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION, color: Util.LASER_COLOR, beam_rotation: float, fade := false) -> LaserSegment:
+	## [br]`finite` dims the beam -- every cell of a finite-range beam
+	func add_laser(from: Util.DIRECTION, to: Util.DIRECTION, color: Util.LASER_COLOR, beam_rotation: float, fade := false, finite := false) -> LaserSegment:
 		var available_segment = Util.find_elem(laser, func(ls): return !ls.is_active())
 		if len(available_segment) == 0:
 			var new_segment = Room.laser_segment_scene.instantiate()
@@ -1085,9 +1093,9 @@ class Cell:
 			new_segment.z_index = Util.Z_LASER
 			laser.push_back(new_segment)
 			resolve_room.call().add_child(new_segment)
-			new_segment.set_laser(from, to, color, beam_rotation, fade)
+			new_segment.set_laser(from, to, color, beam_rotation, fade, finite)
 			return new_segment
-		available_segment[0].set_laser(from, to, color, beam_rotation, fade)
+		available_segment[0].set_laser(from, to, color, beam_rotation, fade, finite)
 		return available_segment[0]
 
 	## Draws a mirror bounce here as two half-beam sprites (incoming + reflected),
@@ -1095,58 +1103,58 @@ class Cell:
 	## Each bounce claims its own pair of segments from the pool, so a mirror struck
 	## by two beams in one resolve draws both bounces instead of the second
 	## overwriting the first (GEN-573).
-	func add_mirror_laser(is_long: bool, color: Util.LASER_COLOR, incoming_xf: Transform2D, reflected_xf: Transform2D) -> Array:
+	func add_mirror_laser(is_long: bool, color: Util.LASER_COLOR, incoming_xf: Transform2D, reflected_xf: Transform2D, finite := false) -> Array:
 		return [
-			_claim_mirror_segment(is_long, color, incoming_xf),
-			_claim_mirror_segment(is_long, color, reflected_xf),
+			_claim_mirror_segment(is_long, color, incoming_xf, finite),
+			_claim_mirror_segment(is_long, color, reflected_xf, finite),
 		]
 
 	## Sets the next inactive mirror segment in the pool (growing it if every one is
 	## already lit) and returns it. set_mirror shows the segment, so a second claim in
 	## the same bounce can't hand back the one just taken.
-	func _claim_mirror_segment(is_long: bool, color: Util.LASER_COLOR, xf: Transform2D) -> MirrorSegment:
+	func _claim_mirror_segment(is_long: bool, color: Util.LASER_COLOR, xf: Transform2D, finite := false) -> MirrorSegment:
 		var available = Util.find_elem(mirror_laser, func(ms): return !ms.is_active())
 		if len(available) == 0:
 			var seg = Room.mirror_segment_scene.instantiate()
 			seg.z_index = Util.Z_LASER
 			mirror_laser.push_back(seg)
 			resolve_room.call().add_child(seg)
-			seg.set_mirror(is_long, color, xf)
+			seg.set_mirror(is_long, color, xf, finite)
 			return seg
-		available[0].set_mirror(is_long, color, xf)
+		available[0].set_mirror(is_long, color, xf, finite)
 		return available[0]
 
 	## Draws a prism split here as four flat-cut half-beam sprites, pooled like the
 	## straight segments. `colors[i]` and `transforms[i]` come from Grid._draw_prism_split.
-	func add_prism_laser(colors: Array, transforms: Array) -> Array:
+	func add_prism_laser(colors: Array, transforms: Array, finite := false) -> Array:
 		var segs: Array = []
 		for i in range(colors.size()):
-			segs.push_back(_set_prism_segment(i, colors[i], transforms[i]))
+			segs.push_back(_set_prism_segment(i, colors[i], transforms[i], finite))
 		return segs
 
-	func _set_prism_segment(index: int, color: Util.LASER_COLOR, xf: Transform2D) -> PrismSegment:
+	func _set_prism_segment(index: int, color: Util.LASER_COLOR, xf: Transform2D, finite := false) -> PrismSegment:
 		while prism_laser.size() <= index:
 			var seg = Room.prism_segment_scene.instantiate()
 			seg.z_index = Util.Z_LASER
 			prism_laser.push_back(seg)
 			resolve_room.call().add_child(seg)
-		prism_laser[index].set_prism(color, xf)
+		prism_laser[index].set_prism(color, xf, finite)
 		return prism_laser[index]
 
 	## Draws a flat-cut half-beam stub at a beam endpoint here, reusing the prism
 	## half-beam sprite. Pooled like the straight segments, since an endpoint (e.g.
 	## a crate) can be struck from several directions at once. Transform comes from
 	## Grid._draw_half_beam.
-	func add_half_laser(color: Util.LASER_COLOR, xf: Transform2D) -> PrismSegment:
+	func add_half_laser(color: Util.LASER_COLOR, xf: Transform2D, finite := false) -> PrismSegment:
 		var available_segment = Util.find_elem(half_laser, func(cs): return !cs.is_active())
 		if len(available_segment) == 0:
 			var new_segment = Room.prism_segment_scene.instantiate()
 			new_segment.z_index = Util.Z_LASER
 			half_laser.push_back(new_segment)
 			resolve_room.call().add_child(new_segment)
-			new_segment.set_prism(color, xf)
+			new_segment.set_prism(color, xf, finite)
 			return new_segment
-		available_segment[0].set_prism(color, xf)
+		available_segment[0].set_prism(color, xf, finite)
 		return available_segment[0]
 
 	## Clears out all lasers in this cell

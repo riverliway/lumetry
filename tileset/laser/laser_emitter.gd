@@ -13,10 +13,17 @@ extends AnimatedSprite2D
 var block_type = Util.BLOCK_TYPE.LASER_EMITTER
 
 func _ready() -> void:
-	# Locked emitters (interactable == false) can't be toggled by the player, so
-	# show the greyed-out sprite as a hint. The disabled animation mirrors the
-	# active one frame-for-frame, so the global anim clock drives it identically.
-	animation = &"default" if interactable else &"disabled"
+	# Two independent visual cues, each a frame-for-frame variant of the active
+	# sprite so the global anim clock drives them all identically:
+	#  * Locked emitters (interactable == false) show the greyed-out sprite.
+	#  * Finite-range emitters (laser_range != -1) show a dimmer sprite, matching
+	#    the darker beam they fire (see LaserSegment.beam_modulate) so a limited
+	#    emitter reads as limited before it's even switched on.
+	var finite := laser_range != -1
+	if interactable:
+		animation = &"finite" if finite else &"default"
+	else:
+		animation = &"finite_disabled" if finite else &"disabled"
 
 func use() -> void:
 	activated = !activated

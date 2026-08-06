@@ -123,6 +123,43 @@ func test_infinite_beam_never_fades():
 	assert_eq(room.grid.grid[4][11].laser[0].animation, &"white",
 		"the beam reaches the edge solid, not faded")
 
+func test_finite_beam_is_dimmed_along_its_whole_length():
+	# A finite beam reads as weaker than an infinite one by being dimmed -- and the
+	# whole beam is dimmed, not just its faded tip, so every cell carries the cue.
+	var emitter := make_block(EmitterScene, 4, 2)
+	emitter.laser_range = 3  # lights (4,3), (4,4) solid + (4,5) tip
+	var room := build_room([emitter])
+	var dim := LaserSegment.beam_modulate(Util.LASER_COLOR.WHITE, true)
+	assert_eq(room.grid.grid[4][3].laser[0].self_modulate, dim, "first cell dimmed")
+	assert_eq(room.grid.grid[4][4].laser[0].self_modulate, dim, "middle cell dimmed")
+	assert_eq(room.grid.grid[4][5].laser[0].self_modulate, dim, "faded tip is dimmed too")
+
+func test_infinite_beam_is_not_dimmed():
+	var emitter := make_block(EmitterScene, 4, 2)
+	emitter.laser_range = -1
+	var room := build_room([emitter])
+	assert_eq(room.grid.grid[4][4].laser[0].self_modulate, LaserSegment.LASER_MODULATE[Util.LASER_COLOR.WHITE],
+		"an infinite beam keeps full brightness")
+
+func test_a_colored_split_off_a_finite_beam_stays_dimmed():
+	# A finite beam can still reach and split in a prism before its range runs out;
+	# the colored outputs inherit the dimming so a split off a finite beam is dim.
+	var emitter := make_block(EmitterScene, 4, 3)
+	emitter.laser_range = 5  # reaches the prism at (4,5) with range to spare, then splits
+	var prism := make_block(PrismScene, 4, 5)
+	var room := build_room([emitter, prism], Vector2i(20, 0))
+	var cyan = _find_active_segment_of_color(room, Util.LASER_COLOR.CYAN)
+	assert_not_null(cyan, "the finite beam split a cyan output")
+	assert_eq(cyan.self_modulate, LaserSegment.beam_modulate(Util.LASER_COLOR.CYAN, true),
+		"the cyan split is the cyan tint dimmed, not full brightness")
+
+## First lit straight segment in the room with the given color, or null.
+func _find_active_segment_of_color(room: Room, color: Util.LASER_COLOR):
+	for child in room.get_children():
+		if child is LaserSegment and child.is_active() and child.color == color:
+			return child
+	return null
+
 func test_fade_tip_takes_precedence_over_a_mirror_just_out_of_range():
 	# A finite beam that runs out one cell short of a mirror fades at its tip and
 	# never bounces -- the range is spent before the beam reaches the mirror.

@@ -47,3 +47,25 @@ func test_locked_emitter_shows_disabled_animation():
 	emitter.interactable = false
 	add_child_autofree(emitter)
 	assert_eq(emitter.animation, &"disabled")
+
+## _ready reads laser_range/interactable, so configure the emitter before it
+## enters the tree (add_child runs _ready).
+func make_configured_emitter(laser_range: int, interactable: bool):
+	var emitter = EmitterScene.instantiate()
+	emitter.laser_range = laser_range
+	emitter.interactable = interactable
+	add_child_autofree(emitter)
+	return emitter
+
+func test_finite_emitter_shows_the_dimmed_finite_animation():
+	# A finite-range emitter (laser_range != -1) reads as weaker via a dimmed
+	# sprite, matching the dimmed beam it fires.
+	assert_eq(make_configured_emitter(5, true).animation, &"finite")
+
+func test_finite_locked_emitter_combines_both_cues():
+	# Finiteness and locked-ness are independent cues, so a finite locked emitter
+	# gets the dimmed *and* greyed-out sprite.
+	assert_eq(make_configured_emitter(5, false).animation, &"finite_disabled")
+
+func test_infinite_emitter_is_not_finite_dimmed():
+	assert_eq(make_configured_emitter(-1, true).animation, &"default")

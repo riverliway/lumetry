@@ -196,7 +196,53 @@ def compile_laser_fade() -> int:
 
 
 # --------------------------------------------------------------------------- #
-# Step 5: level-select status icons (placeholder art)
+# Step 5: finite-range emitter frames (darkened placeholder art)
+# --------------------------------------------------------------------------- #
+# A finite-range emitter reads as visually distinct from an infinite one by being
+# dimmer -- the same "finite == dimmer" cue LaserSegment applies to the beam it
+# fires (see LaserSegment.FINITE_DARKEN). There is no purpose-drawn finite art
+# yet, so these are just the normal emitter frames multiplied toward black; an
+# artist can drop real frames over the same filenames later. Both the active and
+# the greyed-out (locked) sets are darkened, so a finite emitter reads as finite
+# whether or not the player can toggle it.
+FINITE_DARKEN = 0.45  # keep in sync with LaserSegment.FINITE_DARKEN
+
+EMITTER_DIR = ROOT / "tileset" / "laser"
+FINITE_EMITTER_FRAMES = {
+    "laser_emitter_1.png": "laser_emitter_finite_1.png",
+    "laser_emitter_2.png": "laser_emitter_finite_2.png",
+    "laser_emitter_disabled_1.png": "laser_emitter_finite_disabled_1.png",
+    "laser_emitter_disabled_2.png": "laser_emitter_finite_disabled_2.png",
+}
+
+
+def darken(im: Image.Image, amount: float) -> Image.Image:
+    """Multiply RGB toward black by `amount` (0..1), leaving alpha untouched --
+    the same operation as Godot's Color.darkened(), so a darkened sprite matches
+    a darkened modulate."""
+    r, g, b, a = im.convert("RGBA").split()
+    lut = [int(round(i * (1.0 - amount))) for i in range(256)]
+    return Image.merge("RGBA", (r.point(lut), g.point(lut), b.point(lut), a))
+
+
+def compile_finite_emitter() -> int:
+    count = 0
+    for src_name, out_name in FINITE_EMITTER_FRAMES.items():
+        src = EMITTER_DIR / src_name
+        if not src.is_file():
+            print(f"[finite-emitter] missing source {src.relative_to(ROOT)}, skipping")
+            continue
+        out = EMITTER_DIR / out_name
+        darken(Image.open(src), FINITE_DARKEN).save(out)
+        count += 1
+        print(f"  finite emitter: {out.relative_to(ROOT)}")
+    print(f"[finite-emitter] wrote {count} sprite(s)\n" if count
+          else "[finite-emitter] nothing generated\n")
+    return count
+
+
+# --------------------------------------------------------------------------- #
+# Step 6: level-select status icons (placeholder art)
 # --------------------------------------------------------------------------- #
 # Flat placeholder badges the level selector shows on a level the player has
 # fried in (a laser-hazard death) or softlocked in (manually reset a stuck
@@ -247,6 +293,7 @@ def main() -> None:
     compile_laser_mirror_cuts()
     compile_laser_prism_cut()
     compile_laser_fade()
+    compile_finite_emitter()
     compile_status_icons()
 
 

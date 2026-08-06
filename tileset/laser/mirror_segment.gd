@@ -23,12 +23,13 @@ func is_active() -> bool:
 
 ## Shows the bounce half-beam.
 ## [br]`is_long` selects the long (60 deg bounce) vs short (120 deg) cut
-## [br]`color` tints the white beam via the shared LaserSegment.LASER_MODULATE table
+## [br]`color` tints the white beam via the shared LaserSegment.beam_modulate
 ## [br]`xf` places/orients the sprite so its cut lands on the mirror surface
-func set_mirror(is_long: bool, color: Util.LASER_COLOR, xf: Transform2D) -> void:
+## [br]`finite` dims the beam when it belongs to a finite-range emitter
+func set_mirror(is_long: bool, color: Util.LASER_COLOR, xf: Transform2D, finite := false) -> void:
 	animation = 'long' if is_long else 'short'
 	AnimSync.sync(self)
-	self_modulate = LaserSegment.LASER_MODULATE.get(color, Color.WHITE)
+	self_modulate = LaserSegment.beam_modulate(color, finite)
 	if _symbol:
 		_symbol.set_symbol(color)
 		_symbol.set_active(true)

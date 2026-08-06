@@ -22,11 +22,12 @@ func is_active() -> bool:
 
 
 ## Shows one half-beam of the split.
-## [br]`color` tints the white beam via the shared LaserSegment.LASER_MODULATE table
+## [br]`color` tints the white beam via the shared LaserSegment.beam_modulate
 ## [br]`xf` rotates/places the sprite so its flat cut sits at the prism center
-func set_prism(color: Util.LASER_COLOR, xf: Transform2D) -> void:
+## [br]`finite` dims the beam when it belongs to a finite-range emitter
+func set_prism(color: Util.LASER_COLOR, xf: Transform2D, finite := false) -> void:
 	AnimSync.sync(self)
-	self_modulate = LaserSegment.LASER_MODULATE.get(color, Color.WHITE)
+	self_modulate = LaserSegment.beam_modulate(color, finite)
 	if _symbol:
 		_symbol.set_symbol(color)
 		_symbol.set_active(true)

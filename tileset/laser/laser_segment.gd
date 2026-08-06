@@ -17,6 +17,22 @@ const LASER_MODULATE := {
 	Util.LASER_COLOR.DESTRUCTIVE: Color(1.0, 0.35, 0.30),
 }
 
+## How far a finite-range beam is darkened toward black relative to an infinite
+## one, so the two read as visually distinct (a finite emitter fires a dimmer
+## beam). Applied over the per-color tint above -- every colored split of a
+## finite beam is dimmed too. RGB only: alpha carries the fade-tail and the
+## traveling-beam reveal, so darkening must leave it alone (Color.darkened does).
+## The finite-emitter sprite is pre-darkened by the same amount in
+## tools/image_compiler.py so beam and emitter match.
+const FINITE_DARKEN := 0.45
+
+## The tint to apply over the white base sprite for a beam of `color`, dimmed if
+## the beam is finite-range. Shared by every laser sprite type (straight,
+## mirror, prism, half-beam) so they dim in lockstep.
+static func beam_modulate(color: Util.LASER_COLOR, finite: bool) -> Color:
+	var tint: Color = LASER_MODULATE.get(color, Color.WHITE)
+	return tint.darkened(FINITE_DARKEN) if finite else tint
+
 ## The colorblind glyph overlay, if present (null in stripped-down test rigs).
 @onready var _symbol: ColorSymbol = get_node_or_null("ColorSymbol")
 
@@ -41,11 +57,13 @@ func is_active() -> bool:
 ## beams collinear with the cells they pass through (no per-segment jag).
 ## [br]`fade` Draw the dissolving-tail sprite instead of the solid beam -- used for
 ## the final cell of a finite-range beam, so it peters out rather than cutting off.
-func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LASER_COLOR, beam_rotation: float, fade := false) -> void:
+## [br]`finite` Dim the beam (see beam_modulate) -- true for every cell of a
+## finite-range beam, so the whole beam reads as weaker, not just its faded tip.
+func set_laser(pfrom: Util.DIRECTION, pto: Util.DIRECTION, laser_color: Util.LASER_COLOR, beam_rotation: float, fade := false, finite := false) -> void:
 	color = laser_color
 	animation = 'fade' if fade else 'white'
 	AnimSync.sync(self)
-	self_modulate = LASER_MODULATE.get(color, Color.WHITE)
+	self_modulate = beam_modulate(color, finite)
 	if _symbol:
 		_symbol.set_symbol(color)
 		_symbol.set_active(true)

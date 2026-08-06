@@ -34,3 +34,20 @@ func test_straight_through_beam_uses_provided_rotation():
 	# geometric angle, not an idealized hex angle).
 	seg.set_laser(Util.DIRECTION.UP, Util.DIRECTION.DOWN, Util.LASER_COLOR.WHITE, 1.25)
 	assert_almost_eq(seg.rotation, 1.25, 0.0001)
+
+func test_infinite_beam_uses_the_plain_color_tint():
+	var seg = make_segment()
+	seg.set_laser(Util.DIRECTION.UP, Util.DIRECTION.DOWN, Util.LASER_COLOR.CYAN, 0.0)
+	assert_eq(seg.self_modulate, LaserSegment.LASER_MODULATE[Util.LASER_COLOR.CYAN],
+		"an infinite beam is tinted at full brightness")
+
+func test_finite_beam_is_dimmed():
+	var seg = make_segment()
+	seg.set_laser(Util.DIRECTION.UP, Util.DIRECTION.DOWN, Util.LASER_COLOR.CYAN, 0.0, false, true)
+	assert_eq(seg.self_modulate, LaserSegment.LASER_MODULATE[Util.LASER_COLOR.CYAN].darkened(LaserSegment.FINITE_DARKEN),
+		"a finite beam is the same tint darkened toward black")
+
+func test_beam_modulate_leaves_alpha_untouched():
+	# Alpha carries the fade-tail and the traveling-beam reveal, so dimming must
+	# only touch RGB (Color.darkened does).
+	assert_eq(LaserSegment.beam_modulate(Util.LASER_COLOR.WHITE, true).a, 1.0)
