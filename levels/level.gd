@@ -41,6 +41,9 @@ const LEVEL_SELECT_SCENE := "res://level_select.tscn"
 ## reset / advance, with player input locked, so the player can register what
 ## happened.
 const POST_EVENT_DELAY := 1.0
+## Subtle Perlin-noise variation laid over the flat background, so the grout
+## between the hex floor tiles doesn't read as one uniform grey.
+const GROUT_NOISE_SHADER := preload("res://levels/grout_noise.gdshader")
 
 @onready var room: Room = $Room
 
@@ -50,10 +53,22 @@ var _solved := false  ## whether the win condition is currently satisfied
 func _ready() -> void:
 	dim_wall_floor()
 	fit_to_screen()
+	_texture_background()
 	add_child(PAUSE_MENU.instantiate())
 	_connect_win_condition()
 	_connect_hazard()
 	_play_intro()
+
+
+## Lays the grout-noise shader over the background ColorRect so its grey isn't
+## perfectly flat. No-ops if the level has no such node (e.g. a synthetic test tree).
+func _texture_background() -> void:
+	var grey := get_node_or_null("Background/GreyBack") as CanvasItem
+	if grey == null:
+		return
+	var mat := ShaderMaterial.new()
+	mat.shader = GROUT_NOISE_SHADER
+	grey.material = mat
 
 
 ## Opens the room: locks input, plays the traveling-beam reveal from dark (Room drew
