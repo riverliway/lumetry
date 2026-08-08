@@ -131,6 +131,11 @@ func _process_move(_delta) -> void:
 		_state = Util.PLAYER_STATE.IDLE
 	else:
 		var t = 1.0 - (_time_left / _MOVE_DURATION)
+		# A pushed block eases in and out (an S-curve) so a shove reads as weighty:
+		# it takes off slowly, speeds through the middle, and settles into place.
+		# The player's own step (move_object is self) stays linear and snappy.
+		if _move_object != self:
+			t = smoothstep(0.0, 1.0, t)
 		_move_object.position = _move_start_pos.lerp(_move_target, t)
 
 
