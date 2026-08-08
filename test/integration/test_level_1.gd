@@ -124,10 +124,12 @@ func test_wall_floor_is_dimmed_at_runtime():
 	var wall := make_block(WallScene, 3, 4)
 	var level := build_level([wall], Vector2i(0, 0), 23, 12, true)
 	var wall_center := cell_center(3, 4)
+	# Wall cells are tinted with an opaque WALL_FLOOR_MODULATE (not made transparent),
+	# so a dimmed tile is one whose modulate is no longer the default white.
 	var dimmed := 0
 	var wall_tile_dimmed := false
 	for tile in level.get_node("Floor").get_children():
-		if tile.modulate.a < 1.0:
+		if tile.modulate != Color.WHITE:
 			dimmed += 1
 			if tile.position.is_equal_approx(wall_center):
 				wall_tile_dimmed = true

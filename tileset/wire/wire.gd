@@ -37,8 +37,9 @@ const OUTER_RADIUS := 9.0
 const INNER_RADIUS := 5.0
 const ARM_LENGTH := 98.0
 
-## How far an unpowered run is dimmed (multiplies every color above).
-const DEACTIVATED_MODULATE := Color(0.5, 0.5, 0.5)
+## How far an unpowered run is darkened (0 = unchanged, 1 = black). Applied to the
+## draw colours rather than the node's modulate, so nothing is written to the scene.
+const DEACTIVATED_DARKEN := 0.5
 
 ## Whether the wire currently reads as powered. Exported so a level can set the
 ## default in the editor; level code flips it via activate()/deactivate().
@@ -49,11 +50,14 @@ const DEACTIVATED_MODULATE := Color(0.5, 0.5, 0.5)
 
 
 func _ready() -> void:
-	# The child sprites are now just position/rotation markers -- drop their old
-	# texture so only this node's drawing shows.
-	for sprite in _segments(self):
-		sprite.texture = null
-	_refresh()
+	# The child sprites are now just position/rotation markers -- this node draws the
+	# wire. Drop their old texture at RUNTIME only (a scene-load change that never
+	# persists); in the editor we leave the scene untouched, so opening a level never
+	# dirties it just by looking at it.
+	if not Engine.is_editor_hint():
+		for sprite in _segments(self):
+			sprite.texture = null
+	queue_redraw()
 	# Snapping is an authoring aid; the saved scene is already grid-perfect, so
 	# there is nothing to do at runtime.
 	set_process(Engine.is_editor_hint())
@@ -67,9 +71,6 @@ func _process(_delta: float) -> void:
 		return
 	var moved := false
 	for sprite in _segments(self):
-		if sprite.texture != null:
-			sprite.texture = null  # a freshly duplicated segment; markers stay bare
-			moved = true
 		var target_pos := _nearest_cell_center(sprite.global_position)
 		if not sprite.global_position.is_equal_approx(target_pos):
 			sprite.global_position = target_pos
@@ -95,25 +96,23 @@ func deactivate() -> void:
 func set_activated(value: bool) -> void:
 	activated = value
 	if is_node_ready():
-		_refresh()
-
-
-## Applies the current power state -- the whole run dims when unpowered -- and redraws.
-func _refresh() -> void:
-	modulate = Color.WHITE if activated else DEACTIVATED_MODULATE
-	queue_redraw()
+		queue_redraw()
 
 
 func _draw() -> void:
+	# Unpowered runs draw darker. Done here (not via the node's modulate) so the
+	# power state never writes a property back to the scene.
+	var outer := outer_color if activated else outer_color.darkened(DEACTIVATED_DARKEN)
+	var inner := inner_color if activated else inner_color.darkened(DEACTIVATED_DARKEN)
 	# Every darker body first, then every lighter core, so two segments sharing a
 	# joint blend into a smooth corner instead of one body's edge cutting across the
 	# other's core (the same layering that gives Track its clean turns).
 	var segs := _segments(self)
 	var inv := get_global_transform().affine_inverse()
 	for seg in segs:
-		_draw_segment(inv * seg.get_global_transform(), OUTER_RADIUS, outer_color)
+		_draw_segment(inv * seg.get_global_transform(), OUTER_RADIUS, outer)
 	for seg in segs:
-		_draw_segment(inv * seg.get_global_transform(), INNER_RADIUS, inner_color)
+		_draw_segment(inv * seg.get_global_transform(), INNER_RADIUS, inner)
 
 
 ## Draws one rounded segment (a rectangle capped by a semicircle at its origin) in

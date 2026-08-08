@@ -30,9 +30,13 @@ signal solved
 ## Emitted once when a previously-solved room stops satisfying it.
 signal unsolved
 
-## Dim tint for floor cells under a wall, so the arena boundary reads darker than
-## the open, movable cells. Matches the old hand-authored `is_background` look.
-const WALL_FLOOR_MODULATE := Color("ffffff26")
+## Tint for floor cells under a wall, so the arena boundary reads darker than the
+## open, movable cells. Opaque (full alpha): the tile itself carries the dimming, so
+## the noisy background can't show through it -- an earlier semi-transparent tint let
+## the grout noise bleed across the whole boundary tile, which looked wrong. Chosen
+## to multiply the cyan floor texture (~0.373, 0.706, 0.8) down to roughly the muted
+## blue-grey (0.32, 0.37, 0.38) that the old transparent tint composited to.
+const WALL_FLOOR_MODULATE := Color(0.85, 0.52, 0.476)
 ## Pause menu overlay, added to every room so ESC always has a menu behind it.
 const PAUSE_MENU := preload("res://ui/pause_menu.tscn")
 ## Where advancing past the final level lands (there is no next room to open).

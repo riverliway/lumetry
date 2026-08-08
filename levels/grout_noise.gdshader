@@ -4,7 +4,7 @@ shader_type canvas_item;
 // so the grout showing between the hex floor tiles isn't perfectly uniform and the
 // board reads less samey. The noise only lightens (adds 0 .. strength to the
 // colour), so it stays a subtle texture rather than a pattern.
-uniform float strength : hint_range(0.0, 1.0) = 0.1;
+uniform float strength : hint_range(0.0, 1.0) = 0.2;
 // Noise frequency in 1/pixels of board space -- roughly one feature per few tiles.
 uniform float noise_scale = 0.006;
 
