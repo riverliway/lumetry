@@ -49,10 +49,13 @@ func _process(delta: float) -> void:
 		_rotating_block.rotation = Util.mod_float(_rotation_block_start_amount + turned, 2 * PI)
 
 
-## Starts rotating both itself and the given block
-func perform_rotation(block: Node2D) -> void:
+## Starts rotating both itself and the given block. Returns the animation's
+## duration so a caller can time other effects to it (e.g. the room holds a
+## re-aimed beam back until the spin finishes).
+func perform_rotation(block: Node2D) -> float:
 	_rotating_block = block
 	_rotation_time_left = _ROTATION_DURATION
 	_rotation_self_start_amount = rotation
 	if _rotating_block != null:
 		_rotation_block_start_amount = _rotating_block.rotation
+	return _ROTATION_DURATION

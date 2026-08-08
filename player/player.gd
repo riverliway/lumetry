@@ -340,8 +340,10 @@ func _mouse_screen_position() -> Vector2:
 	return vp.get_mouse_position() if vp != null else Vector2.ZERO
 
 
-## Actually starts the movement animation of the character to a new position
-func move(move_object, new_pos: Vector2, old_pos: Vector2) -> void:
+## Actually starts the movement animation of the character to a new position.
+## Returns the duration of the move so a caller can time other effects to it (e.g.
+## the room holds a rerouted beam back until a pushed block lands).
+func move(move_object, new_pos: Vector2, old_pos: Vector2) -> float:
 	_move_object = move_object
 	_move_target = new_pos
 	_move_start_pos = old_pos
@@ -350,6 +352,7 @@ func move(move_object, new_pos: Vector2, old_pos: Vector2) -> void:
 	# the time, so a shove is snappier than the player's own walk.
 	_move_duration = _MOVE_DURATION if move_object == self else _MOVE_DURATION / 2.0
 	_time_left = _move_duration
+	return _move_duration
 
 
 func use() -> void:

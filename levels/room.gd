@@ -223,6 +223,13 @@ class Grid:
 	## light from dark as an animation (the level intro), overriding the player-gated
 	## default above and diffing against nothing so every lit cell staggers in.
 	var _force_intro := false
+	## Seconds to hold back the newly-lit segments of the next resolve, on top of the
+	## per-cell travel stagger. Set to a push/rotation's animation length so a beam
+	## that changes because a block moved stays dark until the block lands, then
+	## propagates -- instead of bouncing off where the block will be. Only the changed
+	## (diverged) cells wait; the unchanged prefix and unrelated beams still show at
+	## once. One-shot: the driving resolve sets it and clears it straight after.
+	var _reveal_offset := 0.0
 
 	var WIDTH = 23 ## Number of cells in each row
 	var HEIGHT = 12 ## Number of cells in each column
@@ -629,9 +636,13 @@ class Grid:
 		var pad = cell.get_rotation_pad()
 		if pad == null:
 			return
-		pad.perform_rotation(cell.block)
+		var rotate_dur := pad.perform_rotation(cell.block)
 		cell.block_facing = Util.rotate_direction_clockwise(cell.block_facing)
+		# Hold the re-aimed beam dark until the spin finishes, then propagate it in,
+		# rather than snapping to the final facing before the block has turned.
+		_reveal_offset = rotate_dur
 		handle_laser_physics()
+		_reveal_offset = 0.0
 
 	
 	## A hook for the player attempt move signal
@@ -667,8 +678,13 @@ class Grid:
 			push_cell.block = new_cell.block
 			push_cell.block_facing = new_cell.block_facing
 			new_cell.remove_block()
-			player.move(push_cell.block, push_cell.pos, new_cell.pos)
+			var push_dur := player.move(push_cell.block, push_cell.pos, new_cell.pos)
+			# Hold any beam the block reroutes dark until it has finished sliding, then
+			# let it propagate in -- so it doesn't bounce off the block's destination
+			# before the block gets there.
+			_reveal_offset = push_dur
 			handle_laser_physics()
+			_reveal_offset = 0.0
 
 			return
 		
@@ -932,7 +948,10 @@ class Grid:
 		else:
 			ctx["index"] += 1
 
-		var delay: float = ctx["index"] * LASER_STEP_DELAY
+		# _reveal_offset holds the whole diverged run back until a moving block has
+		# landed (0 for an ordinary resolve), so even the divergence cell (index 0)
+		# waits when a push/rotation drives this.
+		var delay: float = _reveal_offset + ctx["index"] * LASER_STEP_DELAY
 		for seg in segs:
 			if _animating and delay > 0.0:
 				seg.modulate.a = 0.0
