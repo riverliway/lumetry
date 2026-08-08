@@ -319,26 +319,36 @@ func test_left_stick_looks_first_then_moves_when_facing_settles():
 
 
 # ---------------------------------------------------------------------- move
-func test_move_enters_moving_state_and_arms_the_timer():
+func test_walk_enters_moving_state_and_arms_the_full_timer():
+	# Moving the player itself is a walk, so the timer is armed to the full duration.
 	var p = _make_player()
-	var obj := Node2D.new()
-	add_child_autofree(obj)
-	p.move(obj, Vector2(100, 0), Vector2(0, 0))
+	p.move(p, Vector2(100, 0), Vector2(0, 0))
 	assert_eq(p._state, Util.PLAYER_STATE.MOVING, "entered MOVING")
-	assert_almost_eq(p._time_left, p._MOVE_DURATION, 0.0001, "move timer armed")
+	assert_almost_eq(p._time_left, p._MOVE_DURATION, 0.0001, "walk timer armed to the full duration")
 
-func test_move_interpolates_partway_then_snaps_on_completion():
+func test_walk_interpolates_linearly_then_snaps_on_completion():
 	var p = _make_player()
-	var obj := Node2D.new()
-	add_child_autofree(obj)
-	obj.position = Vector2(0, 0)
-	p.move(obj, Vector2(100, 0), Vector2(0, 0))
+	p.move(p, Vector2(100, 0), Vector2(0, 0))  # move_object == self -> a linear walk
 	p._process(p._MOVE_DURATION / 2.0)  # halfway
-	assert_almost_eq(obj.position.x, 50.0, 1.0, "object lerps toward the target")
+	assert_almost_eq(p.position.x, 50.0, 1.0, "a walk lerps linearly toward the target")
 	assert_eq(p._state, Util.PLAYER_STATE.MOVING, "still animating at the halfway point")
 	p._process(p._MOVE_DURATION)  # exceed the remaining time -> completion
-	assert_almost_eq(obj.position, Vector2(100, 0), Vector2(0.5, 0.5), "snaps exactly to target")
+	assert_almost_eq(p.position, Vector2(100, 0), Vector2(0.5, 0.5), "snaps exactly to target")
 	assert_eq(p._state, Util.PLAYER_STATE.IDLE, "returns to IDLE when the move finishes")
+
+func test_push_uses_half_duration_and_eases_in_and_out():
+	var p = _make_player()
+	var block := Node2D.new()
+	add_child_autofree(block)
+	p.move(block, Vector2(100, 0), Vector2(0, 0))  # move_object != self -> a push
+	assert_almost_eq(p._time_left, p._MOVE_DURATION / 2.0, 0.0001, "push timer armed to half the walk duration")
+	# A quarter of the way through the (half-length) push the S-curve is still
+	# accelerating, so the block sits well short of the linear-interp quarter (25).
+	p._process(p._MOVE_DURATION / 8.0)
+	assert_almost_eq(block.position.x, 15.6, 1.0, "eased in: behind the linear quarter mark")
+	p._process(p._MOVE_DURATION)  # exceed the remaining time -> completion
+	assert_almost_eq(block.position, Vector2(100, 0), Vector2(0.5, 0.5), "snaps exactly to target")
+	assert_eq(p._state, Util.PLAYER_STATE.IDLE, "returns to IDLE when the push finishes")
 
 
 # ----------------------------------------------------------------------- use

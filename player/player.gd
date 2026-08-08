@@ -43,6 +43,10 @@ var _LOOK_DURATION := 0.2
 var _MOVE_DURATION := 0.5
 var _USE_DURATION := 1.0
 var _time_left := 0.0
+## Duration of the move currently animating. A walk takes _MOVE_DURATION; a pushed
+## block covers its step in half that, so a shove feels snappier. Set per-move in
+## move(), and used as the interpolation denominator so the S-curve spans the move.
+var _move_duration := _MOVE_DURATION
 
 
 func _ready() -> void:
@@ -130,7 +134,7 @@ func _process_move(_delta) -> void:
 		_move_object.position = _move_target
 		_state = Util.PLAYER_STATE.IDLE
 	else:
-		var t = 1.0 - (_time_left / _MOVE_DURATION)
+		var t = 1.0 - (_time_left / _move_duration)
 		# A pushed block eases in and out (an S-curve) so a shove reads as weighty:
 		# it takes off slowly, speeds through the middle, and settles into place.
 		# The player's own step (move_object is self) stays linear and snappy.
@@ -342,7 +346,10 @@ func move(move_object, new_pos: Vector2, old_pos: Vector2) -> void:
 	_move_target = new_pos
 	_move_start_pos = old_pos
 	_state = Util.PLAYER_STATE.MOVING
-	_time_left = _MOVE_DURATION
+	# A pushed block (anything other than the player itself) covers its step in half
+	# the time, so a shove is snappier than the player's own walk.
+	_move_duration = _MOVE_DURATION if move_object == self else _MOVE_DURATION / 2.0
+	_time_left = _move_duration
 
 
 func use() -> void:
