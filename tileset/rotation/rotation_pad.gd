@@ -26,20 +26,27 @@ var _rotation_self_start_amount := 0.0 ## The rotation amount for the pad at the
 var _rotation_block_start_amount := 0.0 ## The rotation amount for the block at the start of the rotation
 
 func _process(delta: float) -> void:
-	if _rotation_time_left > 0.0:
-		var rotation_step = (_ROTATION_AMOUNT / _ROTATION_DURATION) * delta
-		
-		rotation = Util.mod_float(rotation + rotation_step, 2 * PI)
-		if _rotating_block != null:
-			_rotating_block.rotation = Util.mod_float(_rotating_block.rotation + rotation_step, 2 * PI)
+	if _rotation_time_left <= 0.0:
+		return
 
-		_rotation_time_left -= delta
-		if _rotation_time_left <= 0.0:
-			# Ensure final rotation amounts are exact
-			rotation = Util.mod_float(_rotation_self_start_amount + _ROTATION_AMOUNT, 2 * PI)
-			if _rotating_block != null:
-				_rotating_block.rotation = Util.mod_float(_rotation_block_start_amount + _ROTATION_AMOUNT, 2 * PI)
-			_rotating_block = null
+	_rotation_time_left -= delta
+	if _rotation_time_left <= 0.0:
+		# Ensure final rotation amounts are exact
+		rotation = Util.mod_float(_rotation_self_start_amount + _ROTATION_AMOUNT, 2 * PI)
+		if _rotating_block != null:
+			_rotating_block.rotation = Util.mod_float(_rotation_block_start_amount + _ROTATION_AMOUNT, 2 * PI)
+		_rotating_block = null
+		return
+
+	# Ease the spin in and out (an S-curve) so it accelerates off the start and
+	# settles gently into +60 deg, rather than snapping to a constant speed.
+	# Interpolate absolutely from the recorded start angle so the eased fraction
+	# maps straight onto the turn.
+	var t := smoothstep(0.0, 1.0, 1.0 - (_rotation_time_left / _ROTATION_DURATION))
+	var turned := _ROTATION_AMOUNT * t
+	rotation = Util.mod_float(_rotation_self_start_amount + turned, 2 * PI)
+	if _rotating_block != null:
+		_rotating_block.rotation = Util.mod_float(_rotation_block_start_amount + turned, 2 * PI)
 
 
 ## Starts rotating both itself and the given block
