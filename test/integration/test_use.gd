@@ -77,6 +77,10 @@ func test_use_on_a_rotation_pad_spins_the_block_and_reaims_the_beam():
 	var running_pad = pad_cell.get_rotation_pad()
 	assert_eq(running_pad._rotating_block, emitter, "the pad is animating the emitter")
 	assert_gt(running_pad._rotation_time_left, 0.0, "the rotation animation is in progress")
+
+	# The beam re-light is held until the spin is half done, then runs on the reveal
+	# clock; step past that so the physics has settled to the new facing.
+	room._process(1.0)
 	assert_false(room.grid.grid[5][7].is_laser_active(),
 		"the beam re-aimed off the straight-down path after the spin")
 	assert_gt(active_laser_count(room), 0, "a beam still exists in the new direction")
@@ -112,6 +116,9 @@ func test_rotate_pad_hook_spins_the_block_and_reaims_the_beam():
 	assert_eq(pad_cell.block_facing, Util.rotate_direction_clockwise(Util.DIRECTION.DOWN),
 		"the block's facing advanced one hex step clockwise")
 	assert_eq(pad_cell.get_rotation_pad()._rotating_block, emitter, "the pad is animating the emitter")
+
+	# The re-light is deferred to the spin's midpoint; step past it before asserting.
+	room._process(1.0)
 	assert_false(room.grid.grid[5][7].is_laser_active(), "the beam re-aimed off the straight-down path")
 	assert_gt(active_laser_count(room), 0, "a beam still exists in the new direction")
 

@@ -124,6 +124,20 @@ func handle_laser_physics() -> void:
 	grid.handle_laser_physics()
 
 
+## Leaves the beams currently on screen untouched and resolves the lasers `delay`
+## seconds later, on the reveal clock (so tests can step it via _process). Used while
+## a pushed or rotated block is animating: the old beam holds until the block is
+## partway to its new spot, then the resolve re-lights and the new beam travels in --
+## rather than snapping to the block's destination before it has visibly arrived.
+## delay <= 0 resolves at once.
+func resolve_lasers_after(delay: float) -> void:
+	if delay <= 0.0:
+		grid.handle_laser_physics()
+		return
+	begin_laser_reveal()
+	schedule_reveal_callback(delay, func() -> void: grid.handle_laser_physics())
+
+
 ## Plays the room's opening reveal: re-lights every beam from dark and staggers the
 ## segments in on the reveal clock (the same traveling-beam animation a player-driven
 ## change uses), returning once the last one has appeared. The load-time resolve in
@@ -223,13 +237,6 @@ class Grid:
 	## light from dark as an animation (the level intro), overriding the player-gated
 	## default above and diffing against nothing so every lit cell staggers in.
 	var _force_intro := false
-	## Seconds to hold back the newly-lit segments of the next resolve, on top of the
-	## per-cell travel stagger. Set to a push/rotation's animation length so a beam
-	## that changes because a block moved stays dark until the block lands, then
-	## propagates -- instead of bouncing off where the block will be. Only the changed
-	## (diverged) cells wait; the unchanged prefix and unrelated beams still show at
-	## once. One-shot: the driving resolve sets it and clears it straight after.
-	var _reveal_offset := 0.0
 
 	var WIDTH = 23 ## Number of cells in each row
 	var HEIGHT = 12 ## Number of cells in each column
@@ -638,11 +645,10 @@ class Grid:
 			return
 		var rotate_dur := pad.perform_rotation(cell.block)
 		cell.block_facing = Util.rotate_direction_clockwise(cell.block_facing)
-		# Hold the re-aimed beam dark until the spin finishes, then propagate it in,
-		# rather than snapping to the final facing before the block has turned.
-		_reveal_offset = rotate_dur
-		handle_laser_physics()
-		_reveal_offset = 0.0
+		# Keep the current beam on screen through the first half of the spin, then
+		# re-light for the new facing -- so a re-aimed beam doesn't snap to its final
+		# direction before the block has visibly turned.
+		resolve_room.call().resolve_lasers_after(rotate_dur / 2.0)
 
 	
 	## A hook for the player attempt move signal
@@ -679,12 +685,10 @@ class Grid:
 			push_cell.block_facing = new_cell.block_facing
 			new_cell.remove_block()
 			var push_dur := player.move(push_cell.block, push_cell.pos, new_cell.pos)
-			# Hold any beam the block reroutes dark until it has finished sliding, then
-			# let it propagate in -- so it doesn't bounce off the block's destination
-			# before the block gets there.
-			_reveal_offset = push_dur
-			handle_laser_physics()
-			_reveal_offset = 0.0
+			# Keep the current beam on screen through the first half of the push, then
+			# re-light from the block's new cell -- so a rerouted beam doesn't jump to
+			# the block's destination before it has visibly slid there.
+			resolve_room.call().resolve_lasers_after(push_dur / 2.0)
 
 			return
 		
@@ -948,10 +952,7 @@ class Grid:
 		else:
 			ctx["index"] += 1
 
-		# _reveal_offset holds the whole diverged run back until a moving block has
-		# landed (0 for an ordinary resolve), so even the divergence cell (index 0)
-		# waits when a push/rotation drives this.
-		var delay: float = _reveal_offset + ctx["index"] * LASER_STEP_DELAY
+		var delay: float = ctx["index"] * LASER_STEP_DELAY
 		for seg in segs:
 			if _animating and delay > 0.0:
 				seg.modulate.a = 0.0

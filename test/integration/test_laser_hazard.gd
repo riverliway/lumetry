@@ -49,6 +49,7 @@ func test_rotating_an_emitter_into_yourself_fries_you():
 	watch_signals(room)
 
 	room.rotate_pad(pad)  # DOWN_RIGHT -> DOWN, now aimed at the player
+	room._process(1.0)  # the re-light (and so the fry) is held until the spin is half done
 
 	assert_signal_emitted(room, "player_fried", "rotating the beam onto yourself fries you")
 	assert_true(emitter.activated, "the emitter stays on, not switched off by the fry")

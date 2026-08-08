@@ -166,11 +166,11 @@ func test_a_hit_that_breaks_before_it_reveals_is_never_reported():
 	assert_false(d.is_hit, "and it ends logically un-hit")
 
 
-# ------------------------- a moving block holds its rerouted beam until it lands
-func test_rotating_a_pad_holds_the_reaimed_beam_until_the_spin_finishes():
+# ---------------------- a moving block keeps its old beam through the first half
+func test_rotating_a_pad_keeps_the_old_beam_until_the_spin_is_half_done():
 	# An emitter on a rotation pad fires straight down. Rotating it re-aims the beam,
-	# but the new path must stay hidden until the block has finished turning -- rather
-	# than snapping to the final facing before the emitter has visibly rotated.
+	# but the old straight-down beam must stay on screen while the block turns -- the
+	# re-light is deferred, not run the instant the pad is used.
 	var emitter := make_block(EmitterScene, 5, 6)
 	emitter.laser_range = -1
 	var pad := make_block(RotationPadScene, 5, 6)
@@ -180,22 +180,18 @@ func test_rotating_a_pad_holds_the_reaimed_beam_until_the_spin_finishes():
 
 	room.rotate_pad(pad)
 
-	# Physics is instant: the old straight path clears and the re-aimed beam is
-	# logically lit the same tick...
-	assert_false(room.grid.grid[5][7].is_laser_active(), "the old straight-down path clears at once")
-	assert_gt(active_laser_count(room), 0, "the re-aimed beam is logically lit right away")
-	# ...but every re-lit segment is held transparent, and none reveals before the
-	# whole spin has elapsed. (An ordinary resolve shows the divergence cell instantly,
-	# at delay 0 -- here even it waits the spin's duration.)
-	assert_gt(_transparent_count(room), 0, "the re-aimed beam starts hidden")
-	assert_false(room._laser_reveals.is_empty(), "reveals are queued")
-	var spin: float = pad._ROTATION_DURATION
-	for entry in room._laser_reveals:
-		assert_true(entry[1] >= spin - 0.0001,
-			"a queued reveal (%.3fs) waits at least the spin (%.3fs)" % [entry[1], spin])
+	# The re-light has not run: the old straight-down beam still shows, fully opaque,
+	# and a deferred resolve is queued for the spin's midpoint.
+	assert_true(room.grid.grid[5][7].is_laser_active(), "the old straight-down beam holds at first")
+	assert_eq(_transparent_count(room), 0, "the held beam is fully shown, nothing mid-reveal")
+	assert_false(room._reveal_callbacks.is_empty(), "the re-light is deferred, not run yet")
+
+	# Still holding just before the midpoint...
+	room._process(pad._ROTATION_DURATION / 2.0 - 0.05)
+	assert_true(room.grid.grid[5][7].is_laser_active(), "old beam still shown before the midpoint")
 
 
-func test_the_reaimed_beam_appears_once_the_spin_completes():
+func test_the_reaimed_beam_relights_and_travels_in_after_the_midpoint():
 	var emitter := make_block(EmitterScene, 5, 6)
 	emitter.laser_range = -1
 	var pad := make_block(RotationPadScene, 5, 6)
@@ -203,9 +199,13 @@ func test_the_reaimed_beam_appears_once_the_spin_completes():
 	room._process(10.0)  # settle the initial beam
 
 	room.rotate_pad(pad)
-	room._process(pad._ROTATION_DURATION / 2.0)  # part-way through the spin
-	assert_gt(_transparent_count(room), 0, "still hidden midway through the spin")
+	room._process(pad._ROTATION_DURATION / 2.0 + 0.05)  # cross the midpoint -> re-light runs
 
-	room._process(pad._ROTATION_DURATION + 1.0)  # past the spin plus the travel stagger
-	assert_eq(_transparent_count(room), 0, "the re-aimed beam is fully shown once the spin ends")
+	# The old straight path is gone and the re-aimed beam is now lit and travelling in.
+	assert_false(room.grid.grid[5][7].is_laser_active(), "the old straight path cleared once the re-light ran")
+	assert_gt(active_laser_count(room), 0, "the re-aimed beam is lit in its new direction")
+	assert_gt(_transparent_count(room), 0, "and it fades in from the divergence point")
+
+	room._process(10.0)  # let it finish travelling
+	assert_eq(_transparent_count(room), 0, "the re-aimed beam fully shows")
 	assert_true(room._laser_reveals.is_empty(), "the reveal queue drains")
