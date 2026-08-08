@@ -25,14 +25,16 @@ const ARM_DIRS := {
 }
 
 ## Dark outer body and the lighter body layered on top of it.
-@export var outer_color := Color("141d3b")
-@export var inner_color := Color("3d5aa8")
+@export var outer_color := Color("3d5aa8")
+@export var inner_color := Color("141d3b")
+@export var border_color := Color("5aa4c1ff")
 
 ## Half-width of the dark body, which is also the radius of its rounded center cap.
 ## The inner body is BORDER thinner on each side. ARM_LENGTH reaches from the cell
 ## center to the shared edge with a neighbor (~half a cell), so adjacent arms meet.
-const OUTER_RADIUS := 31.0
-const BORDER := 9.0
+const OUTER_RADIUS := 26.0
+const INNER_RADIUS := 9.0
+const BORDER_SIZE := 2
 const ARM_LENGTH := 98.0
 
 
@@ -44,11 +46,14 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	# All dark bodies first, then all light bodies on top.
+	for dir in directions:
+		_draw_arm(dir, OUTER_RADIUS + BORDER_SIZE, border_color)
 	for dir in directions:
 		_draw_arm(dir, OUTER_RADIUS, outer_color)
 	for dir in directions:
-		_draw_arm(dir, OUTER_RADIUS - BORDER, inner_color)
+		_draw_arm(dir, OUTER_RADIUS - INNER_RADIUS + BORDER_SIZE, border_color)
+	for dir in directions:
+		_draw_arm(dir, OUTER_RADIUS - INNER_RADIUS, inner_color)
 
 
 ## Draws one rounded segment for `dir`: a rectangle extending outward from the cell

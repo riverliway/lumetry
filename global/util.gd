@@ -66,17 +66,15 @@ func get_direction_from_rotation(rotation: float) -> Util.DIRECTION:
 	return directions[rot]
 
 
-## Gets the angle in radians from a given hexdirection
+## Gets the angle in radians from a given hexdirection. Derived from the real pixel
+## offset between cell centers, not idealized 60-degree steps: the 168x192 grid is a
+## slightly stretched hex, so the diagonals sit a fraction past 60 degrees (~a pixel
+## at the arm tip). Using the true geometry keeps a sprite/beam collinear with the
+## cells it points at -- see Grid.laser_rotation, which this mirrors. The base sprite
+## points DOWN (+y) at rotation 0, so subtract that reference angle; wrapped to
+## [0, TAU) so the cardinals keep their old values (DOWN -> 0, UP -> PI).
 func get_rotation_from_direction(direction: Util.DIRECTION) -> float:
-	var directions = [
-		Util.DIRECTION.DOWN,
-		Util.DIRECTION.DOWN_LEFT,
-		Util.DIRECTION.UP_LEFT,
-		Util.DIRECTION.UP,
-		Util.DIRECTION.UP_RIGHT,
-		Util.DIRECTION.DOWN_RIGHT
-	]
-	return max(directions.find(direction), 0) * 2 * PI / 6
+	return fposmod(direction_to_offset(direction).angle() - PI / 2.0, TAU)
 
 
 ## Determines if a given rotation is a half-direction (i.e. between two directions)
