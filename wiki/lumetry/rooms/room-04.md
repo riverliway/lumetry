@@ -13,4 +13,4 @@ To softlock yourself:
 
 **Intro**
 
-Prof. Newton (welcoming) - Allow me to introduce you to Professor Radian! They
+Prof. Newton (welcoming) - Allow me to introduce you to Professor Radian! They are another faculty member

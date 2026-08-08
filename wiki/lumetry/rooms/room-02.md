@@ -7,8 +7,7 @@ Room 2 of 18, the middle room in [Prof. Newton](#lumetry/characters/prof-newton.
 This room teaches that the laser emittter is able to be turned off, and that lasers can cross over each other. The emitter in in the top-middle of the room, facing downwards. There is a mirror on a track that bounces it up to the top left. There is another mirror on the same track that has to be pushed into place. But you can't cross the laser to get there. So the player will need to turn off the laser emitter, push the mirror into place, and then turn it back on.
 
 To softlock yourself:
-- push the two mirrors on the track together so neither one can be moved (4 spots to do this)
-- get on the left side of the emitter and push the top mirror back to the right, trapping yourself via lasers
+- push the two mirrors on the track together so neither one can be moved (at the bottom)
 
 ## Dialogue
 

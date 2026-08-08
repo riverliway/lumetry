@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bid0ygivbhoey" path="res://tileset/track/track.tscn" id="7_dg0hw"]
 [ext_resource type="PackedScene" uid="uid://cdet3ct0rdet0" path="res://tileset/detector/detector.tscn" id="9_2lrd6"]
 [ext_resource type="Script" uid="uid://yc2tjg0e3og3" path="res://levels/level1/level_1.gd" id="9_lvl1"]
-[ext_resource type="PackedScene" uid="uid://ccrate3blk700" path="res://tileset/crate/crate.tscn" id="10_8e3mo"]
 [ext_resource type="PackedScene" uid="uid://k1vggxbxxpto" path="res://ui/controls_display.tscn" id="11_controls"]
 [ext_resource type="Texture2D" uid="uid://bqgn8qi0u7dg4" path="res://tileset/floor/Floor.png" id="floor_tile_tex"]
 
@@ -1211,10 +1210,10 @@ position = Vector2(2073, 2109)
 position = Vector2(2254, 2194)
 
 [node name="Wall42" parent="Room" unique_id=90623931 instance=ExtResource("4_pgt2t")]
-position = Vector2(2437, 1728)
+position = Vector2(2426, 1720)
 
 [node name="Wall43" parent="Room" unique_id=347127980 instance=ExtResource("4_pgt2t")]
-position = Vector2(2604, 1806)
+position = Vector2(2596, 1826)
 
 [node name="Wall20" parent="Room" unique_id=529499427 instance=ExtResource("4_pgt2t")]
 position = Vector2(2405, 2087)
@@ -1222,17 +1221,11 @@ position = Vector2(2405, 2087)
 [node name="Wall21" parent="Room" unique_id=2070242513 instance=ExtResource("4_pgt2t")]
 position = Vector2(2589, 2004)
 
-[node name="Wall22" parent="Room" unique_id=202434801 instance=ExtResource("4_pgt2t")]
-position = Vector2(2747, 2088)
-
-[node name="Wall23" parent="Room" unique_id=794739877 instance=ExtResource("4_pgt2t")]
-position = Vector2(2733, 1900)
-
 [node name="Wall24" parent="Room" unique_id=403842860 instance=ExtResource("4_pgt2t")]
-position = Vector2(2904, 1807)
+position = Vector2(2602, 1639)
 
 [node name="Wall25" parent="Room" unique_id=537699470 instance=ExtResource("4_pgt2t")]
-position = Vector2(2919, 1614)
+position = Vector2(2775, 1529)
 
 [node name="Wall30" parent="Room" unique_id=1738940874 instance=ExtResource("4_pgt2t")]
 position = Vector2(2914, 1421)
@@ -1351,39 +1344,6 @@ visible = false
 [node name="BottomRight" parent="Room/Track5" index="5"]
 visible = false
 
-[node name="Track6" parent="Room" unique_id=1332863435 instance=ExtResource("7_dg0hw")]
-position = Vector2(1914.2734, 1232)
-
-[node name="BottomLeft" parent="Room/Track6" index="2"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track6" index="3"]
-visible = false
-
-[node name="TopRight" parent="Room/Track6" index="4"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track6" index="5"]
-visible = false
-
-[node name="Track7" parent="Room" unique_id=424049714 instance=ExtResource("7_dg0hw")]
-position = Vector2(1923.2734, 1033)
-
-[node name="Top" parent="Room/Track7" index="0"]
-visible = false
-
-[node name="BottomLeft" parent="Room/Track7" index="2"]
-visible = false
-
-[node name="TopLeft" parent="Room/Track7" index="3"]
-visible = false
-
-[node name="TopRight" parent="Room/Track7" index="4"]
-visible = false
-
-[node name="BottomRight" parent="Room/Track7" index="5"]
-visible = false
-
 [node name="Track8" parent="Room" unique_id=140594601 instance=ExtResource("7_dg0hw")]
 position = Vector2(1751.2734, 1326)
 
@@ -1401,6 +1361,9 @@ visible = false
 
 [node name="Track9" parent="Room" unique_id=1811071608 instance=ExtResource("7_dg0hw")]
 position = Vector2(1927.2734, 1417)
+
+[node name="Top" parent="Room/Track9" index="0"]
+visible = false
 
 [node name="BottomLeft" parent="Room/Track9" index="2"]
 visible = false
@@ -1438,9 +1401,6 @@ position = Vector2(2258, 1998)
 position = Vector2(2584.2734, 1034)
 rotation = 2.0367992
 
-[node name="Crate" parent="Room" unique_id=230658233 instance=ExtResource("10_8e3mo")]
-position = Vector2(2594.2734, 1418)
-
 [node name="WallArt" type="Control" parent="." unique_id=1119903716]
 z_index = 100
 layout_mode = 3
@@ -1464,8 +1424,6 @@ color = Color(0, 0, 0, 1)
 [editable path="Room/Track3"]
 [editable path="Room/Track4"]
 [editable path="Room/Track5"]
-[editable path="Room/Track6"]
-[editable path="Room/Track7"]
 [editable path="Room/Track8"]
 [editable path="Room/Track9"]
 [editable path="Room/Track10"]

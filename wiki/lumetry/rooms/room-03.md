@@ -7,7 +7,7 @@ Room 3 of 18, the final room in [Prof. Newton](#lumetry/characters/prof-newton.m
 There are three mirror tracks you have to push into place, and one detector turns on the other laser. All three mirrors are on the same track. You have to move two mirrors out of the way and then push the third mirror over to the left side, then you can push the other two over to the right.
 
 To softlock yourself:
-- Push any two mirrors right next to each other on the track such that it is impossible to get them apart again
+- Push all three mirrors to either end of the track
 
 ## Dialogue
 

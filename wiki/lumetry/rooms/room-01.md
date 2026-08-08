@@ -7,7 +7,6 @@ Room 1 of 18, the first room in [Prof. Newton](#lumetry/characters/prof-newton.m
 Since this is the first room, the player is introduced to push mirrors. There is a laser emitter in the top left facing downwards. There is a stationary mirror below it, routing the laser to the top right. There is a mirror on a track that needs to be pushed into position that makes the laser go down to the detector which finishes the puzzle.
 
 To softlock yourself:
-- push the mirror into the middle fork so it hits the crate. Then walk around the crate and push it down, trapping yourself in the top section
 - Push the mirror back down into its original position
 
 ## Dialogue
@@ -52,6 +51,6 @@ Prof. Newton (thinking) - Looks like even a professor like myself still has much
 
 Tess (victory-1) - I did it! 
 
-Prof. Newton (satisfied) - Nice! There's nothing we can't do when we put our minds do it. Ready to move on to the next project?
+Prof. Newton (satisfied) - Oh yeah, its all coming together. Ready to move on to the next project?
 
 Tess (excited) - Yes! This is so much fun!
